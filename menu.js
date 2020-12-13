@@ -18,5 +18,6 @@ function onOpen() {
           //.addItem('check settings', 'checkTokens')
           .addItem('set token', 'setToken_')
           .addItem('set host', 'setHost_'))
+      //.addSeparator()
       .addToUi();
 }

@@ -8,7 +8,7 @@ function setToken_() {
   } 
 }
 function setHost_() {
-  var host = Browser.inputBox("Set Host ('https://yourschool.instructure.com')", 'Current Host: ['+PropertiesService.getUserProperties().getProperty("host")+']', Browser.Buttons.OK_CANCEL);
+  var host = Browser.inputBox("Set Host ('https://yourschool.instructure.com')", 'Current Host: [hidden]', Browser.Buttons.OK_CANCEL);
   if(host && host != "cancel") {
     if(!host.match(/http/)) {
       host = "https://" + host;
