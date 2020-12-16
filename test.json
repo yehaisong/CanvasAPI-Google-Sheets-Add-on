@@ -1,0 +1,72 @@
+{
+    "get_assignments":{
+      "api":"get_assignments",
+      "course_id desc":"course id, e.g., 83",
+      "search_term desc":"partial text of the assignment title, e.g., test",
+      "order_by desc":"default name, allowed values: position|name|due_date",
+      "-----":"-----",
+      "course_id":"",
+      "search_term":"",
+      "order_by":"name"
+    },
+    "get_assignment_overrides":{
+      "api":"get_assignment_overrides",
+      "course_id desc":"course id, e.g., 83",
+      "assignment_id desc":"assignment id, e.g., 1234. Find the assignment id first using get_assignments",
+      "-----":"-----",
+      "course_id":"",
+      "assignment_id":""
+    },
+    "get_courses_in_account":{
+      "api":"get_courses_in_account",
+      "account_id desc":"account id, default 1",
+      "search_term desc":"partial text of course title, code, and id; or teacher's name",
+      "search_by desc":"default course, allowed values: course|teacher",
+      "blueprint desc":"default empty, allowed values: true|false",
+      "-----":"-----",
+      "account_id":"1",
+      "search_term":"",
+      "search_by":"course",
+      "blueprint":""
+    },
+    "accounts":{
+        "get_accounts":{
+            "reference":"https://canvas.instructure.com/doc/api/accounts.html#method.accounts.courses_api",
+            "guide":[
+                "Select an empty cell to start",
+                "Click the button to call API <button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"google.script.run.get_accounts()\">Call API</button>"
+            ],
+            "template":{}
+        },
+        "get_sub_accounts":{
+            "reference":"https://canvas.instructure.com/doc/api/accounts.html#method.accounts.courses_api",
+            "guide":[
+                "Select a cell with an account id",
+                "Click the button to call API <button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"google.script.run.get_sub_accounts()\">Call API</button>"
+            ],
+            "template":{}
+        },
+      "get_courses_in_account":{
+        "reference":"https://canvas.instructure.com/doc/api/accounts.html#method.accounts.courses_api",
+        "guide":[
+          "Select an empty cell to start",
+          "Click the button to generate the params template: <button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"google.script.run.generateParamTemplate('get_courses_in_account')\">Generate Template</button>",
+          "Enter values",
+          "Select the range of the params names and values",
+          "Click the button to call API <button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"google.script.run.get_courses_in_account()\">Call API</button>"
+        ],
+        "template":{
+          "api":"get_courses_in_account",
+          "account_id desc":"account id, default 1",
+          "search_term desc":"partial text of course title, code, and id; or teacher's name",
+          "search_by desc":"default course, allowed values: course|teacher",
+          "blueprint desc":"default empty, allowed values: true|false",
+          "-----":"-----",
+          "account_id":"1",
+          "search_term":"",
+          "search_by":"course",
+          "blueprint":""
+        }
+      }
+    }
+  }

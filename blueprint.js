@@ -22,9 +22,10 @@ function get_blueprint_templates()
 		};
   
   var data=canvasAPI(endpoint,opts);
-  var contents=parse_JSON_object(data);
+  var contents=Helper.parse_JSON_object(data);
   var cell=SpreadsheetApp.getCurrentCell();
-  fillValuesFromJsonObject(cell.getRow()+1,cell.getColumn(),data);
+  Helper.fillValuesFromJsonObject(cell.getRow()+1,cell.getColumn(),data);
+  Helper.fillValuesFromJsonList
 }
 
 /*
@@ -44,14 +45,14 @@ function update_associated_courses()
   //options
   var opts = {
 			'course_id': course_id,
-            'course_ids_to_add' : [course_id_to_add],
-            'course_ids_to_remove' : []
+      'course_ids_to_add' : [course_id_to_add],
+      'course_ids_to_remove' : []
 		};
   
   var data=canvasAPI(endpoint,opts);
   var rlt=data["Success"];
   var cell=SpreadsheetApp.getCurrentCell();
-  fillValuesFromJsonObject(cell.getRow()+1,cell.getColumn(),data);
+  Helper.fillValuesFromJsonObject(cell.getRow()+1,cell.getColumn(),data);
   
   //sync_associated_courses('initial sync',false,true,false);
 }
@@ -70,13 +71,13 @@ function sync_associated_courses(comment,send_notification,copy_settings,publish
   //options
   var opts = {
 			'course_id': course_id,
-            'comment':comment,
-            'send_notification':send_notification,
-            'copy_settings':copy_settings,
-            'publish_after_initial_sync':publish_after_initial_sync
+      'comment':comment,
+      'send_notification':send_notification,
+      'copy_settings':copy_settings,
+      'publish_after_initial_sync':publish_after_initial_sync
 		};
   
   var data=canvasAPI(endpoint,opts);
   var cell=SpreadsheetApp.getCurrentCell();
-  fillValuesFromJsonObject(cell.getRow()+1,cell.getColumn(),data);
+  Helper.fillValuesFromJsonObject(cell.getRow()+1,cell.getColumn(),data);
 }

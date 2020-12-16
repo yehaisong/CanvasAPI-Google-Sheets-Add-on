@@ -12,6 +12,40 @@
  *   Last updated 20150731T091500Z by James Jones
  */
 
+
+/*
+Add by hy
+function to parse opts and call the canvasAPI function
+endpoint - the endpoint of the api call
+hasopts - boolean. True-with opts/False- no opts.
+optsdata - json object for opts
+
+function callCanvasAPI(endpoint, hasparams,params)
+{
+  if(hasparams)
+  {
+    var param_range=SpreadsheetApp.getActiveSheet().getActiveRange();
+    Browser.msgBox(params != null);
+    if (params!= null)
+    {
+      params=range_to_json(param_range);//parse params in the selected range. function is in helper.gs
+    }
+    var data=canvasAPI(endpoint,params);//call api with opts
+    fillValuesFromJsonList(param_range.getLastRow()+1,param_range.getColumn(),data) //fill values starting from the cell below the current range
+
+  }
+  else
+  {
+    var data=canvasAPI(endpoint);//call api without opts
+    var cell=SpreadsheetApp.getCurrentCell();//get current cell
+    fillValuesFromJsonList(cell.getRow(),cell.getColumn(),data); //fill values starting from the current cell
+  }
+}
+*/
+
+
+
+
 /**
  * @function userConfiguration This function specifies your Canvas instance and
  *           your access token Once you have ran the script once, you can remove

@@ -15,7 +15,8 @@ function get_courses()
   var endpoint="GET /api/v1/courses";
   var cell=SpreadsheetApp.getCurrentCell();
   var data=canvasAPI(endpoint);
-  fillValuesFromJsonList(cell.getRow(),cell.getColumn(),data);
+  var columns=displayColumns["course_list"];
+  Helper.fillValuesFromJsonList(cell.getRow(),cell.getColumn(),data,null,columns);
 }
 
 /*
@@ -36,7 +37,7 @@ function get_single_course()
   
   var data=canvasAPI(endpoint,opts);
   var cell=SpreadsheetApp.getCurrentCell();
-  fillValuesFromJsonObject(cell.getRow()+1,cell.getColumn(),data);
+  Helper.fillValuesFromJsonObject(cell.getRow()+1,cell.getColumn(),data);
 }
 
 
