@@ -10,41 +10,8 @@
  *   but it would be really awesome that if you contribute something, you share it back so others can benefit.
  *   If you know what you're doing with Google Apps and want to coordinate a team effort, let me know.
  *   Last updated 20150731T091500Z by James Jones
+ *   Last updated 20201215 by Haisong Ye
  */
-
-
-/*
-Add by hy
-function to parse opts and call the canvasAPI function
-endpoint - the endpoint of the api call
-hasopts - boolean. True-with opts/False- no opts.
-optsdata - json object for opts
-
-function callCanvasAPI(endpoint, hasparams,params)
-{
-  if(hasparams)
-  {
-    var param_range=SpreadsheetApp.getActiveSheet().getActiveRange();
-    Browser.msgBox(params != null);
-    if (params!= null)
-    {
-      params=range_to_json(param_range);//parse params in the selected range. function is in helper.gs
-    }
-    var data=canvasAPI(endpoint,params);//call api with opts
-    fillValuesFromJsonList(param_range.getLastRow()+1,param_range.getColumn(),data) //fill values starting from the cell below the current range
-
-  }
-  else
-  {
-    var data=canvasAPI(endpoint);//call api without opts
-    var cell=SpreadsheetApp.getCurrentCell();//get current cell
-    fillValuesFromJsonList(cell.getRow(),cell.getColumn(),data); //fill values starting from the current cell
-  }
-}
-*/
-
-
-
 
 /**
  * @function userConfiguration This function specifies your Canvas instance and
@@ -60,17 +27,13 @@ function callCanvasAPI(endpoint, hasparams,params)
  *
  */
 function userConfiguration() {
-
 	var userProperties = PropertiesService.getUserProperties();
-    
-    if(!userProperties.getProperty("host")) 
-    { 
-      setHost_(); //config.gs
-    }
-    if(!userProperties.getProperty("token")) {
-      setToken_(); //config.gs
-    }
-	
+  if(!userProperties.getProperty("host")) { 
+    setHost_(); //config.gs
+  }
+  if(!userProperties.getProperty("token")) {
+    setToken_(); //config.gs
+  }
 	return userProperties.getProperties();
 }
 
@@ -99,6 +62,8 @@ function canvasAPI(endpoint, opts, filter) { //filter is not supported currently
 	if (typeof opts === 'undefined') {
 		opts = {};
 	}
+  
+  Helper.log("opts :"+ JSON.stringify(opts));
 
 	var PER_PAGE = 1000;
 	var API_VERSION = 1;
@@ -127,6 +92,7 @@ function canvasAPI(endpoint, opts, filter) { //filter is not supported currently
 			throw 'Endpoint specification must be a string. Received: '
 					+ typeof endpoint;
 		}
+
 		var endpointMatches = endpointRegex.exec(endpoint);
 		if (endpointMatches === null) {
 			throw 'Invalid endpoint specified: ' + endpoint;
@@ -236,6 +202,7 @@ function canvasAPI(endpoint, opts, filter) { //filter is not supported currently
   
   
   while (url !== null) {
+    Helper.log("Fetch: "+endpoint);
 		var response = UrlFetchApp.fetch(url, parms );
         Utilities.sleep(1000); 
 		url = null;
@@ -281,7 +248,7 @@ function canvasAPI(endpoint, opts, filter) { //filter is not supported currently
 			}*/
 		}
 	}
-
+  Helper.log("return data: "+JSON.stringify(data));
 	return data;
 }
 
