@@ -235,7 +235,7 @@ class Helper {
   }
   
   /**
-   * convert data in a sheet range to a json object
+   * convert data in a sheet range to a json object, row headed
    * The parameters should be listed by rows. The range should be 2 cols, the first col is for key, and the second col is for value. 
    * @param {object} range A json object
    * @return {object}
@@ -246,8 +246,21 @@ class Helper {
     //Browser.msgBox(range.getNumRows());
     for(var i=1;i<=range.getNumRows();i++)
     {
-      if(range.getCell(i,1).getValue()!=""&&range.getCell(i,2).getValue()!="")
-        json[range.getCell(i,1).getValue()]=range.getCell(i,2).getValue();
+      if(range.getCell(i,1).getValue()!=""&&range.getCell(i,2).getValue()!=""){
+        var param_name=range.getCell(i,1).getValue();
+        var param_value_str=range.getCell(i,2).getValue();
+        var param_value=null;
+        if(param_name.endsWith("[]")){//this is an array parameter
+          param_name=param_name.substring(0,param_name.length-2);
+          param_value=[];
+          param_value_str=param_value_str.substring(1,param_value_str.length-1);
+          param_value=param_value_str.split(",");
+        }
+        else{//this is a string parameter
+          param_value=param_value_str;
+        }
+        json[param_name]=param_value;
+      }
     }
     return json;
   }

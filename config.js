@@ -390,7 +390,7 @@ const canvasAPITemplate={
         "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"google.script.run.generateParamTemplate('blueprints',1)\">Get parameters</button>",
         "Enter values",
         "Select the range of the params names and values",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"google.script.run.update_associated_courses()\">Call API</button>"
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"google.script.run.callCanvasAPIwithRangeParamsRO('PUT /api/v1/courses/:course_id/blueprint_templates/default/update_associations',null,null)\">Call API</button>"
       ],
       "api":{
         "name":"update_associated_courses",
@@ -429,7 +429,7 @@ const canvasAPITemplate={
         "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"google.script.run.generateParamTemplate('blueprints',2)\">Get parameters</button>",
         "Enter values",
         "Select the range of the params names and values",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"google.script.run.sync_associated_courses()\">Call API</button>"
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"google.script.run.callCanvasAPIwithRangeParamsRO('POST /api/v1/courses/:course_id/blueprint_templates/default/migrations',null,null)\">Call API</button>"
       ],
       "api":{
         "name":"sync_associated_courses",

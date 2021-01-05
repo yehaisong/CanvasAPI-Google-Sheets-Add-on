@@ -17,7 +17,7 @@ function assignments_guide()
 *POST /api/v1/courses/:course_id/assignments/:assignment_id/overrides
 *One of student_ids, group_id, or course_section_id must be present. 
 *. At most one should be present; if multiple are present only the most specific (student_ids first, then group_id, then course_section_id) is used and *. any others are ignored.
-* Returns a AssignmentOverride
+* Returns an AssignmentOverride
 */
 function create_an_assignment_override()
 {
@@ -79,10 +79,20 @@ function create_an_assignment_override()
 }
 
 /**
+ * update an assignment override
+ * PUT /api/v1/courses/:course_id/assignments/:assignment_id/overrides/:id
+ * Returns an AssignmentOverride
+ */
+function update_an_assignment_override()
+{
+  Browser.msgBox("Not implemented.");
+}
+
+/**
  * Delete an assignment override
  * DELETE /api/v1/courses/:course_id/assignments/:assignment_id/overrides/:id
  * Deletes an override and returns its former details.
- * Returns a AssignmentOverride
+ * Returns an AssignmentOverride
  */
 function delete_an_assignment_override()
 {
