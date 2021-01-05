@@ -18,10 +18,11 @@ function blueprints_guide()
  * Using 'default' as the template_id should suffice for the current implmentation (as there should be only one template per course). 
  * However, using specific template ids may become necessary in the future
  */
+/*
 function get_blueprint_information()
 {
   //var endpoint="GET /api/v1/courses/:course_id/blueprint_templates/default";
-  var endpoint=Helper.getEndpoint("blueprints","get_blueprint_information");
+  var endpoint=Helper.getAPIAction("blueprints","get_blueprint_information").endpoint;
   //course id
   var cell=SpreadsheetApp.getCurrentCell();
   var course_id=cell.getValue();
@@ -35,6 +36,7 @@ function get_blueprint_information()
   var cell=SpreadsheetApp.getCurrentCell();
   Helper.fillValuesFromJsonObject(cell.getRow()+1,cell.getColumn(),data,null,null);
 }
+*/
 
 /**
  * Update associated courses
@@ -46,7 +48,7 @@ function get_blueprint_information()
 function update_associated_courses()
 {
   //var endpoint="PUT /api/v1/courses/:course_id/blueprint_templates/default/update_associations";
-  var endpoint=Helper.getEndpoint("blueprints","update_associated_courses");
+  var endpoint=Helper.getAPIAction("blueprints","update_associated_courses").endpoint;
   //course id
   var cell=SpreadsheetApp.getCurrentCell();
   var course_id=cell.getValue();
@@ -74,7 +76,7 @@ function update_associated_courses()
 function sync_associated_courses(comment,send_notification,copy_settings,publish_after_initial_sync)
 {
   //var endpoint="POST /api/v1/courses/:course_id/blueprint_templates/default/migrations";
-  var endpoint=Helper.getEndpoint("blueprints","sync_associated_courses");
+  var endpoint=Helper.getAPIAction("blueprints","sync_associated_courses").endpoint;
   //course id
   var cell=SpreadsheetApp.getCurrentCell();
   var course_id=cell.getValue();

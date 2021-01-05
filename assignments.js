@@ -18,12 +18,14 @@ function assignments_guide()
  * GET /api/v1/courses/:course_id/assignment_groups/:assignment_group_id/assignments
  * Returns the paginated list of assignments for the current course or assignment group.
  */
+/*automated
 function get_assignments ()
 {
   //var endpoint="GET /api/v1/courses/:course_id/assignments"; //specify api
-  var endpoint=Helper.getEndpoint("assignments","get_assignments");
-  GeneralAPICall.callCanvasAPIwithRangeParams(endpoint,"assignment_list");
+  var endpoint=Helper.getAPIAction("assignments","get_assignments").endpoint;
+  callCanvasAPIwithRangeParams(endpoint,"assignment_list",null);
 }
+*/
 
 /**
  * List assignment overrides
@@ -31,12 +33,14 @@ function get_assignments ()
  * Returns the paginated list of overrides for this assignment that target sections/groups/students visible to the current user.
  * Returns a list of AssignmentOverrides
  */
+/*
 function get_assignment_overrides()
 {
   //var endpoint="GET /api/v1/courses/:course_id/assignments/:assignment_id/overrides"; //specify api
-  var endpoint=Helper.getEndpoint("assignments","get_assignment_overrides");
-  GeneralAPICall.callCanvasAPIwithRangeParams(endpoint,"overrides_list");
+  var endpoint=Helper.getAPIAction("assignments","get_assignment_overrides").endpoint;
+  callCanvasAPIwithRangeParams(endpoint,"overrides_list",null);
 }
+*/
 
 /**
 *Create an assignment override
@@ -48,7 +52,7 @@ function get_assignment_overrides()
 function create_an_assignment_override()
 {
   //var endpoint="POST /api/v1/courses/:course_id/assignments/:assignment_id/overrides"; //specify api
-  var endpoint=Helper.getEndpoint("assignments","create_an_assignment_override");
+  var endpoint=Helper.getAPIAction("assignments","create_an_assignment_override").endpoint;
   Helper.log("Call create_an_assignment_override().")
   var range=SpreadsheetApp.getActiveRange();
   var data=range.getValues();

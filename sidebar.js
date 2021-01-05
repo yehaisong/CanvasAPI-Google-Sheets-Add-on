@@ -8,12 +8,12 @@
  */
 class SideBar{
   /**
-   * Return a json array from the paramList
+   * Return a json array from the canvasAPITemplate
    * @param {string} name Provide a name of a Canvas API controller
    */
   static getAPIWrapper(name)
   {
-    return paramList[name];
+    return canvasAPITemplate[name];
   }
 
   /**

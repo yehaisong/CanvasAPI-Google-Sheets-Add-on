@@ -11,35 +11,23 @@ class Helper {
    * get Canvas api endpoint by controller and action
    * @param {string} controller name, for example, accounts
    * @param {string} action name, for example, get_accounts
+   * @return {object}
    */
-  static getEndpoint(controller,action)
+  static getAPIAction(controller,action)
   {
-    var actions=paramList[controller];
-    var endpoint="";
-    if (typeof actions ==="object")
-    {
-      for(var i=0;i<actions.length;i++)
-      {
-        var apiName=actions[i]["api"];
-        if(apiName.includes(":"))
-        {
-          apiName=apiName.split(":")[1].trim();
-        }
-        if(apiName==action)
-        {
-          endpoint=actions[i]["endpoint"];
+    var _actions=canvasAPITemplate[controller];
+    var _action;
+    if (typeof _actions ==="object"){
+      for(var i=0;i<_actions.length;i++){
+        if(_actions[i].api.name==action){
+          _action=_actions[i].api;
           break;
         }
       }
     }
-    else
-    {
-      return "";
-    }
-    Helper.log("Endpoint: "+endpoint);
-    return endpoint;
+    Helper.log("API action object: "+_action);
+    return _action;
   }
-
 
 
   /**
@@ -56,6 +44,19 @@ class Helper {
     var contents=Helper.parse_JSON_array(jsonarray,columns);
     Helper.setValues(startrow,startcol,contents,bgcolor);
   }
+
+  /**
+   * setValues with a json array; list attributes in columns
+   * @param {number} startrow An absolute row index of a sheet
+   * @param {number} startcol An absolute column index of a sheetz
+   * @param {Array<object>} jsonarray Provide an object array contains the data to be filled
+   * @param {string} columns Filter displayColumns name
+   */
+  static setNotesFromJsonList(startrow,startcol,jsonarray,columns)
+  {
+    var contents=Helper.parse_JSON_array(jsonarray,columns);
+    Helper.setNotes(startrow,startcol,contents,"column");
+  }
   
   /**
    * setValues with a json object; list attributes in rows
@@ -71,6 +72,19 @@ class Helper {
     var contents=Helper.parse_JSON_object(jsonobject,columns);
     Helper.setValues(startrow,startcol,contents,bgcolor);
   }
+
+  /**
+   * setValues with a json object; list attributes in rows
+   * @param {number} startrow An absolute row index of a sheet
+   * @param {number} startcol An absolute column index of a sheet
+   * @param {Object} jsonobject Provide a endpoint URL of a Canvas API function
+   * @param {string} columns Filter displayColumns name
+   */
+  static setNotesFromJsonObject(startrow,startcol,jsonobject,columns)
+  {
+    var contents=Helper.parse_JSON_object(jsonobject,columns);
+    Helper.setNotes(startrow,startcol,contents,"row");
+  }
   
   /**
    * setValues with a two demision array
@@ -82,14 +96,52 @@ class Helper {
    */
   static setValues(startrow,startcol,contents,bgcolor)
   {
-    Helper.insertRows(startrow,contents.length);
-    var rng = SpreadsheetApp.getActiveSheet().getRange(startrow,startcol,contents.length,contents[0].length);
-    if(bgcolor==null)
-      bgcolor= Helper.getColor();
-    rng.setHorizontalAlignment("left");
-    rng.setValues(contents);
-    rng.setBackground(bgcolor);
+    if(contents.length>0){
+      Helper.insertRows(startrow,contents.length);
+      var rng = SpreadsheetApp.getActiveSheet().getRange(startrow,startcol,contents.length,contents[0].length);
+      if(bgcolor==null)
+        bgcolor= Helper.getColor();
+      rng.setHorizontalAlignment("left");
+      rng.setValues(contents);
+      rng.setBackground(bgcolor);
+    }
+    else
+    {
+      Browser.msgBox("No records to display.");
+    }
   }
+
+  /**
+   * setValues with a two demision array
+   * @param {number} startrow An absolute row index of a sheet
+   * @param {number} startcol An absolute column index of a sheet
+   * @param {Array<object>} contents Provide a endpoint URL of a Canvas API function
+   * @param {string} header "row" or "column" notes will be added to the header row or column. If not presented, set as no header.
+   */
+  static setNotes(startrow,startcol,contents,header)
+  {
+    if(contents.length>0){
+      if(header=="column"){//list style
+        var rng = SpreadsheetApp.getActiveSheet().getRange(startrow,startcol,1,contents[0].length);
+        for(var ci=0;ci<contents[1].length;ci++)
+        {
+          rng.getCell(1,ci+1).setNote(contents[1][ci]);
+        }
+      }else if (header=="row"){//object style
+        var rng = SpreadsheetApp.getActiveSheet().getRange(startrow,startcol,contents.length,1);
+        for(var ri=0;ri<contents.length;ri++)
+        {
+          rng.getCell(ri+1,1).setNote(contents[ri][1]);
+        }
+      }
+      else{
+        var rng = SpreadsheetApp.getActiveSheet().getRange(startrow,startcol,contents.length,contents[0].length);
+        rng.setNotes(contents);
+      }
+      
+    }
+  }
+
   
   /**
    * insert empty rows
@@ -110,30 +162,37 @@ class Helper {
    */
   static parse_JSON_array(jsonarray,columns)
   {
-    //create headers
-    var filter=displayColumns[columns];
-    var headerRow=[];
-    if(filter!=null)//column filters
+    if(jsonarray!=null && jsonarray.length!=0)
     {
-      headerRow=filter;
+      //create headers
+      var filter=displayColumns[columns];
+      var headerRow=[];
+      if(filter!=null)//column filters
+      {
+        headerRow=filter;
+      }
+      else
+      {
+        headerRow=Object.keys(jsonarray[0]);
+      }
+      var contents=[headerRow];
+      //get rows
+      for(var i=0;i<jsonarray.length;i++)
+      {
+        var row=headerRow.map(function(key) {
+            var value=jsonarray[i][key];
+            if(typeof value==="object")
+              return JSON.stringify(value);
+            return value;
+          });
+        contents.push(row);
+      }
+      return contents;
     }
     else
     {
-      headerRow=Object.keys(jsonarray[0]);
+      return [];
     }
-    var contents=[headerRow];
-    //get rows
-    for(var i=0;i<jsonarray.length;i++)
-    {
-      var row=headerRow.map(function(key) {
-          var value=jsonarray[i][key];
-          if(typeof value==="object")
-            return JSON.stringify(value);
-          return value;
-        });
-      contents.push(row);
-    }
-    return contents;
   }
   
   /**
@@ -144,28 +203,35 @@ class Helper {
    */
   static parse_JSON_object(jsonobject,columns)
   {
-    //create headers
-    var filter=displayColumns[columns]
-    var headerRow=[];
-    if(filter!=null)//column filters
+    if(jsonobject!=null && jsonobject.length!=0)
     {
-      headerRow=filter;
+      //create headers
+      var filter=displayColumns[columns]
+      var headerRow=[];
+      if(filter!=null)//column filters
+      {
+        headerRow=filter;
+      }
+      else
+      {
+        headerRow=Object.keys(jsonobject);
+      }
+      //get row
+      var row=headerRow.map(function(key) {return jsonobject[key]});
+      
+      //var contents=[headerRow,row];//horizontal display
+      
+      var contents=[]; //vertial display
+      for(var i=0;i<headerRow.length;i++)
+      {
+        contents.push([headerRow[i],row[i]]);
+      }
+      return contents;
     }
     else
     {
-      headerRow=Object.keys(jsonobject);
+      return {};
     }
-    //get row
-    var row=headerRow.map(function(key) {return jsonobject[key]});
-    
-    //var contents=[headerRow,row];//horizontal display
-    
-    var contents=[]; //vertial display
-    for(var i=0;i<headerRow.length;i++)
-    {
-      contents.push([headerRow[i],row[i]]);
-    }
-    return contents;
   }
   
   /**

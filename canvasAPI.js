@@ -248,7 +248,7 @@ function canvasAPI(endpoint, opts, filter) { //filter is not supported currently
 			}*/
 		}
 	}
-  Helper.log("return data: "+JSON.stringify(data));
+  Helper.log("return data: "+data);
 	return data;
 }
 
