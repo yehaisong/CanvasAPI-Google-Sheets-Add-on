@@ -384,7 +384,7 @@ const canvasAPITemplate={
     },
     {//1
       "display_name":"1: update_associated_courses",
-      "automated":"false",
+      "automated":"true",
       "guide":[
         "Select an empty cell to start",
         "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"google.script.run.generateParamTemplate('blueprints',1)\">Get parameters</button>",
@@ -423,7 +423,7 @@ const canvasAPITemplate={
     },
     {//2
       "display_name":"2: sync_associated_courses",
-      "automated":"false",
+      "automated":"true",
       "guide":[
         "Select an empty cell to start",
         "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"google.script.run.generateParamTemplate('blueprints',2)\">Get parameters</button>",
