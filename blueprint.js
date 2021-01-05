@@ -12,33 +12,6 @@ function blueprints_guide()
 }
 
 /**
- * Get blueprint information
- * GET /api/v1/courses/:course_id/blueprint_templates/:template_id
- * Scope: url:GET|/api/v1/courses/:course_id/blueprint_templates/:template_id
- * Using 'default' as the template_id should suffice for the current implmentation (as there should be only one template per course). 
- * However, using specific template ids may become necessary in the future
- */
-/*
-function get_blueprint_information()
-{
-  //var endpoint="GET /api/v1/courses/:course_id/blueprint_templates/default";
-  var endpoint=Helper.getAPIAction("blueprints","get_blueprint_information").endpoint;
-  //course id
-  var cell=SpreadsheetApp.getCurrentCell();
-  var course_id=cell.getValue();
-  //options
-  var opts = {
-			'course_id' : course_id
-		};
-  
-  var data=canvasAPI(endpoint,opts);
-  var contents=Helper.parse_JSON_object(data,null);
-  var cell=SpreadsheetApp.getCurrentCell();
-  Helper.fillValuesFromJsonObject(cell.getRow()+1,cell.getColumn(),data,null,null);
-}
-*/
-
-/**
  * Update associated courses
  * PUT /api/v1/courses/:course_id/blueprint_templates/:template_id/update_associations
  * Send a list of course ids to add or remove new associations for the template. 
