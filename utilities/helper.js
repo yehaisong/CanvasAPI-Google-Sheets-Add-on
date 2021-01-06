@@ -55,32 +55,6 @@ class Helper {
   static fillValues(startrow,startcol,jsonobject,columns,bgcolor)
   {
     var contents=Helper.parse_JSON(jsonobject,columns);
-    Helper.setValues(startrow,startcol,contents,bgcolor);
-  }
-
-  /**
-   * setValues with a json object; list attributes in rows
-   * @param {number} startrow An absolute row index of a sheet
-   * @param {number} startcol An absolute column index of a sheet
-   * @param {Object} jsonobject Provide a endpoint URL of a Canvas API function
-   * @param {string} columns Filter displayColumns name
-   */
-  static setNotesFromJsonObject(startrow,startcol,jsonobject,columns)
-  {
-    var contents=Helper.parse_JSON(jsonobject,columns);
-    Helper.setNotes(startrow,startcol,contents,"row");
-  }
-  
-  /**
-   * setValues with a two demision array
-   * @param {number} startrow An absolute row index of a sheet
-   * @param {number} startcol An absolute column index of a sheet
-   * @param {Array<object>} contents Provide a endpoint URL of a Canvas API function
-   * @param {string} bgcolor Provide a RGB color for the background of the filled area 
-   *. If not provided, a randome color will be used. See function getColor() for all colors
-   */
-  static setValues(startrow,startcol,contents,bgcolor)
-  {
     if(contents.length>0){
       Helper.insertRows(startrow,contents.length);
       var rng = SpreadsheetApp.getActiveSheet().getRange(startrow,startcol,contents.length,contents[0].length);
@@ -95,6 +69,19 @@ class Helper {
     {
       Browser.msgBox("No records to display.");
     }
+  }
+
+  /**
+   * setNotes with a json object; list attributes in rows
+   * @param {number} startrow An absolute row index of a sheet
+   * @param {number} startcol An absolute column index of a sheet
+   * @param {Object} jsonobject Provide a endpoint URL of a Canvas API function
+   * @param {string} columns Filter displayColumns name
+   */
+  static setNotesFromJsonObject(startrow,startcol,jsonobject,columns)
+  {
+    var contents=Helper.parse_JSON(jsonobject,columns);
+    Helper.setNotes(startrow,startcol,contents,"row");
   }
 
   /**
