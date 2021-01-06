@@ -1,56 +1,18 @@
 /**
- * @fileoverview This file defines configuration functions and consts.
+ * @fileoverview This file defines api specifications
  * @author hye@cedarville.edu (Haisong Ye)
  */
 
-/**
- * My config class
- */
-class MyConfig
-{
-  static logCustomMessage(){
-    return true;
-  }
-}
 
-/**
- * Show a input dialog for user token.
- * The user token is stored in UserProperties["token"].
- */
-function setToken_() {
-  var token = Browser.inputBox('Set Token', 'Current Token: ['+PropertiesService.getUserProperties().getProperty("token")+']', Browser.Buttons.OK_CANCEL);
-  if(token && token != "cancel") {
-    PropertiesService.getUserProperties().setProperty("token", token);
-  } 
-}
-
-/**
- * Show a input dialog for Canvas URL.
- * The host URL is stored in UserProperties["host"].
- */
-function setHost_() {
-  var host = Browser.inputBox("Set Host ('https://yourschool.instructure.com')", 'Current Host: ['+PropertiesService.getUserProperties().getProperty("host")+']', Browser.Buttons.OK_CANCEL);
-  if(host && host != "cancel") {
-    if(!host.match(/http/)) {
-      host = "https://" + host;
-    }
-    host = host.replace(/\/$/, '');
-    PropertiesService.getUserProperties().setProperty("host", host);
-  } 
-}
-
-/*
+/** 
 How to make an automated api call:
 Pre-condition:
 -The api needs no parameters or only simple types of parameters.
 Procedure:
 1. Determine the type of call
-  - no parameter, return an object: callCanvasAPIRO (endpoint#requred,columns,bgcolor)
-  - no parameter, return a list: callCanvasAPI (endpoint#requred,columns,bgcolor)
-  - single parameter, return an object: callCanvasAPIwithSingleParamRO (endpoint#requred,default_param#requred,columns,bgcolor)
-  - single parameter, return a list: callCanvasAPIwithSingleParam (endpoint#requred,default_param#requred,columns,bgcolor)
-  - multiple paramters, return an object: callCanvasAPIwithRangeParamsRO (endpoint#requred,columns,bgcolor)
-  - multiple parameters, return a list: callCanvasAPIwithRangeParams (endpoint#requred,columns,bgcolor)
+  - no parameter: callCanvasAPI (endpoint#requred,columns,bgcolor)
+  - single parameter: callCanvasAPIwithSingleParam (endpoint#requred,default_param#requred,columns,bgcolor)
+  - multiple parameters: callCanvasAPIwithRangeParams (endpoint#requred,columns,bgcolor)
 2. Assign the general api caller to the onclick event of the Call API button.
 */
 
@@ -69,7 +31,7 @@ const canvasAPITemplate={
         "Select an empty cell to start",
         "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"google.script.run.generateParamTemplate('assignments',0)\">Get parameters</button>",
         "Enter values",
-        "Select the range of the params names and values",
+        "Select the range of the light blue area of the parameter template",
         "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"google.script.run.callCanvasAPIwithRangeParams('GET /api/v1/courses/:course_id/assignments','assignment_list')\">Call API</button>"
       ],
       "api":{
@@ -108,7 +70,7 @@ const canvasAPITemplate={
         "Select an empty cell to start",
         "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"google.script.run.generateParamTemplate('assignments',1)\">Get parameters</button>",
         "Enter values",
-        "Select the range of the params names and values",
+        "Select the range of the light blue area of the parameter template",
         "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"google.script.run.callCanvasAPIwithRangeParams('GET /api/v1/courses/:course_id/assignments/:assignment_id/overrides','overrides_list')\">Call API</button>"
       ],
       "api":{
@@ -135,13 +97,13 @@ const canvasAPITemplate={
     },
     {//2
       "display_name":"2: create_an_assignment_override", 
-      "automated":"false",
+      "automated":"true",
       "guide":[
         "Select an empty cell to start",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"google.script.run.generateArrayParamTemplate('assignments',2)\">Get parameters</button>",
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"google.script.run.generateParamTemplate('assignments',2)\">Get parameters</button>",
         "Enter values",
-        "Select the range of the params names and values",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"google.script.run.create_an_assignment_override()\">Call API</button>"
+        "Select the range of the light blue area of the parameter template",
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"google.script.run.callCanvasAPIwithRangeParams('POST /api/v1/courses/:course_id/assignments/:assignment_id/overrides',null,null)\">Call API</button>"
       ],
       "api":{
         "name":"create_an_assignment_override",
@@ -163,35 +125,35 @@ const canvasAPITemplate={
             "example":"1234"
           },
           {
-            "name":"assignment_override[title]",
+            "name":"assignment_override.title",
             "type":"string",
             "default_value":"",
             "desc":"The title of the adhoc assignment override. Required if student_ids is present, ignored otherwise (the title is set to the name of the targetted group or section instead).",
             "example":"one student"
           },
           {
-            "name":"assignment_override[lock_at]",
+            "name":"assignment_override.lock_at",
             "type":"number",
             "default_value":"",
             "desc":"The day/time the overridden assignment becomes locked. Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z. If absent, this override will not affect the lock date. May be present but null to indicate the override removes any previous lock date.",
             "example":"2020-01-25T23:59:59Z"
           },
           {
-            "name":"assignment_override[due_at]",
+            "name":"assignment_override.due_at",
             "type":"datetime",
             "default_value":"",
             "desc":"The day/time the overridden assignment is due. Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z. If absent, this override will not affect due date. May be present but null to indicate the override removes any previous due date.",
             "example":"2020-01-25T23:59:59Z"
           },
           {
-            "name":"assignment_override[unlock_at]",
+            "name":"assignment_override.unlock_at",
             "type":"number",
             "default_value":"",
             "desc":"The day/time the overridden assignment becomes unlocked. Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z. If absent, this override will not affect the unlock date. May be present but null to indicate the override removes any previous unlock date.",
             "example":"2020-01-25T23:59:59Z"
           },
           {
-            "name":"assignment_override[student_ids][]",
+            "name":"assignment_override.student_ids[]",
             "type":"number",
             "default_value":"",
             "desc":"The IDs of the override's target students. One student per row. If present, the IDs must each identify a user with an active student enrollment in the course that is not already targetted by a different adhoc override.",
@@ -202,13 +164,13 @@ const canvasAPITemplate={
     },
     {//3
       "display_name":"3: update_an_assignment_override", 
-      "automated":"false",
+      "automated":"true",
       "guide":[
         "Select an empty cell to start",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"google.script.run.generateArrayParamTemplate('assignments',3)\">Get parameters</button>",
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"google.script.run.generateParamTemplate('assignments',3)\">Get parameters</button>",
         "Enter values",
-        "Select the range of the params names and values",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"google.script.run.update_an_assignment_override()\">Call API</button>"
+        "Select the range of the light blue area of the parameter template",
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"google.script.run.callCanvasAPIwithRangeParams('PUT /api/v1/courses/:course_id/assignments/:assignment_id/overrides/:id',null,null)\">Call API</button>"
       ],
       "api":{
         "name":"update_an_assignment_override",
@@ -237,35 +199,35 @@ const canvasAPITemplate={
             "example":"26789"
           },
           {
-            "name":"assignment_override[title]",
+            "name":"assignment_override.title",
             "type":"string",
             "default_value":"",
             "desc":"The title of the adhoc assignment override. Required if student_ids is present, ignored otherwise (the title is set to the name of the targetted group or section instead).",
             "example":"one student"
           },
           {
-            "name":"assignment_override[lock_at]",
+            "name":"assignment_override.lock_at",
             "type":"number",
             "default_value":"",
             "desc":"The day/time the overridden assignment becomes locked. Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z. If absent, this override will not affect the lock date. May be present but null to indicate the override removes any previous lock date.",
             "example":"2020-01-25T23:59:59Z"
           },
           {
-            "name":"assignment_override[due_at]",
+            "name":"assignment_override.due_at",
             "type":"datetime",
-            "default_value":"The day/time the overridden assignment is due. Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z. If absent, this override will not affect due date. May be present but null to indicate the override removes any previous due date.",
-            "desc":"due date of the override",
+            "default_value":"",
+            "desc":"The day/time the overridden assignment is due. Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z. If absent, this override will not affect due date. May be present but null to indicate the override removes any previous due date.",
             "example":"2020-01-25T23:59:59Z"
           },
           {
-            "name":"assignment_override[unlock_at]",
+            "name":"assignment_override.unlock_at",
             "type":"number",
             "default_value":"",
             "desc":"The day/time the overridden assignment becomes unlocked. Accepts times in ISO 8601 format, e.g. 2014-10-21T18:48:00Z. If absent, this override will not affect the unlock date. May be present but null to indicate the override removes any previous unlock date.",
             "example":"2020-01-25T23:59:59Z"
           },
           {
-            "name":"assignment_override[student_ids][]",
+            "name":"assignment_override.student_ids[]",
             "type":"number",
             "default_value":"",
             "desc":"The IDs of the override's target students. One student per row. If present, the IDs must each identify a user with an active student enrollment in the course that is not already targetted by a different adhoc override.",
@@ -319,7 +281,7 @@ const canvasAPITemplate={
         "Select an empty cell to start",
         "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"google.script.run.generateParamTemplate('accounts',2)\">Get parameters</button>",
         "Enter values",
-        "Select the range of the params names and values",
+        "Select the range of the light blue area of the parameter template",
         "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"google.script.run.callCanvasAPIwithRangeParams('GET /api/v1/accounts/:account_id/courses','course_list')\">Call API</button>"
       ],
       "api":{
@@ -365,7 +327,7 @@ const canvasAPITemplate={
       "automated":"true",
       "guide":[
         "Select a cell with a course id",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"google.script.run.callCanvasAPIwithSingleParamRO('GET /api/v1/courses/:course_id/blueprint_templates/default','course_id')\">Call API</button>"
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"google.script.run.callCanvasAPIwithSingleParam('GET /api/v1/courses/:course_id/blueprint_templates/default','course_id')\">Call API</button>"
       ],
       "api":{
         "name":"get_blueprint_information",
@@ -389,8 +351,8 @@ const canvasAPITemplate={
         "Select an empty cell to start",
         "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"google.script.run.generateParamTemplate('blueprints',1)\">Get parameters</button>",
         "Enter values",
-        "Select the range of the params names and values",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"google.script.run.callCanvasAPIwithRangeParamsRO('PUT /api/v1/courses/:course_id/blueprint_templates/default/update_associations',null,null)\">Call API</button>"
+        "Select the range of the light blue area of the parameter template",
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"google.script.run.callCanvasAPIwithRangeParams('PUT /api/v1/courses/:course_id/blueprint_templates/default/update_associations',null,null)\">Call API</button>"
       ],
       "api":{
         "name":"update_associated_courses",
@@ -428,8 +390,8 @@ const canvasAPITemplate={
         "Select an empty cell to start",
         "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"google.script.run.generateParamTemplate('blueprints',2)\">Get parameters</button>",
         "Enter values",
-        "Select the range of the params names and values",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"google.script.run.callCanvasAPIwithRangeParamsRO('POST /api/v1/courses/:course_id/blueprint_templates/default/migrations',null,null)\">Call API</button>"
+        "Select the range of the light blue area of the parameter template",
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"google.script.run.callCanvasAPIwithRangeParams('POST /api/v1/courses/:course_id/blueprint_templates/default/migrations',null,null)\">Call API</button>"
       ],
       "api":{
         "name":"sync_associated_courses",
@@ -495,7 +457,7 @@ const canvasAPITemplate={
       "automated":"true",
       "guide":[
         "Select a cell with a course id",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"google.script.run.callCanvasAPIwithSingleParamRO('GET /api/v1/courses/:id','id')\">Call API</button>"
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"google.script.run.callCanvasAPIwithSingleParam('GET /api/v1/courses/:id','id')\">Call API</button>"
       ],
       "api":{
         "name":"get_single_course",
@@ -514,13 +476,3 @@ const canvasAPITemplate={
     }
   ]
 };
-
-
-/**
- * An object contains columns that will be displayed in sheet
- * @type {!Object}
- */
-const displayColumns={
-"assignment_list":["course_id","id","name","assignment_group_id","submission_type","due_at","unlock_at","lock_at","points_possible","has_overrides","html_url","workflow_state"],
-"course_list":["account_id","id","name","course_code","is_public","enrollment_term_id","sis_course_id","start_at","end_at","time_zone","workflow_state"],
-}

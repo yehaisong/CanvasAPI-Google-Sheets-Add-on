@@ -21,6 +21,46 @@ function assignments_guide()
 */
 function create_an_assignment_override()
 {
+  Browser.msgBox("Not implemented.");
+}
+
+/**
+ * update an assignment override
+ * PUT /api/v1/courses/:course_id/assignments/:assignment_id/overrides/:id
+ * Returns an AssignmentOverride
+ */
+function update_an_assignment_override()
+{
+  Browser.msgBox("Not implemented.");
+}
+
+/**
+ * Delete an assignment override
+ * DELETE /api/v1/courses/:course_id/assignments/:assignment_id/overrides/:id
+ * Deletes an override and returns its former details.
+ * Returns an AssignmentOverride
+ */
+function delete_an_assignment_override()
+{
+  Browser.msgBox("Not implemented.");
+}
+
+
+/**
+*Batch create overrides in a course
+*POST /api/v1/courses/:course_id/assignments/overrides
+*
+*Creates the specified overrides for each assignment. Handles creation in a transaction, so all records are created or none are.
+*One of student_ids, group_id, or course_section_id must be present. 
+*. At most one should be present; if multiple are present only the most specific 
+*. (student_ids first, then group_id, then course_section_id) is used and any others are ignored.
+* Errors are reported in an errors attribute, an array of errors corresponding to inputs. Global errors will be reported as a single element errors array
+* Returns a list of AssignmentOverrides
+*/
+function batch_create_assignments_overrides()
+{
+  Browser.msgBox("Not implemented.");
+  /* copied from create an override
   //var endpoint="POST /api/v1/courses/:course_id/assignments/:assignment_id/overrides"; //specify api
   var endpoint=Helper.getAPIAction("assignments","create_an_assignment_override").endpoint;
   Helper.log("Call create_an_assignment_override().")
@@ -76,42 +116,6 @@ function create_an_assignment_override()
   Helper.log("result: "+JSON.stringify(result));
   Helper.fillValuesFromJsonObject(range.getLastRow()+1,range.getColumn(),result,null,null);
   Helper.log("End call create_an_assignment_override().");
-}
-
-/**
- * update an assignment override
- * PUT /api/v1/courses/:course_id/assignments/:assignment_id/overrides/:id
- * Returns an AssignmentOverride
- */
-function update_an_assignment_override()
-{
-  Browser.msgBox("Not implemented.");
-}
-
-/**
- * Delete an assignment override
- * DELETE /api/v1/courses/:course_id/assignments/:assignment_id/overrides/:id
- * Deletes an override and returns its former details.
- * Returns an AssignmentOverride
- */
-function delete_an_assignment_override()
-{
-  Browser.msgBox("Not implemented.");
-}
-
-
-/**
-*Batch create overrides in a course
-*POST /api/v1/courses/:course_id/assignments/overrides
-*
-*Creates the specified overrides for each assignment. Handles creation in a transaction, so all records are created or none are.
-*One of student_ids, group_id, or course_section_id must be present. 
-*. At most one should be present; if multiple are present only the most specific 
-*. (student_ids first, then group_id, then course_section_id) is used and any others are ignored.
-* Errors are reported in an errors attribute, an array of errors corresponding to inputs. Global errors will be reported as a single element errors array
-* Returns a list of AssignmentOverrides
-*/
-function batch_create_assignments_overrides()
-{
-  Browser.msgBox("Not implemented.");
+  */
+  
 }

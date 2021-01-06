@@ -15,16 +15,16 @@ function generateParamTemplate(name,index) {
     var cell=SpreadsheetApp.getCurrentCell();
     var apirow={"api":_action.name}; //find the api
     //desc and params
-    var _desc={"param":""};
-    var _params={"param":"value"};
+    var _desc={};
+    var _params={};
     for(var i=0;i<_action.params.length;i++){
       _desc[_action.params[i].name]=_action.params[i].desc+" e.g., "+_action.params[i].example;
       _params[_action.params[i].name]=_action.params[i].default_value;
     }
     //api row 1
-    Helper.fillValuesFromJsonObject(cell.getRow(),cell.getColumn(),apirow,"#eeeeee",null);
+    Helper.fillValues(cell.getRow(),cell.getColumn(),apirow,"#eeeeee",null);
     //params row +1
-    Helper.fillValuesFromJsonObject(cell.getRow()+1,cell.getColumn(),_params,"#eeeeee",null);
+    Helper.fillValues(cell.getRow()+1,cell.getColumn(),_params,"#ADD8E6",null);
     //desc note col 1
     Helper.setNotesFromJsonObject(cell.getRow()+1,cell.getColumn(),_desc,null)
     Helper.log("created template for "+_action.name);
@@ -50,8 +50,8 @@ function generateArrayParamTemplate(name,index) {
     //desc and params
     var _desclist=[];
     var _paramslist=[];
-    var _desc={"param":""};
-    var _params={"param":"value"};
+    var _desc={};
+    var _params={};
     for(var i=0;i<_action.params.length;i++){
       _desc[_action.params[i].name]=_action.params[i].desc+" e.g., "+_action.params[i].example;
       _params[_action.params[i].name]=_action.params[i].default_value;
@@ -60,9 +60,9 @@ function generateArrayParamTemplate(name,index) {
     _paramslist.push(_params);
 
     //api row 1
-    Helper.fillValuesFromJsonObject(cell.getRow(),cell.getColumn(),apirow,"#eeeeee",null);
+    Helper.fillValues(cell.getRow(),cell.getColumn(),apirow,"#eeeeee",null);
     //parames rows 2,3
-    Helper.fillValuesFromJsonList(cell.getRow()+1,cell.getColumn(),_paramslist,"#eeeeee",null);
+    Helper.fillValues(cell.getRow()+1,cell.getColumn(),_paramslist,"#ADD8E6",null);
     //desc notes rows 2,3
     Helper.setNotesFromJsonList(cell.getRow()+1,cell.getColumn(),_desclist,null);
     Helper.log("created template for "+_action.name);

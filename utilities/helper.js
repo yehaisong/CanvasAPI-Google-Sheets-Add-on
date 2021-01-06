@@ -29,22 +29,6 @@ class Helper {
     return _action;
   }
 
-
-  /**
-   * setValues with a json array; list attributes in columns
-   * @param {number} startrow An absolute row index of a sheet
-   * @param {number} startcol An absolute column index of a sheetz
-   * @param {Array<object>} jsonarray Provide an object array contains the data to be filled
-   * @param {string} bgcolor Provide a RGB color for the background of the filled area 
-   *. If not provided, a randome color will be used. See function getColor() for all colors
-   * @param {string} columns Filter displayColumns name
-   */
-  static fillValuesFromJsonList(startrow,startcol,jsonarray,bgcolor,columns)
-  {
-    var contents=Helper.parse_JSON_array(jsonarray,columns);
-    Helper.setValues(startrow,startcol,contents,bgcolor);
-  }
-
   /**
    * setValues with a json array; list attributes in columns
    * @param {number} startrow An absolute row index of a sheet
@@ -54,7 +38,7 @@ class Helper {
    */
   static setNotesFromJsonList(startrow,startcol,jsonarray,columns)
   {
-    var contents=Helper.parse_JSON_array(jsonarray,columns);
+    var contents=Helper.parse_JSON(jsonarray,columns);
     Helper.setNotes(startrow,startcol,contents,"column");
   }
   
@@ -62,14 +46,15 @@ class Helper {
    * setValues with a json object; list attributes in rows
    * @param {number} startrow An absolute row index of a sheet
    * @param {number} startcol An absolute column index of a sheet
-   * @param {Object} jsonobject Provide a endpoint URL of a Canvas API function
+   * @param {Object} jsonobject data need to be displayed
+   * @param {string} columns Filter displayColumns name
    * @param {string} bgcolor Provide a RGB color for the background of the filled area 
    *. If not provided, a randome color will be used. See function getColor() for all colors
-   * @param {string} columns Filter displayColumns name
+  
    */
-  static fillValuesFromJsonObject(startrow,startcol,jsonobject,bgcolor,columns)
+  static fillValues(startrow,startcol,jsonobject,columns,bgcolor)
   {
-    var contents=Helper.parse_JSON_object(jsonobject,columns);
+    var contents=Helper.parse_JSON(jsonobject,columns);
     Helper.setValues(startrow,startcol,contents,bgcolor);
   }
 
@@ -82,7 +67,7 @@ class Helper {
    */
   static setNotesFromJsonObject(startrow,startcol,jsonobject,columns)
   {
-    var contents=Helper.parse_JSON_object(jsonobject,columns);
+    var contents=Helper.parse_JSON(jsonobject,columns);
     Helper.setNotes(startrow,startcol,contents,"row");
   }
   
@@ -104,6 +89,7 @@ class Helper {
       rng.setHorizontalAlignment("left");
       rng.setValues(contents);
       rng.setBackground(bgcolor);
+      Helper.log(bgcolor);
     }
     else
     {
@@ -154,46 +140,7 @@ class Helper {
     sheet.insertRows(position, numrows);
   }
   
-  /**
-   * convert a json array data to Array[][]
-   * @param {Array<object>} jsonarray A json array
-   * @param {string} columns Filter displayColumns name
-   * @return {object}
-   */
-  static parse_JSON_array(jsonarray,columns)
-  {
-    if(jsonarray!=null && jsonarray.length!=0)
-    {
-      //create headers
-      var filter=displayColumns[columns];
-      var headerRow=[];
-      if(filter!=null)//column filters
-      {
-        headerRow=filter;
-      }
-      else
-      {
-        headerRow=Object.keys(jsonarray[0]);
-      }
-      var contents=[headerRow];
-      //get rows
-      for(var i=0;i<jsonarray.length;i++)
-      {
-        var row=headerRow.map(function(key) {
-            var value=jsonarray[i][key];
-            if(typeof value==="object")
-              return JSON.stringify(value);
-            return value;
-          });
-        contents.push(row);
-      }
-      return contents;
-    }
-    else
-    {
-      return [];
-    }
-  }
+  
   
   /**
    * convert a json object data to Array[][]
@@ -201,35 +148,55 @@ class Helper {
    * @param {string} columns Filter displayColumns name
    * @return {object}
    */
-  static parse_JSON_object(jsonobject,columns)
+  static parse_JSON(jsonobject,columns)
   {
-    if(jsonobject!=null && jsonobject.length!=0)
-    {
-      //create headers
-      var filter=displayColumns[columns]
-      var headerRow=[];
-      if(filter!=null)//column filters
-      {
-        headerRow=filter;
+    if(jsonobject!=null){
+      if (Array.isArray(jsonobject)){
+        //create headers
+        var filter=displayColumns[columns];
+        var headerRow=[];
+        if(filter!=null){//column filters
+          headerRow=filter;
+        }
+        else{
+          headerRow=Object.keys(jsonobject[0]);
+        }
+        var contents=[headerRow];
+        //get rows
+        for(var i=0;i<jsonobject.length;i++){
+          var row=headerRow.map(function(key) {
+              var value=jsonobject[i][key];
+              if(typeof value==="object")
+                return JSON.stringify(value);
+              return value;
+            });
+          contents.push(row);
+        }
+        return contents;
       }
-      else
-      {
-        headerRow=Object.keys(jsonobject);
+      else{
+        //create headers
+        var filter=displayColumns[columns]
+        var headerRow=[];
+        if(filter!=null){//column filters
+          headerRow=filter;
+        }
+        else{
+          headerRow=Object.keys(jsonobject);
+        }
+        //get row
+        var row=headerRow.map(function(key) {return jsonobject[key]});
+        
+        //var contents=[headerRow,row];//horizontal display
+        
+        var contents=[]; //vertial display
+        for(var i=0;i<headerRow.length;i++){
+          contents.push([headerRow[i],row[i]]);
+        }
+        return contents;
       }
-      //get row
-      var row=headerRow.map(function(key) {return jsonobject[key]});
-      
-      //var contents=[headerRow,row];//horizontal display
-      
-      var contents=[]; //vertial display
-      for(var i=0;i<headerRow.length;i++)
-      {
-        contents.push([headerRow[i],row[i]]);
-      }
-      return contents;
     }
-    else
-    {
+    else{
       return {};
     }
   }
@@ -244,8 +211,7 @@ class Helper {
   {
     var json={};
     //Browser.msgBox(range.getNumRows());
-    for(var i=1;i<=range.getNumRows();i++)
-    {
+    for(var i=1;i<=range.getNumRows();i++){
       if(range.getCell(i,1).getValue()!=""&&range.getCell(i,2).getValue()!=""){
         var param_name=range.getCell(i,1).getValue();
         var param_value_str=range.getCell(i,2).getValue();
@@ -259,7 +225,20 @@ class Helper {
         else{//this is a string parameter
           param_value=param_value_str;
         }
-        json[param_name]=param_value;
+        //check if the param is an object
+        //Helper.log(param_name);
+        var param_name_parts=[]
+        param_name_parts=param_name.split(".");
+        //Helper.log(param_name_parts);
+        if(param_name_parts!=null && param_name_parts.length>1){//this is a property of an object parameter
+          //assume there is only two levels
+          if(json[param_name_parts[0]]==null)
+            json[param_name_parts[0]]={};
+          json[param_name_parts[0]][param_name_parts[1]]=param_value;
+        }
+        else{
+          json[param_name]=param_value;
+        }
       }
     }
     return json;
@@ -272,7 +251,7 @@ class Helper {
    */
   static getColor()
   {
-    var color=['#eeeeee','#F0FFF0','#F0F8FF','#FFEFD5','#B0E0E6','#FFFFF0','#E6E6FA'];
+    var color=['#EEEEEE','#F0FFF0','#F0F8FF','#FFEFD5','#B0E0E6','#FFFFF0','#E6E6FA'];
     return color[Helper.getRandomInt(color.length-1)];
   }
 
@@ -292,8 +271,7 @@ class Helper {
    */
   static log(data)
   {
-    if(MyConfig.logCustomMessage())
-    {
+    if(MyConfig.logCustomMessage()){
       Logger.log(data);
     }
   }
