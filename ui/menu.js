@@ -4,7 +4,7 @@
  */
 
 /**
- * Add menu items
+ * Add menu items 
  */
 function onOpen() {
   var ui = SpreadsheetApp.getUi();
