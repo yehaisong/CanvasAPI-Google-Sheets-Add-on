@@ -13,25 +13,53 @@ function assignments_guide()
 }
 
 /**
-*Create an assignment override
-*POST /api/v1/courses/:course_id/assignments/:assignment_id/overrides
-*One of student_ids, group_id, or course_section_id must be present. 
-*. At most one should be present; if multiple are present only the most specific (student_ids first, then group_id, then course_section_id) is used and *. any others are ignored.
-* Returns an AssignmentOverride
-*/
-function create_an_assignment_override()
+ * Get all assignments in a course and list all due dates, unlock dates, and lock dates
+ * GET /api/v1/courses/:course_id/assignments
+ * Returns the paginated list of assignments for the current course or assignment group.
+ */
+function listAssignmentsDate()
 {
-  Browser.msgBox("Not implemented.");
+  var endpoint=Helper.getAPIAction("assignments","list_assignments_date").endpoint;
+  //get course id
+  var cell=SpreadsheetApp.getCurrentCell();
+  var param_value=cell.getValue();
+  //create opts
+  var opts ={};
+  opts["course_id"]=param_value;
+  //opts.include.push("all_dates");
+  //call api
+  var data=canvasAPI(endpoint,opts);
+  //handle data
+  Helper.fillValues(cell.getRow()+1,cell.getColumn(),data,"assignment_dates",null);
 }
 
 /**
- * update an assignment override
- * PUT /api/v1/courses/:course_id/assignments/:assignment_id/overrides/:id
- * Returns an AssignmentOverride
+ * Add number of days to the current assignments dates
+ * Bulk update assignment dates
+ * PUT /api/v1/courses/:course_id/assignments/bulk_update
+ * Update due dates and availability dates for multiple assignments in a course.
+ * Accepts a JSON array of objects containing two keys each: id, the assignment id, and all_dates, an array of AssignmentDate structures containing the base and/or override dates for the assignment, as returned from the List assignments endpoint with include[]=all_dates.
+ * Override dates are not handled.
  */
-function update_an_assignment_override()
+/*
+'[{
+      "id": 1, //asignment id
+      "all_dates": 
+      [{
+        "base": true, //default value
+        "due_at": "2020-08-29T23:59:00-06:00" //new date
+      }
+    }]'
+*/
+function shiftAssignmentsDate()
 {
-  Browser.msgBox("Not implemented.");
+  //endpoint
+  //params:courseid, number of days
+  //create opts for get assignments
+  //call get assignment api
+  //create opts for bulkUpdate
+  //call bulkUpdate api
+  //handle data
 }
 
 /**

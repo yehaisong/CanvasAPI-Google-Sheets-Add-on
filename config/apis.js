@@ -24,7 +24,7 @@ Procedure:
  */
 const canvasAPITemplate={
   "assignments":[
-    {//0
+    {
       "display_name":"0: get_assignments",
       "automated":"true",
       "guide":[
@@ -63,7 +63,7 @@ const canvasAPITemplate={
         ]
       }
     },
-    {//1
+    {
       "display_name":"1: get_assignment_overrides",
       "automated":"true",
       "guide":[
@@ -95,7 +95,7 @@ const canvasAPITemplate={
         ]
       }
     },
-    {//2
+    {
       "display_name":"2: create_an_assignment_override", 
       "automated":"true",
       "guide":[
@@ -162,7 +162,7 @@ const canvasAPITemplate={
         ]
       }
     },
-    {//3
+    {
       "display_name":"3: update_an_assignment_override", 
       "automated":"true",
       "guide":[
@@ -235,10 +235,33 @@ const canvasAPITemplate={
           }
         ]
       }
+    },
+    {
+      "display_name":"4: list_assignments_date", 
+      "automated":"false",
+      "guide":[
+        "Select a cell with a course id",
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"google.script.run.listAssignmentsDate()\">Call API</button>"
+      ],
+      "api":{
+        "name":"list_assignments_date",
+        "endpoint":"GET /api/v1/courses/:course_id/assignments",
+        "reference":"https://canvas.instructure.com/doc/api/assignments.html#method.assignments_api.index",
+        "notes":"include assignments date when call the api and only process the assignments date info",
+        "params":[
+          {
+            "name":"course_id",
+            "type":"number",
+            "default_value":"",
+            "desc":"course id",
+            "example":"83"
+          }
+        ]
+      }
     }
   ],
   "accounts":[
-    { //0
+    { 
       "display_name":"0: get_accounts",
       "automated":"true",
       "guide":[
@@ -252,7 +275,7 @@ const canvasAPITemplate={
         "params":[]
       }
     },
-    {//1
+    {
       "display_name":"1: get_sub_accounts",
       "automated":"true",
       "guide":[
@@ -274,7 +297,7 @@ const canvasAPITemplate={
         ]
       }
     },
-    {//2
+    {
       "display_name":"2: get_courses_in_account",
       "automated":"true",
       "guide":[
@@ -322,7 +345,7 @@ const canvasAPITemplate={
     }
   ],
   "blueprints":[
-    {//0 
+    {
       "display_name":"0: get_blueprint_information",
       "automated":"true",
       "guide":[
@@ -344,7 +367,7 @@ const canvasAPITemplate={
         ]
       }
     },
-    {//1
+    {
       "display_name":"1: update_associated_courses",
       "automated":"true",
       "guide":[
@@ -383,7 +406,7 @@ const canvasAPITemplate={
         ]
       }
     },
-    {//2
+    {
       "display_name":"2: sync_associated_courses",
       "automated":"true",
       "guide":[
@@ -438,7 +461,7 @@ const canvasAPITemplate={
     }
   ],
   "courses":[
-    { //0
+    { 
       "display_name":"0: get_your_active_courses",
       "automated":"true",
       "guide":[
@@ -452,7 +475,7 @@ const canvasAPITemplate={
         "params":[]
       }
     },
-    { //1
+    { 
       "display_name":"1: get_single_course",
       "automated":"true",
       "guide":[
