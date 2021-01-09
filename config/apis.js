@@ -241,7 +241,7 @@ const canvasAPITemplate={
       "automated":"false",
       "guide":[
         "Select a cell with a course id",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"google.script.run.listAssignmentsDate()\">Call API</button>"
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"google.script.run.Assignments.listAssignmentsDate()\">Call API</button>"
       ],
       "api":{
         "name":"list_assignments_date",
@@ -270,8 +270,8 @@ const canvasAPITemplate={
       ],
       "api":{
         "name":"shift_assignments_dates",
-        "endpoint":"PUT /api/v1/courses/:course_id/assignments/:id",
-        "reference":"https://canvas.instructure.com/doc/api/assignments.html#method.assignments_api.update",
+        "endpoint":"PUT /api/v1/courses/:course_id/assignments/bulk_update",
+        "reference":"https://canvas.instructure.com/doc/api/assignments.html#method.assignments_api.bulk_update",
         "desc":"Update due dates and availability dates for multiple assignments in a course by shifting a specific number of days.",
         "params":[
           {

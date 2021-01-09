@@ -80,52 +80,49 @@ function shifAssignmentDates()
 
   //call get assignment api
   var original_dates=getAssginmentsDate(opts.course_id);
-  var cell=SpreadsheetApp.getActiveSheet().getRange(param_range.getLastRow()+1,param_range.getColumn());
-  var total=original_dates.length;
-
+  
+  //var total=original_dates.length;
+  let date_opts={
+    "course_id":opts.course_id,
+    "dlist":[]
+    };
   //updage assignments
   var assignments=[];
-  for(var i=0;i<original_dates.length;i++){//check all assignments
-    cell.setValue((i+1)+"/"+total);
+  for(var i=0;i<original_dates.length;i++){//check all assignments  
+        let new_date={
+          "id":original_dates[i].id.toString(),
+          "all_dates":[{
+            "base":true
+          }]
+        }
+        //due_at
+        if(original_dates[i].due_at!=null){
+          new_date.all_dates[0].due_at=shiftDate(original_dates[i].due_at,opts.num_of_days);
+        }
+        //lock_at
+        if(original_dates[i].lock_at!=null){
+          new_date.all_dates[0].lock_at=shiftDate(original_dates[i].lock_at,opts.num_of_days);
+        }
+        //unlock_at
+        if(original_dates[i].unlock_at!=null){
+          new_date.all_dates[0].unlock_at=shiftDate(original_dates[i].unlock_at,opts.num_of_days);
+        } 
 
-    var date_opts={
-      "course_id":opts.course_id.toString(),
-      "id":original_dates[i].id.toString(),
-      "assignment":{}
-      }
-    
-    
-    //due_at
-    if(original_dates[i].due_at!=null){
-      //Helper.log(original_dates[i].due_at);
-      date_opts.assignment.due_at=shiftDate(original_dates[i].due_at,opts.num_of_days);
-    }
-    //lock_at
-    if(original_dates[i].lock_at!=null){
-      //Helper.log(original_dates[i].due_at);
-      date_opts.assignment.lock_at=shiftDate(original_dates[i].lock_at,opts.num_of_days);
-    }
-    //unlock_at
-    if(original_dates[i].unlock_at!=null){
-      //Helper.log(original_dates[i].due_at);
-      date_opts.assignment.unlock_at=shiftDate(original_dates[i].unlock_at,opts.num_of_days);
-    }
-
-    //Helper.log(date_opts);
-    //call bulkUpdate api
-    let data=canvasAPI(endpoint,date_opts);
-    //handle data. the data is an assignment
-    //add to a array and display with columns. it is just for display
-    
-    if(data!=null){
-      assignments.push(data);
-    }
-    else{
-      assignments.push({"id":original_dates[i].id.toString(),"name":original_dates[i].name,"due_at":"","unlockat_at":"","lock_at":""});
-    }
-    
+        if(new_date.all_dates[0].due_at!=null || new_date.all_dates[0].lock_at!=null || new_date.all_dates[0].unlock_at!=null)
+          date_opts.dlist.push(new_date);
   }
-  Helper.fillValues(param_range.getLastRow()+1,param_range.getColumn(),assignments,"assignment_dates","#e1eec7");
+  //call bulkUpdate api
+  //Helper.log(date_opts);
+  let data=canvasAPI(endpoint,date_opts);
+  //handle data
+  Helper.fillValues(param_range.getLastRow()+1,param_range.getColumn(),data,"progress","#e1eec7");
+  Utilities.sleep(500);
+  //show progress
+  var cell1=SpreadsheetApp.getActiveSheet().getRange(param_range.getLastRow()+2,param_range.getColumn());
+  cell1.setValue("completion");
+  var cell2=SpreadsheetApp.getActiveSheet().getRange(param_range.getLastRow()+2,param_range.getColumn()+1);
+  queryProgress(data.id,cell2);
+  //Helper.fillValues(param_range.getLastRow()+1,param_range.getColumn(),assignments,"assignment_dates","#e1eec7");
 }
 
 /**
