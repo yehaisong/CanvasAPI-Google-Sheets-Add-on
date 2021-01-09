@@ -8,12 +8,12 @@
  */
 class SideBar{
   /**
-   * Return a json array from the paramList
+   * Return a json array from the canvasAPITemplate
    * @param {string} name Provide a name of a Canvas API controller
    */
   static getAPIWrapper(name)
   {
-    return paramList[name];
+    return canvasAPITemplate[name];
   }
 
   /**
@@ -21,7 +21,7 @@ class SideBar{
    */
   static show(name)
   {
-    var htmlTemplate=HtmlService.createTemplateFromFile('template/api_sidebar');
+    var htmlTemplate=HtmlService.createTemplateFromFile('ui/template/api_sidebar');
     htmlTemplate.data=SideBar.getAPIWrapper(name.toLowerCase());
     SpreadsheetApp.getUi().showSidebar(htmlTemplate.evaluate().setTitle(name));
   }

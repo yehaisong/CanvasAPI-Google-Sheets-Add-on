@@ -86,6 +86,7 @@ function canvasAPI(endpoint, opts, filter) { //filter is not supported currently
 			'headers' : {
 				'Authorization' : 'Bearer ' + userProperties.token,
 			},
+      'muteHttpExceptions': true //added by hy
 		};
 
 		if (typeof endpoint !== 'string') {
@@ -134,14 +135,23 @@ function canvasAPI(endpoint, opts, filter) { //filter is not supported currently
 			}
 		}
 		if (typeof opts === 'object') {
-			for ( var field in opts) {
-				if (opts.hasOwnProperty(field) && opts[field] !== null
-						&& !/^:/.test(field)) {
-					
-                    if (typeof _payload === 'undefined') {
-						_payload = {};
+			if(opts["dlist"]!=null){
+				//i want to use a list as the only parameter without a field name
+				if (typeof _payload === 'undefined') {
+					_payload = {};
+				}
+				_payload=opts["dlist"];
+			}
+			else{
+				for ( var field in opts) {
+					if (opts.hasOwnProperty(field) && opts[field] !== null
+							&& !/^:/.test(field)) {
+						
+						if (typeof _payload === 'undefined') {
+							_payload = {};
+						}
+						_payload[field] = opts[field];
 					}
-					_payload[field] = opts[field];
 				}
 			}
 		}
@@ -209,26 +219,22 @@ function canvasAPI(endpoint, opts, filter) { //filter is not supported currently
 		if (response.getResponseCode() == 200) {
 			var headers = response.getAllHeaders();
 			if (typeof headers.Link !== undefined) {
-                /*
-                var links = headers.Link.split(',');
+        /*
+        var links = headers.Link.split(',');
 				*/
-                if (typeof links === 'object') {
+        if (typeof links === 'object') {
 					for (var l = 0; l < links.length; l++) {
 						var linkMatch = nextLinkRegex.exec(links[i]);
 						if (linkMatch !== null) {
 							url = linkMatch[1];
 						}
-					}
-                
-                }
+					}        
+        }
 			}
             
 			var json = JSON.parse(response.getContentText());
             data=json;
-			
-            
-            
-           /*
+      /* commented by hy
            for ( var item in json) {
 				if (json.hasOwnProperty(item)) {
 					var entry = json[item];
@@ -247,10 +253,22 @@ function canvasAPI(endpoint, opts, filter) { //filter is not supported currently
 				}
 			}*/
 		}
+    else if (response.getResponseCode()==404) {
+      var json = JSON.parse(response.getContentText());
+      Helper.log("404 error: " + json.errors[0].message);
+      data=json.errors;
+    }
+    else{
+      var json = JSON.parse(response.getContentText());
+      //Helper.log("Response body: " + response.getContentText());
+      data=json;
+    }
 	}
-  Helper.log("return data: "+JSON.stringify(data));
+  Helper.log("return data: "+data);
 	return data;
 }
+
+
 
 
 

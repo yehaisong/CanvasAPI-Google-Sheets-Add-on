@@ -4,7 +4,7 @@
  */
 
 /**
- * Add menu items
+ * Add menu items 
  */
 function onOpen() {
   var ui = SpreadsheetApp.getUi();
@@ -14,6 +14,7 @@ function onOpen() {
       .addItem("assignments","assignments_guide")
       .addItem("blueprints","blueprints_guide") 
       .addItem("courses","courses_guide") 
+      /*
       .addSeparator()
       .addSubMenu(ui.createMenu('direct API call')
           .addSubMenu(ui.createMenu('accounts')
@@ -33,7 +34,7 @@ function onOpen() {
           .addSubMenu(ui.createMenu('courses')
             .addItem('get courses', 'get_courses')
             .addItem('get single course', 'get_single_course'))
-      )
+      )*/
       .addSeparator()
       .addSubMenu(ui.createMenu('config')
           //.addItem('check settings', 'checkTokens')
