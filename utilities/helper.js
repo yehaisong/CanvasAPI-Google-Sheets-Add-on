@@ -63,11 +63,13 @@ class Helper {
       rng.setHorizontalAlignment("left");
       rng.setValues(contents);
       rng.setBackground(bgcolor);
-      Helper.log(bgcolor);
+      //Helper.log(bgcolor);
     }
     else
     {
-      Browser.msgBox("No records to display.");
+      Helper.insertRows(startrow,1);
+      let cell=SpreadsheetApp.getActiveSheet().getRange(startrow,startcol,1,1);
+      cell.setValue("Something is wrong...");
     }
   }
 

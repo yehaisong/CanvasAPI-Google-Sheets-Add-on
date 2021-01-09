@@ -10,7 +10,7 @@ Pre-condition:
 -The api needs no parameters or only simple types of parameters.
 Procedure:
 1. Determine the type of call
-  - no parameter: callCanvasAPI (endpoint#requred,columns,bgcolor)
+  - no parameter: callCanvasAPINoParam (endpoint#requred,columns,bgcolor)
   - single parameter: callCanvasAPIwithSingleParam (endpoint#requred,default_param#requred,columns,bgcolor)
   - multiple parameters: callCanvasAPIwithRangeParams (endpoint#requred,columns,bgcolor)
 2. Assign the general api caller to the onclick event of the Call API button.
@@ -247,7 +247,6 @@ const canvasAPITemplate={
         "name":"list_assignments_date",
         "endpoint":"GET /api/v1/courses/:course_id/assignments",
         "reference":"https://canvas.instructure.com/doc/api/assignments.html#method.assignments_api.index",
-        "notes":"include assignments date when call the api and only process the assignments date info",
         "params":[
           {
             "name":"course_id",
@@ -255,6 +254,39 @@ const canvasAPITemplate={
             "default_value":"",
             "desc":"course id",
             "example":"83"
+          }
+        ]
+      }
+    },
+    {
+      "display_name":"5: shift_assignments_dates", 
+      "automated":"false",
+      "guide":[
+        "Select an empty cell to start",
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"google.script.run.generateParamTemplate('assignments',5)\">Get parameters</button>",
+        "Enter values",
+        "Select the range of the light blue area of the parameter template",
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"google.script.run.shifAssignmentDates()\">Call API</button>"
+      ],
+      "api":{
+        "name":"shift_assignments_dates",
+        "endpoint":"PUT /api/v1/courses/:course_id/assignments/:id",
+        "reference":"https://canvas.instructure.com/doc/api/assignments.html#method.assignments_api.update",
+        "desc":"Update due dates and availability dates for multiple assignments in a course by shifting a specific number of days.",
+        "params":[
+          {
+            "name":"course_id",
+            "type":"number",
+            "default_value":"",
+            "desc":"course id",
+            "example":"83"
+          },
+          {
+            "name":"num_of_days",
+            "type":"number",
+            "default_value":"",
+            "desc":"number of days to shift",
+            "example":"30"
           }
         ]
       }
@@ -266,7 +298,7 @@ const canvasAPITemplate={
       "automated":"true",
       "guide":[
         "Select an empty cell to start",
-          "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"google.script.run.callCanvasAPI('GET /api/v1/accounts')\">Call API</button>"
+          "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"google.script.run.callCanvasAPINoParam('GET /api/v1/accounts')\">Call API</button>"
       ],
       "api":{
         "name":"get_accounts",
@@ -466,7 +498,7 @@ const canvasAPITemplate={
       "automated":"true",
       "guide":[
         "Select an empty cell to start",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"google.script.run.callCanvasAPI('GET /api/v1/courses','course_list')\">Call API</button>"
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"google.script.run.callCanvasAPINoParam('GET /api/v1/courses','course_list')\">Call API</button>"
       ],
       "api":{
         "name":"get_your_active_courses",

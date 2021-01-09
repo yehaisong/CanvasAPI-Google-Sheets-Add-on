@@ -30,7 +30,7 @@ function callCanvasAPIwithRangeParams(endpoint,columns,bgcolor)
   * @param {string} bgcolor RBG value
   * show {array<object>}
   */
-function callCanvasAPI(endpoint,columns,bgcolor)
+function callCanvasAPINoParam(endpoint,columns,bgcolor)
 {
   var data=canvasAPI(endpoint);
   var cell=SpreadsheetApp.getCurrentCell();

@@ -12,6 +12,7 @@ function assignments_guide()
   SideBar.show("Assignments");
 }
 
+
 /**
  * Get all assignments in a course and list all due dates, unlock dates, and lock dates
  * GET /api/v1/courses/:course_id/assignments
@@ -19,19 +20,31 @@ function assignments_guide()
  */
 function listAssignmentsDate()
 {
-  var endpoint=Helper.getAPIAction("assignments","list_assignments_date").endpoint;
   //get course id
   var cell=SpreadsheetApp.getCurrentCell();
-  var param_value=cell.getValue();
+  var course_id=cell.getValue();
+  var data=getAssginmentsDate(course_id);
+  //handle data
+  Helper.fillValues(cell.getRow()+1,cell.getColumn(),data,"assignment_dates",null);
+}
+
+/**
+ * Get all assignments dates in a course
+ * @param {number} course_id 
+ */
+function getAssginmentsDate(course_id)
+{
+  var endpoint=Helper.getAPIAction("assignments","list_assignments_date").endpoint;
   //create opts
   var opts ={};
-  opts["course_id"]=param_value;
+  opts["course_id"]=course_id;
   //opts.include.push("all_dates");
   //call api
   var data=canvasAPI(endpoint,opts);
   //handle data
-  Helper.fillValues(cell.getRow()+1,cell.getColumn(),data,"assignment_dates",null);
+  return data
 }
+
 
 /**
  * Add number of days to the current assignments dates
@@ -51,15 +64,81 @@ function listAssignmentsDate()
       }
     }]'
 */
-function shiftAssignmentsDate()
+function shifAssignmentDates()
 {
   //endpoint
+  var endpoint=Helper.getAPIAction("assignments","shift_assignments_dates").endpoint;
   //params:courseid, number of days
-  //create opts for get assignments
+  var param_range=SpreadsheetApp.getActiveSheet().getActiveRange();
+  var opts=Helper.range_to_json(param_range);
+  
+  //verify opts
+  if(opts["course_id"]==null || opts["num_of_days"]==null){
+    Browser.msgBox("Invalid parameters.")
+  }
+    
+
   //call get assignment api
-  //create opts for bulkUpdate
-  //call bulkUpdate api
-  //handle data
+  var original_dates=getAssginmentsDate(opts.course_id);
+  var cell=SpreadsheetApp.getActiveSheet().getRange(param_range.getLastRow()+1,param_range.getColumn());
+  var total=original_dates.length;
+
+  //updage assignments
+  var assignments=[];
+  for(var i=0;i<original_dates.length;i++){//check all assignments
+    cell.setValue((i+1)+"/"+total);
+
+    var date_opts={
+      "course_id":opts.course_id.toString(),
+      "id":original_dates[i].id.toString(),
+      "assignment":{}
+      }
+    
+    
+    //due_at
+    if(original_dates[i].due_at!=null){
+      //Helper.log(original_dates[i].due_at);
+      date_opts.assignment.due_at=shiftDate(original_dates[i].due_at,opts.num_of_days);
+    }
+    //lock_at
+    if(original_dates[i].lock_at!=null){
+      //Helper.log(original_dates[i].due_at);
+      date_opts.assignment.lock_at=shiftDate(original_dates[i].lock_at,opts.num_of_days);
+    }
+    //unlock_at
+    if(original_dates[i].unlock_at!=null){
+      //Helper.log(original_dates[i].due_at);
+      date_opts.assignment.unlock_at=shiftDate(original_dates[i].unlock_at,opts.num_of_days);
+    }
+
+    //Helper.log(date_opts);
+    //call bulkUpdate api
+    let data=canvasAPI(endpoint,date_opts);
+    //handle data. the data is an assignment
+    //add to a array and display with columns. it is just for display
+    
+    if(data!=null){
+      assignments.push(data);
+    }
+    else{
+      assignments.push({"id":original_dates[i].id.toString(),"name":original_dates[i].name,"due_at":"","unlockat_at":"","lock_at":""});
+    }
+    
+  }
+  Helper.fillValues(param_range.getLastRow()+1,param_range.getColumn(),assignments,"assignment_dates","#e1eec7");
+}
+
+/**
+ * Shift days
+ * @param {string} olddatestr 
+ * @param {Number} num_of_days 
+ */
+function shiftDate(olddatestr,num_of_days)
+{
+  let result=new Date(olddatestr);
+  let olddate=new Date(olddatestr);
+  result.setDate(olddate.getDate()+num_of_days);
+  return result.toISOString();
 }
 
 /**

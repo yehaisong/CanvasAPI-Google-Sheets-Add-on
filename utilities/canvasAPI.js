@@ -135,14 +135,23 @@ function canvasAPI(endpoint, opts, filter) { //filter is not supported currently
 			}
 		}
 		if (typeof opts === 'object') {
-			for ( var field in opts) {
-				if (opts.hasOwnProperty(field) && opts[field] !== null
-						&& !/^:/.test(field)) {
-					
-                    if (typeof _payload === 'undefined') {
-						_payload = {};
+			if(opts["dlist"]!=null){
+				//i want to use a list as the only parameter without a field name
+				if (typeof _payload === 'undefined') {
+					_payload = {};
+				}
+				_payload=opts["dlist"];
+			}
+			else{
+				for ( var field in opts) {
+					if (opts.hasOwnProperty(field) && opts[field] !== null
+							&& !/^:/.test(field)) {
+						
+						if (typeof _payload === 'undefined') {
+							_payload = {};
+						}
+						_payload[field] = opts[field];
 					}
-					_payload[field] = opts[field];
 				}
 			}
 		}
@@ -258,6 +267,8 @@ function canvasAPI(endpoint, opts, filter) { //filter is not supported currently
   Helper.log("return data: "+data);
 	return data;
 }
+
+
 
 
 

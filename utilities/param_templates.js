@@ -36,6 +36,17 @@ function generateParamTemplate(name,index) {
 }
 
 /**
+ * Verify params
+ * @param {string} name 
+ * @param {number} index 
+ * @param {array:any} params 
+ */
+function validateParams(name,index,params)
+{
+
+}
+
+/**
  * generate array parameters template, column headed
  * @param {string} name The name of the api function
  * @param {int} index The 0 based index of the array
