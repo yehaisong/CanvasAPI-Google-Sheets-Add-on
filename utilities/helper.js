@@ -142,18 +142,19 @@ class Helper {
     if(jsonobject!=null){
       if (Array.isArray(jsonobject)){
         //create headers
-        var filter=displayColumns[columns];
-        var headerRow=[];
-        if(filter!=null){//column filters
+        let filter=displayColumns[columns];
+        let headerRow=[];
+        let returned_fields=Object.keys(jsonobject[0]);
+        if(filter!=null && Helper.verify_ObjectKeys(returned_fields,filter)){//column filters
           headerRow=filter;
         }
         else{
-          headerRow=Object.keys(jsonobject[0]);
+          headerRow=returned_fields;
         }
-        var contents=[headerRow];
+        let contents=[headerRow];
         //get rows
         for(var i=0;i<jsonobject.length;i++){
-          var row=headerRow.map(function(key) {
+          let row=headerRow.map(function(key) {
               var value=jsonobject[i][key];
               if(typeof value==="object")
                 return JSON.stringify(value);
@@ -165,13 +166,14 @@ class Helper {
       }
       else{
         //create headers
-        var filter=displayColumns[columns]
-        var headerRow=[];
-        if(filter!=null){//column filters
+        let filter=displayColumns[columns];
+        let headerRow=[];
+        let returned_fields=Object.keys(jsonobject);
+        if(filter!=null && Helper.verify_ObjectKeys(returned_fields,filter)){//column filters
           headerRow=filter;
         }
         else{
-          headerRow=Object.keys(jsonobject);
+          headerRow=returned_fields;
         }
         //get row
         var row=headerRow.map(function(key) {return jsonobject[key]});
@@ -188,6 +190,22 @@ class Helper {
     else{
       return {};
     }
+  }
+
+  /**
+   * check if the returned array contains expected data.
+   * @param {array} returndatafields 
+   * @param {array} filter 
+   */
+  static verify_ObjectKeys(returndatafields,filter)
+  {
+    for(let i=0;i<filter.length;i++)
+    {
+      if(!returndatafields.includes(filter[i])){
+        return false;
+      }
+    }
+    return true;
   }
   
   /**

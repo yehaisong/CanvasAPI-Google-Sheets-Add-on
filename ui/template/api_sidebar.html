@@ -63,16 +63,42 @@
       </div>
     <?}?>
     </div>
-    <div class="fixed-bottom alert alert-primary m-2 text-center" id="result"></div>
+    <div class="fixed-bottom alert alert-primary m-2 text-center d-none" id="result">
+      <div class="float-start" id="status">status</div>
+      <a href="#" class="float-end text-decoration-none" data-dismiss="alert" onclick="closeStatus()">&times;</a>
+    </div>
     <script>
       function onSuccess() {
-        var div = document.getElementById('result');
-        div.innerHTML = '<div>Sucess!</div>';
+        changeStyle('alert-success');
+        updateStatus('<div>API Call Completed!</div>');
       }
-    
-        function onFailure() {
+      function onFailure() {
+        changeStyle('alert-danger');
+        updateStatus('<div>API Call Failed!</div>');
+      }
+      function onCall(){
+        showStatus();
+        changeStyle('alert-primary');
+        updateStatus('<div class="spinner-border spinner-border-sm pr-2" role="status"></div><span> Working...</span>');
+      }
+      function closeStatus(){
         var div = document.getElementById('result');
-        div.innerHTML = '<div>Fail!</div>';
+        div.classList.add("d-none");    
+      }
+      function showStatus(){
+        var div = document.getElementById('result');
+        div.classList.remove("d-none");
+      }
+      function changeStyle(newstyle){
+        var div = document.getElementById('result');
+        div.classList.remove("alert-success");
+        div.classList.remove("alert-danger");
+        div.classList.remove("alert-primary");
+        div.classList.add(newstyle);
+      }
+      function updateStatus(status){
+        var div_status = document.getElementById('status');
+        div_status.innerHTML = status;
       }
     </script>
   </body>
