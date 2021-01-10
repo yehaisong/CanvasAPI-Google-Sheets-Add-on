@@ -18,7 +18,7 @@
         cell.setValue(progress+" "+results);
         if(progress>=100)
             break;
-        Utilities.sleep(1000);
+        Utilities.sleep(500);
     }
     
  }
@@ -30,3 +30,4 @@
     var data=canvasAPI(endpoint,opts);
     return data;
  }
+

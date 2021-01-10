@@ -241,7 +241,7 @@ const canvasAPITemplate={
       "automated":"false",
       "guide":[
         "Select a cell with a course id",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"google.script.run.Assignments.listAssignmentsDate()\">Call API</button>"
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"google.script.run.listAssignmentsDate()\">Call API</button>"
       ],
       "api":{
         "name":"list_assignments_date",
@@ -266,7 +266,7 @@ const canvasAPITemplate={
         "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"google.script.run.generateParamTemplate('assignments',5)\">Get parameters</button>",
         "Enter values",
         "Select the range of the light blue area of the parameter template",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"google.script.run.shifAssignmentDates()\">Call API</button>"
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){var div = document.getElementById('result'); div.innerHTML = '<div> Working... </div>';google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).shifAssignmentDates();})();return false;\">Call API</button>"
       ],
       "api":{
         "name":"shift_assignments_dates",

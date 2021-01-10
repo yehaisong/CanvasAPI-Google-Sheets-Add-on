@@ -64,7 +64,7 @@ function getAssginmentsDate(course_id)
       }
     }]'
 */
-function shifAssignmentDates()
+async function shifAssignmentDates()
 {
   //endpoint
   var endpoint=Helper.getAPIAction("assignments","shift_assignments_dates").endpoint;
@@ -113,10 +113,9 @@ function shifAssignmentDates()
   }
   //call bulkUpdate api
   //Helper.log(date_opts);
-  let data=canvasAPI(endpoint,date_opts);
+  let data= canvasAPI(endpoint,date_opts);
   //handle data
-  Helper.fillValues(param_range.getLastRow()+1,param_range.getColumn(),data,"progress","#e1eec7");
-  Utilities.sleep(500);
+  Helper.fillValues(param_range.getLastRow()+1,param_range.getColumn(),await data,"progress","#e1eec7");
   //show progress
   var cell1=SpreadsheetApp.getActiveSheet().getRange(param_range.getLastRow()+2,param_range.getColumn());
   cell1.setValue("completion");
