@@ -3,21 +3,21 @@
  * @author hye@cedarville.edu (Haisong Ye)
  */
 
-/**
- * My config class
+
+/**@constant
+ * @type {boolean}
+ * @description Log customized message using Helper.log or not.
+ * @default true
  */
-class MyConfig
-{
-  static logCustomMessage(){
-    return true;
-  }
-}
+const LOGMESSAGE = true;
+
+
 
 /**
  * Show a input dialog for user token.
  * The user token is stored in UserProperties["token"].
  */
-function setToken_() {
+function setToken() {
   var token = Browser.inputBox('Set Token', 'Current Token: ['+PropertiesService.getUserProperties().getProperty("token")+']', Browser.Buttons.OK_CANCEL);
   if(token && token != "cancel") {
     PropertiesService.getUserProperties().setProperty("token", token);
@@ -28,7 +28,7 @@ function setToken_() {
  * Show a input dialog for Canvas URL.
  * The host URL is stored in UserProperties["host"].
  */
-function setHost_() {
+function setHost() {
   var host = Browser.inputBox("Set Host ('https://yourschool.instructure.com')", 'Current Host: ['+PropertiesService.getUserProperties().getProperty("host")+']', Browser.Buttons.OK_CANCEL);
   if(host && host != "cancel") {
     if(!host.match(/http/)) {

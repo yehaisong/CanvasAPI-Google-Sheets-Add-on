@@ -10,10 +10,10 @@ function onOpen() {
   var ui = SpreadsheetApp.getUi();
   // Or DocumentApp or FormApp.
   ui.createMenu('Canvas')
-      .addItem("accounts","accounts_guide")
-      .addItem("assignments","assignments_guide")
-      .addItem("blueprints","blueprints_guide") 
-      .addItem("courses","courses_guide") 
+      .addItem("accounts","showAccountsGuide")
+      .addItem("assignments","showAssignmentsGuide")
+      .addItem("blueprints","showBlueprintsGuide") 
+      .addItem("courses","showCoursesGuide") 
       /*
       .addSeparator()
       .addSubMenu(ui.createMenu('direct API call')
@@ -25,8 +25,8 @@ function onOpen() {
             .addItem('get assignments', 'get_assignments')
             .addItem('get assignment overrides', 'get_assignment_overrides')
             .addItem('create an assignment override', 'create_an_assignment_override')
-            .addItem('delete an assignment override', 'delete_an_assignment_override')
-            .addItem('batch create assignments overrides', 'batch_create_assignments_overrides'))
+            .addItem('delete an assignment override', 'deleteAssignmentOverride')
+            .addItem('batch create assignments overrides', 'batchCreateAssignmentsOverrides'))
           .addSubMenu(ui.createMenu('blueprints')
             .addItem('get blueprint templates', 'get_blueprint_templates')
             .addItem('update associated courses', 'update_associated_courses')
@@ -38,8 +38,8 @@ function onOpen() {
       .addSeparator()
       .addSubMenu(ui.createMenu('config')
           //.addItem('check settings', 'checkTokens')
-          .addItem('set token', 'setToken_')
-          .addItem('set host', 'setHost_'))
+          .addItem('set token', 'setToken')
+          .addItem('set host', 'setHost'))
       //.addSeparator()
       .addToUi();
 }

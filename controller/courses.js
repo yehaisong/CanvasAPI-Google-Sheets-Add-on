@@ -6,7 +6,7 @@
 /**
  * Show the sidebar for courses APIs
  */
-function courses_guide()
+function showCoursesGuide()
 {
   SideBar.show("Courses");
 }

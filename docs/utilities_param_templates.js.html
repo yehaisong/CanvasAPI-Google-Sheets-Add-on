@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: utilities/param_templates.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: utilities/param_templates.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview functions for generate paramter templates for endpoints
+ * @author hye@cedarville.edu (Haisong Ye)
+ */
+
+/**
+ * generate parameters template, row headed
+ * @param {string} name The name of the controller
+ * @param {int} index The 0 based index of action. check the CANVASAPIS for index.
+ */
+function generateParamTemplate(name,index) {
+  var _action=CANVASAPIS[name][index].api;
+  if(typeof _action!=null)
+  {
+    var cell=SpreadsheetApp.getCurrentCell();
+    var apirow={"api":_action.name}; //find the api
+    //desc and params
+    var _desc={};
+    var _params={};
+    for(var i=0;i&lt;_action.params.length;i++){
+      _desc[_action.params[i].name]=_action.params[i].desc+" e.g., "+_action.params[i].example;
+      _params[_action.params[i].name]=_action.params[i].default_value;
+    }
+    //api row 1
+    Helper.fillValues(cell.getRow(),cell.getColumn(),apirow,"#eeeeee",null);
+    //params row +1
+    Helper.fillValues(cell.getRow()+1,cell.getColumn(),_params,"#ADD8E6",null);
+    //desc note col 1
+    Helper.setNotesFromJsonObject(cell.getRow()+1,cell.getColumn(),_desc,null)
+    Helper.log("created template for "+_action.name);
+  }
+  else
+  {
+    Browser.msgBox('API '+name+' is not implemented.');
+  }
+}
+
+/**
+ * Verify params for an action (api call). If false, do not call the api. [Not implemented]
+ * @param {string} controller Name of the API controller, e.g., "assignments"
+ * @param {string} action Name of the action, e.g. "list_assignments"
+ * @param {array:any} params The list of the parameters ready to pass to the api
+ * @returns {boolean}
+ */
+function validateParams(name,index,params)
+{
+  return true;
+}
+
+/**
+ * generate array parameters template, column headed
+ * @param {string} name The name of the api function
+ * @param {int} index The 0 based index of the array
+ */
+function generateArrayParamTemplate(name,index) {
+  var _action=CANVASAPIS[name][index].api;
+  if(typeof _action!=null)
+  {
+    var cell=SpreadsheetApp.getCurrentCell();
+    
+    var apirow={"api":_action.name}; //find the api
+    //desc and params
+    var _desclist=[];
+    var _paramslist=[];
+    var _desc={};
+    var _params={};
+    for(var i=0;i&lt;_action.params.length;i++){
+      _desc[_action.params[i].name]=_action.params[i].desc+" e.g., "+_action.params[i].example;
+      _params[_action.params[i].name]=_action.params[i].default_value;
+    }
+    _desclist.push(_desc);
+    _paramslist.push(_params);
+
+    //api row 1
+    Helper.fillValues(cell.getRow(),cell.getColumn(),apirow,"#eeeeee",null);
+    //parames rows 2,3
+    Helper.fillValues(cell.getRow()+1,cell.getColumn(),_paramslist,"#ADD8E6",null);
+    //desc notes rows 2,3
+    Helper.setNotesFromJsonList(cell.getRow()+1,cell.getColumn(),_desclist,null);
+    Helper.log("created template for "+_action.name);
+  }
+  else
+  {
+    Browser.msgBox('API '+name+' is not implemented.');
+  }
+}
+
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Helper.html">Helper</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateArrayParamTemplate">generateArrayParamTemplate</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getAssginmentsDate">getAssginmentsDate</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftDate">shiftDate</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sun Jan 10 2021 23:08:05 GMT-0500 (Eastern Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

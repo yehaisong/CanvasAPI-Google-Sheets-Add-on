@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: utilities/helper.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: utilities/helper.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @fileoverview Utilities for the app
  * @author hye@cedarville.edu (Haisong Ye)
  */
@@ -22,7 +50,7 @@ class Helper {
     var _actions=CANVASAPIS[controller];
     var _action;
     if (typeof _actions ==="object"){
-      for(var i=0;i<_actions.length;i++){
+      for(var i=0;i&lt;_actions.length;i++){
         if(_actions[i].api.name==action){
           _action=_actions[i].api;
           break;
@@ -38,7 +66,7 @@ class Helper {
    * Use this for a parameter template that list paramters in a row. Each parameter uses one column.
    * @param {number} startrow An absolute row index of a sheet
    * @param {number} startcol An absolute column index of a sheetz
-   * @param {Array<object>} jsonarray Provide an object array contains the data to be filled
+   * @param {Array&lt;object>} jsonarray Provide an object array contains the data to be filled
    * @param {string} columns Filter DISPLAYCOLUMNS name
    */
   static setNotesFromJsonList(startrow,startcol,jsonarray,columns)
@@ -101,7 +129,7 @@ class Helper {
    * setValues with a two demision array
    * @param {number} startrow An absolute row index of a sheet
    * @param {number} startcol An absolute column index of a sheet
-   * @param {Array<object>} contents Provide a endpoint URL of a Canvas API function
+   * @param {Array&lt;object>} contents Provide a endpoint URL of a Canvas API function
    * @param {string} header "row" or "column" notes will be added to the header row or column. If not presented, set as no header.
    */
   static setNotes(startrow,startcol,contents,header)
@@ -109,13 +137,13 @@ class Helper {
     if(contents.length>0){
       if(header=="column"){//list style
         var rng = SpreadsheetApp.getActiveSheet().getRange(startrow,startcol,1,contents[0].length);
-        for(var ci=0;ci<contents[1].length;ci++)
+        for(var ci=0;ci&lt;contents[1].length;ci++)
         {
           rng.getCell(1,ci+1).setNote(contents[1][ci]);
         }
       }else if (header=="row"){//object style
         var rng = SpreadsheetApp.getActiveSheet().getRange(startrow,startcol,contents.length,1);
-        for(var ri=0;ri<contents.length;ri++)
+        for(var ri=0;ri&lt;contents.length;ri++)
         {
           rng.getCell(ri+1,1).setNote(contents[ri][1]);
         }
@@ -156,7 +184,7 @@ class Helper {
         let filter=DISPLAYCOLUMNS[columns];
         let headerRow=[];
         let returned_fields=Object.keys(jsonobject[0]);
-        if(filter!=null && Helper.verifyObjectKeys(returned_fields,filter)){//column filters
+        if(filter!=null &amp;&amp; Helper.verifyObjectKeys(returned_fields,filter)){//column filters
           headerRow=filter;
         }
         else{
@@ -164,7 +192,7 @@ class Helper {
         }
         let contents=[headerRow];
         //get rows
-        for(var i=0;i<jsonobject.length;i++){
+        for(var i=0;i&lt;jsonobject.length;i++){
           let row=headerRow.map(function(key) {
               var value=jsonobject[i][key];
               if(typeof value==="object")
@@ -180,7 +208,7 @@ class Helper {
         let filter=DISPLAYCOLUMNS[columns];
         let headerRow=[];
         let returned_fields=Object.keys(jsonobject);
-        if(filter!=null && Helper.verifyObjectKeys(returned_fields,filter)){//column filters
+        if(filter!=null &amp;&amp; Helper.verifyObjectKeys(returned_fields,filter)){//column filters
           headerRow=filter;
         }
         else{
@@ -192,7 +220,7 @@ class Helper {
         //var contents=[headerRow,row];//horizontal display
         
         var contents=[]; //vertial display
-        for(var i=0;i<headerRow.length;i++){
+        for(var i=0;i&lt;headerRow.length;i++){
           contents.push([headerRow[i],row[i]]);
         }
         return contents;
@@ -211,7 +239,7 @@ class Helper {
    */
   static verifyObjectKeys(returndatafields,filter)
   {
-    for(let i=0;i<filter.length;i++)
+    for(let i=0;i&lt;filter.length;i++)
     {
       if(!returndatafields.includes(filter[i])){
         return false;
@@ -230,8 +258,8 @@ class Helper {
   {
     var json={};
     //Browser.msgBox(range.getNumRows());
-    for(var i=1;i<=range.getNumRows();i++){
-      if(range.getCell(i,1).getValue()!=""&&range.getCell(i,2).getValue()!=""){
+    for(var i=1;i&lt;=range.getNumRows();i++){
+      if(range.getCell(i,1).getValue()!=""&amp;&amp;range.getCell(i,2).getValue()!=""){
         var param_name=range.getCell(i,1).getValue();
         var param_value_str=range.getCell(i,2).getValue();
         var param_value=null;
@@ -249,7 +277,7 @@ class Helper {
         var param_name_parts=[]
         param_name_parts=param_name.split(".");
         //Helper.log(param_name_parts);
-        if(param_name_parts!=null && param_name_parts.length>1){//this is a property of an object parameter
+        if(param_name_parts!=null &amp;&amp; param_name_parts.length>1){//this is a property of an object parameter
           //assume there is only two levels
           if(json[param_name_parts[0]]==null)
             json[param_name_parts[0]]={};
@@ -294,4 +322,26 @@ class Helper {
       Logger.log(data);
     }
   }
-}
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Helper.html">Helper</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateArrayParamTemplate">generateArrayParamTemplate</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getAssginmentsDate">getAssginmentsDate</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftDate">shiftDate</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sun Jan 10 2021 23:08:05 GMT-0500 (Eastern Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

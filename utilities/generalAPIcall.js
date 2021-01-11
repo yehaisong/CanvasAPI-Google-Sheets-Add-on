@@ -5,30 +5,24 @@
 
 
 /**
- * range paramters, return list
- * call the API endpoint using the selected range as the parameters, row headed 
- *. and fill sheet with returned data of a list of objects
+ * Call an API endpoint using the selected range as the parameters.
   * @param {string} endpoint Provide an endpoint URL of a Canvas API function
-  * @param {string} columns Filter displayColumns name
+  * @param {string} columns Filter DISPLAYCOLUMNS name
   * @param {string} bgcolor RBG value
-  * show {array<object>}
   */
 function callCanvasAPIwithRangeParams(endpoint,columns,bgcolor)
 {
   var param_range=SpreadsheetApp.getActiveSheet().getActiveRange();
-  var opts=Helper.range_to_json(param_range);
+  var opts=Helper.parseRangeToJson(param_range);
   var data=canvasAPI(endpoint,opts);
   Helper.fillValues(param_range.getLastRow()+1,param_range.getColumn(),data,columns,bgcolor);
 }
 
 /**
- * no paramter, return list
- * call the API endpoint without parameters 
- *. and fill sheet with returned data of a list of objects
+ * Call an API endpoint without parameters 
   * @param {string} endpoint Provide an endpoint URL of a Canvas API function
-  * @param {string} columns Filter displayColumns name, null to return all columns
+  * @param {string} columns Filter DISPLAYCOLUMNS name, null to return all columns
   * @param {string} bgcolor RBG value
-  * show {array<object>}
   */
 function callCanvasAPINoParam(endpoint,columns,bgcolor)
 {
@@ -39,14 +33,11 @@ function callCanvasAPINoParam(endpoint,columns,bgcolor)
 
 
 /**
- * single paramter, return list
- * call the API endpoint with single parameter (select a cell) 
- *. and fill sheet with returned data of a list of objects
+ * Call an API endpoint with single parameter (current cell)
   * @param {string} endpoint Provide an endpoint URL of a Canvas API function
   * @param {string} default_param Provide the default param name
-  * @param {string} columns Filter displayColumns name, null to return all columns
+  * @param {string} columns Filter DISPLAYCOLUMNS name, null to return all columns
   * @param {string} bgcolor RBG value
-  * show {array<object>}
   */
 function callCanvasAPIwithSingleParam(endpoint,default_param,columns,bgcolor)
 {
@@ -57,4 +48,5 @@ function callCanvasAPIwithSingleParam(endpoint,default_param,columns,bgcolor)
   var data=canvasAPI(endpoint,opts);
   Helper.fillValues(cell.getRow()+1,cell.getColumn(),data,columns,bgcolor)
 }
+
 

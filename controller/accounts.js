@@ -7,7 +7,7 @@
 /**
  * Show the sidebar for accounts APIs
  */
-function accounts_guide()
+function showAccountsGuide()
 {
   SideBar.show("Accounts");
 }

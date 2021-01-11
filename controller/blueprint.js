@@ -6,7 +6,7 @@
 /**
  * Show the sidebar for blueprints APIs
  */
-function blueprints_guide()
+function showBlueprintsGuide()
 {
   SideBar.show("Blueprints");
 }

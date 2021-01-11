@@ -6,10 +6,10 @@
 /**
  * generate parameters template, row headed
  * @param {string} name The name of the controller
- * @param {int} index The 0 based index of action. check the canvasAPITemplate for index.
+ * @param {int} index The 0 based index of action. check the CANVASAPIS for index.
  */
 function generateParamTemplate(name,index) {
-  var _action=canvasAPITemplate[name][index].api;
+  var _action=CANVASAPIS[name][index].api;
   if(typeof _action!=null)
   {
     var cell=SpreadsheetApp.getCurrentCell();
@@ -36,14 +36,15 @@ function generateParamTemplate(name,index) {
 }
 
 /**
- * Verify params
- * @param {string} name 
- * @param {number} index 
- * @param {array:any} params 
+ * Verify params for an action (api call). If false, do not call the api. [Not implemented]
+ * @param {string} controller Name of the API controller, e.g., "assignments"
+ * @param {string} action Name of the action, e.g. "list_assignments"
+ * @param {array:any} params The list of the parameters ready to pass to the api
+ * @returns {boolean}
  */
 function validateParams(name,index,params)
 {
-
+  return true;
 }
 
 /**
@@ -52,7 +53,7 @@ function validateParams(name,index,params)
  * @param {int} index The 0 based index of the array
  */
 function generateArrayParamTemplate(name,index) {
-  var _action=canvasAPITemplate[name][index].api;
+  var _action=CANVASAPIS[name][index].api;
   if(typeof _action!=null)
   {
     var cell=SpreadsheetApp.getCurrentCell();

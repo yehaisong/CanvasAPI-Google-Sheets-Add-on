@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: config/apis.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: config/apis.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @fileoverview This file defines api specifications
  * @author hye@cedarville.edu (Haisong Ye)
  */
@@ -29,10 +57,10 @@ const CANVASAPIS={
       "automated":"true",
       "guide":[
         "Select an empty cell to start",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('assignments',0);})();return false;\">Get parameters</button>",
+        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('assignments',0);})();return false;\">Get parameters&lt;/button>",
         "Enter values",
         "Select the range of the light blue area of the parameter template",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('GET /api/v1/courses/:course_id/assignments','assignment_list');})();return false;\">Call API</button>"
+        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('GET /api/v1/courses/:course_id/assignments','assignment_list');})();return false;\">Call API&lt;/button>"
       ],
       "api":{
         "name":"get_assignments",
@@ -68,10 +96,10 @@ const CANVASAPIS={
       "automated":"true",
       "guide":[
         "Select an empty cell to start",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('assignments',1);})();return false;\">Get parameters</button>",
+        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('assignments',1);})();return false;\">Get parameters&lt;/button>",
         "Enter values",
         "Select the range of the light blue area of the parameter template",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('GET /api/v1/courses/:course_id/assignments/:assignment_id/overrides','overrides_list');})();return false;\">Call API</button>"
+        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('GET /api/v1/courses/:course_id/assignments/:assignment_id/overrides','overrides_list');})();return false;\">Call API&lt;/button>"
       ],
       "api":{
         "name":"get_assignment_overrides",
@@ -100,10 +128,10 @@ const CANVASAPIS={
       "automated":"true",
       "guide":[
         "Select an empty cell to start",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('assignments',2);})();return false;\">Get parameters</button>",
+        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('assignments',2);})();return false;\">Get parameters&lt;/button>",
         "Enter values",
         "Select the range of the light blue area of the parameter template",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('POST /api/v1/courses/:course_id/assignments/:assignment_id/overrides',null,null);})();return false;\">Call API</button>"
+        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('POST /api/v1/courses/:course_id/assignments/:assignment_id/overrides',null,null);})();return false;\">Call API&lt;/button>"
       ],
       "api":{
         "name":"create_an_assignment_override",
@@ -167,10 +195,10 @@ const CANVASAPIS={
       "automated":"true",
       "guide":[
         "Select an empty cell to start",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('assignments',3);})();return false;\">Get parameters</button>",
+        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('assignments',3);})();return false;\">Get parameters&lt;/button>",
         "Enter values",
         "Select the range of the light blue area of the parameter template",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('PUT /api/v1/courses/:course_id/assignments/:assignment_id/overrides/:id',null,null);})();return false;\">Call API</button>"
+        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('PUT /api/v1/courses/:course_id/assignments/:assignment_id/overrides/:id',null,null);})();return false;\">Call API&lt;/button>"
       ],
       "api":{
         "name":"update_an_assignment_override",
@@ -241,7 +269,7 @@ const CANVASAPIS={
       "automated":"false",
       "guide":[
         "Select a cell with a course id",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).listAssignmentsDate();})();return false;\">Call API</button>"
+        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).Assignments.listAssignmentsDate();})();return false;\">Call API&lt;/button>"
       ],
       "api":{
         "name":"list_assignments_date",
@@ -263,10 +291,10 @@ const CANVASAPIS={
       "automated":"false",
       "guide":[
         "Select an empty cell to start",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('assignments',5);})();return false;\">Get parameters</button>",
+        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('assignments',5);})();return false;\">Get parameters&lt;/button>",
         "Enter values",
         "Select the range of the light blue area of the parameter template",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).shifAssignmentDates();})();return false;\">Call API</button>"
+        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).shifAssignmentDates();})();return false;\">Call API&lt;/button>"
       ],
       "api":{
         "name":"shift_assignments_dates",
@@ -298,7 +326,7 @@ const CANVASAPIS={
       "automated":"true",
       "guide":[
         "Select an empty cell to start",
-          "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPINoParam('GET /api/v1/accounts');})();return false;\">Call API</button>"
+          "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPINoParam('GET /api/v1/accounts');})();return false;\">Call API&lt;/button>"
       ],
       "api":{
         "name":"get_accounts",
@@ -312,7 +340,7 @@ const CANVASAPIS={
       "automated":"true",
       "guide":[
         "Select a cell with an account id",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithSingleParam('GET /api/v1/accounts/:account_id/sub_accounts','account_id');})();return false;\">Call API</button>"
+        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithSingleParam('GET /api/v1/accounts/:account_id/sub_accounts','account_id');})();return false;\">Call API&lt;/button>"
       ],
       "api":{
         "name":"get_sub_accounts",
@@ -334,10 +362,10 @@ const CANVASAPIS={
       "automated":"true",
       "guide":[
         "Select an empty cell to start",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('accounts',2);})();return false;\">Get parameters</button>",
+        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('accounts',2);})();return false;\">Get parameters&lt;/button>",
         "Enter values",
         "Select the range of the light blue area of the parameter template",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('GET /api/v1/accounts/:account_id/courses','course_list');})();return false;\">Call API</button>"
+        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('GET /api/v1/accounts/:account_id/courses','course_list');})();return false;\">Call API&lt;/button>"
       ],
       "api":{
         "name":"get_courses_in_account",
@@ -382,7 +410,7 @@ const CANVASAPIS={
       "automated":"true",
       "guide":[
         "Select a cell with a course id",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithSingleParam('GET /api/v1/courses/:course_id/blueprint_templates/default','course_id');})();return false;\">Call API</button>"
+        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithSingleParam('GET /api/v1/courses/:course_id/blueprint_templates/default','course_id');})();return false;\">Call API&lt;/button>"
       ],
       "api":{
         "name":"get_blueprint_information",
@@ -404,10 +432,10 @@ const CANVASAPIS={
       "automated":"true",
       "guide":[
         "Select an empty cell to start",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('blueprints',1);})();return false;\">Get parameters</button>",
+        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('blueprints',1);})();return false;\">Get parameters&lt;/button>",
         "Enter values",
         "Select the range of the light blue area of the parameter template",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('PUT /api/v1/courses/:course_id/blueprint_templates/default/update_associations',null,null);})();return false;\">Call API</button>"
+        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('PUT /api/v1/courses/:course_id/blueprint_templates/default/update_associations',null,null);})();return false;\">Call API&lt;/button>"
       ],
       "api":{
         "name":"update_associated_courses",
@@ -443,10 +471,10 @@ const CANVASAPIS={
       "automated":"true",
       "guide":[
         "Select an empty cell to start",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('blueprints',2);})();return false;\">Get parameters</button>",
+        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('blueprints',2);})();return false;\">Get parameters&lt;/button>",
         "Enter values",
         "Select the range of the light blue area of the parameter template",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('POST /api/v1/courses/:course_id/blueprint_templates/default/migrations',null,null);})();return false;\">Call API</button>"
+        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('POST /api/v1/courses/:course_id/blueprint_templates/default/migrations',null,null);})();return false;\">Call API&lt;/button>"
       ],
       "api":{
         "name":"sync_associated_courses",
@@ -498,7 +526,7 @@ const CANVASAPIS={
       "automated":"true",
       "guide":[
         "Select an empty cell to start",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPINoParam('GET /api/v1/courses','course_list');})();return false;\">Call API</button>"
+        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPINoParam('GET /api/v1/courses','course_list');})();return false;\">Call API&lt;/button>"
       ],
       "api":{
         "name":"get_your_active_courses",
@@ -512,7 +540,7 @@ const CANVASAPIS={
       "automated":"true",
       "guide":[
         "Select a cell with a course id",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithSingleParam('GET /api/v1/courses/:id','id');})();return false;\">Call API</button>"
+        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithSingleParam('GET /api/v1/courses/:id','id');})();return false;\">Call API&lt;/button>"
       ],
       "api":{
         "name":"get_single_course",
@@ -531,3 +559,26 @@ const CANVASAPIS={
     }
   ]
 };
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Helper.html">Helper</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateArrayParamTemplate">generateArrayParamTemplate</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getAssginmentsDate">getAssginmentsDate</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftDate">shiftDate</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sun Jan 10 2021 23:08:05 GMT-0500 (Eastern Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
