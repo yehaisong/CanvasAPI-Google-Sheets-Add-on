@@ -32,11 +32,11 @@ const CANVASAPIS={
         "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('assignments',0);})();return false;\">Get parameters</button>",
         "Enter values",
         "Select the range of the light blue area of the parameter template",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('GET /api/v1/courses/:course_id/assignments','assignment_list');})();return false;\">Call API</button>"
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('GET /api/v1/courses/:course_id/pages','assignment_list');})();return false;\">Call API</button>"
       ],
       "api":{
         "name":"get_assignments",
-        "endpoint":"GET /api/v1/courses/:course_id/assignments",
+        "endpoint":"GET /api/v1/courses/:course_id/pages",
         "reference":"https://canvas.instructure.com/doc/api/assignments.html#method.assignments_api.index",
         "params":[
           {
@@ -71,11 +71,11 @@ const CANVASAPIS={
         "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('assignments',1);})();return false;\">Get parameters</button>",
         "Enter values",
         "Select the range of the light blue area of the parameter template",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('GET /api/v1/courses/:course_id/assignments/:assignment_id/overrides','overrides_list');})();return false;\">Call API</button>"
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('GET /api/v1/courses/:course_id/pages/:assignment_id/overrides','overrides_list');})();return false;\">Call API</button>"
       ],
       "api":{
         "name":"get_assignment_overrides",
-        "endpoint":"GET /api/v1/courses/:course_id/assignments/:assignment_id/overrides",
+        "endpoint":"GET /api/v1/courses/:course_id/pages/:assignment_id/overrides",
         "reference":"https://canvas.instructure.com/doc/api/assignments.html#method.assignment_overrides.index",
         "params":[
           {
@@ -245,7 +245,7 @@ const CANVASAPIS={
       ],
       "api":{
         "name":"list_assignments_date",
-        "endpoint":"GET /api/v1/courses/:course_id/assignments",
+        "endpoint":"GET /api/v1/courses/:course_id/pages",
         "reference":"https://canvas.instructure.com/doc/api/assignments.html#method.assignments_api.index",
         "params":[
           {
@@ -371,6 +371,13 @@ const CANVASAPIS={
             "default_value":"",
             "desc":"If true, include only blueprint courses. If false, exclude them. If not present, do not filter on this basis.",
             "example":"true"
+          },
+          {
+            "name":"enrollment_term_id",
+            "type":"number",
+            "default_value":"",
+            "desc":"If set, only includes courses from the specified term.",
+            "example":"1"
           }
         ]
       }
@@ -525,6 +532,91 @@ const CANVASAPIS={
             "default_value":"",
             "desc":"course id",
             "example":"83"
+          }
+        ]
+      }
+    },
+    { 
+      "display_name":"2: update_courses",
+      "automated":"false",
+      "guide":[
+        "Select a column with course ids listed in rows",
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).updateCourses('offer');})();return false;\">publish</button>"
+
+      ],
+      "api":{
+        "name":"update_courses",
+        "endpoint":"PUT /api/v1/accounts/:account_id/courses",
+        "reference":"https://canvas.instructure.com/doc/api/courses.html#method.courses.show",
+        "params":[
+          {
+            "name":"account_id",
+            "type":"number",
+            "default_value":"1",
+            "desc":"account id",
+            "example":"1"
+          },
+          {
+            "name":"course_ids[]",
+            "type":"array",
+            "default_value":"[]",
+            "desc":"List of ids of courses to update. At most 500 courses may be updated in one call.",
+            "example":"[83,84,85]"
+          },
+          {
+            "name":"event",
+            "type":"string",
+            "default_value":"",
+            "desc":"Allowed values: offer (publish), conclude, delete, undelete",
+            "example":"offer"
+          }
+        ]
+      }
+    }
+  ],
+  "pages":[
+    { 
+      "display_name":"0: list_pages",
+      "automated":"true",
+      "guide":[
+        "Select an empty cell to start",
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('pages',0);})();return false;\">Get parameters</button>",
+        "Enter values",
+        "Select the range of the light blue area of the parameter template",
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('GET /api/v1/courses/:course_id/pages','page_list');})();return false;\">Call API</button>"
+      ],
+      "api":{
+        "name":"list_pages",
+        "endpoint":"GET /api/v1/courses/:course_id/pages",
+        "reference":"https://canvas.instructure.com/doc/api/pages.html#method.wiki_pages_api.index",
+        "params":[
+          {
+            "name":"course_id",
+            "type":"number",
+            "default_value":"",
+            "desc":"course id",
+            "example":"83"
+          },
+          {
+            "name":"search_term",
+            "type":"string",
+            "default_value":"",
+            "desc":"The partial title of the pages to match and return.",
+            "example":"quiz"
+          },
+          {
+            "name":"sort",
+            "type":"string",
+            "default_value":"title",
+            "desc":"Determines the order of the assignments. Defaults to “title”. title|created_at|updated_at",
+            "example":"title"
+          },
+          {
+            "name":"published",
+            "type":"boolean",
+            "default_value":"true",
+            "desc":"If true, include only published paqes. If false, exclude published pages. If not present, do not filter on published status.",
+            "example":"title"
           }
         ]
       }

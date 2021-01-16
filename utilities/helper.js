@@ -294,4 +294,18 @@ class Helper {
       Logger.log(data);
     }
   }
+
+  /**Show bulk action progress
+   * @param {Range} range
+   * @param {Array} data
+   */
+  static showProgress(range, data)
+  {
+    //show progress with url
+    Helper.fillValues(range.getLastRow()+1,range.getColumn(),data,"progress",null);
+    //show progress restuls
+    let progressid=data.id;
+    let progressResult=queryProgress(progressid);
+    Helper.fillValues(range.getLastRow()+3,range.getColumn(),progressResult,"progress_results",null);
+  }
 }

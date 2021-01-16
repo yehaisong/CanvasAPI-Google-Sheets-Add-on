@@ -64,7 +64,7 @@ function getAssginmentsDate(course_id)
       }
     }]'
 */
-async function shifAssignmentDates()
+function shifAssignmentDates()
 {
   //endpoint
   var endpoint=Helper.getAPIAction("assignments","shift_assignments_dates").endpoint;
@@ -75,6 +75,7 @@ async function shifAssignmentDates()
   //verify opts
   if(opts["course_id"]==null || opts["num_of_days"]==null){
     Browser.msgBox("Invalid parameters.")
+    return;
   }
     
 
@@ -115,13 +116,7 @@ async function shifAssignmentDates()
   //Helper.log(date_opts);
   let data= canvasAPI(endpoint,date_opts);
   //handle data
-  Helper.fillValues(param_range.getLastRow()+1,param_range.getColumn(),await data,"progress","#e1eec7");
-  //show progress
-  var cell1=SpreadsheetApp.getActiveSheet().getRange(param_range.getLastRow()+2,param_range.getColumn());
-  cell1.setValue("completion");
-  var cell2=SpreadsheetApp.getActiveSheet().getRange(param_range.getLastRow()+2,param_range.getColumn()+1);
-  queryProgress(data.id,cell2);
-  //Helper.fillValues(param_range.getLastRow()+1,param_range.getColumn(),assignments,"assignment_dates","#e1eec7");
+  Helper.showProgress(param_range,data);
 }
 
 /**

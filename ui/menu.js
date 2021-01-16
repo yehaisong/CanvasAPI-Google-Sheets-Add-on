@@ -13,7 +13,8 @@ function onOpen() {
       .addItem("accounts","showAccountsGuide")
       .addItem("assignments","showAssignmentsGuide")
       .addItem("blueprints","showBlueprintsGuide") 
-      .addItem("courses","showCoursesGuide") 
+      .addItem("courses","showCoursesGuide")
+      .addItem("pages","showPagesGuide") 
       /*
       .addSeparator()
       .addSubMenu(ui.createMenu('direct API call')

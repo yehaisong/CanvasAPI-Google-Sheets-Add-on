@@ -259,7 +259,12 @@ function canvasAPI(endpoint, opts, filter) { //filter is not supported currently
       var json = JSON.parse(response.getContentText());
       Helper.log("404 error: " + json.errors[0].message);
       data=json.errors;
-    }
+	}
+	else if (response.getResponseCode()==503) {
+		var json = {"errors":[{"message":"503 API Server Down"}]};
+		Helper.log("503 error: " + json.errors[0].message);
+		data=json.errors;
+	}
     else{
       var json = JSON.parse(response.getContentText());
       //Helper.log("Response body: " + response.getContentText());

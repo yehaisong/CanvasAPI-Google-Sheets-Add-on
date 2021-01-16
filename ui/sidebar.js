@@ -23,6 +23,6 @@ class SideBar{
   {
     var htmlTemplate=HtmlService.createTemplateFromFile('ui/template/api_sidebar');
     htmlTemplate.data=SideBar.getAPIWrapper(name.toLowerCase());
-    SpreadsheetApp.getUi().showSidebar(htmlTemplate.evaluate().setTitle(name));
+    SpreadsheetApp.getUi().showSidebar(htmlTemplate.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).setTitle(name));
   }
 }

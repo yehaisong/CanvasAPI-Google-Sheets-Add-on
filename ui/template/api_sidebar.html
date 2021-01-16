@@ -72,9 +72,9 @@
         changeStyle('alert-success');
         updateStatus('<div>API Call Completed!</div>');
       }
-      function onFailure() {
+      function onFailure(error) {
         changeStyle('alert-danger');
-        updateStatus('<div>API Call Failed!</div>');
+        updateStatus('<div>API Call Failed!</div><div class="text-start">'+error+'</div>');
       }
       function onCall(){
         showStatus();
