@@ -42,3 +42,17 @@ function updateCourses(event)
   //handle progress
   Helper.showProgress(rng,data);
 }
+
+
+
+/**
+ * Batch update course dates
+ * @param {String} range The range of course ids, e.g. A1:B2. If not provided, use the current selected range.
+ * @param {DateTime} newstartdate The new start date and time.
+ * @param {DateTime} newenddate The new end date and time.
+ * @param {boolean} updateduedate Update due date or not. Default is true.
+ */
+function updateCourseDates(range,newstartdate,newenddate,updateduedate)
+{
+  throw "Not implemented";
+}

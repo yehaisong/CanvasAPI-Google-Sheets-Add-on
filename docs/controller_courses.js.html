@@ -38,7 +38,52 @@ function showCoursesGuide()
 {
   SideBar.show("Courses");
 }
-</code></pre>
+
+/**
+ * Update multiple courses in an account. Operates asynchronously; 
+ * Use the progress endpoint to query the status of an operation.
+ * The action to take on each course. Must be one of 'offer', 'conclude', 'delete', or 'undelete'.
+ * PUT /api/v1/accounts/:account_id/courses
+ * @param {string} event 
+ */
+function updateCourses(event)
+{
+  //get the selected column. If no selected column or more than one column selected, return error.
+  let rng=SpreadsheetApp.getActiveSheet().getActiveRange();
+  if(rng.getNumColumns()>1){
+    Browser.msgBox("Only one column allowed.");
+    return;
+  }
+  //prepare opts
+  let opts={
+    "account_id":1,
+    "event":event,
+    "course_ids":[]
+  }
+  for(let i=1;i&lt;=rng.getNumRows();i++){
+    opts.course_ids.push(rng.getCell(i,1).getValue());
+  }
+  //get endpoint
+  let endpoint=Helper.getAPIAction("courses","update_courses").endpoint;
+  //call endpoint
+  let data= canvasAPI(endpoint,opts);
+  //handle progress
+  Helper.showProgress(rng,data);
+}
+
+
+
+/**
+ * Batch update course dates
+ * @param {String} range The range of course ids, e.g. A1:B2. If not provided, use the current selected range.
+ * @param {DateTime} newstartdate The new start date and time.
+ * @param {DateTime} newenddate The new end date and time.
+ * @param {boolean} updateduedate Update due date or not. Default is true.
+ */
+function updateCourseDates(range,newstartdate,newenddate,updateduedate)
+{
+  throw "Not implemented";
+}</code></pre>
         </article>
     </section>
 
@@ -48,13 +93,13 @@ function showCoursesGuide()
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Helper.html">Helper</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateArrayParamTemplate">generateArrayParamTemplate</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getAssginmentsDate">getAssginmentsDate</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftDate">shiftDate</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Helper.html">Helper</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#DATECOLUMNS">DATECOLUMNS</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateArrayParamTemplate">generateArrayParamTemplate</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getAssginments">getAssginments</a></li><li><a href="global.html#getCoursesInAccount">getCoursesInAccount</a></li><li><a href="global.html#getCoursesInfo">getCoursesInfo</a></li><li><a href="global.html#getProgress">getProgress</a></li><li><a href="global.html#getSelectedRange">getSelectedRange</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#searchCoursesByNames">searchCoursesByNames</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftDate">shiftDate</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#showPagesGuide">showPagesGuide</a></li><li><a href="global.html#TFCOLUMNS">TFCOLUMNS</a></li><li><a href="global.html#TFCOLUMNS_RO">TFCOLUMNS_RO</a></li><li><a href="global.html#updateCourseDates">updateCourseDates</a></li><li><a href="global.html#updateCourses">updateCourses</a></li><li><a href="global.html#updatePageToDoDate">updatePageToDoDate</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sun Jan 10 2021 23:08:05 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sun Jan 17 2021 23:55:36 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

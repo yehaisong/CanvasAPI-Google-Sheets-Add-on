@@ -51,18 +51,25 @@ function listAssignmentsDate()
   //get course id
   var cell=SpreadsheetApp.getCurrentCell();
   var course_id=cell.getValue();
-  var data=getAssginmentsDate(course_id);
+  var data=getAssginments(course_id);
   //handle data
+  /* fill data is handling this date issue
+  for(let i=0;i&lt;data.length;i++){
+    data[i].due_at=Helper.getLocalDate(data[i].due_at);
+    data[i].unlock_at=Helper.getLocalDate(data[i].unlock_at);
+    data[i].lock_at=Helper.getLocalDate(data[i].lock_at);
+  }*/
   Helper.fillValues(cell.getRow()+1,cell.getColumn(),data,"assignment_dates",null);
 }
 
 /**
  * Get all assignments dates in a course
  * @param {number} course_id 
+ * @returns {object} a list of assignments
  */
-function getAssginmentsDate(course_id)
+function getAssginments(course_id)
 {
-  var endpoint=Helper.getAPIAction("assignments","list_assignments_date").endpoint;
+  var endpoint=Helper.getAPIAction("assignments","get_assignments").endpoint;
   //create opts
   var opts ={};
   opts["course_id"]=course_id;
@@ -92,7 +99,7 @@ function getAssginmentsDate(course_id)
       }
     }]'
 */
-async function shifAssignmentDates()
+function shifAssignmentDates()
 {
   //endpoint
   var endpoint=Helper.getAPIAction("assignments","shift_assignments_dates").endpoint;
@@ -103,37 +110,37 @@ async function shifAssignmentDates()
   //verify opts
   if(opts["course_id"]==null || opts["num_of_days"]==null){
     Browser.msgBox("Invalid parameters.")
+    return;
   }
     
 
   //call get assignment api
-  var original_dates=getAssginmentsDate(opts.course_id);
+  var assignments=getAssginments(opts.course_id);
   
-  //var total=original_dates.length;
+  //var total=assignments.length;
   let date_opts={
     "course_id":opts.course_id,
     "dlist":[]
     };
-  //updage assignments
-  var assignments=[];
-  for(var i=0;i&lt;original_dates.length;i++){//check all assignments  
+  
+  for(var i=0;i&lt;assignments.length;i++){//check all assignments  
         let new_date={
-          "id":original_dates[i].id.toString(),
+          "id":assignments[i].id.toString(),
           "all_dates":[{
             "base":true
           }]
         }
         //due_at
-        if(original_dates[i].due_at!=null){
-          new_date.all_dates[0].due_at=shiftDate(original_dates[i].due_at,opts.num_of_days);
+        if(assignments[i].due_at!=null){
+          new_date.all_dates[0].due_at=shiftDate(assignments[i].due_at,opts.num_of_days);
         }
         //lock_at
-        if(original_dates[i].lock_at!=null){
-          new_date.all_dates[0].lock_at=shiftDate(original_dates[i].lock_at,opts.num_of_days);
+        if(assignments[i].lock_at!=null){
+          new_date.all_dates[0].lock_at=shiftDate(assignments[i].lock_at,opts.num_of_days);
         }
         //unlock_at
-        if(original_dates[i].unlock_at!=null){
-          new_date.all_dates[0].unlock_at=shiftDate(original_dates[i].unlock_at,opts.num_of_days);
+        if(assignments[i].unlock_at!=null){
+          new_date.all_dates[0].unlock_at=shiftDate(assignments[i].unlock_at,opts.num_of_days);
         } 
 
         if(new_date.all_dates[0].due_at!=null || new_date.all_dates[0].lock_at!=null || new_date.all_dates[0].unlock_at!=null)
@@ -143,13 +150,7 @@ async function shifAssignmentDates()
   //Helper.log(date_opts);
   let data= canvasAPI(endpoint,date_opts);
   //handle data
-  Helper.fillValues(param_range.getLastRow()+1,param_range.getColumn(),await data,"progress","#e1eec7");
-  //show progress
-  var cell1=SpreadsheetApp.getActiveSheet().getRange(param_range.getLastRow()+2,param_range.getColumn());
-  cell1.setValue("completion");
-  var cell2=SpreadsheetApp.getActiveSheet().getRange(param_range.getLastRow()+2,param_range.getColumn()+1);
-  queryProgress(data.id,cell2);
-  //Helper.fillValues(param_range.getLastRow()+1,param_range.getColumn(),assignments,"assignment_dates","#e1eec7");
+  Helper.showProgress(param_range,data);
 }
 
 /**
@@ -262,13 +263,13 @@ function batchCreateAssignmentsOverrides()
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Helper.html">Helper</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateArrayParamTemplate">generateArrayParamTemplate</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getAssginmentsDate">getAssginmentsDate</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftDate">shiftDate</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Helper.html">Helper</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#DATECOLUMNS">DATECOLUMNS</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateArrayParamTemplate">generateArrayParamTemplate</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getAssginments">getAssginments</a></li><li><a href="global.html#getCoursesInAccount">getCoursesInAccount</a></li><li><a href="global.html#getCoursesInfo">getCoursesInfo</a></li><li><a href="global.html#getProgress">getProgress</a></li><li><a href="global.html#getSelectedRange">getSelectedRange</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#searchCoursesByNames">searchCoursesByNames</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftDate">shiftDate</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#showPagesGuide">showPagesGuide</a></li><li><a href="global.html#TFCOLUMNS">TFCOLUMNS</a></li><li><a href="global.html#TFCOLUMNS_RO">TFCOLUMNS_RO</a></li><li><a href="global.html#updateCourseDates">updateCourseDates</a></li><li><a href="global.html#updateCourses">updateCourses</a></li><li><a href="global.html#updatePageToDoDate">updatePageToDoDate</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sun Jan 10 2021 23:08:05 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sun Jan 17 2021 23:55:36 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

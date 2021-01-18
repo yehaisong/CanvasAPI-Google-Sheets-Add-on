@@ -23,18 +23,25 @@ function listAssignmentsDate()
   //get course id
   var cell=SpreadsheetApp.getCurrentCell();
   var course_id=cell.getValue();
-  var data=getAssginmentsDate(course_id);
+  var data=getAssginments(course_id);
   //handle data
+  /* fill data is handling this date issue
+  for(let i=0;i<data.length;i++){
+    data[i].due_at=Helper.getLocalDate(data[i].due_at);
+    data[i].unlock_at=Helper.getLocalDate(data[i].unlock_at);
+    data[i].lock_at=Helper.getLocalDate(data[i].lock_at);
+  }*/
   Helper.fillValues(cell.getRow()+1,cell.getColumn(),data,"assignment_dates",null);
 }
 
 /**
  * Get all assignments dates in a course
  * @param {number} course_id 
+ * @returns {object} a list of assignments
  */
-function getAssginmentsDate(course_id)
+function getAssginments(course_id)
 {
-  var endpoint=Helper.getAPIAction("assignments","list_assignments_date").endpoint;
+  var endpoint=Helper.getAPIAction("assignments","get_assignments").endpoint;
   //create opts
   var opts ={};
   opts["course_id"]=course_id;
@@ -80,33 +87,32 @@ function shifAssignmentDates()
     
 
   //call get assignment api
-  var original_dates=getAssginmentsDate(opts.course_id);
+  var assignments=getAssginments(opts.course_id);
   
-  //var total=original_dates.length;
+  //var total=assignments.length;
   let date_opts={
     "course_id":opts.course_id,
     "dlist":[]
     };
-  //updage assignments
-  var assignments=[];
-  for(var i=0;i<original_dates.length;i++){//check all assignments  
+  
+  for(var i=0;i<assignments.length;i++){//check all assignments  
         let new_date={
-          "id":original_dates[i].id.toString(),
+          "id":assignments[i].id.toString(),
           "all_dates":[{
             "base":true
           }]
         }
         //due_at
-        if(original_dates[i].due_at!=null){
-          new_date.all_dates[0].due_at=shiftDate(original_dates[i].due_at,opts.num_of_days);
+        if(assignments[i].due_at!=null){
+          new_date.all_dates[0].due_at=shiftDate(assignments[i].due_at,opts.num_of_days);
         }
         //lock_at
-        if(original_dates[i].lock_at!=null){
-          new_date.all_dates[0].lock_at=shiftDate(original_dates[i].lock_at,opts.num_of_days);
+        if(assignments[i].lock_at!=null){
+          new_date.all_dates[0].lock_at=shiftDate(assignments[i].lock_at,opts.num_of_days);
         }
         //unlock_at
-        if(original_dates[i].unlock_at!=null){
-          new_date.all_dates[0].unlock_at=shiftDate(original_dates[i].unlock_at,opts.num_of_days);
+        if(assignments[i].unlock_at!=null){
+          new_date.all_dates[0].unlock_at=shiftDate(assignments[i].unlock_at,opts.num_of_days);
         } 
 
         if(new_date.all_dates[0].due_at!=null || new_date.all_dates[0].lock_at!=null || new_date.all_dates[0].unlock_at!=null)

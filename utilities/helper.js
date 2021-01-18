@@ -29,7 +29,7 @@ class Helper {
         }
       }
     }
-    Helper.log("API action object: "+_action);
+    Helper.log("API action object: "+_action.name);
     return _action;
   }
 
@@ -76,21 +76,34 @@ class Helper {
    */
   static fillValues(startrow,startcol,jsonobject,columns,bgcolor)
   {
-    var contents=Helper.parseJSON(jsonobject,columns);
+    const contents=Helper.parseJSON(jsonobject,columns);
     if(contents.length>0){
       Helper.insertRows(startrow,contents.length);
-      var rng = SpreadsheetApp.getActiveSheet().getRange(startrow,startcol,contents.length,contents[0].length);
+      const rng = SpreadsheetApp.getActiveSheet().getRange(startrow,startcol,contents.length,contents[0].length);
       if(bgcolor==null)
         bgcolor= Helper.getColor();
       rng.setHorizontalAlignment("left");
       rng.setValues(contents);
       rng.setBackground(bgcolor);
+      
       //Helper.log(bgcolor);
+      //format columns - add checkbox for t/f values
+      for(let c=1;c<rng.getNumColumns();c++){
+        //check header text
+        const cell=rng.getCell(1,c);
+        const header=cell.getValue();
+        //true or false column
+        if(TFCOLUMNS.includes(header)){
+          SpreadsheetApp.getActiveSheet().getRange(cell.getRow()+1,cell.getColumn(),rng.getNumRows()-1,1).insertCheckboxes();
+        }
+      }
+      //group rows
+      SpreadsheetApp.getActiveSheet().getRange((rng.getRow()+1)+":"+rng.getLastRow()).activate().shiftRowGroupDepth(1);
     }
     else
     {
       Helper.insertRows(startrow,1);
-      let cell=SpreadsheetApp.getActiveSheet().getRange(startrow,startcol,1,1);
+      const cell=SpreadsheetApp.getActiveSheet().getRange(startrow,startcol,1,1);
       cell.setValue("Something is wrong...");
     }
   }
@@ -143,7 +156,8 @@ class Helper {
   
   
   /**
-   * Convert a json object data to Array[][]
+   * Convert a json object data to Array[][].
+   * All date values will be converted to local date time based on the script timezone.
    * @param {object} jsonobject A json object
    * @param {string} columns Filter DISPLAYCOLUMNS name
    * @return {object} Array[][]
@@ -152,10 +166,14 @@ class Helper {
   {
     if(jsonobject!=null){
       if (Array.isArray(jsonobject)){
+        if(jsonobject.length==0)
+          return {};
         //create headers
         let filter=DISPLAYCOLUMNS[columns];
         let headerRow=[];
         let returned_fields=Object.keys(jsonobject[0]);
+        //Helper.log(filter);
+        //Helper.log("Verify filter - "+ Helper.verifyObjectKeys(returned_fields,filter));
         if(filter!=null && Helper.verifyObjectKeys(returned_fields,filter)){//column filters
           headerRow=filter;
         }
@@ -169,7 +187,7 @@ class Helper {
               var value=jsonobject[i][key];
               if(typeof value==="object")
                 return JSON.stringify(value);
-              return value;
+              return Helper.formatSpecialValue(key,value);
             });
           contents.push(row);
         }
@@ -187,7 +205,12 @@ class Helper {
           headerRow=returned_fields;
         }
         //get row
-        var row=headerRow.map(function(key) {return jsonobject[key]});
+        var row=headerRow.map(function(key) {
+          var value=jsonobject[key];
+              if(typeof value==="object")
+                return JSON.stringify(value);
+              return Helper.formatSpecialValue(key,value);
+        });
         
         //var contents=[headerRow,row];//horizontal display
         
@@ -204,6 +227,27 @@ class Helper {
   }
 
   /**
+   * Format special values such as datetime, read only true or false
+   * @param {string} key Columne name 
+   * @param {any} value Value
+   * @return {string} Formated value
+   */
+  static formatSpecialValue(key,value)
+  {
+    //format date value
+    if(DATECOLUMNS.includes(key))
+    value=Helper.getLocalDate(value);
+    //format tf value
+    if(TFCOLUMNS_RO.includes(key)){
+      if(value)
+        value="✓";
+      else
+        value="𐄂";
+    }
+    return value;
+  }
+
+  /**
    * Check if the returned array contains expected fields in the filter.
    * @param {array} returndatafields 
    * @param {array} filter 
@@ -213,6 +257,8 @@ class Helper {
   {
     for(let i=0;i<filter.length;i++)
     {
+      //Helper.log(filter[i]+" "+ returndatafields.includes(filter[i]));
+
       if(!returndatafields.includes(filter[i])){
         return false;
       }
@@ -301,11 +347,48 @@ class Helper {
    */
   static showProgress(range, data)
   {
-    //show progress with url
-    Helper.fillValues(range.getLastRow()+1,range.getColumn(),data,"progress",null);
-    //show progress restuls
     let progressid=data.id;
+    //show progress with url
+    //Helper.fillValues(range.getLastRow()+1,range.getColumn(),data,"progress",null);
+    Helper.toast(data.tag+" "+data.workflow_state,"Progress "+progressid+" Status");
+    //show progress restuls
     let progressResult=queryProgress(progressid);
-    Helper.fillValues(range.getLastRow()+3,range.getColumn(),progressResult,"progress_results",null);
+    Helper.fillValues(range.getLastRow()+1,range.getColumn(),progressResult,"progress",null);
+  }
+
+  /**
+   * Shows a popup window in the lower right corner of the spreadsheet with the given title and message, that stays visible for a certain length of time.
+   * @param {string} msg The message to be shown in the toast.
+   * @param {string} title The optional title of the toast.
+   * @param {number} timeoutSeconds The timeout in seconds; if null, the toast defaults to 5 seconds; if negative, the toast remains until dismissed.
+   */
+  static toast(msg,title,timeoutSeconds)
+  {
+    SpreadsheetApp.getActiveSpreadsheet().toast(msg,title,timeoutSeconds);
+  }
+
+  
+  /**
+   * Convert a GMT time to the local time (default ET, see appscript.json)
+   * @param {string} gmtdate GMT date time
+   * @return {Date} local date time
+   */
+  static getLocalDate(gmtdate)
+  {
+    if(gmtdate==null)
+      return null;
+    return (new Date(gmtdate)).toLocaleString();
+  }
+
+  /**
+   * Convert a local time to a GMT date time
+   * @param {string} localdate local date time
+   * @return {Date} GMT date time
+   */
+  static getGMTDate(localdate)
+  {
+    if(localdate==null)
+      return null;
+    return Utilities.formatDate((new Date(localdate)), "GMT","yyyy-MM-dd'T'HH:mm:ss'Z'");
   }
 }

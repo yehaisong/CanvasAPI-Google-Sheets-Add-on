@@ -32,11 +32,11 @@ const CANVASAPIS={
         "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('assignments',0);})();return false;\">Get parameters</button>",
         "Enter values",
         "Select the range of the light blue area of the parameter template",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('GET /api/v1/courses/:course_id/pages','assignment_list');})();return false;\">Call API</button>"
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('GET /api/v1/courses/:course_id/assignments','assignment_list',null);})();return false;\">Call API</button>"
       ],
       "api":{
         "name":"get_assignments",
-        "endpoint":"GET /api/v1/courses/:course_id/pages",
+        "endpoint":"GET /api/v1/courses/:course_id/assignments",
         "reference":"https://canvas.instructure.com/doc/api/assignments.html#method.assignments_api.index",
         "params":[
           {
@@ -71,7 +71,7 @@ const CANVASAPIS={
         "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('assignments',1);})();return false;\">Get parameters</button>",
         "Enter values",
         "Select the range of the light blue area of the parameter template",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('GET /api/v1/courses/:course_id/pages/:assignment_id/overrides','overrides_list');})();return false;\">Call API</button>"
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('GET /api/v1/courses/:course_id/pages/:assignment_id/overrides','overrides_list',null);})();return false;\">Call API</button>"
       ],
       "api":{
         "name":"get_assignment_overrides",
@@ -245,7 +245,7 @@ const CANVASAPIS={
       ],
       "api":{
         "name":"list_assignments_date",
-        "endpoint":"GET /api/v1/courses/:course_id/pages",
+        "endpoint":"GET /api/v1/courses/:course_id/assignments",
         "reference":"https://canvas.instructure.com/doc/api/assignments.html#method.assignments_api.index",
         "params":[
           {

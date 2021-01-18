@@ -60,7 +60,7 @@ const CANVASAPIS={
         "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('assignments',0);})();return false;\">Get parameters&lt;/button>",
         "Enter values",
         "Select the range of the light blue area of the parameter template",
-        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('GET /api/v1/courses/:course_id/assignments','assignment_list');})();return false;\">Call API&lt;/button>"
+        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('GET /api/v1/courses/:course_id/assignments','assignment_list',null);})();return false;\">Call API&lt;/button>"
       ],
       "api":{
         "name":"get_assignments",
@@ -99,11 +99,11 @@ const CANVASAPIS={
         "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('assignments',1);})();return false;\">Get parameters&lt;/button>",
         "Enter values",
         "Select the range of the light blue area of the parameter template",
-        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('GET /api/v1/courses/:course_id/assignments/:assignment_id/overrides','overrides_list');})();return false;\">Call API&lt;/button>"
+        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('GET /api/v1/courses/:course_id/pages/:assignment_id/overrides','overrides_list',null);})();return false;\">Call API&lt;/button>"
       ],
       "api":{
         "name":"get_assignment_overrides",
-        "endpoint":"GET /api/v1/courses/:course_id/assignments/:assignment_id/overrides",
+        "endpoint":"GET /api/v1/courses/:course_id/pages/:assignment_id/overrides",
         "reference":"https://canvas.instructure.com/doc/api/assignments.html#method.assignment_overrides.index",
         "params":[
           {
@@ -269,7 +269,7 @@ const CANVASAPIS={
       "automated":"false",
       "guide":[
         "Select a cell with a course id",
-        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).Assignments.listAssignmentsDate();})();return false;\">Call API&lt;/button>"
+        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).listAssignmentsDate();})();return false;\">Call API&lt;/button>"
       ],
       "api":{
         "name":"list_assignments_date",
@@ -399,6 +399,13 @@ const CANVASAPIS={
             "default_value":"",
             "desc":"If true, include only blueprint courses. If false, exclude them. If not present, do not filter on this basis.",
             "example":"true"
+          },
+          {
+            "name":"enrollment_term_id",
+            "type":"number",
+            "default_value":"",
+            "desc":"If set, only includes courses from the specified term.",
+            "example":"1"
           }
         ]
       }
@@ -556,6 +563,91 @@ const CANVASAPIS={
           }
         ]
       }
+    },
+    { 
+      "display_name":"2: update_courses",
+      "automated":"false",
+      "guide":[
+        "Select a column with course ids listed in rows",
+        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).updateCourses('offer');})();return false;\">publish&lt;/button>"
+
+      ],
+      "api":{
+        "name":"update_courses",
+        "endpoint":"PUT /api/v1/accounts/:account_id/courses",
+        "reference":"https://canvas.instructure.com/doc/api/courses.html#method.courses.show",
+        "params":[
+          {
+            "name":"account_id",
+            "type":"number",
+            "default_value":"1",
+            "desc":"account id",
+            "example":"1"
+          },
+          {
+            "name":"course_ids[]",
+            "type":"array",
+            "default_value":"[]",
+            "desc":"List of ids of courses to update. At most 500 courses may be updated in one call.",
+            "example":"[83,84,85]"
+          },
+          {
+            "name":"event",
+            "type":"string",
+            "default_value":"",
+            "desc":"Allowed values: offer (publish), conclude, delete, undelete",
+            "example":"offer"
+          }
+        ]
+      }
+    }
+  ],
+  "pages":[
+    { 
+      "display_name":"0: list_pages",
+      "automated":"true",
+      "guide":[
+        "Select an empty cell to start",
+        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('pages',0);})();return false;\">Get parameters&lt;/button>",
+        "Enter values",
+        "Select the range of the light blue area of the parameter template",
+        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('GET /api/v1/courses/:course_id/pages','page_list');})();return false;\">Call API&lt;/button>"
+      ],
+      "api":{
+        "name":"list_pages",
+        "endpoint":"GET /api/v1/courses/:course_id/pages",
+        "reference":"https://canvas.instructure.com/doc/api/pages.html#method.wiki_pages_api.index",
+        "params":[
+          {
+            "name":"course_id",
+            "type":"number",
+            "default_value":"",
+            "desc":"course id",
+            "example":"83"
+          },
+          {
+            "name":"search_term",
+            "type":"string",
+            "default_value":"",
+            "desc":"The partial title of the pages to match and return.",
+            "example":"quiz"
+          },
+          {
+            "name":"sort",
+            "type":"string",
+            "default_value":"title",
+            "desc":"Determines the order of the assignments. Defaults to “title”. title|created_at|updated_at",
+            "example":"title"
+          },
+          {
+            "name":"published",
+            "type":"boolean",
+            "default_value":"true",
+            "desc":"If true, include only published paqes. If false, exclude published pages. If not present, do not filter on published status.",
+            "example":"title"
+          }
+        ]
+      }
     }
   ]
 };
@@ -569,13 +661,13 @@ const CANVASAPIS={
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Helper.html">Helper</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateArrayParamTemplate">generateArrayParamTemplate</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getAssginmentsDate">getAssginmentsDate</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftDate">shiftDate</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Helper.html">Helper</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#DATECOLUMNS">DATECOLUMNS</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateArrayParamTemplate">generateArrayParamTemplate</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getAssginments">getAssginments</a></li><li><a href="global.html#getCoursesInAccount">getCoursesInAccount</a></li><li><a href="global.html#getCoursesInfo">getCoursesInfo</a></li><li><a href="global.html#getProgress">getProgress</a></li><li><a href="global.html#getSelectedRange">getSelectedRange</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#searchCoursesByNames">searchCoursesByNames</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftDate">shiftDate</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#showPagesGuide">showPagesGuide</a></li><li><a href="global.html#TFCOLUMNS">TFCOLUMNS</a></li><li><a href="global.html#TFCOLUMNS_RO">TFCOLUMNS_RO</a></li><li><a href="global.html#updateCourseDates">updateCourseDates</a></li><li><a href="global.html#updateCourses">updateCourses</a></li><li><a href="global.html#updatePageToDoDate">updatePageToDoDate</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sun Jan 10 2021 23:08:05 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sun Jan 17 2021 23:55:36 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

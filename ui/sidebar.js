@@ -25,4 +25,16 @@ class SideBar{
     htmlTemplate.data=SideBar.getAPIWrapper(name.toLowerCase());
     SpreadsheetApp.getUi().showSidebar(htmlTemplate.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).setTitle(name));
   }
+
+  /**
+   * Show update course dates side bar
+   */
+  static showUpdateCourseDatesSideBar()
+  {
+    const title="Change Course Dates";
+    let htmlTemplate=HtmlService.createTemplateFromFile('ui/template/updateCourseDates');
+    //htmlTemplate.data=SpreadsheetApp.getActiveRange().getA1Notation();
+    SpreadsheetApp.getUi().showSidebar(htmlTemplate.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).setTitle(title));
+  }
+
 }

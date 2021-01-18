@@ -8,3 +8,13 @@ I am not a fulltime developer. The project will be missing some documentations.
 
 I am using clasp to maintain the project. To see how to use clasp, check https://developers.google.com/apps-script/guides/clasp.
 
+
+To pull codes from GAS
+clasp pull
+
+To push codes to GAS
+clasp push
+
+To generate js doc
+jsdoc ./ -r -d docs
+
