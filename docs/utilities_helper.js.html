@@ -39,7 +39,7 @@ class Helper {
    * Get Canvas api endpoint by controller and action from the constant apis
    * @param {string} controller name, for example, accounts
    * @param {string} action name, for example, get_accounts
-   * @return {object} 
+   * @returns {object} 
    * {"name":"action",
       "endpoint":"endpoint",
       "reference":"url",
@@ -47,10 +47,10 @@ class Helper {
    */
   static getAPIAction(controller,action)
   {
-    var _actions=CANVASAPIS[controller];
-    var _action;
+    let _actions=CANVASAPIS[controller];
+    let _action;
     if (typeof _actions ==="object"){
-      for(var i=0;i&lt;_actions.length;i++){
+      for(let i=0;i&lt;_actions.length;i++){
         if(_actions[i].api.name==action){
           _action=_actions[i].api;
           break;
@@ -71,7 +71,7 @@ class Helper {
    */
   static setNotesFromJsonList(startrow,startcol,jsonarray,columns)
   {
-    var contents=Helper.parseJSON(jsonarray,columns);
+    let contents=Helper.parseJSON(jsonarray,columns);
     Helper.setNotes(startrow,startcol,contents,"column");
   }
   
@@ -107,6 +107,7 @@ class Helper {
     const contents=Helper.parseJSON(jsonobject,columns);
     if(contents.length>0){
       Helper.insertRows(startrow,contents.length);
+      startrow++;
       const rng = SpreadsheetApp.getActiveSheet().getRange(startrow,startcol,contents.length,contents[0].length);
       if(bgcolor==null)
         bgcolor= Helper.getColor();
@@ -126,7 +127,7 @@ class Helper {
         }
       }
       //group rows
-      SpreadsheetApp.getActiveSheet().getRange((rng.getRow()+1)+":"+rng.getLastRow()).activate().shiftRowGroupDepth(1);
+      SpreadsheetApp.getActiveSheet().getRange((rng.getRow())+":"+rng.getLastRow()).activate().shiftRowGroupDepth(1);
     }
     else
     {
@@ -302,13 +303,15 @@ class Helper {
    */
   static parseRangeToJson(range)
   {
-    var json={};
+    let json={};
+    if(range.getNumColumns()!=2)
+      return json;
     //Browser.msgBox(range.getNumRows());
-    for(var i=1;i&lt;=range.getNumRows();i++){
+    for(let i=1;i&lt;=range.getNumRows();i++){
       if(range.getCell(i,1).getValue()!=""&amp;&amp;range.getCell(i,2).getValue()!=""){
-        var param_name=range.getCell(i,1).getValue();
-        var param_value_str=range.getCell(i,2).getValue();
-        var param_value=null;
+        let param_name=range.getCell(i,1).getValue();
+        let param_value_str=range.getCell(i,2).getValue();
+        let param_value=null;
         if(param_name.endsWith("[]")){//this is an array parameter
           param_name=param_name.substring(0,param_name.length-2);
           param_value=[];
@@ -320,7 +323,7 @@ class Helper {
         }
         //check if the param is an object
         //Helper.log(param_name);
-        var param_name_parts=[]
+        let param_name_parts=[]
         param_name_parts=param_name.split(".");
         //Helper.log(param_name_parts);
         if(param_name_parts!=null &amp;&amp; param_name_parts.length>1){//this is a property of an object parameter
@@ -337,6 +340,54 @@ class Helper {
     return json;
   }
 
+  /**
+   * Convert a range with a header row to an json object array
+   * @param {Range} range A Spreadsheet Range object
+   * @returns {Array&lt;object>} object array.
+   */
+  static convertRangeToObjectArray(range)
+  {
+    let rangedata=range.getValues();
+    let header=rangedata[0];
+    let objects=[]
+    for(let r=1;r&lt;rangedata.length;r++){
+      let object={};
+      for(let c=0;c&lt;header.length;c++){
+          object[header[c]]=rangedata[r][c];
+      }
+      objects.push(object);
+    }
+    return objects;
+  }
+
+  /**
+   * Check if range contains all required columns
+   * @param {object} range A Spreadsheet Range object
+   * @param {Array&lt;sting>} columns A list of required column names
+   * @returns {boolean} True or false
+   */
+  static checkRequiredColumns(range, columns)
+  {
+    //the range has less columns than required columns or has less than 2 rows. return false
+    if(range.getNumColumns()&lt;columns.length || range.getNumRows()&lt;2){
+      Browser.msgBox("Please select a range with the required columns: "+action.required_columns.toString());
+      return false;
+    }
+      
+
+    let header=SpreadsheetApp.getActiveSheet().getRange(range.getRow(),range.getColumn(),1,range.getNumColumns()).getValues();
+    Helper.log(header[0]);
+    Helper.log(columns);
+    for(let i=0;i&lt;columns.length;i++){
+      if(!header[0].includes(columns[i])){
+        Browser.msgBox("Expecting column "+columns[i]);
+        return false;//the column is not included, return false
+      }
+        
+    }
+
+    return true;//all required columns are included, return true
+  }
   
   /**
    * get a random color from the default list
@@ -399,25 +450,55 @@ class Helper {
   /**
    * Convert a GMT time to the local time (default ET, see appscript.json)
    * @param {string} gmtdate GMT date time
-   * @return {Date} local date time
+   * @return {string} local date time
    */
   static getLocalDate(gmtdate)
   {
-    if(gmtdate==null)
-      return null;
+    if(gmtdate==null || gmtdate.trim().toLowerCase()=="null" || gmtdate.trim()=="")
+      return "null";
     return (new Date(gmtdate)).toLocaleString();
   }
 
   /**
-   * Convert a local time to a GMT date time
+   * Convert a local time to a GMT-0 date time. Use it when submit a date time string to Canvas.
    * @param {string} localdate local date time
-   * @return {Date} GMT date time
+   * @return {string} GMT date time
    */
-  static getGMTDate(localdate)
+  static getISODate(localdate)
   {
-    if(localdate==null)
-      return null;
-    return Utilities.formatDate((new Date(localdate)), "GMT","yyyy-MM-dd'T'HH:mm:ss'Z'");
+    if(localdate==null || localdate.trim().toLowerCase()=="null" || localdate.trim()=="")
+      return "null";
+    return (new Date(localdate)).toISOString();
+  }
+
+  /**
+   * Calculate the date difference in days. 
+   * @param {string} date1 
+   * @param {string} date2 
+   * @returns {number} Difference in days. Positive if date2 is later than date1.
+   */
+  static daysDiff(date1, date2)
+  {
+    const current_date = new Date(date1); 
+    const update_date = new Date(date2); 
+    const oneday=1000*3600*24;   
+    // To calculate the time difference of two dates 
+    const Difference_In_Time = update_date.getTime() - current_date.getTime();   
+    // To calculate the no. of days between two dates 
+    return Difference_In_Time / oneday;
+  }
+
+  /**
+   * Shift days
+   * @param {string} olddatestr 
+   * @param {Number} num_of_days 
+   */
+  static shiftDate(olddatestr,num_of_days)
+  {
+    let result=new Date(olddatestr);
+    let olddate=new Date(olddatestr);
+    result.setDate(olddate.getDate()+num_of_days);
+    return result.toISOString();
   }
 }</code></pre>
         </article>
@@ -429,13 +510,13 @@ class Helper {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Helper.html">Helper</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#DATECOLUMNS">DATECOLUMNS</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateArrayParamTemplate">generateArrayParamTemplate</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getAssginments">getAssginments</a></li><li><a href="global.html#getCoursesInAccount">getCoursesInAccount</a></li><li><a href="global.html#getCoursesInfo">getCoursesInfo</a></li><li><a href="global.html#getProgress">getProgress</a></li><li><a href="global.html#getSelectedRange">getSelectedRange</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#searchCoursesByNames">searchCoursesByNames</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftDate">shiftDate</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#showPagesGuide">showPagesGuide</a></li><li><a href="global.html#TFCOLUMNS">TFCOLUMNS</a></li><li><a href="global.html#TFCOLUMNS_RO">TFCOLUMNS_RO</a></li><li><a href="global.html#updateCourseDates">updateCourseDates</a></li><li><a href="global.html#updateCourses">updateCourses</a></li><li><a href="global.html#updatePageToDoDate">updatePageToDoDate</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Accounts.html">Accounts</a></li><li><a href="Assignments.html">Assignments</a></li><li><a href="Courses.html">Courses</a></li><li><a href="Helper.html">Helper</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#APIAction">APIAction</a></li><li><a href="global.html#APIController">APIController</a></li><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#DATECOLUMNS">DATECOLUMNS</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateArrayParamTemplate">generateArrayParamTemplate</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getCoursesInfo">getCoursesInfo</a></li><li><a href="global.html#getProgress">getProgress</a></li><li><a href="global.html#getSelectedRange">getSelectedRange</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftAssignmentDates">shiftAssignmentDates</a></li><li><a href="global.html#shiftDates">shiftDates</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#showPagesGuide">showPagesGuide</a></li><li><a href="global.html#TFCOLUMNS">TFCOLUMNS</a></li><li><a href="global.html#TFCOLUMNS_RO">TFCOLUMNS_RO</a></li><li><a href="global.html#updateCourseDates">updateCourseDates</a></li><li><a href="global.html#updateCourses">updateCourses</a></li><li><a href="global.html#updatePageToDoDate">updatePageToDoDate</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sun Jan 17 2021 23:55:36 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Mon Jan 18 2021 23:34:02 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

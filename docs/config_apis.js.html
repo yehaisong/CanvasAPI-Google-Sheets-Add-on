@@ -32,6 +32,7 @@
  */
 
 
+
 /** 
 How to make an automated api call:
 Pre-condition:
@@ -294,7 +295,7 @@ const CANVASAPIS={
         "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('assignments',5);})();return false;\">Get parameters&lt;/button>",
         "Enter values",
         "Select the range of the light blue area of the parameter template",
-        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).shifAssignmentDates();})();return false;\">Call API&lt;/button>"
+        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).shiftAssignmentDates();})();return false;\">Call API&lt;/button>"
       ],
       "api":{
         "name":"shift_assignments_dates",
@@ -570,7 +571,6 @@ const CANVASAPIS={
       "guide":[
         "Select a column with course ids listed in rows",
         "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).updateCourses('offer');})();return false;\">publish&lt;/button>"
-
       ],
       "api":{
         "name":"update_courses",
@@ -598,6 +598,59 @@ const CANVASAPIS={
             "desc":"Allowed values: offer (publish), conclude, delete, undelete",
             "example":"offer"
           }
+        ]
+      }
+    },
+    { 
+      "display_name":"3: update_a_course",
+      "automated":"true",
+      "guide":[
+        "Select an empty cell to start",
+        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('courses',3);})();return false;\">Get parameters&lt;/button>",
+        "Enter values",
+        "Select the range of the light blue area of the parameter template",
+        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('GPUT /api/v1/courses/:id',null,null);})();return false;\">Call API&lt;/button>"
+      ],
+      "api":{
+        "name":"update_a_course",
+        "endpoint":"PUT /api/v1/courses/:id",
+        "reference":"https://canvas.instructure.com/doc/api/courses.html#method.courses.update",
+        "params":[
+          {
+            "name":"id",
+            "type":"number",
+            "default_value":"",
+            "desc":"course id",
+            "example":"1"
+          },
+          {
+            "name":"course.name",
+            "type":"string",
+            "default_value":"",
+            "desc":"The name of the course. If omitted, the course will be named “Unnamed Course.",
+            "example":"name"
+          },
+          {
+            "name":"course.course_code",
+            "type":"string",
+            "default_value":"",
+            "desc":"The course code for the course.",
+            "example":"abc-3456"
+          },
+          {
+            "name":"course.start_at",
+            "type":"DateTime",
+            "default_value":"",
+            "desc":"Course start date in ISO8601 format",
+            "example":"2011-01-01T01:00Z"
+          },
+          {
+            "name":"course.end_at",
+            "type":"DateTime",
+            "default_value":"",
+            "desc":"Course start date in ISO8601 format",
+            "example":"2011-01-01T01:00Z"
+          },
         ]
       }
     }
@@ -648,6 +701,20 @@ const CANVASAPIS={
           }
         ]
       }
+    },
+    { 
+      "display_name":"1: update_pages_todo",
+      "automated":"false",
+      "guide":[
+        "Select a range with page info. Include a header row with required columns: course_id, url, todo_date",
+        "&lt;button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).updatePageToDoDate();})();return false;\">Call API&lt;/button>"
+      ],
+      "api":{
+        "name":"update_pages_todo",
+        "endpoint":"PUT /api/v1/courses/:course_id/pages/:url",
+        "reference":"https://canvas.instructure.com/doc/api/pages.html#method.wiki_pages_api.update",
+        "required_columns":["course_id","url","todo_date"]
+      }
     }
   ]
 };
@@ -661,13 +728,13 @@ const CANVASAPIS={
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Helper.html">Helper</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#DATECOLUMNS">DATECOLUMNS</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateArrayParamTemplate">generateArrayParamTemplate</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getAssginments">getAssginments</a></li><li><a href="global.html#getCoursesInAccount">getCoursesInAccount</a></li><li><a href="global.html#getCoursesInfo">getCoursesInfo</a></li><li><a href="global.html#getProgress">getProgress</a></li><li><a href="global.html#getSelectedRange">getSelectedRange</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#searchCoursesByNames">searchCoursesByNames</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftDate">shiftDate</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#showPagesGuide">showPagesGuide</a></li><li><a href="global.html#TFCOLUMNS">TFCOLUMNS</a></li><li><a href="global.html#TFCOLUMNS_RO">TFCOLUMNS_RO</a></li><li><a href="global.html#updateCourseDates">updateCourseDates</a></li><li><a href="global.html#updateCourses">updateCourses</a></li><li><a href="global.html#updatePageToDoDate">updatePageToDoDate</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Accounts.html">Accounts</a></li><li><a href="Assignments.html">Assignments</a></li><li><a href="Courses.html">Courses</a></li><li><a href="Helper.html">Helper</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#APIAction">APIAction</a></li><li><a href="global.html#APIController">APIController</a></li><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#DATECOLUMNS">DATECOLUMNS</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateArrayParamTemplate">generateArrayParamTemplate</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getCoursesInfo">getCoursesInfo</a></li><li><a href="global.html#getProgress">getProgress</a></li><li><a href="global.html#getSelectedRange">getSelectedRange</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftAssignmentDates">shiftAssignmentDates</a></li><li><a href="global.html#shiftDates">shiftDates</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#showPagesGuide">showPagesGuide</a></li><li><a href="global.html#TFCOLUMNS">TFCOLUMNS</a></li><li><a href="global.html#TFCOLUMNS_RO">TFCOLUMNS_RO</a></li><li><a href="global.html#updateCourseDates">updateCourseDates</a></li><li><a href="global.html#updateCourses">updateCourses</a></li><li><a href="global.html#updatePageToDoDate">updatePageToDoDate</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sun Jan 17 2021 23:55:36 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Mon Jan 18 2021 23:34:02 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

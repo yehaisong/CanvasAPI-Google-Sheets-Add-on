@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: SideBar</title>
+    <title>JSDoc: Class: Assignments</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: SideBar</h1>
+    <h1 class="page-title">Class: Assignments</h1>
 
     
 
@@ -28,9 +28,9 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>SideBar<span class="signature">()</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>Assignments<span class="signature">()</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Prepare sidebar</div>
+            <div class="class-description">The Assignments class</div>
         
     
 </header>
@@ -45,7 +45,7 @@
     
 
     
-    <h4 class="name" id="SideBar"><span class="type-signature"></span>new SideBar<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Assignments"><span class="type-signature"></span>new Assignments<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -93,7 +93,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ui_sidebar.js.html">ui/sidebar.js</a>, <a href="ui_sidebar.js.html#line9">line 9</a>
+        <a href="controller_assignments.js.html">controller/assignments.js</a>, <a href="controller_assignments.js.html#line18">line 18</a>
     </li></ul></dd>
     
 
@@ -149,7 +149,7 @@
     
 
     
-    <h4 class="name" id=".getAPIWrapper"><span class="type-signature">(static) </span>getAPIWrapper<span class="signature">(name)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".bulkUpdateAssignmentDate"><span class="type-signature">(static) </span>bulkUpdateAssignmentDate<span class="signature">(date_opts)</span><span class="type-signature"></span></h4>
     
 
     
@@ -157,7 +157,8 @@
 
 
 <div class="description">
-    Return a json array from the CANVASAPIS
+    Bulk update assignment dates
+PUT /api/v1/courses/:course_id/assignments/bulk_update
 </div>
 
 
@@ -193,13 +194,13 @@
 
         <tr>
             
-                <td class="name"><code>name</code></td>
+                <td class="name"><code>date_opts</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">object</span>
 
 
             
@@ -209,7 +210,7 @@
 
             
 
-            <td class="description last">Provide a name of a Canvas API controller</td>
+            <td class="description last">bulk assignment date update options object.</td>
         </tr>
 
     
@@ -250,7 +251,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ui_sidebar.js.html">ui/sidebar.js</a>, <a href="ui_sidebar.js.html#line14">line 14</a>
+        <a href="controller_assignments.js.html">controller/assignments.js</a>, <a href="controller_assignments.js.html#line42">line 42</a>
     </li></ul></dd>
     
 
@@ -286,12 +287,16 @@
     
 
     
-    <h4 class="name" id=".show"><span class="type-signature">(static) </span>show<span class="signature">(name)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".getBulkAssignmentDateOpts"><span class="type-signature">(static) </span>getBulkAssignmentDateOpts<span class="signature">(assignments, num_of_days)</span><span class="type-signature"> &rarr; {object}</span></h4>
     
 
     
 
 
+
+<div class="description">
+    Construct a bulk assignment date update options object.
+</div>
 
 
 
@@ -326,13 +331,13 @@
 
         <tr>
             
-                <td class="name"><code>name</code></td>
+                <td class="name"><code>assignments</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">array.&lt;assignment></span>
 
 
             
@@ -342,7 +347,30 @@
 
             
 
-            <td class="description last">The name of the api function</td>
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>num_of_days</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
         </tr>
 
     
@@ -383,7 +411,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ui_sidebar.js.html">ui/sidebar.js</a>, <a href="ui_sidebar.js.html#line22">line 22</a>
+        <a href="controller_assignments.js.html">controller/assignments.js</a>, <a href="controller_assignments.js.html#line62">line 62</a>
     </li></ul></dd>
     
 
@@ -408,6 +436,35 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    '[{
+        "id": 1, //asignment id
+        "all_dates": 
+        [{
+          "base": true, //default value
+          "due_at": "2020-08-29T23:59:00-06:00" //new date
+        }
+      }]'
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">object</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -419,7 +476,7 @@
     
 
     
-    <h4 class="name" id=".showUpdateCourseDatesSideBar"><span class="type-signature">(static) </span>showUpdateCourseDatesSideBar<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".getCourseAssginments"><span class="type-signature">(static) </span>getCourseAssginments<span class="signature">(course_id)</span><span class="type-signature"> &rarr; {object}</span></h4>
     
 
     
@@ -427,7 +484,7 @@
 
 
 <div class="description">
-    Show update course dates side bar
+    Get all assignments dates in a course
 </div>
 
 
@@ -436,6 +493,55 @@
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>course_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -471,7 +577,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ui_sidebar.js.html">ui/sidebar.js</a>, <a href="ui_sidebar.js.html#line32">line 32</a>
+        <a href="controller_assignments.js.html">controller/assignments.js</a>, <a href="controller_assignments.js.html#line24">line 24</a>
     </li></ul></dd>
     
 
@@ -496,6 +602,28 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    a list of assignments
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">object</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 

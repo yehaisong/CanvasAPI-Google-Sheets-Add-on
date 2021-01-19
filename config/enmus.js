@@ -11,7 +11,8 @@ const APIAction={
     COURSES:{
         GET_YOUR_ACTIVE_COURSES:'get_your_active_courses',
         UPDATE_COURSES:'update_courses',
-        GET_SINGLE_COURSE:'get_single_course'
+        GET_SINGLE_COURSE:'get_single_course',
+        UPDATE_A_COURSE:'update_a_course'
     },
     ASSIGNMENGS:{
         GET_ASSIGNMENTS:'get_assignments',

@@ -12,131 +12,100 @@ function showAssignmentsGuide()
   SideBar.show("Assignments");
 }
 
-
 /**
- * Get all assignments in a course and list all due dates, unlock dates, and lock dates
- * GET /api/v1/courses/:course_id/assignments
- * Returns the paginated list of assignments for the current course or assignment group.
+ * The Assignments class
  */
-function listAssignmentsDate()
-{
-  //get course id
-  var cell=SpreadsheetApp.getCurrentCell();
-  var course_id=cell.getValue();
-  var data=getAssginments(course_id);
-  //handle data
-  /* fill data is handling this date issue
-  for(let i=0;i<data.length;i++){
-    data[i].due_at=Helper.getLocalDate(data[i].due_at);
-    data[i].unlock_at=Helper.getLocalDate(data[i].unlock_at);
-    data[i].lock_at=Helper.getLocalDate(data[i].lock_at);
-  }*/
-  Helper.fillValues(cell.getRow()+1,cell.getColumn(),data,"assignment_dates",null);
-}
-
-/**
- * Get all assignments dates in a course
- * @param {number} course_id 
- * @returns {object} a list of assignments
- */
-function getAssginments(course_id)
-{
-  var endpoint=Helper.getAPIAction("assignments","get_assignments").endpoint;
-  //create opts
-  var opts ={};
-  opts["course_id"]=course_id;
-  //opts.include.push("all_dates");
-  //call api
-  var data=canvasAPI(endpoint,opts);
-  //handle data
-  return data
-}
-
-
-/**
- * Add number of days to the current assignments dates
- * Bulk update assignment dates
- * PUT /api/v1/courses/:course_id/assignments/bulk_update
- * Update due dates and availability dates for multiple assignments in a course.
- * Accepts a JSON array of objects containing two keys each: id, the assignment id, and all_dates, an array of AssignmentDate structures containing the base and/or override dates for the assignment, as returned from the List assignments endpoint with include[]=all_dates.
- * Override dates are not handled.
- */
-/*
-'[{
-      "id": 1, //asignment id
-      "all_dates": 
-      [{
-        "base": true, //default value
-        "due_at": "2020-08-29T23:59:00-06:00" //new date
-      }
-    }]'
-*/
-function shifAssignmentDates()
-{
-  //endpoint
-  var endpoint=Helper.getAPIAction("assignments","shift_assignments_dates").endpoint;
-  //params:courseid, number of days
-  var param_range=SpreadsheetApp.getActiveSheet().getActiveRange();
-  var opts=Helper.parseRangeToJson(param_range);
-  
-  //verify opts
-  if(opts["course_id"]==null || opts["num_of_days"]==null){
-    Browser.msgBox("Invalid parameters.")
-    return;
+class Assignments{
+  /**
+   * Get all assignments dates in a course
+   * @param {number} course_id 
+   * @returns {object} a list of assignments
+   */
+  static getCourseAssginments(course_id)
+  {
+    var endpoint=Helper.getAPIAction("assignments","get_assignments").endpoint;
+    //create opts
+    var opts ={};
+    opts["course_id"]=course_id;
+    //opts.include.push("all_dates");
+    //call api
+    var data=canvasAPI(endpoint,opts);
+    //handle data
+    return data
   }
+
+  /**
+   * Bulk update assignment dates
+   * PUT /api/v1/courses/:course_id/assignments/bulk_update
+   * @param {object} date_opts bulk assignment date update options object.
+   */
+  static bulkUpdateAssignmentDate(date_opts)
+  {
+    const endpoint=Helper.getAPIAction("assignments","shift_assignments_dates").endpoint;
+    return canvasAPI(endpoint,date_opts);
+  }
+
+  /**
+   * Construct a bulk assignment date update options object.
+   * @param {array<assignment>} assignments 
+   * @param {number} num_of_days
+   * @returns {object} 
+   * '[{
+        "id": 1, //asignment id
+        "all_dates": 
+        [{
+          "base": true, //default value
+          "due_at": "2020-08-29T23:59:00-06:00" //new date
+        }
+      }]'
+  */
+  static getBulkAssignmentDateOpts(assignments,num_of_days)
+  {
+    let date_opts={
+      "course_id":opts.course_id,
+      "dlist":[]
+      };
     
+    for(var i=0;i<assignments.length;i++){//check all assignments  
+      let new_date={
+        "id":assignments[i].id.toString(),
+        "all_dates":[{
+          "base":true
+        }]
+      }
+      //due_at
+      if(assignments[i].due_at!=null){
+        new_date.all_dates[0].due_at=Helper.shiftDate(assignments[i].due_at,num_of_days);
+      }
+      //lock_at
+      if(assignments[i].lock_at!=null){
+        new_date.all_dates[0].lock_at=Helper.shiftDate(assignments[i].lock_at,num_of_days);
+      }
+      //unlock_at
+      if(assignments[i].unlock_at!=null){
+        new_date.all_dates[0].unlock_at=Helper.shiftDate(assignments[i].unlock_at,num_of_days);
+      } 
 
-  //call get assignment api
-  var assignments=getAssginments(opts.course_id);
-  
-  //var total=assignments.length;
-  let date_opts={
-    "course_id":opts.course_id,
-    "dlist":[]
-    };
-  
-  for(var i=0;i<assignments.length;i++){//check all assignments  
-        let new_date={
-          "id":assignments[i].id.toString(),
-          "all_dates":[{
-            "base":true
-          }]
-        }
-        //due_at
-        if(assignments[i].due_at!=null){
-          new_date.all_dates[0].due_at=shiftDate(assignments[i].due_at,opts.num_of_days);
-        }
-        //lock_at
-        if(assignments[i].lock_at!=null){
-          new_date.all_dates[0].lock_at=shiftDate(assignments[i].lock_at,opts.num_of_days);
-        }
-        //unlock_at
-        if(assignments[i].unlock_at!=null){
-          new_date.all_dates[0].unlock_at=shiftDate(assignments[i].unlock_at,opts.num_of_days);
-        } 
-
-        if(new_date.all_dates[0].due_at!=null || new_date.all_dates[0].lock_at!=null || new_date.all_dates[0].unlock_at!=null)
-          date_opts.dlist.push(new_date);
+      if(new_date.all_dates[0].due_at!=null || new_date.all_dates[0].lock_at!=null || new_date.all_dates[0].unlock_at!=null)
+        date_opts.dlist.push(new_date);
+    }
+    return date_opts;
   }
-  //call bulkUpdate api
-  //Helper.log(date_opts);
-  let data= canvasAPI(endpoint,date_opts);
-  //handle data
-  Helper.showProgress(param_range,data);
+
 }
 
-/**
- * Shift days
- * @param {string} olddatestr 
- * @param {Number} num_of_days 
- */
-function shiftDate(olddatestr,num_of_days)
-{
-  let result=new Date(olddatestr);
-  let olddate=new Date(olddatestr);
-  result.setDate(olddate.getDate()+num_of_days);
-  return result.toISOString();
-}
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * Delete an assignment override

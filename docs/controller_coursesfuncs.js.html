@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: ui/menu.js</title>
+    <title>JSDoc: Source: controller/coursesfuncs.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: ui/menu.js</h1>
+    <h1 class="page-title">Source: controller/coursesfuncs.js</h1>
 
     
 
@@ -26,59 +26,107 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * @fileoverview Create Menu UI
+            <pre class="prettyprint source linenums"><code>
+/**
+ * @fileoverview Defines client funcs related to courses
  * @author hye@cedarville.edu (Haisong Ye)
  */
 
 /**
- * Add menu items 
+ * Batch update course dates
+ * @param {String} range_notation The range of course ids, e.g. A1:B2. If not provided, use the current selected range.
+ * @param {boolean} updateduedate Update due date or not. Default is true.
  */
-function onOpen() {
-  var ui = SpreadsheetApp.getUi();
-  // Or DocumentApp or FormApp.
-  ui.createMenu('Canvas')
-  .addItem("change course date","SideBar.showUpdateCourseDatesSideBar")
-  .addSeparator()
-  .addItem("shift dates","shiftDates")
-  .addSeparator()
-  .addSubMenu(ui.createMenu('apis')    
-    .addItem("accounts","showAccountsGuide")
-    .addItem("assignments","showAssignmentsGuide")
-    .addItem("blueprints","showBlueprintsGuide") 
-    .addItem("courses","showCoursesGuide")
-    .addItem("pages","showPagesGuide"))
-  /*
-  .addSeparator()
-  .addSubMenu(ui.createMenu('direct API call')
-      .addSubMenu(ui.createMenu('accounts')
-        .addItem('get your active accounts', 'get_your_active_courses')
-        .addItem('get subaccounts','get_sub_accounts')
-        .addItem('get courses in an account','get_courses_in_account'))
-      .addSubMenu(ui.createMenu('assignments')
-        .addItem('get assignments', 'get_assignments')
-        .addItem('get assignment overrides', 'get_assignment_overrides')
-        .addItem('create an assignment override', 'create_an_assignment_override')
-        .addItem('delete an assignment override', 'deleteAssignmentOverride')
-        .addItem('batch create assignments overrides', 'batchCreateAssignmentsOverrides'))
-      .addSubMenu(ui.createMenu('blueprints')
-        .addItem('get blueprint templates', 'get_blueprint_templates')
-        .addItem('update associated courses', 'update_associated_courses')
-        .addItem('sync associated courses', 'sync_associated_courses'))
-      .addSubMenu(ui.createMenu('courses')
-        .addItem('get courses', 'get_courses')
-        .addItem('get single course', 'get_single_course'))
-  )*/
-  .addSeparator()
-  .addSubMenu(ui.createMenu('config')
-      //.addItem('check settings', 'checkTokens')
-      .addItem('set token', 'setToken')
-      .addItem('set host', 'setHost'))
-  //.addSeparator()
-  .addToUi();
+function updateCourseDates(range_notation,updateduedate)
+{
+  //get range
+  let range=SpreadsheetApp.getActiveSheet().getActiveRange();
+  if(range_notation!=null)
+    range=SpreadsheetApp.getActiveSheet().getRange(range_notation);
+  //check header
+  if(!Helper.checkRequiredColumns(range,["id","start_at","end_at"])){
+    //Browser.msgBox("Please select a range with the required column: id, start_at, end_at");
+    return;
+  }
+  //set updateduate
+  if(updateduedate==null){
+    updateduedate=ture;
+  }
+  //get course data
+  let courses=Helper.convertRangeToObjectArray(range);
+  let results=[];
+
+  for(let n=0;n&lt;courses.length;n++){
+    //update each course
+    const update_course=courses[n];
+    const current_course=Courses.getCourseById(update_course.id);
+    if(current_course.id!=null){//exising course
+      const return_course=Courses.updateCourse(update_course);
+      results.push({"result":return_course.id+" dates updated."});
+      //calculate datediff between current start_at and update start_at
+      const num_of_days=Helper.daysDiff(current_course.start_at,update.start_at);
+      if(num_of_days!=0 &amp;&amp; updateduedate){
+        //update assignment dates
+        //get all assignments
+        //call get assignment api
+        var assignments=Assignments.getCourseAssginments(current_course.id);
+        //get bulk assignment date opts
+        let date_opts=getBulkAssignmentDateOpts(assignments,num_of_days);
+        //call api bulk date change
+        var endpoint=Helper.getAPIAction("assignments","shift_assignments_dates").endpoint;
+
+        //update pages dates
+        //get all pages
+        //loop in each page
+        //construct ops each page with student_todo
+        //call api
+      }
+    }  
+  }
+  
+  //generate report
 }
 
-</code></pre>
+/**
+ * Get full course information using course name or course id
+ * @param {string} range_notation A1 Notation. If not provided, use the current selected range.
+ */
+function getCoursesInfo(range_notation)
+{
+  //get range
+  let range=SpreadsheetApp.getActiveSheet().getActiveRange();
+  if(range_notation!=null)
+    range=SpreadsheetApp.getActiveSheet().getRange(range_notation);
+  //check header
+  if(!Helper.checkRequiredColumns(range,["name"])){
+    //Browser.msgBox("Please select a range with the required column: name");
+    return;
+  }
+  //get course data
+  let courses=Helper.convertRangeToObjectArray(range);
+  let queued_courses=[];
+  
+  for(let i=0;i&lt;courses.length;i++){
+    if(courses[i].id!=null){
+      //if course ids are provided
+      let course=Courses.getCourseById(courses[i].id);
+      if(course.name!=null){
+        queued_courses.push(course);
+      }
+    }
+    else if(courses[i].name!=null){
+      //search course by name
+      let rtn_courses=getCoursesByName(courses[i].name,1,"course",null,null);
+      for(let i=0;i&lt;rtn_courses.length;i++)
+      {
+        queued_courses.push(rtn_courses[i]);
+      }
+    }
+    Helper.toast("getting info: "+courses[i].name,"Progress",2)
+  }
+  Helper.fillValues(range.getLastRow()+1,range.getColumn(),queued_courses,"course_list",null);
+  //fill data
+}</code></pre>
         </article>
     </section>
 

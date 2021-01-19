@@ -98,6 +98,130 @@
 
         
             
+<h4 class="name" id="APIAction"><span class="type-signature">(constant) </span>APIAction<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Canvas API actions
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="config_enmus.js.html">config/enmus.js</a>, <a href="config_enmus.js.html#line10">line 10</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="APIController"><span class="type-signature">(constant) </span>APIController<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Canvas API controllers
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="config_enmus.js.html">config/enmus.js</a>, <a href="config_enmus.js.html#line44">line 44</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
 <h4 class="name" id="CANVASAPIS"><span class="type-signature">(constant, non-null) </span>CANVASAPIS<span class="type-signature"> :Object</span></h4>
 
 
@@ -154,7 +278,7 @@ if an api is a general get/put/post call with simple type parameters (2-column f
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="config_apis.js.html">config/apis.js</a>, <a href="config_apis.js.html#line25">line 25</a>
+        <a href="config_apis.js.html">config/apis.js</a>, <a href="config_apis.js.html#line26">line 26</a>
     </li></ul></dd>
     
 
@@ -608,7 +732,7 @@ Returns a list of AssignmentOverrides
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controller_assignments.js.html">controller/assignments.js</a>, <a href="controller_assignments.js.html#line166">line 166</a>
+        <a href="controller_assignments.js.html">controller/assignments.js</a>, <a href="controller_assignments.js.html#line135">line 135</a>
     </li></ul></dd>
     
 
@@ -1494,7 +1618,7 @@ Returns an AssignmentOverride
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controller_assignments.js.html">controller/assignments.js</a>, <a href="controller_assignments.js.html#line148">line 148</a>
+        <a href="controller_assignments.js.html">controller/assignments.js</a>, <a href="controller_assignments.js.html#line117">line 117</a>
     </li></ul></dd>
     
 
@@ -1850,7 +1974,7 @@ Returns an AssignmentOverride
     
 
     
-    <h4 class="name" id="getAssginments"><span class="type-signature"></span>getAssginments<span class="signature">(course_id)</span><span class="type-signature"> &rarr; {object}</span></h4>
+    <h4 class="name" id="getCoursesInfo"><span class="type-signature"></span>getCoursesInfo<span class="signature">(range_notation)</span><span class="type-signature"></span></h4>
     
 
     
@@ -1858,7 +1982,7 @@ Returns an AssignmentOverride
 
 
 <div class="description">
-    Get all assignments dates in a course
+    Get full course information using course name or course id
 </div>
 
 
@@ -1894,166 +2018,7 @@ Returns an AssignmentOverride
 
         <tr>
             
-                <td class="name"><code>course_id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controller_assignments.js.html">controller/assignments.js</a>, <a href="controller_assignments.js.html#line42">line 42</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    a list of assignments
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">object</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="getCoursesInAccount"><span class="type-signature"></span>getCoursesInAccount<span class="signature">(search_term, account_id, search_by, blueprint, enrollment_term_id)</span><span class="type-signature"> &rarr; {array}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Get courses that match the criteria.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>search_term</code></td>
+                <td class="name"><code>range_notation</code></td>
             
 
             <td class="type">
@@ -2069,99 +2034,7 @@ Returns an AssignmentOverride
 
             
 
-            <td class="description last">The partial course name, code, or full ID to match and return in the results list. Must be at least 3 characters. e.g., GEDE-2300</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>account_id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">*</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">account id e.g., 1</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>search_by</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">*</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The filter to search by. course|teacher. “course” searches for course names, course codes, and SIS IDs. “teacher” searches for teacher names e.g., course</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>blueprint</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">*</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">If true, include only blueprint courses. If false, exclude them. If not present, do not filter on this basis. e.g., true</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>enrollment_term_id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">*</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">If set, only includes courses from the specified term. e.g., 1</td>
+            <td class="description last">A1 Notation. If not provided, use the current selected range.</td>
         </tr>
 
     
@@ -2202,166 +2075,7 @@ Returns an AssignmentOverride
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controller_accounts.js.html">controller/accounts.js</a>, <a href="controller_accounts.js.html#line45">line 45</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    A list of courses
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">array</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="getCoursesInfo"><span class="type-signature"></span>getCoursesInfo<span class="signature">(range)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Fill a spread sheet range with course info
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>range</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">A1 Notation e.g. A1:A13</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controller_accounts.js.html">controller/accounts.js</a>, <a href="controller_accounts.js.html#line19">line 19</a>
+        <a href="controller_coursesfuncs.js.html">controller/coursesfuncs.js</a>, <a href="controller_coursesfuncs.js.html#line66">line 66</a>
     </li></ul></dd>
     
 
@@ -2700,7 +2414,7 @@ Returns the paginated list of assignments for the current course or assignment g
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controller_assignments.js.html">controller/assignments.js</a>, <a href="controller_assignments.js.html#line21">line 21</a>
+        <a href="utilities_clintFuncs.js.html">utilities/clintFuncs.js</a>, <a href="utilities_clintFuncs.js.html#line126">line 126</a>
     </li></ul></dd>
     
 
@@ -2983,165 +2697,6 @@ Returns the paginated list of assignments for the current course or assignment g
     
 
     
-    <h4 class="name" id="searchCoursesByNames"><span class="type-signature"></span>searchCoursesByNames<span class="signature">(names)</span><span class="type-signature"> &rarr; {array}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Get courses by names
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>names</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">array</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">A list of course names</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controller_accounts.js.html">controller/accounts.js</a>, <a href="controller_accounts.js.html#line30">line 30</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    A list of courses
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">array</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
     <h4 class="name" id="setHost"><span class="type-signature"></span>setHost<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
@@ -3320,7 +2875,7 @@ The user token is stored in UserProperties["token"].
     
 
     
-    <h4 class="name" id="shiftDate"><span class="type-signature"></span>shiftDate<span class="signature">(olddatestr, num_of_days)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="shiftAssignmentDates"><span class="type-signature"></span>shiftAssignmentDates<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -3328,7 +2883,99 @@ The user token is stored in UserProperties["token"].
 
 
 <div class="description">
-    Shift days
+    Add number of days to the current assignments dates
+Bulk update assignment dates
+Update due dates and availability dates for multiple assignments in a course.
+Accepts a JSON array of objects containing two keys each: id, the assignment id, and all_dates, an array of AssignmentDate structures containing the base and/or override dates for the assignment, as returned from the List assignments endpoint with include[]=all_dates.
+Override dates are not handled.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utilities_clintFuncs.js.html">utilities/clintFuncs.js</a>, <a href="utilities_clintFuncs.js.html#line149">line 149</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="shiftDates"><span class="type-signature"></span>shiftDates<span class="signature">(range_notation)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Shift a list of dates by adding/substracing days
 </div>
 
 
@@ -3364,7 +3011,7 @@ The user token is stored in UserProperties["token"].
 
         <tr>
             
-                <td class="name"><code>olddatestr</code></td>
+                <td class="name"><code>range_notation</code></td>
             
 
             <td class="type">
@@ -3380,30 +3027,7 @@ The user token is stored in UserProperties["token"].
 
             
 
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>num_of_days</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
+            <td class="description last">A1 Notation</td>
         </tr>
 
     
@@ -3444,7 +3068,7 @@ The user token is stored in UserProperties["token"].
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controller_assignments.js.html">controller/assignments.js</a>, <a href="controller_assignments.js.html#line133">line 133</a>
+        <a href="utilities_clintFuncs.js.html">utilities/clintFuncs.js</a>, <a href="utilities_clintFuncs.js.html#line14">line 14</a>
     </li></ul></dd>
     
 
@@ -3920,7 +3544,7 @@ The user token is stored in UserProperties["token"].
     
 
     
-    <h4 class="name" id="updateCourseDates"><span class="type-signature"></span>updateCourseDates<span class="signature">(range, newstartdate, newenddate, updateduedate)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="updateCourseDates"><span class="type-signature"></span>updateCourseDates<span class="signature">(range_notation, updateduedate)</span><span class="type-signature"></span></h4>
     
 
     
@@ -3964,7 +3588,7 @@ The user token is stored in UserProperties["token"].
 
         <tr>
             
-                <td class="name"><code>range</code></td>
+                <td class="name"><code>range_notation</code></td>
             
 
             <td class="type">
@@ -3981,52 +3605,6 @@ The user token is stored in UserProperties["token"].
             
 
             <td class="description last">The range of course ids, e.g. A1:B2. If not provided, use the current selected range.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>newstartdate</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">DateTime</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The new start date and time.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>newenddate</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">DateTime</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The new end date and time.</td>
         </tr>
 
     
@@ -4090,7 +3668,7 @@ The user token is stored in UserProperties["token"].
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controller_courses.js.html">controller/courses.js</a>, <a href="controller_courses.js.html#line55">line 55</a>
+        <a href="controller_coursesfuncs.js.html">controller/coursesfuncs.js</a>, <a href="controller_coursesfuncs.js.html#line12">line 12</a>
     </li></ul></dd>
     
 
@@ -4230,7 +3808,7 @@ PUT /api/v1/accounts/:account_id/courses
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controller_courses.js.html">controller/courses.js</a>, <a href="controller_courses.js.html#line21">line 21</a>
+        <a href="utilities_clintFuncs.js.html">utilities/clintFuncs.js</a>, <a href="utilities_clintFuncs.js.html#line96">line 96</a>
     </li></ul></dd>
     
 
@@ -4266,7 +3844,7 @@ PUT /api/v1/accounts/:account_id/courses
     
 
     
-    <h4 class="name" id="updatePageToDoDate"><span class="type-signature"></span>updatePageToDoDate<span class="signature">(range)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="updatePageToDoDate"><span class="type-signature"></span>updatePageToDoDate<span class="signature">(range_notation)</span><span class="type-signature"></span></h4>
     
 
     
@@ -4310,7 +3888,7 @@ PUT /api/v1/accounts/:account_id/courses
 
         <tr>
             
-                <td class="name"><code>range</code></td>
+                <td class="name"><code>range_notation</code></td>
             
 
             <td class="type">
@@ -4367,7 +3945,7 @@ PUT /api/v1/accounts/:account_id/courses
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controller_pages.js.html">controller/pages.js</a>, <a href="controller_pages.js.html#line18">line 18</a>
+        <a href="utilities_clintFuncs.js.html">utilities/clintFuncs.js</a>, <a href="utilities_clintFuncs.js.html#line38">line 38</a>
     </li></ul></dd>
     
 
@@ -4711,13 +4289,13 @@ PUT /api/v1/accounts/:account_id/courses
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Helper.html">Helper</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#DATECOLUMNS">DATECOLUMNS</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateArrayParamTemplate">generateArrayParamTemplate</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getAssginments">getAssginments</a></li><li><a href="global.html#getCoursesInAccount">getCoursesInAccount</a></li><li><a href="global.html#getCoursesInfo">getCoursesInfo</a></li><li><a href="global.html#getProgress">getProgress</a></li><li><a href="global.html#getSelectedRange">getSelectedRange</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#searchCoursesByNames">searchCoursesByNames</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftDate">shiftDate</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#showPagesGuide">showPagesGuide</a></li><li><a href="global.html#TFCOLUMNS">TFCOLUMNS</a></li><li><a href="global.html#TFCOLUMNS_RO">TFCOLUMNS_RO</a></li><li><a href="global.html#updateCourseDates">updateCourseDates</a></li><li><a href="global.html#updateCourses">updateCourses</a></li><li><a href="global.html#updatePageToDoDate">updatePageToDoDate</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Accounts.html">Accounts</a></li><li><a href="Assignments.html">Assignments</a></li><li><a href="Courses.html">Courses</a></li><li><a href="Helper.html">Helper</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#APIAction">APIAction</a></li><li><a href="global.html#APIController">APIController</a></li><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#DATECOLUMNS">DATECOLUMNS</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateArrayParamTemplate">generateArrayParamTemplate</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getCoursesInfo">getCoursesInfo</a></li><li><a href="global.html#getProgress">getProgress</a></li><li><a href="global.html#getSelectedRange">getSelectedRange</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftAssignmentDates">shiftAssignmentDates</a></li><li><a href="global.html#shiftDates">shiftDates</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#showPagesGuide">showPagesGuide</a></li><li><a href="global.html#TFCOLUMNS">TFCOLUMNS</a></li><li><a href="global.html#TFCOLUMNS_RO">TFCOLUMNS_RO</a></li><li><a href="global.html#updateCourseDates">updateCourseDates</a></li><li><a href="global.html#updateCourses">updateCourses</a></li><li><a href="global.html#updatePageToDoDate">updatePageToDoDate</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sun Jan 17 2021 23:55:36 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Mon Jan 18 2021 23:34:02 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -11,7 +11,7 @@ class Helper {
    * Get Canvas api endpoint by controller and action from the constant apis
    * @param {string} controller name, for example, accounts
    * @param {string} action name, for example, get_accounts
-   * @return {object} 
+   * @returns {object} 
    * {"name":"action",
       "endpoint":"endpoint",
       "reference":"url",
@@ -19,10 +19,10 @@ class Helper {
    */
   static getAPIAction(controller,action)
   {
-    var _actions=CANVASAPIS[controller];
-    var _action;
+    let _actions=CANVASAPIS[controller];
+    let _action;
     if (typeof _actions ==="object"){
-      for(var i=0;i<_actions.length;i++){
+      for(let i=0;i<_actions.length;i++){
         if(_actions[i].api.name==action){
           _action=_actions[i].api;
           break;
@@ -43,7 +43,7 @@ class Helper {
    */
   static setNotesFromJsonList(startrow,startcol,jsonarray,columns)
   {
-    var contents=Helper.parseJSON(jsonarray,columns);
+    let contents=Helper.parseJSON(jsonarray,columns);
     Helper.setNotes(startrow,startcol,contents,"column");
   }
   
@@ -341,15 +341,21 @@ class Helper {
   static checkRequiredColumns(range, columns)
   {
     //the range has less columns than required columns or has less than 2 rows. return false
-    if(range.getNumColumns()<columns.length || range.getNumRows()<2)
+    if(range.getNumColumns()<columns.length || range.getNumRows()<2){
+      Browser.msgBox("Please select a range with the required columns: "+action.required_columns.toString());
       return false;
+    }
+      
 
     let header=SpreadsheetApp.getActiveSheet().getRange(range.getRow(),range.getColumn(),1,range.getNumColumns()).getValues();
     Helper.log(header[0]);
     Helper.log(columns);
     for(let i=0;i<columns.length;i++){
-      if(!header[0].includes(columns[i]))
+      if(!header[0].includes(columns[i])){
+        Browser.msgBox("Expecting column "+columns[i]);
         return false;//the column is not included, return false
+      }
+        
     }
 
     return true;//all required columns are included, return true
@@ -435,5 +441,35 @@ class Helper {
     if(localdate==null || localdate.trim().toLowerCase()=="null" || localdate.trim()=="")
       return "null";
     return (new Date(localdate)).toISOString();
+  }
+
+  /**
+   * Calculate the date difference in days. 
+   * @param {string} date1 
+   * @param {string} date2 
+   * @returns {number} Difference in days. Positive if date2 is later than date1.
+   */
+  static daysDiff(date1, date2)
+  {
+    const current_date = new Date(date1); 
+    const update_date = new Date(date2); 
+    const oneday=1000*3600*24;   
+    // To calculate the time difference of two dates 
+    const Difference_In_Time = update_date.getTime() - current_date.getTime();   
+    // To calculate the no. of days between two dates 
+    return Difference_In_Time / oneday;
+  }
+
+  /**
+   * Shift days
+   * @param {string} olddatestr 
+   * @param {Number} num_of_days 
+   */
+  static shiftDate(olddatestr,num_of_days)
+  {
+    let result=new Date(olddatestr);
+    let olddate=new Date(olddatestr);
+    result.setDate(olddate.getDate()+num_of_days);
+    return result.toISOString();
   }
 }

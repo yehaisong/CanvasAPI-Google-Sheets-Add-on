@@ -149,6 +149,529 @@
     
 
     
+    <h4 class="name" id=".checkRequiredColumns"><span class="type-signature">(static) </span>checkRequiredColumns<span class="signature">(range, columns)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Check if range contains all required columns
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>range</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">A Spreadsheet Range object</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>columns</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;sting></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">A list of required column names</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line341">line 341</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    True or false
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".convertRangeToObjectArray"><span class="type-signature">(static) </span>convertRangeToObjectArray<span class="signature">(range)</span><span class="type-signature"> &rarr; {Array.&lt;object>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Convert a range with a header row to an json object array
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>range</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Range</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">A Spreadsheet Range object</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line320">line 320</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    object array.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;object></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".daysDiff"><span class="type-signature">(static) </span>daysDiff<span class="signature">(date1, date2)</span><span class="type-signature"> &rarr; {number}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Calculate the date difference in days.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>date1</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>date2</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line452">line 452</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Difference in days. Positive if date2 is later than date1.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">number</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id=".fillValues"><span class="type-signature">(static) </span>fillValues<span class="signature">(startrow, startcol, jsonobject, columns, bgcolor)</span><span class="type-signature"></span></h4>
     
 
@@ -506,7 +1029,7 @@ If not provided, all original field of the jsonobject will be displayed.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line235">line 235</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line236">line 236</a>
     </li></ul></dd>
     
 
@@ -801,7 +1324,7 @@ If not provided, all original field of the jsonobject will be displayed.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line317">line 317</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line368">line 368</a>
     </li></ul></dd>
     
 
@@ -859,7 +1382,7 @@ If not provided, all original field of the jsonobject will be displayed.</td>
     
 
     
-    <h4 class="name" id=".getGMTDate"><span class="type-signature">(static) </span>getGMTDate<span class="signature">(localdate)</span><span class="type-signature"> &rarr; {Date}</span></h4>
+    <h4 class="name" id=".getISODate"><span class="type-signature">(static) </span>getISODate<span class="signature">(localdate)</span><span class="type-signature"> &rarr; {string}</span></h4>
     
 
     
@@ -867,7 +1390,7 @@ If not provided, all original field of the jsonobject will be displayed.</td>
 
 
 <div class="description">
-    Convert a local time to a GMT date time
+    Convert a local time to a GMT-0 date time. Use it when submit a date time string to Canvas.
 </div>
 
 
@@ -960,7 +1483,7 @@ If not provided, all original field of the jsonobject will be displayed.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line388">line 388</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line439">line 439</a>
     </li></ul></dd>
     
 
@@ -1000,7 +1523,7 @@ If not provided, all original field of the jsonobject will be displayed.</td>
     </dt>
     <dd>
         
-<span class="param-type">Date</span>
+<span class="param-type">string</span>
 
 
     </dd>
@@ -1018,7 +1541,7 @@ If not provided, all original field of the jsonobject will be displayed.</td>
     
 
     
-    <h4 class="name" id=".getLocalDate"><span class="type-signature">(static) </span>getLocalDate<span class="signature">(gmtdate)</span><span class="type-signature"> &rarr; {Date}</span></h4>
+    <h4 class="name" id=".getLocalDate"><span class="type-signature">(static) </span>getLocalDate<span class="signature">(gmtdate)</span><span class="type-signature"> &rarr; {string}</span></h4>
     
 
     
@@ -1119,7 +1642,7 @@ If not provided, all original field of the jsonobject will be displayed.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line376">line 376</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line427">line 427</a>
     </li></ul></dd>
     
 
@@ -1159,7 +1682,7 @@ If not provided, all original field of the jsonobject will be displayed.</td>
     </dt>
     <dd>
         
-<span class="param-type">Date</span>
+<span class="param-type">string</span>
 
 
     </dd>
@@ -1279,7 +1802,7 @@ the range should be 2 cols, The first col for key, and the second col for value.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line329">line 329</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line380">line 380</a>
     </li></ul></dd>
     
 
@@ -1461,7 +1984,7 @@ the range should be 2 cols, The first col for key, and the second col for value.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line150">line 150</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line151">line 151</a>
     </li></ul></dd>
     
 
@@ -1598,7 +2121,7 @@ the range should be 2 cols, The first col for key, and the second col for value.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line337">line 337</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line388">line 388</a>
     </li></ul></dd>
     
 
@@ -1759,7 +2282,7 @@ All date values will be converted to local date time based on the script timezon
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line165">line 165</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line166">line 166</a>
     </li></ul></dd>
     
 
@@ -1919,7 +2442,7 @@ The parameters should be listed by rows. The range should be 2 cols, the first c
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line275">line 275</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line276">line 276</a>
     </li></ul></dd>
     
 
@@ -2143,7 +2666,7 @@ The parameters should be listed by rows. The range should be 2 cols, the first c
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line120">line 120</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line121">line 121</a>
     </li></ul></dd>
     
 
@@ -2593,6 +3116,166 @@ Use this for a parameter template that list paramters in a column. Each paramete
     
 
     
+    <h4 class="name" id=".shiftDate"><span class="type-signature">(static) </span>shiftDate<span class="signature">(olddatestr, num_of_days)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Shift days
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>olddatestr</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>num_of_days</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line468">line 468</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id=".showProgress"><span class="type-signature">(static) </span>showProgress<span class="signature">(range, data)</span><span class="type-signature"></span></h4>
     
 
@@ -2717,7 +3400,7 @@ Use this for a parameter template that list paramters in a column. Each paramete
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line348">line 348</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line399">line 399</a>
     </li></ul></dd>
     
 
@@ -2900,7 +3583,7 @@ Use this for a parameter template that list paramters in a column. Each paramete
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line365">line 365</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line416">line 416</a>
     </li></ul></dd>
     
 
@@ -3060,7 +3743,7 @@ Use this for a parameter template that list paramters in a column. Each paramete
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line256">line 256</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line257">line 257</a>
     </li></ul></dd>
     
 
@@ -3124,13 +3807,13 @@ Use this for a parameter template that list paramters in a column. Each paramete
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Helper.html">Helper</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#DATECOLUMNS">DATECOLUMNS</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateArrayParamTemplate">generateArrayParamTemplate</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getAssginments">getAssginments</a></li><li><a href="global.html#getCoursesInAccount">getCoursesInAccount</a></li><li><a href="global.html#getCoursesInfo">getCoursesInfo</a></li><li><a href="global.html#getProgress">getProgress</a></li><li><a href="global.html#getSelectedRange">getSelectedRange</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#searchCoursesByNames">searchCoursesByNames</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftDate">shiftDate</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#showPagesGuide">showPagesGuide</a></li><li><a href="global.html#TFCOLUMNS">TFCOLUMNS</a></li><li><a href="global.html#TFCOLUMNS_RO">TFCOLUMNS_RO</a></li><li><a href="global.html#updateCourseDates">updateCourseDates</a></li><li><a href="global.html#updateCourses">updateCourses</a></li><li><a href="global.html#updatePageToDoDate">updatePageToDoDate</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Accounts.html">Accounts</a></li><li><a href="Assignments.html">Assignments</a></li><li><a href="Courses.html">Courses</a></li><li><a href="Helper.html">Helper</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#APIAction">APIAction</a></li><li><a href="global.html#APIController">APIController</a></li><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#DATECOLUMNS">DATECOLUMNS</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateArrayParamTemplate">generateArrayParamTemplate</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getCoursesInfo">getCoursesInfo</a></li><li><a href="global.html#getProgress">getProgress</a></li><li><a href="global.html#getSelectedRange">getSelectedRange</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftAssignmentDates">shiftAssignmentDates</a></li><li><a href="global.html#shiftDates">shiftDates</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#showPagesGuide">showPagesGuide</a></li><li><a href="global.html#TFCOLUMNS">TFCOLUMNS</a></li><li><a href="global.html#TFCOLUMNS_RO">TFCOLUMNS_RO</a></li><li><a href="global.html#updateCourseDates">updateCourseDates</a></li><li><a href="global.html#updateCourses">updateCourses</a></li><li><a href="global.html#updatePageToDoDate">updatePageToDoDate</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sun Jan 17 2021 23:55:36 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Mon Jan 18 2021 23:34:02 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -267,7 +267,7 @@ const CANVASAPIS={
         "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('assignments',5);})();return false;\">Get parameters</button>",
         "Enter values",
         "Select the range of the light blue area of the parameter template",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).shifAssignmentDates();})();return false;\">Call API</button>"
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).shiftAssignmentDates();})();return false;\">Call API</button>"
       ],
       "api":{
         "name":"shift_assignments_dates",
@@ -543,7 +543,6 @@ const CANVASAPIS={
       "guide":[
         "Select a column with course ids listed in rows",
         "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).updateCourses('offer');})();return false;\">publish</button>"
-
       ],
       "api":{
         "name":"update_courses",
@@ -571,6 +570,59 @@ const CANVASAPIS={
             "desc":"Allowed values: offer (publish), conclude, delete, undelete",
             "example":"offer"
           }
+        ]
+      }
+    },
+    { 
+      "display_name":"3: update_a_course",
+      "automated":"true",
+      "guide":[
+        "Select an empty cell to start",
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('courses',3);})();return false;\">Get parameters</button>",
+        "Enter values",
+        "Select the range of the light blue area of the parameter template",
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('GPUT /api/v1/courses/:id',null,null);})();return false;\">Call API</button>"
+      ],
+      "api":{
+        "name":"update_a_course",
+        "endpoint":"PUT /api/v1/courses/:id",
+        "reference":"https://canvas.instructure.com/doc/api/courses.html#method.courses.update",
+        "params":[
+          {
+            "name":"id",
+            "type":"number",
+            "default_value":"",
+            "desc":"course id",
+            "example":"1"
+          },
+          {
+            "name":"course.name",
+            "type":"string",
+            "default_value":"",
+            "desc":"The name of the course. If omitted, the course will be named “Unnamed Course.",
+            "example":"name"
+          },
+          {
+            "name":"course.course_code",
+            "type":"string",
+            "default_value":"",
+            "desc":"The course code for the course.",
+            "example":"abc-3456"
+          },
+          {
+            "name":"course.start_at",
+            "type":"DateTime",
+            "default_value":"",
+            "desc":"Course start date in ISO8601 format",
+            "example":"2011-01-01T01:00Z"
+          },
+          {
+            "name":"course.end_at",
+            "type":"DateTime",
+            "default_value":"",
+            "desc":"Course start date in ISO8601 format",
+            "example":"2011-01-01T01:00Z"
+          },
         ]
       }
     }

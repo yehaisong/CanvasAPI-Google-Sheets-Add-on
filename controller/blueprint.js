@@ -1,5 +1,5 @@
 /**
- * @fileoverview
+ * @fileoverview blueprints API wrapper
  * @author hye@cedarville.edu (Haisong Ye)
  */
 
