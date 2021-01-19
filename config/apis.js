@@ -4,6 +4,7 @@
  */
 
 
+
 /** 
 How to make an automated api call:
 Pre-condition:
@@ -619,6 +620,20 @@ const CANVASAPIS={
             "example":"title"
           }
         ]
+      }
+    },
+    { 
+      "display_name":"1: update_pages_todo",
+      "automated":"false",
+      "guide":[
+        "Select a range with page info. Include a header row with required columns: course_id, url, todo_date",
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).updatePageToDoDate();})();return false;\">Call API</button>"
+      ],
+      "api":{
+        "name":"update_pages_todo",
+        "endpoint":"PUT /api/v1/courses/:course_id/pages/:url",
+        "reference":"https://canvas.instructure.com/doc/api/pages.html#method.wiki_pages_api.update",
+        "required_columns":["course_id","url","todo_date"]
       }
     }
   ]

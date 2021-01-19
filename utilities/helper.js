@@ -79,6 +79,7 @@ class Helper {
     const contents=Helper.parseJSON(jsonobject,columns);
     if(contents.length>0){
       Helper.insertRows(startrow,contents.length);
+      startrow++;
       const rng = SpreadsheetApp.getActiveSheet().getRange(startrow,startcol,contents.length,contents[0].length);
       if(bgcolor==null)
         bgcolor= Helper.getColor();
@@ -98,7 +99,7 @@ class Helper {
         }
       }
       //group rows
-      SpreadsheetApp.getActiveSheet().getRange((rng.getRow()+1)+":"+rng.getLastRow()).activate().shiftRowGroupDepth(1);
+      SpreadsheetApp.getActiveSheet().getRange((rng.getRow())+":"+rng.getLastRow()).activate().shiftRowGroupDepth(1);
     }
     else
     {
@@ -274,13 +275,15 @@ class Helper {
    */
   static parseRangeToJson(range)
   {
-    var json={};
+    let json={};
+    if(range.getNumColumns()!=2)
+      return json;
     //Browser.msgBox(range.getNumRows());
-    for(var i=1;i<=range.getNumRows();i++){
+    for(let i=1;i<=range.getNumRows();i++){
       if(range.getCell(i,1).getValue()!=""&&range.getCell(i,2).getValue()!=""){
-        var param_name=range.getCell(i,1).getValue();
-        var param_value_str=range.getCell(i,2).getValue();
-        var param_value=null;
+        let param_name=range.getCell(i,1).getValue();
+        let param_value_str=range.getCell(i,2).getValue();
+        let param_value=null;
         if(param_name.endsWith("[]")){//this is an array parameter
           param_name=param_name.substring(0,param_name.length-2);
           param_value=[];
@@ -292,7 +295,7 @@ class Helper {
         }
         //check if the param is an object
         //Helper.log(param_name);
-        var param_name_parts=[]
+        let param_name_parts=[]
         param_name_parts=param_name.split(".");
         //Helper.log(param_name_parts);
         if(param_name_parts!=null && param_name_parts.length>1){//this is a property of an object parameter
@@ -309,6 +312,48 @@ class Helper {
     return json;
   }
 
+  /**
+   * Convert a range with a header row to an json object array
+   * @param {Range} range A Spreadsheet Range object
+   * @returns {Array<object>} object array.
+   */
+  static convertRangeToObjectArray(range)
+  {
+    let rangedata=range.getValues();
+    let header=rangedata[0];
+    let objects=[]
+    for(let r=1;r<rangedata.length;r++){
+      let object={};
+      for(let c=0;c<header.length;c++){
+          object[header[c]]=rangedata[r][c];
+      }
+      objects.push(object);
+    }
+    return objects;
+  }
+
+  /**
+   * Check if range contains all required columns
+   * @param {object} range A Spreadsheet Range object
+   * @param {Array<sting>} columns A list of required column names
+   * @returns {boolean} True or false
+   */
+  static checkRequiredColumns(range, columns)
+  {
+    //the range has less columns than required columns or has less than 2 rows. return false
+    if(range.getNumColumns()<columns.length || range.getNumRows()<2)
+      return false;
+
+    let header=SpreadsheetApp.getActiveSheet().getRange(range.getRow(),range.getColumn(),1,range.getNumColumns()).getValues();
+    Helper.log(header[0]);
+    Helper.log(columns);
+    for(let i=0;i<columns.length;i++){
+      if(!header[0].includes(columns[i]))
+        return false;//the column is not included, return false
+    }
+
+    return true;//all required columns are included, return true
+  }
   
   /**
    * get a random color from the default list
@@ -371,24 +416,24 @@ class Helper {
   /**
    * Convert a GMT time to the local time (default ET, see appscript.json)
    * @param {string} gmtdate GMT date time
-   * @return {Date} local date time
+   * @return {string} local date time
    */
   static getLocalDate(gmtdate)
   {
-    if(gmtdate==null)
-      return null;
+    if(gmtdate==null || gmtdate.trim().toLowerCase()=="null" || gmtdate.trim()=="")
+      return "null";
     return (new Date(gmtdate)).toLocaleString();
   }
 
   /**
-   * Convert a local time to a GMT date time
+   * Convert a local time to a GMT-0 date time. Use it when submit a date time string to Canvas.
    * @param {string} localdate local date time
-   * @return {Date} GMT date time
+   * @return {string} GMT date time
    */
-  static getGMTDate(localdate)
+  static getISODate(localdate)
   {
-    if(localdate==null)
-      return null;
-    return Utilities.formatDate((new Date(localdate)), "GMT","yyyy-MM-dd'T'HH:mm:ss'Z'");
+    if(localdate==null || localdate.trim().toLowerCase()=="null" || localdate.trim()=="")
+      return "null";
+    return (new Date(localdate)).toISOString();
   }
 }

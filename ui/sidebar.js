@@ -33,7 +33,7 @@ class SideBar{
   {
     const title="Change Course Dates";
     let htmlTemplate=HtmlService.createTemplateFromFile('ui/template/updateCourseDates');
-    //htmlTemplate.data=SpreadsheetApp.getActiveRange().getA1Notation();
+    htmlTemplate.data=SpreadsheetApp.getActiveRange().getA1Notation();
     SpreadsheetApp.getUi().showSidebar(htmlTemplate.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).setTitle(title));
   }
 

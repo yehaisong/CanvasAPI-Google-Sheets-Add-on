@@ -13,5 +13,6 @@ const DISPLAYCOLUMNS={
 "course_list":["account_id","id","name","course_code","is_public","enrollment_term_id","sis_course_id","start_at","end_at","time_zone","workflow_state"],
 "assignment_dates":["id","name","due_at","unlock_at","lock_at"],
 "progress":["workflow_state","completion","message","results","url"],
-//"page_list":["page_id","title","published","todo_date","html_url"]
+"page_list":["page_id","title","published","todo_date","url","html_url"]
 }
+

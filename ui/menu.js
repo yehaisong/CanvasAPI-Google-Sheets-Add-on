@@ -12,6 +12,8 @@ function onOpen() {
   ui.createMenu('Canvas')
   .addItem("change course date","SideBar.showUpdateCourseDatesSideBar")
   .addSeparator()
+  .addItem("shift dates","shiftDates")
+  .addSeparator()
   .addSubMenu(ui.createMenu('apis')    
     .addItem("accounts","showAccountsGuide")
     .addItem("assignments","showAssignmentsGuide")

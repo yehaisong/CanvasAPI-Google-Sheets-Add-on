@@ -30,24 +30,26 @@
         <ol>
             <li>
                 <div class="form-group">
-                    <label for="coursenames">Courses List</label>
-                    <input type="text"  class="form-control" id="coursenames" aria-describedby="coursenamesHelp" placeholder="Enter range" value="<?=data?>" onClick="getSelectedRange();">
-                    <small id="coursenamesHelp" class="form-text text-muted">A1 Notation, A1:A13. Must include a column with header name</small>
+                    <label for="coursenames">Select course name range</label>
+                    <!--
+                    <input type="text"  class="form-control" id="coursenames" aria-describedby="coursenamesHelp" placeholder="Enter range" value="<?=data?>" onClick="getSelectedRange(this);">-->
+                    <small id="coursenamesHelp" class="form-text text-muted">Must include a column with header "name". A column of course ids with header "id" will be helpful.</small>
                 </div>
             </li>
-            <li><button type="button" class="btn btn-primary">Get Courses Info</button></li>
+            <li><button type="button" class="btn btn-primary" onclick="getCourseInfo();">Get Courses Info</button></li>
             <li>
                 <div class="form-group">
-                    <label for="courseinfo">Course IDs Range</label>
-                    <input type="text"  class="form-control" id="courseinfo" aria-describedby="courseinfoHelp" placeholder="Enter range" value="<?=data?>" onClick="getSelectedRange();">
-                    <small id="courseinfoHelp" class="form-text text-muted">A1 Notation, A1:A13. Must include columns with headers course_id, start_at, end_at</small>
+                    <label for="courseinfo">Select all courses range</label>
+                    <!--
+                    <input type="text"  class="form-control" id="courseinfo" aria-describedby="courseinfoHelp" placeholder="Enter range" value="" onClick="getSelectedRange(this);">-->
+                    <small id="courseinfoHelp" class="form-text text-muted">Must include columns with headers course_id, start_at, end_at</small>
                 </div>
                 <div class="form-check">
                     <input type="checkbox" class="form-check-input" id="updateduedate">
-                    <label class="form-check-label" for="updateduedate">Auto update assignments date</label>
+                    <label class="form-check-label" for="updateduedate">Update assignments date</label>
                 </div>
             </li>
-            <li><button type="button" class="btn btn-primary">Update Courses</button></li>
+            <li><button type="button" class="btn btn-primary" onclick="updateCourseDates();">Update Courses</button></li>
         </ol>
         
       </form>
@@ -88,23 +90,46 @@
         var div_status = document.getElementById('status');
         div_status.innerHTML = status;
       }
-      function getSelectedRange(){
+      function getSelectedRange(txtbox){
         onCall();
         google.script.run                       // Executes a Apps Script JS Function
-          .withSuccessHandler(updateTextField)  // function to be called upon successfull completion of Apps Script function          // To pass the event element object
+          .withSuccessHandler(updateTextField)  // function to be called upon successfull completion of Apps Script function
+          .withUserObject(txtbox)          // To pass the event element object
           .getSelectedRange();                  // Apps Sript JS Function
         return;
       }
       
       // Function to be called on success
-      function updateTextField(range){
+      function updateTextField(range,txtbox){
         changeStyle('alert-success');
         updateStatus('<div>Range was copied.</div>');
-        const txtrange=document.getElementById("idrange");
-        txtrange.value = range; // Update the text field value
-        txtrange.select();
+
+        txtbox.value = range; // Update the text field value
+        txtbox.select();
 
       }
+
+      function getCourseInfo(){
+        onCall();
+        //var txtrng=document.getElementById("coursenames")
+        google.script.run                       // Executes a Apps Script JS Function
+          .withSuccessHandler(onSuccess)    // function to be called upon successfull completion of Apps Script function
+          .withFailureHandler(onFailure)
+          .getCoursesInfo();                  // Apps Sript JS Function
+        return;
+      }
+
+      function updateCourseDates(){
+        onCall();
+        //var txtrng=document.getElementById("courseinfo")
+        google.script.run                       // Executes a Apps Script JS Function
+          .withSuccessHandler(onSuccess)    // function to be called upon successfull completion of Apps Script function
+          .withFailureHandler(onFailure)
+          .updateCourseDates();                  // Apps Sript JS Function
+        return;
+      }
+
+
     </script>
   </body>
 </html>
