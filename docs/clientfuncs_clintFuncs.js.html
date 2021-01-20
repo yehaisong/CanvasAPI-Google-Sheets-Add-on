@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: controller/accounts.js</title>
+    <title>JSDoc: Source: clientfuncs/clintFuncs.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: controller/accounts.js</h1>
+    <h1 class="page-title">Source: clientfuncs/clintFuncs.js</h1>
 
     
 
@@ -26,51 +26,50 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * @fileoverview Wrapping accounts APIs
- * @author hye@cedarville.edu (Haisong Ye)
- */
-
-
-/**
- * Show the sidebar for accounts APIs
- */
-function showAccountsGuide()
-{
-  SideBar.show("Accounts");
+            <pre class="prettyprint source linenums"><code>/** Function to pick the selected range from the Google Sheet
+  * This returns the picked range, so that the client-side JS 
+  * function (in HTML file) can populate it in the text field **/
+function getSelectedRange(){
+    var selected = SpreadsheetApp.getActiveSheet().getActiveRange(); // Gets the selected range
+    var rangeString = selected.getA1Notation(); // converts it to the A1 type notation
+    return rangeString;
 }
 
 /**
- * The Accounts class
+ * Shift a list of dates by adding/substracing days
+ * @param {string} range_notation A1 Notation
  */
-class Accounts
-{
-  /**
-   * Get courses that match the criteria.
-   * @param {string} search_term The partial course name, code, or full ID to match and return in the results list. Must be at least 3 characters. e.g., GEDE-2300
-   * @param {number} account_id account id e.g., 1
-   * @param {string} search_by The filter to search by. course|teacher. “course” searches for course names, course codes, and SIS IDs. “teacher” searches for teacher names e.g., course
-   * @param {boolean} blueprint If true, include only blueprint courses. If false, exclude them. If not present, do not filter on this basis. e.g., true
-   * @param {number} enrollment_term_id If set, only includes courses from the specified term. e.g., 1
-   * @return {Array&lt;object>} A list of courses
-   */
-  static getCoursesByName(search_term,account_id,search_by,blueprint,enrollment_term_id)
-  {
-    //call api to get courses
-    const action=Helper.getAPIAction2(APIAction.ACCOUNTS.GET_COURSES_IN_ACCOUNT);
-    const opts={
-      "search_term":search_term,
-      "account_id":account_id,
-      "search_by":search_by,
-      "blueprint":blueprint,
-      "enrollment_term_id":enrollment_term_id
-    };
-    let data=canvasAPI(action.endpoint,opts);
-    //return data
-    return data;
-  }
-
+function shiftDates(range_notation){
+    //get range
+    let range=SpreadsheetApp.getActiveSheet().getActiveRange();
+    if(range_notation!=null)
+        range=SpreadsheetApp.getActiveSheet().getRange(range_notation);
+    
+    //get days
+    let days=parseInt(Browser.inputBox("How many days?"));
+    if(days!=null){
+        //get dates
+        let dates=range.getValues();
+        for(let r=0;r&lt;dates.length;r++){
+            for(let c=0;c&lt;dates[r].length;c++){
+                dates[r][c]=Helper.getLocalDate(shiftDate(dates[r][c],days));
+            }
+        }
+        range.setValues(dates);
+    }
 }
+
+/**
+ * Calculate date difference in days
+ */
+function calculateDateDiff()
+{
+    let date1=Browser.inputBox("date1 (3/25/2020)");
+    let date2=Browser.inputBox("date2 (4/25/2020)");
+    Browser.msgBox(Helper.daysDiff(date1,date2));
+}
+
+
 
 
 
