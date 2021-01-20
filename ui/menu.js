@@ -13,6 +13,7 @@ function onOpen() {
   .addItem("change course date","SideBar.showUpdateCourseDatesSideBar")
   .addSeparator()
   .addItem("shift dates","shiftDates")
+  .addItem("date diff in days","calculateDateDiff")
   .addSeparator()
   .addSubMenu(ui.createMenu('apis')    
     .addItem("accounts","showAccountsGuide")

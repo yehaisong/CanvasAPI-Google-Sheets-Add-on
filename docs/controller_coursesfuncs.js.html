@@ -50,41 +50,67 @@ function updateCourseDates(range_notation,updateduedate)
   }
   //set updateduate
   if(updateduedate==null){
-    updateduedate=ture;
+    updateduedate=truer;
   }
-  //get course data
+  //prepare course data
   let courses=Helper.convertRangeToObjectArray(range);
   let results=[];
 
+  //update each coure
   for(let n=0;n&lt;courses.length;n++){
-    //update each course
+    //get course data
     const update_course=courses[n];
     const current_course=Courses.getCourseById(update_course.id);
     if(current_course.id!=null){//exising course
+      //1. update course **************************************************//
+      //update a course
       const return_course=Courses.updateCourse(update_course);
-      results.push({"result":return_course.id+" dates updated."});
+      Helper.toast(return_course.id+" updated.", "Course update status",3);
+      results.push({"message":"Course "+return_course.id+" dates updated."});
+      //2. update due dates **************************************************//
+      //starting update due dates
       //calculate datediff between current start_at and update start_at
-      const num_of_days=Helper.daysDiff(current_course.start_at,update.start_at);
+      const num_of_days=Helper.daysDiff(current_course.start_at,update_course.start_at);
+      Helper.log("date diff: "+num_of_days);
       if(num_of_days!=0 &amp;&amp; updateduedate){
+        //2.1. update assignment due dates **************************************************//
         //update assignment dates
         //get all assignments
         //call get assignment api
         var assignments=Assignments.getCourseAssginments(current_course.id);
-        //get bulk assignment date opts
-        let date_opts=getBulkAssignmentDateOpts(assignments,num_of_days);
+        //get bulk assignment date opts api
+        let date_opts=Assignments.getBulkAssignmentDateOpts(current_course.id,assignments,num_of_days);
         //call api bulk date change
-        var endpoint=Helper.getAPIAction("assignments","shift_assignments_dates").endpoint;
+        let progress_data=Assignments.bulkUpdateAssignmentDate(date_opts);
+        Helper.toast("Update assignments dates in course "+return_course.id+". Status: "+progress_data.workflow_state,"Update assignments status",3);
+        
+        //check progress. It will take some times to wait for the queued tasks. The following two lines can be removed if check progress is not necessary.***//
+        let progress_result=queryProgress(progress_data.id);
+        results.push({"message": "Course "+return_course.id+" assignments dates update: "+progress_result.workflow_state+" "+JSON.stringify(progress_result.results)});
 
+        //2.2. update page due dates **************************************************//
         //update pages dates
-        //get all pages
+        //get all pages api
+        let pages=Pages.listPages(return_course.id,null,null,null);
         //loop in each page
-        //construct ops each page with student_todo
-        //call api
+        for(let i=0;i&lt;pages.length;i++){
+          if(pages[i].todo_date!=null &amp;&amp; pages[i].todo_date.trim().toLowerCase()!="null"){
+            pages[i].todo_date=Helper.shiftDate(pages[i].todo_date,num_of_days);
+            //call api
+            let page_result=Pages.changePageToDoDate(pages[i],return_course.id);
+            if(page_result.url!=null){
+              Helper.toast("Update "+page_result.url+" in course "+return_course.id+": "+page_result.todo_date,"Update page status",3);
+            }
+          }
+        }
+        results.push({"message":"Course "+return_course.id+" pages dates updated."});
+        results.push({"message":num_of_days+" days shifted."});
       }
     }  
   }
-  
   //generate report
+  const rs=SpreadsheetApp.getActiveSpreadsheet().insertSheet();
+  Helper.fillValues(1,1,results,null,null);
 }
 
 /**
@@ -116,7 +142,7 @@ function getCoursesInfo(range_notation)
     }
     else if(courses[i].name!=null){
       //search course by name
-      let rtn_courses=getCoursesByName(courses[i].name,1,"course",null,null);
+      let rtn_courses=Accounts.getCoursesByName(courses[i].name,1,"course",null,null);
       for(let i=0;i&lt;rtn_courses.length;i++)
       {
         queued_courses.push(rtn_courses[i]);
@@ -124,8 +150,40 @@ function getCoursesInfo(range_notation)
     }
     Helper.toast("getting info: "+courses[i].name,"Progress",2)
   }
-  Helper.fillValues(range.getLastRow()+1,range.getColumn(),queued_courses,"course_list",null);
+  Helper.fillValues(range.getLastRow()+1,range.getColumn(),queued_courses,"course_list_changedate",null);
   //fill data
+}
+
+/**
+ * Publish multiple courses in an account. Operates asynchronously; 
+ * Use the progress endpoint to query the status of an operation.
+ * The action to take on each course. Must be one of 'offer', 'conclude', 'delete', or 'undelete'.
+ * PUT /api/v1/accounts/:account_id/courses
+ * @param {string} event 
+ */
+function publishCourses(event)
+{
+  //get the selected column. If no selected column or more than one column selected, return error.
+  let rng=SpreadsheetApp.getActiveSheet().getActiveRange();
+  if(rng.getNumColumns()>1){
+    Browser.msgBox("Only one column allowed.");
+    return;
+  }
+  //prepare opts
+  let opts={
+    "account_id":1,
+    "event":event,
+    "course_ids":[]
+  }
+  for(let i=1;i&lt;=rng.getNumRows();i++){
+    opts.course_ids.push(rng.getCell(i,1).getValue());
+  }
+  //get endpoint
+  let endpoint=Helper.getAPIAction2(APIAction.COURSES.PUBLISH_COURSES).endpoint;
+  //call endpoint
+  let data= canvasAPI(endpoint,opts);
+  //handle progress
+  Helper.showProgress(rng,data);
 }</code></pre>
         </article>
     </section>
@@ -136,13 +194,13 @@ function getCoursesInfo(range_notation)
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Accounts.html">Accounts</a></li><li><a href="Assignments.html">Assignments</a></li><li><a href="Courses.html">Courses</a></li><li><a href="Helper.html">Helper</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#APIAction">APIAction</a></li><li><a href="global.html#APIController">APIController</a></li><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#DATECOLUMNS">DATECOLUMNS</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateArrayParamTemplate">generateArrayParamTemplate</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getCoursesInfo">getCoursesInfo</a></li><li><a href="global.html#getProgress">getProgress</a></li><li><a href="global.html#getSelectedRange">getSelectedRange</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftAssignmentDates">shiftAssignmentDates</a></li><li><a href="global.html#shiftDates">shiftDates</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#showPagesGuide">showPagesGuide</a></li><li><a href="global.html#TFCOLUMNS">TFCOLUMNS</a></li><li><a href="global.html#TFCOLUMNS_RO">TFCOLUMNS_RO</a></li><li><a href="global.html#updateCourseDates">updateCourseDates</a></li><li><a href="global.html#updateCourses">updateCourses</a></li><li><a href="global.html#updatePageToDoDate">updatePageToDoDate</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Accounts.html">Accounts</a></li><li><a href="Assignments.html">Assignments</a></li><li><a href="Courses.html">Courses</a></li><li><a href="Helper.html">Helper</a></li><li><a href="Pages.html">Pages</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#APIAction">APIAction</a></li><li><a href="global.html#APIController">APIController</a></li><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#calculateDateDiff">calculateDateDiff</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#DATECOLUMNS">DATECOLUMNS</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getCoursesInfo">getCoursesInfo</a></li><li><a href="global.html#getProgress">getProgress</a></li><li><a href="global.html#getSelectedRange">getSelectedRange</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#listPagesWithCourseID">listPagesWithCourseID</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#publishCourses">publishCourses</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftAssignmentDates">shiftAssignmentDates</a></li><li><a href="global.html#shiftDates">shiftDates</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#showPagesGuide">showPagesGuide</a></li><li><a href="global.html#TFCOLUMNS">TFCOLUMNS</a></li><li><a href="global.html#TFCOLUMNS_RO">TFCOLUMNS_RO</a></li><li><a href="global.html#updateAssignmentsDates">updateAssignmentsDates</a></li><li><a href="global.html#updateCourseDates">updateCourseDates</a></li><li><a href="global.html#updatePageToDoDate">updatePageToDoDate</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Mon Jan 18 2021 23:34:02 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue Jan 19 2021 21:43:55 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -10,9 +10,11 @@
  */
 const DISPLAYCOLUMNS={
 "assignment_list":["course_id","id","name","assignment_group_id","submission_types","due_at","unlock_at","lock_at","points_possible","has_overrides","html_url","workflow_state"],
-"course_list":["account_id","id","name","course_code","is_public","enrollment_term_id","sis_course_id","start_at","end_at","time_zone","workflow_state"],
-"assignment_dates":["id","name","due_at","unlock_at","lock_at"],
+"course_list":["account_id","id","name","course_code","enrollment_term_id","sis_course_id","start_at","end_at","time_zone","workflow_state"],
+"course_list_changedate":["id","name","course_code","start_at","end_at","time_zone","workflow_state","enrollment_term_id"],
+"assignment_dates":["course_id","id","name","due_at","unlock_at","lock_at"],
 "progress":["workflow_state","completion","message","results","url"],
-"page_list":["page_id","title","published","todo_date","url","html_url"]
+"page_list":["page_id","title","published","todo_date","url","html_url"],
+"page_list_editing":["course_id","page_id","title","published","todo_date","url","html_url"]
 }
 

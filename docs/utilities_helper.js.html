@@ -62,6 +62,24 @@ class Helper {
   }
 
   /**
+   * Get an API action
+   * @param {string} action action string with controller name, controller.action
+   * @returns {object} action
+   */
+  static getAPIAction2(action)
+  {
+    let ca=action.split(".");
+    if(ca.length==2)
+    {
+      return Helper.getAPIAction(ca[0],ca[1]);
+    }
+    else
+    {
+      return null;
+    }
+  }
+
+  /**
    * Set notest for a SpreadSheet range with a json array. Used to provide description and examples for parameters.
    * Use this for a parameter template that list paramters in a row. Each parameter uses one column.
    * @param {number} startrow An absolute row index of a sheet
@@ -98,16 +116,19 @@ class Helper {
    * @param {string} columns A DISPLAYCOLUMNS name defined in the DISPLAYCOLUMNS variable. Check DISPLAYCOLUMNS.js. 
    * If provided, only the fields defined in the DISPLAYCOLUMNS will be displayed.
    * If not provided, all original field of the jsonobject will be displayed.
-   * @param {string} bgcolor Provide a RGB color for the background of the filled area 
-   *. If not provided, a randome color will be used. See function getColor() for all colors
-  
+   * @param {string} bgcolor Provide a RGB color for the background of the filled area. If not provided, a randome color will be used. See function getColor() for all colors
+   * @param {boolean} blankrow Insert a blankrow or not. Default true.
    */
-  static fillValues(startrow,startcol,jsonobject,columns,bgcolor)
+  static fillValues(startrow,startcol,jsonobject,columns,bgcolor,blankrow)
   {
     const contents=Helper.parseJSON(jsonobject,columns);
     if(contents.length>0){
-      Helper.insertRows(startrow,contents.length);
-      startrow++;
+      if(blankrow==null)
+        blankrow=true;
+      if(blankrow){
+        Helper.insertRows(startrow,contents.length);
+        startrow++;
+      }
       const rng = SpreadsheetApp.getActiveSheet().getRange(startrow,startcol,contents.length,contents[0].length);
       if(bgcolor==null)
         bgcolor= Helper.getColor();
@@ -127,13 +148,16 @@ class Helper {
         }
       }
       //group rows
-      SpreadsheetApp.getActiveSheet().getRange((rng.getRow())+":"+rng.getLastRow()).activate().shiftRowGroupDepth(1);
+      let grouprowindex=rng.getRow()+1;//use the first new row as the +/- row
+      if(blankrow)
+        grouprowindex=rng.getRow();//use the blank row as the +/- row
+      SpreadsheetApp.getActiveSheet().getRange(grouprowindex+":"+rng.getLastRow()).activate().shiftRowGroupDepth(1);
     }
     else
     {
       Helper.insertRows(startrow,1);
       const cell=SpreadsheetApp.getActiveSheet().getRange(startrow,startcol,1,1);
-      cell.setValue("Something is wrong...");
+      cell.setValue("No records were found.");
     }
   }
 
@@ -395,7 +419,7 @@ class Helper {
    */
   static getColor()
   {
-    var color=['#EEEEEE','#F0FFF0','#F0F8FF','#FFEFD5','#B0E0E6','#FFFFF0','#E6E6FA'];
+    var color=['#EEEEEE','#F0FFF0','#F0F8FF','#FFEFD5','#dcf4f7','#FFFFF0','#E6E6FA'];
     return color[Helper.getRandomInt(color.length-1)];
   }
 
@@ -485,13 +509,14 @@ class Helper {
     // To calculate the time difference of two dates 
     const Difference_In_Time = update_date.getTime() - current_date.getTime();   
     // To calculate the no. of days between two dates 
-    return Difference_In_Time / oneday;
+    return Math.floor(Difference_In_Time / oneday);
   }
 
   /**
    * Shift days
-   * @param {string} olddatestr 
-   * @param {Number} num_of_days 
+   * @param {string} olddatestr original date string
+   * @param {Number} num_of_days number of days to be added/substracted
+   * @returns {string} ISO date string
    */
   static shiftDate(olddatestr,num_of_days)
   {
@@ -510,13 +535,13 @@ class Helper {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Accounts.html">Accounts</a></li><li><a href="Assignments.html">Assignments</a></li><li><a href="Courses.html">Courses</a></li><li><a href="Helper.html">Helper</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#APIAction">APIAction</a></li><li><a href="global.html#APIController">APIController</a></li><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#DATECOLUMNS">DATECOLUMNS</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateArrayParamTemplate">generateArrayParamTemplate</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getCoursesInfo">getCoursesInfo</a></li><li><a href="global.html#getProgress">getProgress</a></li><li><a href="global.html#getSelectedRange">getSelectedRange</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftAssignmentDates">shiftAssignmentDates</a></li><li><a href="global.html#shiftDates">shiftDates</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#showPagesGuide">showPagesGuide</a></li><li><a href="global.html#TFCOLUMNS">TFCOLUMNS</a></li><li><a href="global.html#TFCOLUMNS_RO">TFCOLUMNS_RO</a></li><li><a href="global.html#updateCourseDates">updateCourseDates</a></li><li><a href="global.html#updateCourses">updateCourses</a></li><li><a href="global.html#updatePageToDoDate">updatePageToDoDate</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Accounts.html">Accounts</a></li><li><a href="Assignments.html">Assignments</a></li><li><a href="Courses.html">Courses</a></li><li><a href="Helper.html">Helper</a></li><li><a href="Pages.html">Pages</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#APIAction">APIAction</a></li><li><a href="global.html#APIController">APIController</a></li><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#calculateDateDiff">calculateDateDiff</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#DATECOLUMNS">DATECOLUMNS</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getCoursesInfo">getCoursesInfo</a></li><li><a href="global.html#getProgress">getProgress</a></li><li><a href="global.html#getSelectedRange">getSelectedRange</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#listPagesWithCourseID">listPagesWithCourseID</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#publishCourses">publishCourses</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftAssignmentDates">shiftAssignmentDates</a></li><li><a href="global.html#shiftDates">shiftDates</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#showPagesGuide">showPagesGuide</a></li><li><a href="global.html#TFCOLUMNS">TFCOLUMNS</a></li><li><a href="global.html#TFCOLUMNS_RO">TFCOLUMNS_RO</a></li><li><a href="global.html#updateAssignmentsDates">updateAssignmentsDates</a></li><li><a href="global.html#updateCourseDates">updateCourseDates</a></li><li><a href="global.html#updatePageToDoDate">updatePageToDoDate</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Mon Jan 18 2021 23:34:02 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue Jan 19 2021 21:43:55 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

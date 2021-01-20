@@ -15,6 +15,7 @@ function updateCourseDates(range_notation,updateduedate)
   let range=SpreadsheetApp.getActiveSheet().getActiveRange();
   if(range_notation!=null)
     range=SpreadsheetApp.getActiveSheet().getRange(range_notation);
+  
   //check header
   if(!Helper.checkRequiredColumns(range,["id","start_at","end_at"])){
     //Browser.msgBox("Please select a range with the required column: id, start_at, end_at");
@@ -22,41 +23,76 @@ function updateCourseDates(range_notation,updateduedate)
   }
   //set updateduate
   if(updateduedate==null){
-    updateduedate=ture;
+    updateduedate=truer;
   }
-  //get course data
+  //prepare course data
   let courses=Helper.convertRangeToObjectArray(range);
   let results=[];
 
+  //update each coure
   for(let n=0;n<courses.length;n++){
-    //update each course
+    //get course data
     const update_course=courses[n];
     const current_course=Courses.getCourseById(update_course.id);
+    
+    //check if start_at and end_at changed
+    if(Helper.timeDiff(current_course.start_at,update_course.start_at)==0 && Helper.timeDiff(current_course.end_at,update_course.end_at)==0){
+      Helper.toast(return_course.course_code+" start and end times were not changed.", null,3);
+      results.push({"message":"Course "+return_course.course_code+" was skipped."});
+      break;
+    }
+      
+
     if(current_course.id!=null){//exising course
+      //1. update course **************************************************//
+      //update a course call api
       const return_course=Courses.updateCourse(update_course);
-      results.push({"result":return_course.id+" dates updated."});
+      Helper.toast(return_course.course_code+" updated.", null,3);
+      results.push({"message":"Course "+return_course.course_code+" was updated."});
+      //2. update due dates **************************************************//
+      //starting update due dates
       //calculate datediff between current start_at and update start_at
-      const num_of_days=Helper.daysDiff(current_course.start_at,update.start_at);
+      const num_of_days=Helper.daysDiff(current_course.start_at,update_course.start_at);
+      Helper.log("date diff: "+num_of_days);
       if(num_of_days!=0 && updateduedate){
+        //2.1. update assignment due dates **************************************************//
         //update assignment dates
         //get all assignments
         //call get assignment api
         var assignments=Assignments.getCourseAssginments(current_course.id);
-        //get bulk assignment date opts
-        let date_opts=getBulkAssignmentDateOpts(assignments,num_of_days);
+        //get bulk assignment date opts api
+        let date_opts=Assignments.getBulkAssignmentDateOpts(current_course.id,assignments,num_of_days);
         //call api bulk date change
-        var endpoint=Helper.getAPIAction("assignments","shift_assignments_dates").endpoint;
+        let progress_data=Assignments.bulkUpdateAssignmentDate(date_opts);
+        Helper.toast("Update assignments in "+return_course.course_code+". Status: "+progress_data.workflow_state,null,3);
+        
+        //check progress. It will take some times to wait for the queued tasks. The following two lines can be removed if check progress is not necessary.***//
+        let progress_result=queryProgress(progress_data.id);
+        results.push({"message": "Course "+return_course.course_code+" assignments updating "+progress_result.workflow_state+" "+JSON.stringify(progress_result.results)});
 
+        //2.2. update page due dates **************************************************//
         //update pages dates
-        //get all pages
+        //get all pages api
+        let pages=Pages.listPages(return_course.id,null,null,null);
         //loop in each page
-        //construct ops each page with student_todo
-        //call api
+        for(let i=0;i<pages.length;i++){
+          if(pages[i].todo_date!=null && pages[i].todo_date.trim().toLowerCase()!="null"){
+            pages[i].todo_date=Helper.shiftDate(pages[i].todo_date,num_of_days);
+            //call api
+            let page_result=Pages.changePageToDoDate(pages[i],return_course.id);
+            if(page_result.url!=null){
+              Helper.toast("Processing "+page_result.url+" in course "+return_course.course_code+": "+page_result.todo_date,null,3);
+            }
+          }
+        }
+        results.push({"message":"Course "+return_course.course_code+" pages were updated."});
+        results.push({"message":num_of_days+" days shifted."});
       }
     }  
   }
-  
   //generate report
+  const rs=SpreadsheetApp.getActiveSpreadsheet().insertSheet();
+  Helper.fillValues(1,1,results,null,null);
 }
 
 /**
@@ -88,7 +124,7 @@ function getCoursesInfo(range_notation)
     }
     else if(courses[i].name!=null){
       //search course by name
-      let rtn_courses=getCoursesByName(courses[i].name,1,"course",null,null);
+      let rtn_courses=Accounts.getCoursesByName(courses[i].name,1,"course",null,null);
       for(let i=0;i<rtn_courses.length;i++)
       {
         queued_courses.push(rtn_courses[i]);
@@ -96,6 +132,38 @@ function getCoursesInfo(range_notation)
     }
     Helper.toast("getting info: "+courses[i].name,"Progress",2)
   }
-  Helper.fillValues(range.getLastRow()+1,range.getColumn(),queued_courses,"course_list",null);
+  Helper.fillValues(range.getLastRow()+1,range.getColumn(),queued_courses,"course_list_changedate",null);
   //fill data
+}
+
+/**
+ * Publish multiple courses in an account. Operates asynchronously; 
+ * Use the progress endpoint to query the status of an operation.
+ * The action to take on each course. Must be one of 'offer', 'conclude', 'delete', or 'undelete'.
+ * PUT /api/v1/accounts/:account_id/courses
+ * @param {string} event 
+ */
+function publishCourses(event)
+{
+  //get the selected column. If no selected column or more than one column selected, return error.
+  let rng=SpreadsheetApp.getActiveSheet().getActiveRange();
+  if(rng.getNumColumns()>1){
+    Browser.msgBox("Only one column allowed.");
+    return;
+  }
+  //prepare opts
+  let opts={
+    "account_id":1,
+    "event":event,
+    "course_ids":[]
+  }
+  for(let i=1;i<=rng.getNumRows();i++){
+    opts.course_ids.push(rng.getCell(i,1).getValue());
+  }
+  //get endpoint
+  let endpoint=Helper.getAPIAction2(APIAction.COURSES.PUBLISH_COURSES).endpoint;
+  //call endpoint
+  let data= canvasAPI(endpoint,opts);
+  //handle progress
+  Helper.showProgress(rng,data);
 }

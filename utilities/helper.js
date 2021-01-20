@@ -34,6 +34,24 @@ class Helper {
   }
 
   /**
+   * Get an API action
+   * @param {string} action action string with controller name, controller.action
+   * @returns {object} action
+   */
+  static getAPIAction2(action)
+  {
+    let ca=action.split(".");
+    if(ca.length==2)
+    {
+      return Helper.getAPIAction(ca[0],ca[1]);
+    }
+    else
+    {
+      return null;
+    }
+  }
+
+  /**
    * Set notest for a SpreadSheet range with a json array. Used to provide description and examples for parameters.
    * Use this for a parameter template that list paramters in a row. Each parameter uses one column.
    * @param {number} startrow An absolute row index of a sheet
@@ -70,16 +88,19 @@ class Helper {
    * @param {string} columns A DISPLAYCOLUMNS name defined in the DISPLAYCOLUMNS variable. Check DISPLAYCOLUMNS.js. 
    * If provided, only the fields defined in the DISPLAYCOLUMNS will be displayed.
    * If not provided, all original field of the jsonobject will be displayed.
-   * @param {string} bgcolor Provide a RGB color for the background of the filled area 
-   *. If not provided, a randome color will be used. See function getColor() for all colors
-  
+   * @param {string} bgcolor Provide a RGB color for the background of the filled area. If not provided, a randome color will be used. See function getColor() for all colors
+   * @param {boolean} blankrow Insert a blankrow or not. Default true.
    */
-  static fillValues(startrow,startcol,jsonobject,columns,bgcolor)
+  static fillValues(startrow,startcol,jsonobject,columns,bgcolor,blankrow)
   {
     const contents=Helper.parseJSON(jsonobject,columns);
     if(contents.length>0){
-      Helper.insertRows(startrow,contents.length);
-      startrow++;
+      if(blankrow==null)
+        blankrow=true;
+      if(blankrow){
+        Helper.insertRows(startrow,contents.length);
+        startrow++;
+      }
       const rng = SpreadsheetApp.getActiveSheet().getRange(startrow,startcol,contents.length,contents[0].length);
       if(bgcolor==null)
         bgcolor= Helper.getColor();
@@ -99,13 +120,16 @@ class Helper {
         }
       }
       //group rows
-      SpreadsheetApp.getActiveSheet().getRange((rng.getRow())+":"+rng.getLastRow()).activate().shiftRowGroupDepth(1);
+      let grouprowindex=rng.getRow()+1;//use the first new row as the +/- row
+      if(blankrow)
+        grouprowindex=rng.getRow();//use the blank row as the +/- row
+      SpreadsheetApp.getActiveSheet().getRange(grouprowindex+":"+rng.getLastRow()).activate().shiftRowGroupDepth(1);
     }
     else
     {
       Helper.insertRows(startrow,1);
       const cell=SpreadsheetApp.getActiveSheet().getRange(startrow,startcol,1,1);
-      cell.setValue("Something is wrong...");
+      cell.setValue("No records were found.");
     }
   }
 
@@ -342,7 +366,7 @@ class Helper {
   {
     //the range has less columns than required columns or has less than 2 rows. return false
     if(range.getNumColumns()<columns.length || range.getNumRows()<2){
-      Browser.msgBox("Please select a range with the required columns: "+action.required_columns.toString());
+      Browser.msgBox("Please select a range with the required columns: "+columns.toString());
       return false;
     }
       
@@ -367,7 +391,7 @@ class Helper {
    */
   static getColor()
   {
-    var color=['#EEEEEE','#F0FFF0','#F0F8FF','#FFEFD5','#B0E0E6','#FFFFF0','#E6E6FA'];
+    var color=['#EEEEEE','#F0FFF0','#F0F8FF','#FFEFD5','#dcf4f7','#FFFFF0','#E6E6FA'];
     return color[Helper.getRandomInt(color.length-1)];
   }
 
@@ -457,13 +481,30 @@ class Helper {
     // To calculate the time difference of two dates 
     const Difference_In_Time = update_date.getTime() - current_date.getTime();   
     // To calculate the no. of days between two dates 
-    return Difference_In_Time / oneday;
+    return Math.round(Difference_In_Time / oneday);
+  }
+
+  /**
+   * Calculate the date difference in millionseconds. 
+   * @param {string} date1 
+   * @param {string} date2 
+   * @returns {number} Difference in millionseconds. Positive if date2 is later than date1.
+   */
+  static timeDiff(date1, date2)
+  {
+    const current_date = new Date(date1); 
+    const update_date = new Date(date2);
+    // To calculate the time difference of two dates 
+    const Difference_In_Time = update_date.getTime() - current_date.getTime();   
+    // To calculate the no. of days between two dates 
+    return Difference_In_Time;
   }
 
   /**
    * Shift days
-   * @param {string} olddatestr 
-   * @param {Number} num_of_days 
+   * @param {string} olddatestr original date string
+   * @param {Number} num_of_days number of days to be added/substracted
+   * @returns {string} ISO date string
    */
   static shiftDate(olddatestr,num_of_days)
   {

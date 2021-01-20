@@ -29,7 +29,7 @@ class Accounts
   static getCoursesByName(search_term,account_id,search_by,blueprint,enrollment_term_id)
   {
     //call api to get courses
-    const action=Helper.getAPIAction(APIController.ACCOUNTS,APIAction.ACCOUNTS.GET_COURSES_IN_ACCOUNT);
+    const action=Helper.getAPIAction2(APIAction.ACCOUNTS.GET_COURSES_IN_ACCOUNT);
     const opts={
       "search_term":search_term,
       "account_id":account_id,

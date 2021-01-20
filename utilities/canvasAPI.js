@@ -65,7 +65,7 @@ function canvasAPI(endpoint, opts, filter) { //filter is not supported currently
 		opts = {};
 	}
   
-  Helper.log("opts :"+ JSON.stringify(opts));
+  	Helper.log("opts :"+ JSON.stringify(opts));
 
 	var PER_PAGE = 1000;
 	var API_VERSION = 1;
@@ -212,66 +212,68 @@ function canvasAPI(endpoint, opts, filter) { //filter is not supported currently
     parms.contentType='application/json';
   }
   
+  //Helper.log(url);
   
   while (url !== null) {
     Helper.log("Fetch: "+endpoint);
-		var response = UrlFetchApp.fetch(url, parms );
-        Utilities.sleep(1000); 
-		url = null;
-		if (response.getResponseCode() == 200) {
-			var headers = response.getAllHeaders();
-			if (typeof headers.Link !== undefined) {
-        /*
-        var links = headers.Link.split(',');
-				*/
-        if (typeof links === 'object') {
-					for (var l = 0; l < links.length; l++) {
-						var linkMatch = nextLinkRegex.exec(links[i]);
-						if (linkMatch !== null) {
-							url = linkMatch[1];
-						}
-					}        
-        }
-			}
-            
-			var json = JSON.parse(response.getContentText());
-            data=json;
-      /* commented by hy
-           for ( var item in json) {
-				if (json.hasOwnProperty(item)) {
-					var entry = json[item];
-					if (typeof filter !== 'undefined') {
-						var row = {};
-						for ( var j in filter) {
-							if (filter.hasOwnProperty(j)) {
-								var key = filter[j];
-								row[key] = entry[key];
+	var response = UrlFetchApp.fetch(url, parms );
+	Utilities.sleep(1000); 
+	url = null;
+	Helper.log("http response status: "+response.getResponseCode());
+	if (response.getResponseCode() == 200) {
+		var headers = response.getAllHeaders();
+		if (typeof headers.Link !== undefined) {
+			/*
+			var links = headers.Link.split(',');
+					*/
+			if (typeof links === 'object') {
+						for (var l = 0; l < links.length; l++) {
+							var linkMatch = nextLinkRegex.exec(links[i]);
+							if (linkMatch !== null) {
+								url = linkMatch[1];
 							}
-						}
-						data.push(row);
-					} else {
-                        data.push(entry)
-					}
-				}
-			}*/
+						}        
+			}
 		}
-    else if (response.getResponseCode()==404) {
-      var json = JSON.parse(response.getContentText());
-      Helper.log("404 error: " + json.errors[0].message);
-      data=json.errors;
+		//Helper.log("http response raw content: " +response.getContentText());
+		var json = JSON.parse(response.getContentText());
+		data=json;
+		/* commented by hy
+		for ( var item in json) {
+			if (json.hasOwnProperty(item)) {
+				var entry = json[item];
+				if (typeof filter !== 'undefined') {
+					var row = {};
+					for ( var j in filter) {
+						if (filter.hasOwnProperty(j)) {
+							var key = filter[j];
+							row[key] = entry[key];
+						}
+					}
+					data.push(row);
+				} else {
+					data.push(entry)
+				}
+			}
+		}*/
+	}
+	else if (response.getResponseCode()==404) {
+		var json = JSON.parse(response.getContentText());
+		Helper.log("404 error: " + json.errors[0].message);
+		data=json.errors;
 	}
 	else if (response.getResponseCode()==503) {
 		var json = {"errors":[{"message":"503 API Server Down"}]};
 		Helper.log("503 error: " + json.errors[0].message);
 		data=json.errors;
 	}
-    else{
-      var json = JSON.parse(response.getContentText());
-      //Helper.log("Response body: " + response.getContentText());
-      data=json;
-    }
+	else{
+		var json = JSON.parse(response.getContentText());
+		//Helper.log("Response body: " + response.getContentText());
+		data=json;
 	}
-  Helper.log("return data: "+data);
+	}
+  	Helper.log("return data: "+data);
 	return data;
 }
 

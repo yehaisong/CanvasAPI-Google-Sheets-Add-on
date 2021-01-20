@@ -13,19 +13,19 @@ function generateParamTemplate(name,index) {
   if(typeof _action!=null)
   {
     var cell=SpreadsheetApp.getCurrentCell();
-    var apirow={"api":_action.name}; //find the api
+    //var apirow={"api":_action.name}; //find the api
     //desc and params
     var _desc={};
-    var _params={};
+    var _params={"api":_action.name};
     for(var i=0;i<_action.params.length;i++){
       _desc[_action.params[i].name]=_action.params[i].desc+" e.g., "+_action.params[i].example;
       _params[_action.params[i].name]=_action.params[i].default_value;
     }
     //api row 1
-    Helper.fillValues(cell.getRow(),cell.getColumn(),apirow,null,"#eeeeee");
+    //Helper.fillValues(cell.getRow(),cell.getColumn(),apirow,null,"#eeeeee");
     
     //params row +1
-    Helper.fillValues(cell.getRow()+1,cell.getColumn(),_params,null,"#ADD8E6");
+    Helper.fillValues(cell.getRow(),cell.getColumn(),_params,null,"#ADD8E6",false);
     //desc note col 1
     Helper.setNotesFromJsonObject(cell.getRow()+1,cell.getColumn(),_desc,null)
     Helper.log("created template for "+_action.name);
@@ -55,6 +55,7 @@ function validateParams(controller,action,params)
  * @param {string} name The name of the api function
  * @param {int} index The 0 based index of the array
  */
+/*
 function generateArrayParamTemplate(name,index) {
   var _action=CANVASAPIS[name][index].api;
   if(typeof _action!=null)
@@ -65,6 +66,7 @@ function generateArrayParamTemplate(name,index) {
     //desc and params
     var _desclist=[];
     var _paramslist=[];
+    _paramslist.push(apirow);
     var _desc={};
     var _params={};
     for(var i=0;i<_action.params.length;i++){
@@ -73,11 +75,8 @@ function generateArrayParamTemplate(name,index) {
     }
     _desclist.push(_desc);
     _paramslist.push(_params);
-
-    //api row 1
-    Helper.fillValues(cell.getRow(),cell.getColumn(),apirow,null,"#eeeeee");
     //parames rows 2,3
-    Helper.fillValues(cell.getRow()+1,cell.getColumn(),_paramslist,null,"#ADD8E6");
+    Helper.fillValues(cell.getRow(),cell.getColumn(),_paramslist,null,"#ADD8E6");
     //desc notes rows 2,3
     Helper.setNotesFromJsonList(cell.getRow()+1,cell.getColumn(),_desclist,null);
     Helper.log("created template for "+_action.name);
@@ -86,6 +85,6 @@ function generateArrayParamTemplate(name,index) {
   {
     Browser.msgBox('API '+name+' is not implemented.');
   }
-}
+}*/
 
 

@@ -23,13 +23,13 @@ class Courses
    */
   static updateCourse(course)
   {
-    const action=Helper.getAPIAction(APIController.COURSES,APIAction.COURSES.UPDATE_A_COURSE);
+    const action=Helper.getAPIAction2(APIAction.COURSES.UPDATE_A_COURSE);
     //opts
     const opts={
       "id":course.id,
       "course":{
-        "start_at":course.start_at,
-        "end_at":course.end_at
+        "start_at":Helper.getISODate(course.start_at),
+        "end_at": Helper.getISODate(course.end_at)
       }
     }
     return canvasAPI(action.endpoint,opts);
@@ -43,7 +43,7 @@ class Courses
   static getCourseById(id)
   {
     //get get_single_course action
-    let action=Helper.getAPIAction(APIController.COURSES,APIAction.COURSES.GET_SINGLE_COURSE);
+    let action=Helper.getAPIAction2(APIAction.COURSES.GET_SINGLE_COURSE);
     //call canvasAPI
     let course=canvasAPI(action.endpoint,{"id":id});
     return course;

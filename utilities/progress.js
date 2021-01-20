@@ -26,13 +26,13 @@
         
         Helper.log(progress.toFixed(0)+"% "+results);
         
-        if(progress>0)
+        if(progress>50)
         {
             Helper.toast(data.tag+ " " //the type of operation
                 + data.workflow_state //the state of the job one of 'queued', 'running', 'completed', 'failed'
                 +" completion: "+progress.toFixed(0)+"%", //percent completed
                 "Progress "+id+" Status", //title
-                3); //show for 2 seconds
+                2); //show for 2 seconds
         }
 
         if(progress>=100){
@@ -40,7 +40,7 @@
             return data;
         }
 
-        Utilities.sleep(3000);
+        Utilities.sleep(1000);
     }
     return null;
  }

@@ -23,7 +23,7 @@ class Assignments{
    */
   static getCourseAssginments(course_id)
   {
-    var endpoint=Helper.getAPIAction("assignments","get_assignments").endpoint;
+    var endpoint=Helper.getAPIAction2(APIAction.ASSIGNMENGS.GET_ASSIGNMENTS).endpoint;
     //create opts
     var opts ={};
     opts["course_id"]=course_id;
@@ -38,15 +38,17 @@ class Assignments{
    * Bulk update assignment dates
    * PUT /api/v1/courses/:course_id/assignments/bulk_update
    * @param {object} date_opts bulk assignment date update options object.
+   * @returns {object} A progress object. Use the id to track the progress.
    */
   static bulkUpdateAssignmentDate(date_opts)
   {
-    const endpoint=Helper.getAPIAction("assignments","shift_assignments_dates").endpoint;
+    const endpoint=Helper.getAPIAction2(APIAction.ASSIGNMENGS.SHIFT_ASSIGNMENTS_DATES).endpoint;
     return canvasAPI(endpoint,date_opts);
   }
 
   /**
    * Construct a bulk assignment date update options object.
+   * @param {number} course_id
    * @param {array<assignment>} assignments 
    * @param {number} num_of_days
    * @returns {object} 
@@ -59,10 +61,10 @@ class Assignments{
         }
       }]'
   */
-  static getBulkAssignmentDateOpts(assignments,num_of_days)
+  static getBulkAssignmentDateOpts(course_id,assignments,num_of_days)
   {
     let date_opts={
-      "course_id":opts.course_id,
+      "course_id":course_id,
       "dlist":[]
       };
     

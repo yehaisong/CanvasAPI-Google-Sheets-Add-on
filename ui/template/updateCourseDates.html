@@ -45,7 +45,7 @@
                     <small id="courseinfoHelp" class="form-text text-muted">Must include columns with headers course_id, start_at, end_at</small>
                 </div>
                 <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="updateduedate">
+                    <input type="checkbox" class="form-check-input" checked id="updateduedate">
                     <label class="form-check-label" for="updateduedate">Update assignments date</label>
                 </div>
             </li>
@@ -121,11 +121,11 @@
 
       function updateCourseDates(){
         onCall();
-        //var txtrng=document.getElementById("courseinfo")
+        var chkUpdate=document.getElementById("updateduedate")
         google.script.run                       // Executes a Apps Script JS Function
           .withSuccessHandler(onSuccess)    // function to be called upon successfull completion of Apps Script function
           .withFailureHandler(onFailure)
-          .updateCourseDates();                  // Apps Sript JS Function
+          .updateCourseDates(null,chkUpdate.checked);                  // Apps Sript JS Function
         return;
       }
 

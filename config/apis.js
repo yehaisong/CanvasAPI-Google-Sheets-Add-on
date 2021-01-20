@@ -259,12 +259,26 @@ const CANVASAPIS={
         ]
       }
     },
+    { 
+      "display_name":"5: update_assignments_dates",
+      "automated":"false",
+      "guide":[
+        "Select a range with assignments info. Include a header row with required columns: course_id, id, due_at, lock_at, unlock_at",
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).updateAssignmentsDates();})();return false;\">Call API</button>"
+      ],
+      "api":{
+        "name":"update_assignments_dates",
+        "endpoint":"PUT /api/v1/courses/:course_id/assignments/bulk_update",
+        "reference":"https://canvas.instructure.com/doc/api/assignments.html#method.assignments_api.bulk_update",
+        "required_columns":["course_id","id","due_at","lock_at","unlock_at"]
+      }
+    },
     {
-      "display_name":"5: shift_assignments_dates", 
+      "display_name":"6: shift_assignments_dates", 
       "automated":"false",
       "guide":[
         "Select an empty cell to start",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('assignments',5);})();return false;\">Get parameters</button>",
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('assignments',6);})();return false;\">Get parameters</button>",
         "Enter values",
         "Select the range of the light blue area of the parameter template",
         "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).shiftAssignmentDates();})();return false;\">Call API</button>"
@@ -538,14 +552,14 @@ const CANVASAPIS={
       }
     },
     { 
-      "display_name":"2: update_courses",
+      "display_name":"2: publish_courses",
       "automated":"false",
       "guide":[
         "Select a column with course ids listed in rows",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).updateCourses('offer');})();return false;\">publish</button>"
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).publishCourses('offer');})();return false;\">publish</button>"
       ],
       "api":{
-        "name":"update_courses",
+        "name":"publish_courses",
         "endpoint":"PUT /api/v1/accounts/:account_id/courses",
         "reference":"https://canvas.instructure.com/doc/api/courses.html#method.courses.show",
         "params":[
@@ -630,13 +644,13 @@ const CANVASAPIS={
   "pages":[
     { 
       "display_name":"0: list_pages",
-      "automated":"true",
+      "automated":"false",
       "guide":[
         "Select an empty cell to start",
         "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('pages',0);})();return false;\">Get parameters</button>",
         "Enter values",
         "Select the range of the light blue area of the parameter template",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('GET /api/v1/courses/:course_id/pages','page_list');})();return false;\">Call API</button>"
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).listPagesWithCourseID();})();return false;\">Call API</button>"
       ],
       "api":{
         "name":"list_pages",
@@ -675,14 +689,14 @@ const CANVASAPIS={
       }
     },
     { 
-      "display_name":"1: update_pages_todo",
+      "display_name":"1: update_pages_todo_date",
       "automated":"false",
       "guide":[
         "Select a range with page info. Include a header row with required columns: course_id, url, todo_date",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).updatePageToDoDate();})();return false;\">Call API</button>"
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).updatePagesToDoDates();})();return false;\">Call API</button>"
       ],
       "api":{
-        "name":"update_pages_todo",
+        "name":"update_pages_todo_date",
         "endpoint":"PUT /api/v1/courses/:course_id/pages/:url",
         "reference":"https://canvas.instructure.com/doc/api/pages.html#method.wiki_pages_api.update",
         "required_columns":["course_id","url","todo_date"]
