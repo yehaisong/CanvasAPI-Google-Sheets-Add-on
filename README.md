@@ -8,8 +8,7 @@ I am not a fulltime developer. The project will be missing some documentations.
 
 I am using clasp to maintain the project. To see how to use clasp, check https://developers.google.com/apps-script/guides/clasp.
 
-Online JSDoc https://googleaddondoc.azurewebsites.net/index.html
-
+For developers, check out the source code JSDoc @ https://googleaddondoc.azurewebsites.net/index.html
 
 To pull codes from GAS
 clasp pull
