@@ -10,6 +10,8 @@ I am using clasp to maintain the project. To see how to use clasp, check https:/
 
 For developers, check out the source code JSDoc @ https://googleaddondoc.azurewebsites.net/index.html
 
+The add-on is not ready for public testing. It is currently only available to Cedarville University users.
+
 To pull codes from GAS
 clasp pull
 
