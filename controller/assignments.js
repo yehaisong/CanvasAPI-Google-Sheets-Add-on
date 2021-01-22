@@ -76,38 +76,25 @@ class Assignments{
         }]
       }
       //due_at
-      if(assignments[i].due_at!=null){
+      if(Date.parse(assignments[i].due_at)>0){
         new_date.all_dates[0].due_at=Helper.shiftDate(assignments[i].due_at,num_of_days);
       }
       //lock_at
-      if(assignments[i].lock_at!=null){
+      if(Date.parse(assignments[i].lock_at)>0){
         new_date.all_dates[0].lock_at=Helper.shiftDate(assignments[i].lock_at,num_of_days);
       }
       //unlock_at
-      if(assignments[i].unlock_at!=null){
+      if(Date.parse(assignments[i].unlock_at)>0){
         new_date.all_dates[0].unlock_at=Helper.shiftDate(assignments[i].unlock_at,num_of_days);
       } 
 
-      if(new_date.all_dates[0].due_at!=null || new_date.all_dates[0].lock_at!=null || new_date.all_dates[0].unlock_at!=null)
+      if(Date.parse(new_date.all_dates[0].due_at)>0 || Date.parse(new_date.all_dates[0].lock_at)>0 || Date.parse(new_date.all_dates[0].unlock_at)>0)
         date_opts.dlist.push(new_date);
     }
     return date_opts;
   }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /**
  * Delete an assignment override

@@ -24,7 +24,11 @@ function shiftDates(range_notation){
         let dates=range.getValues();
         for(let r=0;r<dates.length;r++){
             for(let c=0;c<dates[r].length;c++){
-                dates[r][c]=Helper.getLocalDate(shiftDate(dates[r][c],days));
+                if(Date.parse(dates[r][c])>0)//there is a valid date in the cell
+                {
+                    dates[r][c]=Helper.getLocalDate(Helper.shiftDate(dates[r][c],days));
+                    Helper.log(dates[r][c]);
+                }
             }
         }
         range.setValues(dates);
@@ -36,9 +40,31 @@ function shiftDates(range_notation){
  */
 function calculateDateDiff()
 {
-    let date1=Browser.inputBox("date1 (3/25/2020)");
-    let date2=Browser.inputBox("date2 (4/25/2020)");
-    Browser.msgBox(Helper.daysDiff(date1,date2));
+    //let date1=Browser.inputBox("date1 (3/25/2020)");
+    //let date2=Browser.inputBox("date2 (4/25/2020)");
+    //Browser.msgBox(Helper.daysDiff(date1,date2));
+    var htmlTemplate = HtmlService.createTemplateFromFile('ui/template/datediff');
+    htmlTemplate.data=(new Date()).toLocaleString();
+    let htmloutput=htmlTemplate.evaluate();
+    SpreadsheetApp.getUi() // Or DocumentApp or SlidesApp or FormApp.
+      .showModalDialog(htmloutput, 'Date Difference');
+
+    
+    /*let htmlTemplate=HtmlService.createTemplateFromFile('ui/template/updateCourseDates');
+    htmlTemplate.data=SpreadsheetApp.getActiveRange().getA1Notation();
+    SpreadsheetApp.getUi().showSidebar(htmlTemplate.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).setTitle(title));*/
+}
+
+/**
+ * For client call
+ * @param {string} datepart Difference in specified date type, support day, hour, minute, second, millionsecond. If not provide, return in millionseconds
+ * @param {string} date1 Date time string 1
+ * @param {string} date2 Date time stirng 2
+ * @returns {number} number of days
+ */
+function dateDiff(datepart, date1, date2)
+{
+    return Math.round(Helper.dateDiff(datepart, date1,date2));
 }
 
 

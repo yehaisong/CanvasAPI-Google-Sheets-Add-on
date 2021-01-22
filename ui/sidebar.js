@@ -17,7 +17,8 @@ class SideBar{
   }
 
   /**
-   * @param {string} name The name of the api function
+   * Show api by group
+   * @param {string} name The name of the api controller
    */
   static show(name)
   {
@@ -36,5 +37,17 @@ class SideBar{
     htmlTemplate.data=SpreadsheetApp.getActiveRange().getA1Notation();
     SpreadsheetApp.getUi().showSidebar(htmlTemplate.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).setTitle(title));
   }
+
+  /**
+   * Show all apis in a sidebar
+   */
+  static showAllAPIs()
+  {
+    var htmlTemplate=HtmlService.createTemplateFromFile('ui/template/allapis');
+    htmlTemplate.data=CANVASAPIS;
+    SpreadsheetApp.getUi().showSidebar(htmlTemplate.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).setTitle("Canvas APIs"));
+  }
+
+
 
 }

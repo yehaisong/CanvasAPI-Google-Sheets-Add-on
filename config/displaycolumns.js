@@ -9,7 +9,7 @@
  * @type {!Object}
  */
 const DISPLAYCOLUMNS={
-"assignment_list":["course_id","id","name","assignment_group_id","submission_types","due_at","unlock_at","lock_at","points_possible","has_overrides","html_url","workflow_state"],
+"assignment_list":["course_id","id","name","due_at","unlock_at","lock_at","assignment_group_id","submission_types","points_possible","has_overrides","html_url","workflow_state"],
 "course_list":["account_id","id","name","course_code","enrollment_term_id","sis_course_id","start_at","end_at","time_zone","workflow_state"],
 "course_list_changedate":["id","name","course_code","start_at","end_at","time_zone","workflow_state","enrollment_term_id"],
 "assignment_dates":["course_id","id","name","due_at","unlock_at","lock_at"],

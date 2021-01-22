@@ -61,38 +61,54 @@ function shiftAssignmentDates()
  */
 function updateAssignmentsDates(range_notation)
 {
-    throw "Not implemented!"
-    /*
-    //get range
-    let range=SpreadsheetApp.getActiveSheet().getActiveRange();
-    if(range_notation!=null)
-        range=SpreadsheetApp.getActiveSheet().getRange(range_notation);
-    //check for requred columns
-    const action=Helper.getAPIAction2(APIAction.PAGES.UPDATE_PAGES_TODO);
-    if(!Helper.checkRequiredColumns(range,action.required_columns)){
-        //Browser.msgBox("Please select a range with the required columns: "+action.required_columns.toString());
-        return;
+  //get range
+  let range=SpreadsheetApp.getActiveSheet().getActiveRange();
+  if(range_notation!=null)
+      range=SpreadsheetApp.getActiveSheet().getRange(range_notation);
+  //check for requred columns
+  const action=Helper.getAPIAction2(APIAction.ASSIGNMENGS.UPDATE_ASSIGNMENTS_DATES);
+  if(!Helper.checkRequiredColumns(range,action.required_columns)){
+      //Browser.msgBox("Please select a range with the required columns: "+action.required_columns.toString());
+      return;
+  }
+      
+  //get assignments
+  let assignments=Helper.convertRangeToObjectArray(range);
+  
+  //get bulk assignment date opts
+  let date_opts={
+    "course_id":0,
+    "dlist":[]
+    };
+  
+  for(var i=0;i<assignments.length;i++){//check all assignments  
+    date_opts.course_id=assignments[i].course_id;
+    let new_date={
+      "id":assignments[i].id.toString(),
+      "all_dates":[{
+        "base":true
+      }]
     }
-        
-    //get pages with todo_date
-    let pages=Helper.convertRangeToObjectArray(range);
-    let return_pages=[];
-    //for each page with todo_date
-    for(let i=0;i<pages.length;i++){
-        
-        //call update page api
-        let data=Pages.updatePageToDoDate(pages[i],pages[i].course_id);
-        //toast msg
-        if(data.url!=null){
-            Helper.toast(data.url+" "+data.todo_date,"Page todo_date updated", 3);
-            return_pages.push(data);
-        }
-        else{
-            Helper.toast(data,"Error",3);
-        }
-        Utilities.sleep(1000);
+    //due_at
+    if(Date.parse(assignments[i].due_at)>0){
+      new_date.all_dates[0].due_at=assignments[i].due_at;
     }
-    Helper.fillValues(range.getLastRow()+1,range.getColumn(),return_pages,"page_list",null);
-    */
+    //lock_at
+    if(Date.parse(assignments[i].lock_at)>0){
+      new_date.all_dates[0].lock_at=assignments[i].lock_at;
+    }
+    //unlock_at
+    if(Date.parse(assignments[i].unlock_at)>0){
+      new_date.all_dates[0].unlock_at=assignments[i].unlock_at;
+    } 
 
+    if(Date.parse(new_date.all_dates[0].due_at)>0 || Date.parse(new_date.all_dates[0].lock_at)>0 || Date.parse(new_date.all_dates[0].unlock_at)>0)
+      date_opts.dlist.push(new_date);
+  }
+    
+  //call bulkUpdate api
+  //Helper.log(date_opts);
+  let progress=Assignments.bulkUpdateAssignmentDate(date_opts);
+  //handle data
+  Helper.showProgress(range,progress);
 }

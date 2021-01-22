@@ -27,6 +27,7 @@ const CANVASAPIS={
   "assignments":[
     {
       "display_name":"0: get_assignments",
+      "description":"Searh and list assignments in a course.",
       "automated":"true",
       "guide":[
         "Select an empty cell to start",
@@ -66,6 +67,7 @@ const CANVASAPIS={
     },
     {
       "display_name":"1: get_assignment_overrides",
+      "description":"Get assignment dates overrides.",
       "automated":"true",
       "guide":[
         "Select an empty cell to start",
@@ -98,6 +100,7 @@ const CANVASAPIS={
     },
     {
       "display_name":"2: create_an_assignment_override", 
+      "description":"Create an assignment overrides by providing override dates.",
       "automated":"true",
       "guide":[
         "Select an empty cell to start",
@@ -165,6 +168,7 @@ const CANVASAPIS={
     },
     {
       "display_name":"3: update_an_assignment_override", 
+      "description":"Update an assignment overrides by providing override dates.",
       "automated":"true",
       "guide":[
         "Select an empty cell to start",
@@ -238,7 +242,8 @@ const CANVASAPIS={
       }
     },
     {
-      "display_name":"4: list_assignments_date", 
+      "display_name":"4: list_assignments_in_course", 
+      "description":"List all assignments in a course by course id.",
       "automated":"false",
       "guide":[
         "Select a cell with a course id",
@@ -261,6 +266,7 @@ const CANVASAPIS={
     },
     { 
       "display_name":"5: update_assignments_dates",
+      "description":"Update dates for selected assignments.",
       "automated":"false",
       "guide":[
         "Select a range with assignments info. Include a header row with required columns: course_id, id, due_at, lock_at, unlock_at",
@@ -275,6 +281,7 @@ const CANVASAPIS={
     },
     {
       "display_name":"6: shift_assignments_dates", 
+      "description":"Shift all assignments dates in a course.",
       "automated":"false",
       "guide":[
         "Select an empty cell to start",
@@ -310,6 +317,7 @@ const CANVASAPIS={
   "accounts":[
     { 
       "display_name":"0: get_accounts",
+      "description":"Get all account of the token owner.",
       "automated":"true",
       "guide":[
         "Select an empty cell to start",
@@ -324,6 +332,7 @@ const CANVASAPIS={
     },
     {
       "display_name":"1: get_sub_accounts",
+      "description":"Get sub account of an account.",
       "automated":"true",
       "guide":[
         "Select a cell with an account id",
@@ -346,6 +355,7 @@ const CANVASAPIS={
     },
     {
       "display_name":"2: get_courses_in_account",
+      "description":"Search and list courses in an account including sub accounts.",
       "automated":"true",
       "guide":[
         "Select an empty cell to start",
@@ -401,6 +411,7 @@ const CANVASAPIS={
   "blueprints":[
     {
       "display_name":"0: get_blueprint_information",
+      "description":"Get blue print information, including sync status.",
       "automated":"true",
       "guide":[
         "Select a cell with a course id",
@@ -423,6 +434,7 @@ const CANVASAPIS={
     },
     {
       "display_name":"1: update_associated_courses",
+      "description":"Associate and unassociate courses.",
       "automated":"true",
       "guide":[
         "Select an empty cell to start",
@@ -462,6 +474,7 @@ const CANVASAPIS={
     },
     {
       "display_name":"2: sync_associated_courses",
+      "description":"Sync associated courses of a blueprint course.",
       "automated":"true",
       "guide":[
         "Select an empty cell to start",
@@ -517,6 +530,7 @@ const CANVASAPIS={
   "courses":[
     { 
       "display_name":"0: get_your_active_courses",
+      "description":"Get active courses of the token owner.",
       "automated":"true",
       "guide":[
         "Select an empty cell to start",
@@ -531,6 +545,7 @@ const CANVASAPIS={
     },
     { 
       "display_name":"1: get_single_course",
+      "description":"Get a single course by course id.",
       "automated":"true",
       "guide":[
         "Select a cell with a course id",
@@ -553,6 +568,7 @@ const CANVASAPIS={
     },
     { 
       "display_name":"2: publish_courses",
+      "description":"Bulk publish courses by select a column of course ids.",
       "automated":"false",
       "guide":[
         "Select a column with course ids listed in rows",
@@ -589,6 +605,7 @@ const CANVASAPIS={
     },
     { 
       "display_name":"3: update_a_course",
+      "description":"Update a course name, code, start_at, and end_at",
       "automated":"true",
       "guide":[
         "Select an empty cell to start",
@@ -644,6 +661,7 @@ const CANVASAPIS={
   "pages":[
     { 
       "display_name":"0: list_pages",
+      "description":"Searh and list pages in a course.",
       "automated":"false",
       "guide":[
         "Select an empty cell to start",
@@ -688,8 +706,32 @@ const CANVASAPIS={
         ]
       }
     },
+    {
+      "display_name":"1: list_pages_in_course", 
+      "description":"List all pages in a course.",
+      "automated":"true",
+      "guide":[
+        "Select a cell with a course id",
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithSingleParam('GET /api/v1/courses/:course_id/pages','course_id');})();return false;\">Call API</button>"
+      ],
+      "api":{
+        "name":"list_pages_in_course",
+        "endpoint":"GET /api/v1/courses/:course_id/pages",
+        "reference":"https://canvas.instructure.com/doc/api/pages.html#method.wiki_pages_api.index",
+        "params":[
+          {
+            "name":"course_id",
+            "type":"number",
+            "default_value":"",
+            "desc":"course id",
+            "example":"83"
+          }
+        ]
+      }
+    },
     { 
-      "display_name":"1: update_pages_todo_date",
+      "display_name":"2: update_pages_todo_date",
+      "description":"Update todo_date of selected pages",
       "automated":"false",
       "guide":[
         "Select a range with page info. Include a header row with required columns: course_id, url, todo_date",

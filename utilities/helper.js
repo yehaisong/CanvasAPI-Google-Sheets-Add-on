@@ -98,9 +98,10 @@ class Helper {
       if(blankrow==null)
         blankrow=true;
       if(blankrow){
-        Helper.insertRows(startrow,contents.length);
+        Helper.insertRows(startrow,1);
         startrow++;
       }
+      Helper.insertRows(startrow,contents.length);
       const rng = SpreadsheetApp.getActiveSheet().getRange(startrow,startcol,contents.length,contents[0].length);
       if(bgcolor==null)
         bgcolor= Helper.getColor();
@@ -121,8 +122,11 @@ class Helper {
       }
       //group rows
       let grouprowindex=rng.getRow()+1;//use the first new row as the +/- row
-      if(blankrow)
+      if(blankrow){
         grouprowindex=rng.getRow();//use the blank row as the +/- row
+        if(grouprowindex>1)
+          grouprowindex--; //use the active row as group header if not the first row
+      }
       SpreadsheetApp.getActiveSheet().getRange(grouprowindex+":"+rng.getLastRow()).activate().shiftRowGroupDepth(1);
     }
     else
@@ -418,14 +422,14 @@ class Helper {
 
   /**Show bulk action progress
    * @param {Range} range
-   * @param {Array} data
+   * @param {object} progress The progress object
    */
-  static showProgress(range, data)
+  static showProgress(range, progress)
   {
-    let progressid=data.id;
+    let progressid=progress.id;
     //show progress with url
     //Helper.fillValues(range.getLastRow()+1,range.getColumn(),data,"progress",null);
-    Helper.toast(data.tag+" "+data.workflow_state,"Progress "+progressid+" Status");
+    Helper.toast(progress.tag+" "+progress.workflow_state,"Progress "+progressid+" Status");
     //show progress restuls
     let progressResult=queryProgress(progressid);
     Helper.fillValues(range.getLastRow()+1,range.getColumn(),progressResult,"progress",null);
@@ -468,36 +472,58 @@ class Helper {
   }
 
   /**
-   * Calculate the date difference in days. 
-   * @param {string} date1 
-   * @param {string} date2 
+   * Calculate the date difference in days with whole number. 
+   * @param {string} date1 A valide date time string
+   * @param {string} date2 A valide date time string
    * @returns {number} Difference in days. Positive if date2 is later than date1.
    */
   static daysDiff(date1, date2)
   {
-    const current_date = new Date(date1); 
-    const update_date = new Date(date2); 
-    const oneday=1000*3600*24;   
-    // To calculate the time difference of two dates 
-    const Difference_In_Time = update_date.getTime() - current_date.getTime();   
-    // To calculate the no. of days between two dates 
-    return Math.round(Difference_In_Time / oneday);
+    return Math.round(Helper.dateDiff(DatePart.DAY,date1, date2));
   }
 
   /**
    * Calculate the date difference in millionseconds. 
-   * @param {string} date1 
-   * @param {string} date2 
+   * @param {string} date1 A valide date time string
+   * @param {string} date2 A valide date time string
    * @returns {number} Difference in millionseconds. Positive if date2 is later than date1.
    */
   static timeDiff(date1, date2)
   {
+    return Helper.dateDiff(DatePart.MILLIONSECOND,date1, date2);
+  }
+
+  /**
+   * Calculate the date difference in specified date part
+   * @param {string} datepart Can  use DatePart enmus. Difference in specified date type, support day, hour, minute, second, millionsecond. If not provide, return in millionseconds
+   * @param {string} date1 A valide date time string
+   * @param {string} date2 A valide date time string
+   */
+  static dateDiff(datepart, date1, date2)
+  {
     const current_date = new Date(date1); 
     const update_date = new Date(date2);
     // To calculate the time difference of two dates 
-    const Difference_In_Time = update_date.getTime() - current_date.getTime();   
-    // To calculate the no. of days between two dates 
-    return Difference_In_Time;
+    const difference_in_time = update_date.getTime() - current_date.getTime();   
+    const oneday=1000*3600*24;
+    const onehour=1000*3600;
+    const oneminute=1000*60;
+    const onesecond=1000;
+    switch (datepart)
+    {
+      case DatePart.DAY:
+        return difference_in_time/oneday;
+      case DatePart.HOUR:
+        return difference_in_time/onehour;
+      case DatePart.MINUTE:
+        return difference_in_time/oneminute;
+      case DatePart.SECOND:
+        return difference_in_time/onesecond;
+      case DatePart.MILLIONSECOND:
+        return difference_in_time;
+      default:
+        return difference_in_time;
+    }
   }
 
   /**

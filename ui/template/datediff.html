@@ -24,60 +24,44 @@
    </style>
   </head>
   <body style="padding:5px">
-    <div class="accordion-flush" id="apiwrapper">
-    <?for (var i=0;i<data.length;i++) {
-      var action=data[i]?>
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="<?=('heading'+i)?>">
-          <button class="accordion-button collapsed" 
-            type="button" 
-            title="<?=action.description?>"
-            data-bs-toggle="collapse" 
-            data-bs-target="<?=('#collapse'+i)?>" 
-            aria-expanded="false" aria-controls="<?=('collapse'+i)?>">
-            <?=action.display_name?>
-          </button>
-        </h2>
-        <div id="<?=('collapse'+i)?>" 
-          class="accordion-collapse collapse" 
-          aria-labelledby="<?=('heading'+i)?>"
-          data-bs-parent="#apiwrapper">
-          <div class="accordion-body">
-            <div title="automated" class="text-end">
-              <?if (action.automated=='true'){?> 
-                <span class="badge bg-success">automated</span> 
-                <?} else {?>
-                <span class="badge bg-warning">customized</span>
-                <?}?>
-              </div>
-            <div><?=action.description?></div>
-            <hr>
-            <div title="endpoint"><?=action.api.endpoint?></div>
-            <div title="reference"><a href="<?=action.api.reference?>" target="_blank">Canvas API reference</a></div>
-            <hr/>
-            <ol title="steps">
-            <?var steps=action.guide?>
-            <?for (var j=0;j<steps.length;j++) {?>
-              <li><?!=steps[j]?></li>
-            <?}?>
-            </ol>
-          </div>
-        </div>
+    <form>
+
+      <div class="form-group">
+          <label for="date1">Date 1</label>
+          <input type="text"  class="form-control" id="date1" aria-describedby="date1Help" placeholder="1/25/2021, 12:00:00 AM" value="<?=data?>">
+          <small id="date1Help" class="form-text text-muted">First date string, e.g., 1/25/2021, 12:00:00 AM</small>
       </div>
-    <?}?>
+      <div class="form-group">
+          <label for="date2">Date 2</label>
+          <input type="text"  class="form-control" id="date2" aria-describedby="date2Help" placeholder="2/25/2021, 12:00:00 AM" value="<?=data?>">
+          <small id="date2Help" class="form-text text-muted">Second date string, e.g., 2/25/2021, 12:00:00 AM</small>
+      </div>
+      <div class="form-group">
+        <label for="datepart">Date part</label>
+        <select class="form-control" id="datepart">
+          <option>day</option>
+          <option>hour</option>
+          <option>minute</option>
+          <option>second</option>
+          <option>millionsecond</option>
+        </select>
     </div>
+      <div class="form-group">
+        <button type="button" class="btn btn-primary" onclick="dateDiff();">Submit</button>
+      </div>
+    </form>
     <div class="fixed-bottom alert alert-primary m-2 text-center d-none" id="result">
       <div class="float-start" id="status">status</div>
       <a href="#" class="float-end text-decoration-none" data-dismiss="alert" onclick="closeStatus()">&times;</a>
     </div>
     <script>
-      function onSuccess() {
+      function onSuccess(days) {
         changeStyle('alert-success');
-        updateStatus('<div>API Call Completed!</div>');
+        updateStatus('<div>'+days+'</div>');
       }
       function onFailure(error) {
         changeStyle('alert-danger');
-        updateStatus('<div>API Call Failed!</div><div class="text-start">'+error+'</div>');
+        updateStatus('<div>'+error+'</div>');
       }
       function onCall(){
         showStatus();
@@ -103,6 +87,20 @@
         var div_status = document.getElementById('status');
         div_status.innerHTML = status;
       }
+      
+      function dateDiff(){
+        onCall();
+        var date1=document.getElementById("date1");
+        var date2=document.getElementById("date2");
+        var datepart=document.getElementById("datepart");
+        google.script.run                       // Executes a Apps Script JS Function
+          .withSuccessHandler(onSuccess)    // function to be called upon successfull completion of Apps Script function
+          .withFailureHandler(onFailure)
+          .dateDiff(datepart.value,date1.value,date2.value);                  // Apps Sript JS Function
+        return;
+      }
+
+
     </script>
   </body>
 </html>

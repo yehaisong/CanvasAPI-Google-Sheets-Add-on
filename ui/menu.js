@@ -10,17 +10,18 @@ function onOpen() {
   var ui = SpreadsheetApp.getUi();
   // Or DocumentApp or FormApp.
   ui.createMenu('Canvas')
-  .addItem("change course date","SideBar.showUpdateCourseDatesSideBar")
+  .addItem("Change course date","SideBar.showUpdateCourseDatesSideBar")
   .addSeparator()
-  .addItem("shift dates","shiftDates")
-  .addItem("date diff in days","calculateDateDiff")
+  .addItem("Shift dates","shiftDates")
+  .addItem("Calculate date diff","calculateDateDiff")
   .addSeparator()
-  .addSubMenu(ui.createMenu('apis')    
-    .addItem("accounts","showAccountsGuide")
-    .addItem("assignments","showAssignmentsGuide")
-    .addItem("blueprints","showBlueprintsGuide") 
-    .addItem("courses","showCoursesGuide")
-    .addItem("pages","showPagesGuide"))
+  .addItem("Show APIs","SideBar.showAllAPIs")
+  .addSubMenu(ui.createMenu('Show APIs by group')    
+    .addItem("Accounts","showAccountsGuide")
+    .addItem("Assignments","showAssignmentsGuide")
+    .addItem("Blueprints","showBlueprintsGuide") 
+    .addItem("Courses","showCoursesGuide")
+    .addItem("Pages","showPagesGuide"))
   /*
   .addSeparator()
   .addSubMenu(ui.createMenu('direct API call')
@@ -43,10 +44,10 @@ function onOpen() {
         .addItem('get single course', 'get_single_course'))
   )*/
   .addSeparator()
-  .addSubMenu(ui.createMenu('config')
+  .addSubMenu(ui.createMenu('Config')
       //.addItem('check settings', 'checkTokens')
-      .addItem('set token', 'setToken')
-      .addItem('set host', 'setHost'))
+      .addItem('Set token', 'setToken')
+      .addItem('Set host', 'setHost'))
   //.addSeparator()
   .addToUi();
 }
