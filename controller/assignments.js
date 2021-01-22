@@ -27,6 +27,7 @@ class Assignments{
     //create opts
     var opts ={};
     opts["course_id"]=course_id;
+    opts["order_by"]="due_at";
     //opts.include.push("all_dates");
     //call api
     var data=canvasAPI(endpoint,opts);

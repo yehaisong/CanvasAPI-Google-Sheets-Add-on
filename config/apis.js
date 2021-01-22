@@ -59,7 +59,7 @@ const CANVASAPIS={
             "name":"order_by",
             "type":"string",
             "default_value":"position",
-            "desc":"Determines the order of the assignments. Defaults to “position”. position|name|due_date",
+            "desc":"Determines the order of the assignments. Defaults to “position”. position|name|due_at",
             "example":"position"
           }
         ]
