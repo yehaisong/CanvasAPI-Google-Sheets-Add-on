@@ -98,7 +98,7 @@ function updateCourseDates(range_notation,updateduedate)
   }
   //generate report
   const rs=SpreadsheetApp.getActiveSpreadsheet().insertSheet();
-  Helper.fillValues(1,1,results,null,null);
+  Helper.fillValues(1,1,results,null,null,false);
 }
 
 /**
