@@ -38,3 +38,11 @@ function setHost() {
     PropertiesService.getUserProperties().setProperty("host", host);
   } 
 }
+
+/**
+ * Get current host
+ * @returns {string} host string
+ */
+function getHost(){
+  return PropertiesService.getUserProperties().getProperty("host");
+}
