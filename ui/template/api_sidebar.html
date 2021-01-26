@@ -6,7 +6,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
     <style>
       html {
-        font-size: 14px;
+        font-size: 12px;
         word-wrap: break-word;
       }
 
@@ -44,21 +44,32 @@
           data-bs-parent="#apiwrapper">
           <div class="accordion-body">
             <div title="automated" class="text-end">
-              <?if (action.automated=='true'){?> 
-                <span class="badge bg-success">automated</span> 
+              <?if (action.automated=='false'){?> 
+                <span class="badge bg-warning">customized</span> 
                 <?} else {?>
-                <span class="badge bg-warning">customized</span>
+                <span class="badge bg-success">automated</span>
                 <?}?>
               </div>
             <div><?=action.description?></div>
             <hr>
-            <div title="endpoint"><?=action.api.endpoint?></div>
-            <div title="reference"><a href="<?=action.api.reference?>" target="_blank">Canvas API reference</a></div>
+            <div title="endpoint"><?=action.endpoint?></div>
+            <div title="reference"><a href="<?=action.reference?>" target="_blank">Canvas API reference</a></div>
             <hr/>
             <ol title="steps">
-            <?var steps=action.guide?>
+            <?var steps=action.guide
+            if (steps!=null){?>
             <?for (var j=0;j<steps.length;j++) {?>
               <li><?!=steps[j]?></li>
+            <?}?>
+            <?}else{?>
+              <?if(action.params.length>0){?>
+                <li>Select an empty cell to start</li>
+                <li><button type="button" class="btn btn-primary" id="btnGenTemp" onclick="(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('<?=(action.controller)?>.<?=action.name?>');})();return false;">Get parameters</button></li>
+                <li>Enter values</li>
+                <li>Select the range of the light blue area of the parameter template</li>
+              <?}?>
+              <li><button type="button" class="btn btn-primary" id="btnCallAPI" onclick="(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('<?=action.endpoint?>');})();return false;">Call API</button></li>
+            </ol>
             <?}?>
             </ol>
           </div>

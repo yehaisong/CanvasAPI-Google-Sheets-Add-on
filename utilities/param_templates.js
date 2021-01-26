@@ -5,19 +5,19 @@
 
 /**
  * generate parameters template, row headed
- * @param {string} name The name of the controller
- * @param {int} index The 0 based index of action. check the CANVASAPIS for index.
+ * @param {string} actionname The name of the controller and action, controller.action
  */
-function generateParamTemplate(name,index) {
-  var _action=CANVASAPIS[name][index].api;
+function generateParamTemplate(actionname) {
+  Helper.log(actionname);
+  let _action=Helper.getAPIAction2(actionname);
   if(typeof _action!=null)
   {
-    var cell=SpreadsheetApp.getCurrentCell();
-    //var apirow={"api":_action.name}; //find the api
+    let cell=SpreadsheetApp.getCurrentCell();
+    //let apirow={"api":_action.name}; //find the api
     //desc and params
-    var _desc={};
-    var _params={"api":_action.name};
-    for(var i=0;i<_action.params.length;i++){
+    let _desc={};
+    let _params={"api":_action.name};
+    for(let i=0;i<_action.params.length;i++){
       _desc[_action.params[i].name]=_action.params[i].desc+" e.g., "+_action.params[i].example;
       _params[_action.params[i].name]=_action.params[i].default_value;
     }
@@ -28,11 +28,11 @@ function generateParamTemplate(name,index) {
     Helper.fillValues(cell.getRow(),cell.getColumn(),_params,null,"#ADD8E6",false);
     //desc note col 1
     Helper.setNotesFromJsonObject(cell.getRow()+1,cell.getColumn(),_desc,null)
-    Helper.log("created template for "+_action.name);
+    Helper.log("created parameter template for "+_action.name);
   }
   else
   {
-    Browser.msgBox('API '+name+' is not implemented.');
+    Browser.msgBox('API '+actionname+' is not implemented.');
   }
 }
 
@@ -57,19 +57,19 @@ function validateParams(controller,action,params)
  */
 /*
 function generateArrayParamTemplate(name,index) {
-  var _action=CANVASAPIS[name][index].api;
+  let _action=CANVASAPIS[name][index].api;
   if(typeof _action!=null)
   {
-    var cell=SpreadsheetApp.getCurrentCell();
+    let cell=SpreadsheetApp.getCurrentCell();
     
-    var apirow={"api":_action.name}; //find the api
+    let apirow={"api":_action.name}; //find the api
     //desc and params
-    var _desclist=[];
-    var _paramslist=[];
+    let _desclist=[];
+    let _paramslist=[];
     _paramslist.push(apirow);
-    var _desc={};
-    var _params={};
-    for(var i=0;i<_action.params.length;i++){
+    let _desc={};
+    let _params={};
+    for(let i=0;i<_action.params.length;i++){
       _desc[_action.params[i].name]=_action.params[i].desc+" e.g., "+_action.params[i].example;
       _params[_action.params[i].name]=_action.params[i].default_value;
     }

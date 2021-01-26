@@ -8,7 +8,7 @@
  */
 function showCoursesGuide()
 {
-  SideBar.show("Courses");
+  SideBar.show("_Courses");
 }
 
 /**

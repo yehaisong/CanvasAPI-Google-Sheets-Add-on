@@ -27,7 +27,7 @@ function shiftDates(range_notation){
                 if(Date.parse(dates[r][c])>0)//there is a valid date in the cell
                 {
                     dates[r][c]=Helper.getLocalDate(Helper.shiftDate(dates[r][c],days));
-                    Helper.log(dates[r][c]);
+                    //Helper.log(dates[r][c]);
                 }
             }
         }
@@ -65,6 +65,34 @@ function calculateDateDiff()
 function dateDiff(datepart, date1, date2)
 {
     return Math.round(Helper.dateDiff(datepart, date1,date2));
+}
+
+/**
+ * Increase number of days for each row
+ * @param {string} range_notation A1 Notation
+ */
+function increaseDays(range_notation)
+{
+    //get range
+    let range=SpreadsheetApp.getActiveSheet().getActiveRange();
+    if(range_notation!=null)
+        range=SpreadsheetApp.getActiveSheet().getRange(range_notation);
+    
+    //get days
+    let days=parseInt(Browser.inputBox("How many days?"));
+    if(days!=null){
+        //get dates
+        let dates=range.getValues();
+        if(Date.parse(dates[0][0])>0){
+            for(let r=0;r<dates.length;r++){
+                for(let c=0;c<dates[r].length;c++){
+                    dates[r][c]=Helper.getLocalDate(Helper.shiftDate(dates[0][0],days*(dates[r].length*r+c)));
+                    //Helper.log(dates[r][c]);
+                }
+            }
+        }
+        range.setValues(dates);
+    }
 }
 
 

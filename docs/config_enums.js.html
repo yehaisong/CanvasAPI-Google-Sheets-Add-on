@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: utilities/progress.js</title>
+    <title>JSDoc: Source: config/enums.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: utilities/progress.js</h1>
+    <h1 class="page-title">Source: config/enums.js</h1>
 
     
 
@@ -27,66 +27,58 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * @fileoverview check progress
+ * @fileoverview This file defines enums 
  * @author hye@cedarville.edu (Haisong Ye)
+ */ 
+
+/**
+ * Canvas API actions
+ * @returns {string} controller.action
  */
-
- /**
-  * query progress every 1s
-  * @param {number} id progress id 
-  * @returns {object} progress object
-  */
- function queryProgress(id){
-    for(let t=0;t&lt;1800;t++) //stop after 30 minutes
-    {
-        let data=getProgress(id);
-        let progress=data.completion;
-        if(progress==null)
-            progress=0;
-        var results;
-        results=data.workflow_state;
-        if(data.results!=null)
-            results+= " "+ JSON.stringify(data.results);
-        else{
-            results+=" "+data.message;
-            data.results="";
-        }
-        
-        Helper.log(progress.toFixed(0)+"% "+results);
-        
-        if(progress>50)
-        {
-            Helper.toast(data.tag+ " " //the type of operation
-                + data.workflow_state //the state of the job one of 'queued', 'running', 'completed', 'failed'
-                +" completion: "+progress.toFixed(0)+"%", //percent completed
-                "Progress "+id+" Status", //title
-                2); //show for 2 seconds
-        }
-
-        if(progress>=100){
-            Helper.toast(data.tag+ " "+ data.workflow_state,"Progress "+id+" Status",5);
-            return data;
-        }
-
-        Utilities.sleep(1000);
+const APIAction={
+    COURSES:{
+        GET_YOUR_ACTIVE_COURSES:'_courses.get_your_active_courses',//get active courses of the token owner
+        PUBLISH_COURSES:'_courses.publish_courses', //bulk publish courses by select a column of course ids
+        GET_SINGLE_COURSE:'_courses.get_single_course', //get a single course by course id
+        UPDATE_A_COURSE:'_courses.update_a_course' //update a course name, code, start_at, and end_at
+    },
+    ASSIGNMENGS:{
+        GET_ASSIGNMENTS:'_assignments.get_assignments', //search assignment in a course by course id and assignment name
+        GET_ASSIGNMENT_OVERRIDES:'_assignments.get_assignment_overrides', //get assignment dates overrides
+        CREATE_AN_ASSIGNMENT_OVERRIDE:'_assignments.create_an_assignment_override',//create an assignment overrides by providing override dates
+        UPDATE_AN_ASSIGNMENT_OVERRIDE:'_assignments.update_an_assignment_override',//update an assignment overrides by providing override dates
+        LIST_ASSIGNMENTS_DATE:'_assignments.list_assignments_date',//list all assignments in a course by course id
+        UPDATE_ASSIGNMENTS_DATES:'_assignments.update_assignments_dates',//update dates for selected assignments
+        SHIFT_ASSIGNMENTS_DATES:'_assignments.shift_assignments_dates'//shift all assignments dates in a course
+    },
+    ACCOUNTS:{
+        GET_ACCOUNTS:'_accounts.get_accounts',//get all account of the token owner
+        GET_SUB_ACCOUNTS:'_accounts.get_sub_accounts',//get sub account of an account
+        GET_COURSES_IN_ACCOUNT:'_accounts.get_courses_in_account',//search courses in an account including sub accounts
+    },
+    BLUEPRINTS:{
+        UPDATE_ASSOCIATED_COURSES:'_blueprints.update_associated_courses',//associate and unassociate courses
+        SYNC_ASSOCIATED_COURSES:'_blueprints.sync_associated_courses',//sync associated courses of a blueprint course
+        GET_BLUEPRINT_INFORMATION:'_blueprints.get_blueprint_information',//get blue print information, including sync status
+    },
+    PAGES:{
+        LIST_PAGES:'_pages.list_pages',//list pages in a course by page names
+        LIST_PAGES_IN_COURSE:'_pages.list_pages_in_course',//list all pages in a course
+        UPDATE_PAGES_TODO:'_pages.update_pages_todo_date',//update todo_date of selected pages
     }
-    return null;
- }
+ };
 
- /**
-  * query progress with id
-  * @param {number} id 
-  * @return {object} progress data
+
+ /**Date part
+  * @returns {string} date part
   */
- function getProgress(id)
- {
-    var opts={"id":id.toString()};
-    var endpoint="GET /api/v1/progress/:id";
-    var data=canvasAPI(endpoint,opts);
-    return data;
- }
-
-</code></pre>
+ const DatePart={
+     DAY:'day',
+     HOUR:'hour',
+     MINUTE:'minute',
+     SECOND:'second',
+     MILLIONSECOND:'millionsecond'
+ };</code></pre>
         </article>
     </section>
 

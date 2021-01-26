@@ -11,11 +11,15 @@ class Helper {
    * Get Canvas api endpoint by controller and action from the constant apis
    * @param {string} controller name, for example, accounts
    * @param {string} action name, for example, get_accounts
-   * @returns {object} 
-   * {"name":"action",
+   * @returns {object} an action project
+   * {"display_name": "summary name",
+      "description": "desc",
+      "automated":"true",
+      "name":"action",
       "endpoint":"endpoint",
       "reference":"url",
-      "params":[]}
+      "params":[],
+      "guide":[]}
    */
   static getAPIAction(controller,action)
   {
@@ -23,12 +27,24 @@ class Helper {
     let _action;
     if (typeof _actions ==="object"){
       for(let i=0;i<_actions.length;i++){
-        if(_actions[i].api.name==action){
-          _action=_actions[i].api;
+        if(_actions[i].name==action){
+          _action=_actions[i];
           break;
         }
       }
     }
+    if(_action==null) {//check raw api actions
+      _actions=RAWCANVASAPIS[controller]
+      if (typeof _actions ==="object"){
+        for(let i=0;i<_actions.length;i++){
+          if(_actions[i].name==action){
+            _action=_actions[i];
+            break;
+          }
+        }
+      }
+    }
+
     Helper.log("API action object: "+_action.name);
     return _action;
   }
@@ -37,6 +53,10 @@ class Helper {
    * Get an API action
    * @param {string} action action string with controller name, controller.action
    * @returns {object} action
+   * {"name":"action",
+      "endpoint":"endpoint",
+      "reference":"url",
+      "params":[]}
    */
   static getAPIAction2(action)
   {
@@ -538,5 +558,23 @@ class Helper {
     let olddate=new Date(olddatestr);
     result.setDate(olddate.getDate()+num_of_days);
     return result.toISOString();
+  }
+
+  /**
+   * Return a list of actions
+   * @param {string} name Provide a name of a Canvas API controller
+   * @returns {array} A list of actions of the controller
+   */
+  static getControllerActions(name)
+  {
+    //Helper.log(name);
+    //Helper.log(CANVASAPIS[name]);
+    //Helper.log(RAWCANVASAPIS[name]);
+    if(CANVASAPIS[name]!=null)
+      return CANVASAPIS[name];
+    else if(RAWCANVASAPIS[name]!=null)
+      return RAWCANVASAPIS[name];
+    else
+      return null;
   }
 }

@@ -8,7 +8,7 @@
  */
 function showPagesGuide()
 {
-  SideBar.show("pages");
+  SideBar.show("_pages");
 }
 
 /**

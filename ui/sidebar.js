@@ -7,14 +7,7 @@
  * Prepare sidebar
  */
 class SideBar{
-  /**
-   * Return a json array from the CANVASAPIS
-   * @param {string} name Provide a name of a Canvas API controller
-   */
-  static getAPIWrapper(name)
-  {
-    return CANVASAPIS[name];
-  }
+  
 
   /**
    * Show api by group
@@ -22,10 +15,44 @@ class SideBar{
    */
   static show(name)
   {
-    var htmlTemplate=HtmlService.createTemplateFromFile('ui/template/api_sidebar');
-    htmlTemplate.data=SideBar.getAPIWrapper(name.toLowerCase());
-    SpreadsheetApp.getUi().showSidebar(htmlTemplate.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).setTitle(name));
+    let actions=Helper.getControllerActions(name);
+    //Helper.log(actions);
+    if(actions!=null){
+      var htmlTemplate=HtmlService.createTemplateFromFile('ui/template/api_sidebar');
+      htmlTemplate.data=actions;
+      SpreadsheetApp.getUi().showSidebar(htmlTemplate.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).setTitle(name));
+    }
   }
+
+  static showAccountsAPIs(){SideBar.show('accounts');}
+  static showAdminsAPIs(){SideBar.show('admins');}
+  static showAnalyticsAPIs(){SideBar.show('analytics');}
+  static showAnnouncementsAPIs(){SideBar.show('announcements');}
+  static showAssignment_groupsAPIs(){SideBar.show('assignment_groups');}
+  static showAssignmentsAPIs(){SideBar.show('assignments');}
+  static showBlueprint_coursesAPIs(){SideBar.show('blueprint_courses');}
+  static showCoursesAPIs(){SideBar.show('courses');}
+  static showDiscussion_topicsAPIs(){SideBar.show('discussion_topics');}
+  static showEnrollment_termsAPIs(){SideBar.show('enrollment_terms');}
+  static showFilesAPIs(){SideBar.show('files');}
+  static showGradebook_historyAPIs(){SideBar.show('gradebook_history');}
+  static showGroupsAPIs(){SideBar.show('groups');}
+  static showLoginsAPIs(){SideBar.show('logins');}
+  static showModulesAPIs(){SideBar.show('modules');}
+  static showOutcome_groupsAPIs(){SideBar.show('outcome_groups');}
+  static showOutcome_importsAPIs(){SideBar.show('outcome_imports');}
+  static showOutcome_resultsAPIs(){SideBar.show('outcome_results');}
+  static showOutcomesAPIs(){SideBar.show('outcomes');}
+  static showPagesAPIs(){SideBar.show('pages');}
+  static showProgressAPIs(){SideBar.show('progress');}
+  static showQuiz_assignment_overridesAPIs(){SideBar.show('quiz_assignment_overrides');}
+  static showQuiz_extensionsAPIs(){SideBar.show('quiz_extensions');}
+  static showResultAPIs(){SideBar.show('result');}
+  static showRolesAPIs(){SideBar.show('roles');}
+  static showRubricsAPIs(){SideBar.show('rubrics');}
+  static showScoreAPIs(){SideBar.show('score');}
+  static showSubmissionsAPIs(){SideBar.show('submissions');}
+  static showUsersAPIs(){SideBar.show('users');}
 
   /**
    * Show update course dates side bar

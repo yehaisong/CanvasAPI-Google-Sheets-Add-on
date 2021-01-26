@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Canvas API GS Add-on: Source: ui/sidebar.js</title>
+    <title>JSDoc: Source: ui/sidebar.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -35,14 +35,7 @@
  * Prepare sidebar
  */
 class SideBar{
-  /**
-   * Return a json array from the CANVASAPIS
-   * @param {string} name Provide a name of a Canvas API controller
-   */
-  static getAPIWrapper(name)
-  {
-    return CANVASAPIS[name];
-  }
+  
 
   /**
    * Show api by group
@@ -50,10 +43,44 @@ class SideBar{
    */
   static show(name)
   {
-    var htmlTemplate=HtmlService.createTemplateFromFile('ui/template/api_sidebar');
-    htmlTemplate.data=SideBar.getAPIWrapper(name.toLowerCase());
-    SpreadsheetApp.getUi().showSidebar(htmlTemplate.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).setTitle(name));
+    let actions=Helper.getControllerActions(name);
+    //Helper.log(actions);
+    if(actions!=null){
+      var htmlTemplate=HtmlService.createTemplateFromFile('ui/template/api_sidebar');
+      htmlTemplate.data=actions;
+      SpreadsheetApp.getUi().showSidebar(htmlTemplate.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).setTitle(name));
+    }
   }
+
+  static showAccountsAPIs(){SideBar.show('accounts');}
+  static showAdminsAPIs(){SideBar.show('admins');}
+  static showAnalyticsAPIs(){SideBar.show('analytics');}
+  static showAnnouncementsAPIs(){SideBar.show('announcements');}
+  static showAssignment_groupsAPIs(){SideBar.show('assignment_groups');}
+  static showAssignmentsAPIs(){SideBar.show('assignments');}
+  static showBlueprint_coursesAPIs(){SideBar.show('blueprint_courses');}
+  static showCoursesAPIs(){SideBar.show('courses');}
+  static showDiscussion_topicsAPIs(){SideBar.show('discussion_topics');}
+  static showEnrollment_termsAPIs(){SideBar.show('enrollment_terms');}
+  static showFilesAPIs(){SideBar.show('files');}
+  static showGradebook_historyAPIs(){SideBar.show('gradebook_history');}
+  static showGroupsAPIs(){SideBar.show('groups');}
+  static showLoginsAPIs(){SideBar.show('logins');}
+  static showModulesAPIs(){SideBar.show('modules');}
+  static showOutcome_groupsAPIs(){SideBar.show('outcome_groups');}
+  static showOutcome_importsAPIs(){SideBar.show('outcome_imports');}
+  static showOutcome_resultsAPIs(){SideBar.show('outcome_results');}
+  static showOutcomesAPIs(){SideBar.show('outcomes');}
+  static showPagesAPIs(){SideBar.show('pages');}
+  static showProgressAPIs(){SideBar.show('progress');}
+  static showQuiz_assignment_overridesAPIs(){SideBar.show('quiz_assignment_overrides');}
+  static showQuiz_extensionsAPIs(){SideBar.show('quiz_extensions');}
+  static showResultAPIs(){SideBar.show('result');}
+  static showRolesAPIs(){SideBar.show('roles');}
+  static showRubricsAPIs(){SideBar.show('rubrics');}
+  static showScoreAPIs(){SideBar.show('score');}
+  static showSubmissionsAPIs(){SideBar.show('submissions');}
+  static showUsersAPIs(){SideBar.show('users');}
 
   /**
    * Show update course dates side bar
@@ -88,13 +115,13 @@ class SideBar{
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Accounts.html">Accounts</a></li><li><a href="Assignments.html">Assignments</a></li><li><a href="Courses.html">Courses</a></li><li><a href="Helper.html">Helper</a></li><li><a href="Pages.html">Pages</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#APIAction">APIAction</a></li><li><a href="global.html#APIController">APIController</a></li><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#calculateDateDiff">calculateDateDiff</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#DATECOLUMNS">DATECOLUMNS</a></li><li><a href="global.html#dateDiff">dateDiff</a></li><li><a href="global.html#DatePart">DatePart</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getCoursesInfo">getCoursesInfo</a></li><li><a href="global.html#getProgress">getProgress</a></li><li><a href="global.html#getSelectedRange">getSelectedRange</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#listPagesWithCourseID">listPagesWithCourseID</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#publishCourses">publishCourses</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftAssignmentDates">shiftAssignmentDates</a></li><li><a href="global.html#shiftDates">shiftDates</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#showPagesGuide">showPagesGuide</a></li><li><a href="global.html#TFCOLUMNS">TFCOLUMNS</a></li><li><a href="global.html#TFCOLUMNS_RO">TFCOLUMNS_RO</a></li><li><a href="global.html#updateAssignmentsDates">updateAssignmentsDates</a></li><li><a href="global.html#updateCourseDates">updateCourseDates</a></li><li><a href="global.html#updatePagesToDoDates">updatePagesToDoDates</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Accounts.html">Accounts</a></li><li><a href="Assignments.html">Assignments</a></li><li><a href="Courses.html">Courses</a></li><li><a href="Helper.html">Helper</a></li><li><a href="Pages.html">Pages</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#APIAction">APIAction</a></li><li><a href="global.html#APIController">APIController</a></li><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#calculateDateDiff">calculateDateDiff</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#DATECOLUMNS">DATECOLUMNS</a></li><li><a href="global.html#dateDiff">dateDiff</a></li><li><a href="global.html#DatePart">DatePart</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getCoursesInfo">getCoursesInfo</a></li><li><a href="global.html#getHost">getHost</a></li><li><a href="global.html#getProgress">getProgress</a></li><li><a href="global.html#getSelectedRange">getSelectedRange</a></li><li><a href="global.html#increaseDays">increaseDays</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#listPagesWithCourseID">listPagesWithCourseID</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#publishCourses">publishCourses</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#RawAPIAction">RawAPIAction</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftAssignmentDates">shiftAssignmentDates</a></li><li><a href="global.html#shiftDates">shiftDates</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#showPagesGuide">showPagesGuide</a></li><li><a href="global.html#TFCOLUMNS">TFCOLUMNS</a></li><li><a href="global.html#TFCOLUMNS_RO">TFCOLUMNS_RO</a></li><li><a href="global.html#updateAssignmentsDates">updateAssignmentsDates</a></li><li><a href="global.html#updateCourseDates">updateCourseDates</a></li><li><a href="global.html#updatePagesToDoDates">updatePagesToDoDates</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Jan 21 2021 23:28:10 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Mon Jan 25 2021 23:21:16 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

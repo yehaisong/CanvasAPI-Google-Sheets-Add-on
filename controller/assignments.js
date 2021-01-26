@@ -9,7 +9,7 @@
  */
 function showAssignmentsGuide()
 {
-  SideBar.show("Assignments");
+  SideBar.show("_Assignments");
 }
 
 /**

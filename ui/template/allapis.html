@@ -28,7 +28,7 @@
     <?
     let controllers=["Assignments","Accounts","Blueprints","Courses","Pages"];
     for (let n=0;n<controllers.length;n++){
-      let controller=data[controllers[n].toLowerCase()];?>
+      let controller=data["_"+controllers[n].toLowerCase()];?>
       <div class="accordion-item">
         <h2 class="accordion-header bg-info" id="<?=('heading'+n)?>">
           <button class="accordion-button collapsed fw-bold fs-4" 
@@ -64,16 +64,16 @@
                     data-bs-parent="#apiwrapper_<?=n?>">
                     <div class="accordion-body">
                       <div title="automated" class="text-end">
-                      <?if (action.automated=='true'){?> 
-                        <span class="badge bg-success">automated</span> 
+                      <?if (action.automated=='false'){?> 
+                        <span class="badge bg-warning">customized</span> 
                         <?} else {?>
-                        <span class="badge bg-warning">customized</span>
+                        <span class="badge bg-success">automated</span>
                         <?}?>
                       </div>
                       <div><?=action.description?></div>
                       <hr>
-                      <div title="endpoint"><?=action.api.endpoint?></div>
-                      <div title="reference"><a href="<?=action.api.reference?>" target="_blank">Canvas API reference</a></div>
+                      <div title="endpoint"><?=action.endpoint?></div>
+                      <div title="reference"><a href="<?=action.reference?>" target="_blank">Canvas API reference</a></div>
                       <hr/>
                       <ol title="steps">
                       <?var steps=action.guide?>

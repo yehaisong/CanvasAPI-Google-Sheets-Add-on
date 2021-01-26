@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Canvas API GS Add-on: Source: utilities/param_templates.js</title>
+    <title>JSDoc: Source: utilities/param_templates.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -33,19 +33,19 @@
 
 /**
  * generate parameters template, row headed
- * @param {string} name The name of the controller
- * @param {int} index The 0 based index of action. check the CANVASAPIS for index.
+ * @param {string} actionname The name of the controller and action, controller.action
  */
-function generateParamTemplate(name,index) {
-  var _action=CANVASAPIS[name][index].api;
+function generateParamTemplate(actionname) {
+  Helper.log(actionname);
+  let _action=Helper.getAPIAction2(actionname);
   if(typeof _action!=null)
   {
-    var cell=SpreadsheetApp.getCurrentCell();
-    //var apirow={"api":_action.name}; //find the api
+    let cell=SpreadsheetApp.getCurrentCell();
+    //let apirow={"api":_action.name}; //find the api
     //desc and params
-    var _desc={};
-    var _params={"api":_action.name};
-    for(var i=0;i&lt;_action.params.length;i++){
+    let _desc={};
+    let _params={"api":_action.name};
+    for(let i=0;i&lt;_action.params.length;i++){
       _desc[_action.params[i].name]=_action.params[i].desc+" e.g., "+_action.params[i].example;
       _params[_action.params[i].name]=_action.params[i].default_value;
     }
@@ -56,11 +56,11 @@ function generateParamTemplate(name,index) {
     Helper.fillValues(cell.getRow(),cell.getColumn(),_params,null,"#ADD8E6",false);
     //desc note col 1
     Helper.setNotesFromJsonObject(cell.getRow()+1,cell.getColumn(),_desc,null)
-    Helper.log("created template for "+_action.name);
+    Helper.log("created parameter template for "+_action.name);
   }
   else
   {
-    Browser.msgBox('API '+name+' is not implemented.');
+    Browser.msgBox('API '+actionname+' is not implemented.');
   }
 }
 
@@ -85,19 +85,19 @@ function validateParams(controller,action,params)
  */
 /*
 function generateArrayParamTemplate(name,index) {
-  var _action=CANVASAPIS[name][index].api;
+  let _action=CANVASAPIS[name][index].api;
   if(typeof _action!=null)
   {
-    var cell=SpreadsheetApp.getCurrentCell();
+    let cell=SpreadsheetApp.getCurrentCell();
     
-    var apirow={"api":_action.name}; //find the api
+    let apirow={"api":_action.name}; //find the api
     //desc and params
-    var _desclist=[];
-    var _paramslist=[];
+    let _desclist=[];
+    let _paramslist=[];
     _paramslist.push(apirow);
-    var _desc={};
-    var _params={};
-    for(var i=0;i&lt;_action.params.length;i++){
+    let _desc={};
+    let _params={};
+    for(let i=0;i&lt;_action.params.length;i++){
       _desc[_action.params[i].name]=_action.params[i].desc+" e.g., "+_action.params[i].example;
       _params[_action.params[i].name]=_action.params[i].default_value;
     }
@@ -126,13 +126,13 @@ function generateArrayParamTemplate(name,index) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Accounts.html">Accounts</a></li><li><a href="Assignments.html">Assignments</a></li><li><a href="Courses.html">Courses</a></li><li><a href="Helper.html">Helper</a></li><li><a href="Pages.html">Pages</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#APIAction">APIAction</a></li><li><a href="global.html#APIController">APIController</a></li><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#calculateDateDiff">calculateDateDiff</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#DATECOLUMNS">DATECOLUMNS</a></li><li><a href="global.html#dateDiff">dateDiff</a></li><li><a href="global.html#DatePart">DatePart</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getCoursesInfo">getCoursesInfo</a></li><li><a href="global.html#getProgress">getProgress</a></li><li><a href="global.html#getSelectedRange">getSelectedRange</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#listPagesWithCourseID">listPagesWithCourseID</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#publishCourses">publishCourses</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftAssignmentDates">shiftAssignmentDates</a></li><li><a href="global.html#shiftDates">shiftDates</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#showPagesGuide">showPagesGuide</a></li><li><a href="global.html#TFCOLUMNS">TFCOLUMNS</a></li><li><a href="global.html#TFCOLUMNS_RO">TFCOLUMNS_RO</a></li><li><a href="global.html#updateAssignmentsDates">updateAssignmentsDates</a></li><li><a href="global.html#updateCourseDates">updateCourseDates</a></li><li><a href="global.html#updatePagesToDoDates">updatePagesToDoDates</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Accounts.html">Accounts</a></li><li><a href="Assignments.html">Assignments</a></li><li><a href="Courses.html">Courses</a></li><li><a href="Helper.html">Helper</a></li><li><a href="Pages.html">Pages</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#APIAction">APIAction</a></li><li><a href="global.html#APIController">APIController</a></li><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#calculateDateDiff">calculateDateDiff</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#DATECOLUMNS">DATECOLUMNS</a></li><li><a href="global.html#dateDiff">dateDiff</a></li><li><a href="global.html#DatePart">DatePart</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getCoursesInfo">getCoursesInfo</a></li><li><a href="global.html#getHost">getHost</a></li><li><a href="global.html#getProgress">getProgress</a></li><li><a href="global.html#getSelectedRange">getSelectedRange</a></li><li><a href="global.html#increaseDays">increaseDays</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#listPagesWithCourseID">listPagesWithCourseID</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#publishCourses">publishCourses</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#RawAPIAction">RawAPIAction</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftAssignmentDates">shiftAssignmentDates</a></li><li><a href="global.html#shiftDates">shiftDates</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#showPagesGuide">showPagesGuide</a></li><li><a href="global.html#TFCOLUMNS">TFCOLUMNS</a></li><li><a href="global.html#TFCOLUMNS_RO">TFCOLUMNS_RO</a></li><li><a href="global.html#updateAssignmentsDates">updateAssignmentsDates</a></li><li><a href="global.html#updateCourseDates">updateCourseDates</a></li><li><a href="global.html#updatePagesToDoDates">updatePagesToDoDates</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Jan 21 2021 23:28:10 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Mon Jan 25 2021 23:21:16 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -9,7 +9,7 @@
  */
 function showAccountsGuide()
 {
-  SideBar.show("Accounts");
+  SideBar.show("_Accounts");
 }
 
 /**

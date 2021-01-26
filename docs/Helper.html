@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Canvas API GS Add-on: Class: Helper</title>
+    <title>JSDoc: Class: Helper</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -273,7 +273,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line369">line 369</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line389">line 389</a>
     </li></ul></dd>
     
 
@@ -432,7 +432,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line348">line 348</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line368">line 368</a>
     </li></ul></dd>
     
 
@@ -637,7 +637,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line502">line 502</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line522">line 522</a>
     </li></ul></dd>
     
 
@@ -797,7 +797,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line480">line 480</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line500">line 500</a>
     </li></ul></dd>
     
 
@@ -1074,7 +1074,7 @@ If not provided, all original field of the jsonobject will be displayed.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line94">line 94</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line114">line 114</a>
     </li></ul></dd>
     
 
@@ -1234,7 +1234,7 @@ If not provided, all original field of the jsonobject will be displayed.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line264">line 264</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line284">line 284</a>
     </li></ul></dd>
     
 
@@ -1416,7 +1416,7 @@ If not provided, all original field of the jsonobject will be displayed.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line20">line 20</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line24">line 24</a>
     </li></ul></dd>
     
 
@@ -1445,10 +1445,15 @@ If not provided, all original field of the jsonobject will be displayed.</td>
 
         
 <div class="param-desc">
-    {"name":"action",
+    an action project
+{"display_name": "summary name",
+      "description": "desc",
+      "automated":"true",
+      "name":"action",
       "endpoint":"endpoint",
       "reference":"url",
-      "params":[]}
+      "params":[],
+      "guide":[]}
 </div>
 
 
@@ -1578,7 +1583,7 @@ If not provided, all original field of the jsonobject will be displayed.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line41">line 41</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line61">line 61</a>
     </li></ul></dd>
     
 
@@ -1608,6 +1613,10 @@ If not provided, all original field of the jsonobject will be displayed.</td>
         
 <div class="param-desc">
     action
+{"name":"action",
+      "endpoint":"endpoint",
+      "reference":"url",
+      "params":[]}
 </div>
 
 
@@ -1688,7 +1697,7 @@ If not provided, all original field of the jsonobject will be displayed.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line396">line 396</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line416">line 416</a>
     </li></ul></dd>
     
 
@@ -1729,6 +1738,165 @@ If not provided, all original field of the jsonobject will be displayed.</td>
     <dd>
         
 <span class="param-type">string</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".getControllerActions"><span class="type-signature">(static) </span>getControllerActions<span class="signature">(name)</span><span class="type-signature"> &rarr; {array}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Return a list of actions
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Provide a name of a Canvas API controller</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line568">line 568</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    A list of actions of the controller
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">array</span>
 
 
     </dd>
@@ -1847,7 +2015,7 @@ If not provided, all original field of the jsonobject will be displayed.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line467">line 467</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line487">line 487</a>
     </li></ul></dd>
     
 
@@ -2006,7 +2174,7 @@ If not provided, all original field of the jsonobject will be displayed.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line455">line 455</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line475">line 475</a>
     </li></ul></dd>
     
 
@@ -2166,7 +2334,7 @@ the range should be 2 cols, The first col for key, and the second col for value.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line408">line 408</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line428">line 428</a>
     </li></ul></dd>
     
 
@@ -2348,7 +2516,7 @@ the range should be 2 cols, The first col for key, and the second col for value.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line179">line 179</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line199">line 199</a>
     </li></ul></dd>
     
 
@@ -2485,7 +2653,7 @@ the range should be 2 cols, The first col for key, and the second col for value.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line416">line 416</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line436">line 436</a>
     </li></ul></dd>
     
 
@@ -2646,7 +2814,7 @@ All date values will be converted to local date time based on the script timezon
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line194">line 194</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line214">line 214</a>
     </li></ul></dd>
     
 
@@ -2806,7 +2974,7 @@ The parameters should be listed by rows. The range should be 2 cols, the first c
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line304">line 304</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line324">line 324</a>
     </li></ul></dd>
     
 
@@ -3030,7 +3198,7 @@ The parameters should be listed by rows. The range should be 2 cols, the first c
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line149">line 149</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line169">line 169</a>
     </li></ul></dd>
     
 
@@ -3237,7 +3405,7 @@ Use this for a parameter template that list paramters in a row. Each parameter u
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line62">line 62</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line82">line 82</a>
     </li></ul></dd>
     
 
@@ -3444,7 +3612,7 @@ Use this for a parameter template that list paramters in a column. Each paramete
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line76">line 76</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line96">line 96</a>
     </li></ul></dd>
     
 
@@ -3604,7 +3772,7 @@ Use this for a parameter template that list paramters in a column. Each paramete
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line535">line 535</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line555">line 555</a>
     </li></ul></dd>
     
 
@@ -3786,7 +3954,7 @@ Use this for a parameter template that list paramters in a column. Each paramete
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line427">line 427</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line447">line 447</a>
     </li></ul></dd>
     
 
@@ -3946,7 +4114,7 @@ Use this for a parameter template that list paramters in a column. Each paramete
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line491">line 491</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line511">line 511</a>
     </li></ul></dd>
     
 
@@ -4151,7 +4319,7 @@ Use this for a parameter template that list paramters in a column. Each paramete
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line444">line 444</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line464">line 464</a>
     </li></ul></dd>
     
 
@@ -4311,7 +4479,7 @@ Use this for a parameter template that list paramters in a column. Each paramete
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line285">line 285</a>
+        <a href="utilities_helper.js.html">utilities/helper.js</a>, <a href="utilities_helper.js.html#line305">line 305</a>
     </li></ul></dd>
     
 
@@ -4375,13 +4543,13 @@ Use this for a parameter template that list paramters in a column. Each paramete
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Accounts.html">Accounts</a></li><li><a href="Assignments.html">Assignments</a></li><li><a href="Courses.html">Courses</a></li><li><a href="Helper.html">Helper</a></li><li><a href="Pages.html">Pages</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#APIAction">APIAction</a></li><li><a href="global.html#APIController">APIController</a></li><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#calculateDateDiff">calculateDateDiff</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#DATECOLUMNS">DATECOLUMNS</a></li><li><a href="global.html#dateDiff">dateDiff</a></li><li><a href="global.html#DatePart">DatePart</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getCoursesInfo">getCoursesInfo</a></li><li><a href="global.html#getProgress">getProgress</a></li><li><a href="global.html#getSelectedRange">getSelectedRange</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#listPagesWithCourseID">listPagesWithCourseID</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#publishCourses">publishCourses</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftAssignmentDates">shiftAssignmentDates</a></li><li><a href="global.html#shiftDates">shiftDates</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#showPagesGuide">showPagesGuide</a></li><li><a href="global.html#TFCOLUMNS">TFCOLUMNS</a></li><li><a href="global.html#TFCOLUMNS_RO">TFCOLUMNS_RO</a></li><li><a href="global.html#updateAssignmentsDates">updateAssignmentsDates</a></li><li><a href="global.html#updateCourseDates">updateCourseDates</a></li><li><a href="global.html#updatePagesToDoDates">updatePagesToDoDates</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Accounts.html">Accounts</a></li><li><a href="Assignments.html">Assignments</a></li><li><a href="Courses.html">Courses</a></li><li><a href="Helper.html">Helper</a></li><li><a href="Pages.html">Pages</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#APIAction">APIAction</a></li><li><a href="global.html#APIController">APIController</a></li><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#calculateDateDiff">calculateDateDiff</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#DATECOLUMNS">DATECOLUMNS</a></li><li><a href="global.html#dateDiff">dateDiff</a></li><li><a href="global.html#DatePart">DatePart</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getCoursesInfo">getCoursesInfo</a></li><li><a href="global.html#getHost">getHost</a></li><li><a href="global.html#getProgress">getProgress</a></li><li><a href="global.html#getSelectedRange">getSelectedRange</a></li><li><a href="global.html#increaseDays">increaseDays</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#listPagesWithCourseID">listPagesWithCourseID</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#publishCourses">publishCourses</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#RawAPIAction">RawAPIAction</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftAssignmentDates">shiftAssignmentDates</a></li><li><a href="global.html#shiftDates">shiftDates</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#showPagesGuide">showPagesGuide</a></li><li><a href="global.html#TFCOLUMNS">TFCOLUMNS</a></li><li><a href="global.html#TFCOLUMNS_RO">TFCOLUMNS_RO</a></li><li><a href="global.html#updateAssignmentsDates">updateAssignmentsDates</a></li><li><a href="global.html#updateCourseDates">updateCourseDates</a></li><li><a href="global.html#updatePagesToDoDates">updatePagesToDoDates</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Jan 21 2021 23:28:10 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Mon Jan 25 2021 23:21:16 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

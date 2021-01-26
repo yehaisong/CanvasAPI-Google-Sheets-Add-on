@@ -1,4 +1,5 @@
 {
     "appService.defaultWebAppToDeploy": "/subscriptions/8d34ef81-8f4e-46ef-bbdc-566d0757e05d/resourceGroups/culab/providers/Microsoft.Web/sites/googleaddondoc",
-    "appService.deploySubpath": "docs"
+    "appService.deploySubpath": "docs",
+    "python.pythonPath": "/usr/local/bin/python3"
 }

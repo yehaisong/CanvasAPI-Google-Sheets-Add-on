@@ -8,6 +8,6 @@
  */
 function showBlueprintsGuide()
 {
-  SideBar.show("Blueprints");
+  SideBar.show("_Blueprints");
 }
 

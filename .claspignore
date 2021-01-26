@@ -3,3 +3,4 @@ test.json
 config/apis.json
 node_modules/**
 docs/**
+python_tools/**
