@@ -19,7 +19,8 @@ function shiftDates(range_notation){
     
     //get days
     let days=parseInt(Browser.inputBox("How many days?"));
-    if(days!=null){
+    Helper.log(days);
+    if(days!=null && !isNaN(days)){
         //get dates
         let dates=range.getValues();
         for(let r=0;r<dates.length;r++){
@@ -64,7 +65,11 @@ function calculateDateDiff()
  */
 function dateDiff(datepart, date1, date2)
 {
-    return Math.round(Helper.dateDiff(datepart, date1,date2));
+    try{
+        return Math.round(Helper.dateDiff(datepart, date1,date2));
+    }catch (err) {
+        return 0;
+    }
 }
 
 /**

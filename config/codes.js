@@ -8,7 +8,7 @@
  * A list of names of date columns in Canvas objects
  * @type {Array<string>}
  */
-const DATECOLUMNS=["created_at","updated_at","todo_date","due_at","lock_at","unlock_at","start_at","end_at"];
+const DATECOLUMNS=["created_at","updated_at","todo_date","due_at","lock_at","unlock_at","start_at","end_at","submitted_at","graded_at"];
 
 /**
  * A list of names of true or false columns in Canvas objects
