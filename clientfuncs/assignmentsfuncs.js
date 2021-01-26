@@ -91,15 +91,15 @@ function updateAssignmentsDates(range_notation)
     }
     //due_at
     if(Date.parse(assignments[i].due_at)>0){
-      new_date.all_dates[0].due_at=assignments[i].due_at;
+      new_date.all_dates[0].due_at=Helper.getISODate(assignments[i].due_at);
     }
     //lock_at
     if(Date.parse(assignments[i].lock_at)>0){
-      new_date.all_dates[0].lock_at=assignments[i].lock_at;
+      new_date.all_dates[0].lock_at=Helper.getISODate(assignments[i].lock_at);
     }
     //unlock_at
     if(Date.parse(assignments[i].unlock_at)>0){
-      new_date.all_dates[0].unlock_at=assignments[i].unlock_at;
+      new_date.all_dates[0].unlock_at=Helper.getISODate(assignments[i].unlock_at);
     } 
 
     if(Date.parse(new_date.all_dates[0].due_at)>0 || Date.parse(new_date.all_dates[0].lock_at)>0 || Date.parse(new_date.all_dates[0].unlock_at)>0)
