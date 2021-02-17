@@ -15,6 +15,6 @@ const DISPLAYCOLUMNS={
 "assignment_dates":["course_id","id","name","due_at","unlock_at","lock_at"],
 "progress":["workflow_state","completion","message","results","url"],
 "page_list":["page_id","title","published","todo_date","url","html_url"],
-"page_list_editing":["course_id","page_id","title","published","todo_date","url","html_url"]
+"page_list_editing":["course_id","page_id","title","published","todo_date","url","html_url","body"]
 }
 

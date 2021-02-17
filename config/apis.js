@@ -645,7 +645,7 @@ const CANVASAPIS={
   "_pages":[
     { 
       "display_name":"0: list_pages",
-      "description":"Searh and list pages in a course.",
+      "description":"Searh and list pages in a course. The list will include course_id and page body. Use this function for update pages.",
       "automated":"false",
       "controller":"_pages",
       "guide":[
@@ -725,6 +725,20 @@ const CANVASAPIS={
       "reference":"https://canvas.instructure.com/doc/api/pages.html#method.wiki_pages_api.update",
       "required_columns":["course_id","url","todo_date"]
       
+    },
+    { 
+      "display_name":"3: update_pages_courses",
+      "description":"Update selected pages title and body",
+      "automated":"false",
+      "controller":"_pages",
+      "name": "update_pages_courses",
+      "endpoint": "PUT /v1/courses/:course_id/pages/:url",
+      "reference": "https://canvas.instructure.com/doc/api/pages.html",
+      "guide":[
+        "Select a range with page info. Include a header row with required columns: course_id, url, body",
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).updatePages();})();return false;\">Call API</button>"
+      ],
+      "required_columns":["course_id","url","body","title"]
     }
   ]
 };

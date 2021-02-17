@@ -19,6 +19,11 @@ function listPagesWithCourseID()
         for(let i=0;i<pages.length;i++)
         {
             pages[i]["course_id"]=opts["course_id"];
+            const endpoint=Helper.getAPIAction2(RawAPIAction.PAGES.SHOW_PAGE_COURSES).endpoint;
+            let body=canvasAPI(endpoint,{"course_id":opts.course_id,"url":pages[i].url}).body;
+            if(body!=null){
+                pages[i]["body"]=body;
+            }
         }
     }
     Helper.fillValues(param_range.getLastRow()+1,param_range.getColumn(),pages,"page_list_editing",null,true);
@@ -26,7 +31,7 @@ function listPagesWithCourseID()
 
 /**
  * Update pages todo_date
- * @param {String} range_notation A1 Notation, e.g. A1:B6. A cell range with headers, must include url and todo_date
+ * @param {String} range_notation A1 Notation, e.g. A1:B6. A cell range with headers, must include course_id, url and todo_date
  */
 function updatePagesToDoDates(range_notation){
     //get range
@@ -59,6 +64,57 @@ function updatePagesToDoDates(range_notation){
         Utilities.sleep(1000);
     }
     Helper.fillValues(range.getLastRow()+1,range.getColumn(),return_pages,"page_list",null);
+    
+    //handle return data
+}
+
+/**
+ * Update pages todo_date
+ * @param {String} range_notation A1 Notation, e.g. A1:B6. A cell range with headers, must include course_id, url, title, and body
+ */
+function updatePages(range_notation){
+    //get range
+    let range=SpreadsheetApp.getActiveSheet().getActiveRange();
+    if(range_notation!=null)
+        range=SpreadsheetApp.getActiveSheet().getRange(range_notation);
+    //check for requred columns
+    const action=Helper.getAPIAction2(APIAction.PAGES.UPDATE_PAGES);
+    if(!Helper.checkRequiredColumns(range,action.required_columns)){
+        //Browser.msgBox("Please select a range with the required columns: "+action.required_columns.toString());
+        return;
+    }
+    let return_pages=[];    
+    //get pages with todo_date
+    let pages=Helper.convertRangeToObjectArray(range);
+
+    //for each page with todo_date
+    for(let i=0;i<pages.length;i++){
+        
+        //call update page api
+        let opts={
+            "course_id":pages[i].course_id,
+            "url":pages[i].url,
+            "wiki_page":{
+                "title":pages[i].title,
+                "body":pages[i].body
+            }
+        };
+        
+        let data=canvasAPI(action.endpoint,opts);
+
+        //toast msg
+        if(data.url!=null){
+            Helper.toast(data.url,"Page updated", 3);
+            return_pages.push(data);
+        }
+        else{
+            Helper.toast(data,"Error",3);
+        }
+        Utilities.sleep(1000);
+    }
+    const rs=SpreadsheetApp.getActiveSpreadsheet().insertSheet();
+    Helper.fillValues(1,1,return_pages,"page_list",null);
+    //Helper.fillValues(range.getLastRow()+1,range.getColumn(),return_pages,"page_list",null);
     
     //handle return data
 }

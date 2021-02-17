@@ -37,6 +37,7 @@ const APIAction={
         LIST_PAGES:'_pages.list_pages',//list pages in a course by page names
         LIST_PAGES_IN_COURSE:'_pages.list_pages_in_course',//list all pages in a course
         UPDATE_PAGES_TODO:'_pages.update_pages_todo_date',//update todo_date of selected pages
+        UPDATE_PAGES:'_pages.update_pages_courses',//update title and body of selected pages
     }
  };
 
