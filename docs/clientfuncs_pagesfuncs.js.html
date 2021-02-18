@@ -47,6 +47,11 @@ function listPagesWithCourseID()
         for(let i=0;i&lt;pages.length;i++)
         {
             pages[i]["course_id"]=opts["course_id"];
+            const endpoint=Helper.getAPIAction2(RawAPIAction.PAGES.SHOW_PAGE_COURSES).endpoint;
+            let body=canvasAPI(endpoint,{"course_id":opts.course_id,"url":pages[i].url}).body;
+            if(body!=null){
+                pages[i]["body"]=body;
+            }
         }
     }
     Helper.fillValues(param_range.getLastRow()+1,param_range.getColumn(),pages,"page_list_editing",null,true);
@@ -54,7 +59,7 @@ function listPagesWithCourseID()
 
 /**
  * Update pages todo_date
- * @param {String} range_notation A1 Notation, e.g. A1:B6. A cell range with headers, must include url and todo_date
+ * @param {String} range_notation A1 Notation, e.g. A1:B6. A cell range with headers, must include course_id, url and todo_date
  */
 function updatePagesToDoDates(range_notation){
     //get range
@@ -89,6 +94,57 @@ function updatePagesToDoDates(range_notation){
     Helper.fillValues(range.getLastRow()+1,range.getColumn(),return_pages,"page_list",null);
     
     //handle return data
+}
+
+/**
+ * Update pages todo_date
+ * @param {String} range_notation A1 Notation, e.g. A1:B6. A cell range with headers, must include course_id, url, title, and body
+ */
+function updatePages(range_notation){
+    //get range
+    let range=SpreadsheetApp.getActiveSheet().getActiveRange();
+    if(range_notation!=null)
+        range=SpreadsheetApp.getActiveSheet().getRange(range_notation);
+    //check for requred columns
+    const action=Helper.getAPIAction2(APIAction.PAGES.UPDATE_PAGES);
+    if(!Helper.checkRequiredColumns(range,action.required_columns)){
+        //Browser.msgBox("Please select a range with the required columns: "+action.required_columns.toString());
+        return;
+    }
+    let return_pages=[];    
+    //get pages with todo_date
+    let pages=Helper.convertRangeToObjectArray(range);
+
+    //for each page with todo_date
+    for(let i=0;i&lt;pages.length;i++){
+        
+        //call update page api
+        let opts={
+            "course_id":pages[i].course_id,
+            "url":pages[i].url,
+            "wiki_page":{
+                "title":pages[i].title,
+                "body":pages[i].body
+            }
+        };
+        
+        let data=canvasAPI(action.endpoint,opts);
+
+        //toast msg
+        if(data.url!=null){
+            Helper.toast(data.url,"Page updated", 3);
+            return_pages.push(data);
+        }
+        else{
+            Helper.toast(data,"Error",3);
+        }
+        Utilities.sleep(1000);
+    }
+    const rs=SpreadsheetApp.getActiveSpreadsheet().insertSheet();
+    Helper.fillValues(1,1,return_pages,"page_list",null);
+    //Helper.fillValues(range.getLastRow()+1,range.getColumn(),return_pages,"page_list",null);
+    
+    //handle return data
 }</code></pre>
         </article>
     </section>
@@ -99,13 +155,13 @@ function updatePagesToDoDates(range_notation){
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Accounts.html">Accounts</a></li><li><a href="Assignments.html">Assignments</a></li><li><a href="Courses.html">Courses</a></li><li><a href="Helper.html">Helper</a></li><li><a href="Pages.html">Pages</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#APIAction">APIAction</a></li><li><a href="global.html#APIController">APIController</a></li><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#calculateDateDiff">calculateDateDiff</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#DATECOLUMNS">DATECOLUMNS</a></li><li><a href="global.html#dateDiff">dateDiff</a></li><li><a href="global.html#DatePart">DatePart</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getCoursesInfo">getCoursesInfo</a></li><li><a href="global.html#getHost">getHost</a></li><li><a href="global.html#getProgress">getProgress</a></li><li><a href="global.html#getSelectedRange">getSelectedRange</a></li><li><a href="global.html#increaseDays">increaseDays</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#listPagesWithCourseID">listPagesWithCourseID</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#publishCourses">publishCourses</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#RawAPIAction">RawAPIAction</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftAssignmentDates">shiftAssignmentDates</a></li><li><a href="global.html#shiftDates">shiftDates</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#showPagesGuide">showPagesGuide</a></li><li><a href="global.html#TFCOLUMNS">TFCOLUMNS</a></li><li><a href="global.html#TFCOLUMNS_RO">TFCOLUMNS_RO</a></li><li><a href="global.html#updateAssignmentsDates">updateAssignmentsDates</a></li><li><a href="global.html#updateCourseDates">updateCourseDates</a></li><li><a href="global.html#updatePagesToDoDates">updatePagesToDoDates</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Accounts.html">Accounts</a></li><li><a href="Assignments.html">Assignments</a></li><li><a href="Courses.html">Courses</a></li><li><a href="Helper.html">Helper</a></li><li><a href="Pages.html">Pages</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#APIAction">APIAction</a></li><li><a href="global.html#APIController">APIController</a></li><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#calculateDateDiff">calculateDateDiff</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#DATECOLUMNS">DATECOLUMNS</a></li><li><a href="global.html#dateDiff">dateDiff</a></li><li><a href="global.html#DatePart">DatePart</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getCoursesInfo">getCoursesInfo</a></li><li><a href="global.html#getHost">getHost</a></li><li><a href="global.html#getProgress">getProgress</a></li><li><a href="global.html#getSelectedRange">getSelectedRange</a></li><li><a href="global.html#increaseDays">increaseDays</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#listPagesWithCourseID">listPagesWithCourseID</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#publishCourses">publishCourses</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#RawAPIAction">RawAPIAction</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftAssignmentDates">shiftAssignmentDates</a></li><li><a href="global.html#shiftDates">shiftDates</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#showPagesGuide">showPagesGuide</a></li><li><a href="global.html#testConfig">testConfig</a></li><li><a href="global.html#TFCOLUMNS">TFCOLUMNS</a></li><li><a href="global.html#TFCOLUMNS_RO">TFCOLUMNS_RO</a></li><li><a href="global.html#updateAssignmentsDates">updateAssignmentsDates</a></li><li><a href="global.html#updateCourseDates">updateCourseDates</a></li><li><a href="global.html#updatePages">updatePages</a></li><li><a href="global.html#updatePagesToDoDates">updatePagesToDoDates</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Mon Jan 25 2021 23:32:01 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Feb 18 2021 13:27:04 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
