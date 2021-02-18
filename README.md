@@ -10,6 +10,17 @@ For developers, check out the source code JSDoc @ https://googleaddondoc.azurewe
 
 The add-on is not ready for public testing. It is currently only available to Cedarville University users.
 
+You need a Google Apps Scirpt project to work on. When you create a GAS project and pull files from Google, you will have a .clasp.json file with the scriptid for your project created in your folder.
+
+The steps are:
+
+1. Clone the git repository in a folder
+2. npm --install packages
+3. Create a new GAS project
+4. Login with clasp
+5. Clone your new project from GAS (it will create a new .clasp.json file)
+6. Push code to your GAS project
+
 In vscode folder
 
 + Login: clasp login
