@@ -17,19 +17,19 @@ In vscode folder
 Login 
 clasp login
 
-+ Create a project
++ Create a project: 
 clasp create [--title <title>] [--type <type>] [--rootDir dir] [--parentId <id>]
 
-+ Clone a project
++ Clone a project: 
 clasp clone <scriptId|scriptURL> [versionNumer]
 
-+ To pull codes from GAS
++ To pull codes: 
 clasp pull [--versionNumber]
 
-+ To push codes to GAS
++ To push codes: 
 clasp push [--watch] [--force]
 
-+ To generate js doc
++ To generate js doc: 
 jsdoc ./ -r -d docs
 
 clasp reference:
