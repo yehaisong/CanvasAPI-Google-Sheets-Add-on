@@ -18,7 +18,7 @@ Login
 clasp login
 
 Create a project
-clasp create [--title <title>] [--type <type>] [--rootDir <dir>] [--parentId <id>]
+clasp create [--title <title>] [--type <type>] [--rootDir dir] [--parentId <id>]
 
 Clone a project
 clasp clone <scriptId|scriptURL> [versionNumer]
@@ -33,17 +33,18 @@ To generate js doc
 jsdoc ./ -r -d docs
 
 clasp reference:
-clasp login [--no-localhost] [--creds <file>] [--status]
-clasp logout
-clasp create [--title <title>] [--type <type>] [--rootDir <dir>] [--parentId <id>]
-clasp clone <scriptId | scriptURL> [versionNumber] [--rootDir <dir>]
-clasp pull [--versionNumber]
-clasp push [--watch] [--force]
-clasp status [--json]
-clasp open [scriptId] [--webapp] [--creds] [--addon] [--deploymentId <id>]
-clasp deployments
-clasp deploy [--versionNumber <version>] [--description <description>] [--deploymentId <id>]
-clasp undeploy [deploymentId] [--all]
-clasp version [description]
-clasp versions
-clasp list
+
++ clasp login [--no-localhost] [--creds <file>] [--status]  
++ clasp logout  
++ clasp create [--title <title>] [--type <type>] [--rootDir dir] [--parentId <id>]  
++ clasp clone <scriptId | scriptURL> [versionNumber] [--rootDir dir]  
++ clasp pull [--versionNumber]  
++ clasp push [--watch] [--force]  
++ clasp status [--json]  
++ clasp open [scriptId] [--webapp] [--creds] [--addon] [--deploymentId <id>]  
++ clasp deployments  
++ clasp deploy [--versionNumber <version>] [--description <description>] [--deploymentId <id>]  
++ clasp undeploy [deploymentId] [--all]  
++ clasp version [description]  
++ clasp versions  
++ clasp list  
