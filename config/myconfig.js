@@ -46,3 +46,13 @@ function setHost() {
 function getHost(){
   return PropertiesService.getUserProperties().getProperty("host");
 }
+
+/**
+ * Test user configurations
+ */
+function testConfig(){
+  const action=Helper.getAPIAction2(RawAPIAction.ACCOUNTS.PERMISSIONS);
+  let opts={"account_id":"self"};
+  let data=canvasAPI(action.endpoint,opts);
+  Browser.msgBox("Testing result", "Root Account Permissions: "+JSON.stringify(data),Browser.Buttons.OK);
+}

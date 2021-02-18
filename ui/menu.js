@@ -81,7 +81,8 @@ function onOpen() {
   .addSubMenu(ui.createMenu('Config')
       //.addItem('check settings', 'checkTokens')
       .addItem('Set token', 'setToken')
-      .addItem('Set host', 'setHost'))
+      .addItem('Set host', 'setHost')
+      .addItem('Test settings','testConfig'))
   //.addSeparator()
   .addToUi();
 }
