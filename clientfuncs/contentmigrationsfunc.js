@@ -11,7 +11,9 @@
   */
  function createContentMigrationCourses(range_notation,shiftdate=true)
  {
-     //get range
+    if(!Helper.confirmHost())
+        return; 
+    //get range
     let range=SpreadsheetApp.getActiveSheet().getActiveRange();
     if(range_notation!=null)
         range=SpreadsheetApp.getActiveSheet().getRange(range_notation);

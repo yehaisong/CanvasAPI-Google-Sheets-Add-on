@@ -11,6 +11,8 @@
  */
 function updateCourseDates(range_notation,updateduedate)
 {
+  if(!Helper.confirmHost())
+    return;
   //get range
   let range=SpreadsheetApp.getActiveSheet().getActiveRange();
   if(range_notation!=null)
@@ -107,6 +109,8 @@ function updateCourseDates(range_notation,updateduedate)
  */
 function getCoursesInfo(range_notation)
 {
+  if(!Helper.confirmHost())
+    return;
   //get range
   let range=SpreadsheetApp.getActiveSheet().getActiveRange();
   if(range_notation!=null)
@@ -151,6 +155,8 @@ function getCoursesInfo(range_notation)
  */
 function publishCourses(event)
 {
+  if(!Helper.confirmHost())
+    return;
   //get the selected column. If no selected column or more than one column selected, return error.
   let rng=SpreadsheetApp.getActiveSheet().getActiveRange();
   if(rng.getNumColumns()>1){

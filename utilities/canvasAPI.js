@@ -84,6 +84,7 @@ function canvasAPI(endpoint, opts, filter) { //filter is not supported currently
 		if (typeof userProperties.host === 'undefined') {
 			throw ('No Canvas host specified. See userConfiguration() function in the script source code.');
 		}
+		
 		var parms = {
 			'headers' : {
 				'Authorization' : 'Bearer ' + userProperties.token,

@@ -10,6 +10,8 @@
  */
 function listAssignmentsDate()
 {
+  if(!Helper.confirmHost())
+    return;
   //get course id
   var cell=SpreadsheetApp.getCurrentCell();
   var course_id=cell.getValue();
@@ -33,6 +35,8 @@ function listAssignmentsDate()
 */
 function shiftAssignmentDates()
 {
+  if(!Helper.confirmHost())
+    return;
   //params:courseid, number of days
   var param_range=SpreadsheetApp.getActiveSheet().getActiveRange();
   var opts=Helper.parseRangeToJson(param_range);
@@ -61,6 +65,8 @@ function shiftAssignmentDates()
  */
 function updateAssignmentsDates(range_notation)
 {
+  if(!Helper.confirmHost())
+    return;
   //get range
   let range=SpreadsheetApp.getActiveSheet().getActiveRange();
   if(range_notation!=null)

@@ -11,6 +11,8 @@
  */
 function listPagesWithCourseID(includebody)
 {
+    if(!Helper.confirmHost())
+        return;
     const cell=SpreadsheetApp.getCurrentCell();
     const opts={"course_id":cell.getValue()};
     
@@ -40,6 +42,8 @@ function listPagesWithCourseID(includebody)
  * @param {String} range_notation A1 Notation, e.g. A1:B6. A cell range with headers, must include course_id, url and todo_date
  */
 function updatePagesToDoDates(range_notation){
+    if(!Helper.confirmHost())
+        return;
     //get range
     let range=SpreadsheetApp.getActiveSheet().getActiveRange();
     if(range_notation!=null)
@@ -79,6 +83,8 @@ function updatePagesToDoDates(range_notation){
  * @param {String} range_notation A1 Notation, e.g. A1:B6. A cell range with headers, must include course_id, url, title, and body
  */
 function updatePages(range_notation){
+    if(!Helper.confirmHost())
+        return;
     //get range
     let range=SpreadsheetApp.getActiveSheet().getActiveRange();
     if(range_notation!=null)

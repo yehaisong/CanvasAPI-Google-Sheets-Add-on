@@ -583,4 +583,20 @@ class Helper {
     else
       return null;
   }
+
+  /**
+   * Confirm host before an operation.
+   */
+  static confirmHost()
+  {
+    const userProperties = userConfiguration();
+    let moveon=Browser.msgBox(`The current host is ${userProperties.host}. Do you want to continue the operation?`, Browser.Buttons.OK_CANCEL);
+		if(moveon=="cancel"){
+			return false;
+		}
+    else
+    {
+      return true;
+    }
+  }
 }
