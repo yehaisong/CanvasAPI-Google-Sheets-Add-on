@@ -598,7 +598,7 @@ const CANVASAPIS={
         "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('_courses.update_a_course');})();return false;\">Get parameters</button>",
         "Enter values",
         "Select the range of the light blue area of the parameter template",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('GPUT /api/v1/courses/:id',null,null);})();return false;\">Call API</button>"
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('PUT /api/v1/courses/:id',null,null);})();return false;\">Call API</button>"
       ],
       "name":"update_a_course",
       "endpoint":"PUT /api/v1/courses/:id",
@@ -645,15 +645,15 @@ const CANVASAPIS={
   "_pages":[
     { 
       "display_name":"0: list_pages",
-      "description":"Searh and list pages in a course. The list will include course_id and page body. Use this function for update pages.",
-      "automated":"false",
+      "description":"Searh and list pages in a course.",
+      "automated":"true",
       "controller":"_pages",
       "guide":[
         "Select an empty cell to start",
         "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).generateParamTemplate('_pages.list_pages');})();return false;\">Get parameters</button>",
         "Enter values",
         "Select the range of the light blue area of the parameter template",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).listPagesWithCourseID();})();return false;\">Call API</button>"
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithRangeParams('GET /api/v1/courses/:course_id/pages',null,null);})();return false;\">Call API</button>"
       ],
       "name":"list_pages",
       "endpoint":"GET /api/v1/courses/:course_id/pages",
@@ -691,12 +691,12 @@ const CANVASAPIS={
     },
     {
       "display_name":"1: list_pages_in_course", 
-      "description":"List all pages in a course.",
-      "automated":"true",
+      "description":"List all pages in a course.The list will include course_id and page body. Use this function for update pages.",
+      "automated":"false",
       "controller":"_pages",
       "guide":[
         "Select a cell with a course id",
-        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).callCanvasAPIwithSingleParam('GET /api/v1/courses/:course_id/pages','course_id');})();return false;\">Call API</button>"
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).listPagesWithCourseID(false);})();return false;\">Call API</button>"
       ],
       "name":"list_pages_in_course",
       "endpoint":"GET /api/v1/courses/:course_id/pages",
@@ -725,6 +725,28 @@ const CANVASAPIS={
       "reference":"https://canvas.instructure.com/doc/api/pages.html#method.wiki_pages_api.update",
       "required_columns":["course_id","url","todo_date"]
       
+    },
+    {
+      "display_name":"1: list_pages_in_course_with_body", 
+      "description":"List all pages in a course.The list will include course_id and page body. Use this function for update pages.",
+      "automated":"false",
+      "controller":"_pages",
+      "guide":[
+        "Select a cell with a course id",
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).listPagesWithCourseID(true);})();return false;\">Call API</button>"
+      ],
+      "name":"list_pages_in_course_with_body",
+      "endpoint":"GET /api/v1/courses/:course_id/pages",
+      "reference":"https://canvas.instructure.com/doc/api/pages.html#method.wiki_pages_api.index",
+      "params":[
+        {
+          "name":"course_id",
+          "type":"number",
+          "default_value":"",
+          "desc":"course id",
+          "example":"83"
+        }
+      ]
     },
     { 
       "display_name":"3: update_pages_courses",

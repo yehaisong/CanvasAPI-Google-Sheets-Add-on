@@ -117,12 +117,17 @@ class Helper {
     if(contents.length>0){
       if(blankrow==null)
         blankrow=true;
+      //insert a blankrow before rng
       if(blankrow){
         Helper.insertRows(startrow,1);
         startrow++;
       }
       Helper.insertRows(startrow,contents.length);
       const rng = SpreadsheetApp.getActiveSheet().getRange(startrow,startcol,contents.length,contents[0].length);
+      //insert a blank row after rng
+      if(blankrow){
+        Helper.insertRows(rng.getLastRow()+1,1);
+      }
       if(bgcolor==null)
         bgcolor= Helper.getColor();
       rng.setHorizontalAlignment("left");
@@ -147,7 +152,8 @@ class Helper {
         if(grouprowindex>1)
           grouprowindex--; //use the active row as group header if not the first row
       }
-      SpreadsheetApp.getActiveSheet().getRange(grouprowindex+":"+rng.getLastRow()).activate().shiftRowGroupDepth(1);
+      SpreadsheetApp.getActiveSheet().getRange(grouprowindex+":"+(rng.getLastRow()+1)).activate().shiftRowGroupDepth(1);
+      //blankrow after range
     }
     else
     {

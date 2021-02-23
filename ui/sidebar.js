@@ -66,6 +66,17 @@ class SideBar{
   }
 
   /**
+   * Show update course dates side bar
+   */
+  static showCreateCourseMigrationSideBar()
+  {
+    const title="Create Course Migrations";
+    let htmlTemplate=HtmlService.createTemplateFromFile('ui/template/createContentMigrations');
+    //htmlTemplate.data=SpreadsheetApp.getActiveRange().getA1Notation();
+    SpreadsheetApp.getUi().showSidebar(htmlTemplate.evaluate().setSandboxMode(HtmlService.SandboxMode.IFRAME).setTitle(title));
+  }
+
+  /**
    * Show all apis in a sidebar
    */
   static showAllAPIs()

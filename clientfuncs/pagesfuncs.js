@@ -7,26 +7,32 @@
 
 /**
  * List pages in a course and add a course_id field to each page.
+ * @param {boolean} includebody True to includebody
  */
-function listPagesWithCourseID()
+function listPagesWithCourseID(includebody)
 {
-    const param_range=SpreadsheetApp.getActiveSheet().getActiveRange();
-    let opts=Helper.parseRangeToJson(param_range);
+    const cell=SpreadsheetApp.getCurrentCell();
+    const opts={"course_id":cell.getValue()};
+    
     //Helper.log("listPageWithCourseID: "+JSON.stringify(opts));
-    let pages=Pages.listPages(opts.course_id,opts.search_term,opts.sort,opts.published);
+    let pages=Pages.listPages(opts.course_id,null,null,null);
     if(pages!=null && pages.length>2)
     {
         for(let i=0;i<pages.length;i++)
         {
             pages[i]["course_id"]=opts["course_id"];
-            const endpoint=Helper.getAPIAction2(RawAPIAction.PAGES.SHOW_PAGE_COURSES).endpoint;
-            let body=canvasAPI(endpoint,{"course_id":opts.course_id,"url":pages[i].url}).body;
-            if(body!=null){
-                pages[i]["body"]=body;
+            pages[i]["body"]="";
+            if(includebody){
+                const endpoint=Helper.getAPIAction2(RawAPIAction.PAGES.SHOW_PAGE_COURSES).endpoint;
+                let body=canvasAPI(endpoint,{"course_id":opts.course_id,"url":pages[i].url}).body;
+                if(body!=null){
+                    pages[i]["body"]=body;
+                }
             }
+            
         }
     }
-    Helper.fillValues(param_range.getLastRow()+1,param_range.getColumn(),pages,"page_list_editing",null,true);
+    Helper.fillValues(cell.getLastRow()+1,cell.getColumn(),pages,"page_list_editing",null,true);
 }
 
 /**

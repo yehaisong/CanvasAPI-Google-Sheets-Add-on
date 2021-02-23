@@ -11,7 +11,8 @@ function onOpen() {
   // Or DocumentApp or FormApp.
   ui.createMenu('Canvas')
   .addSubMenu(ui.createMenu('Bulk operations')
-    .addItem("Change course date","SideBar.showUpdateCourseDatesSideBar"))
+    .addItem("Change course date","SideBar.showUpdateCourseDatesSideBar")
+    .addItem("Create course migration","SideBar.showCreateCourseMigrationSideBar"))
   //apis
   .addSeparator()
   .addItem("Customized APIs","SideBar.showAllAPIs")
