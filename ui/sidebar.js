@@ -53,6 +53,7 @@ class SideBar{
   static showScoreAPIs(){SideBar.show('score');}
   static showSubmissionsAPIs(){SideBar.show('submissions');}
   static showUsersAPIs(){SideBar.show('users');}
+  static showContentMigrationAPIs(){SideBar.show('content_migrations');}
 
   /**
    * Show update course dates side bar

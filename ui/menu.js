@@ -25,6 +25,7 @@ function onOpen() {
     .addItem('Assignment_groups','SideBar.showAssignment_groupsAPIs')
     .addItem('Assignments','SideBar.showAssignmentsAPIs')
     .addItem('Blueprint_courses','SideBar.showBlueprint_coursesAPIs')
+    .addItem('Content_migration','SideBar.showContentMigrationAPIs')
     .addItem('Courses','SideBar.showCoursesAPIs')
     .addItem('Discussion_topics','SideBar.showDiscussion_topicsAPIs')
     .addItem('Enrollment_terms','SideBar.showEnrollment_termsAPIs')
