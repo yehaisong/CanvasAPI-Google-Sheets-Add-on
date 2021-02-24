@@ -623,7 +623,7 @@ if an api is a general get/put/post call with simple type parameters (2-column f
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="config_rawenum.js.html">config/rawenum.js</a>, <a href="config_rawenum.js.html#line45">line 45</a>
+        <a href="config_rawenum.js.html">config/rawenum.js</a>, <a href="config_rawenum.js.html#line46">line 46</a>
     </li></ul></dd>
     
 
@@ -944,7 +944,7 @@ Returns a list of AssignmentOverrides
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="clientfuncs_clintFuncs.js.html">clientfuncs/clintFuncs.js</a>, <a href="clientfuncs_clintFuncs.js.html#line42">line 42</a>
+        <a href="clientfuncs_clintFuncs.js.html">clientfuncs/clintFuncs.js</a>, <a href="clientfuncs_clintFuncs.js.html#line45">line 45</a>
     </li></ul></dd>
     
 
@@ -1774,6 +1774,179 @@ Returns a list of AssignmentOverrides
     
 
     
+    <h4 class="name" id="createContentMigrationCourses"><span class="type-signature"></span>createContentMigrationCourses<span class="signature">(range_notation, shiftdate)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Copy content from sources courses to target courses in the selected range.
+The range needs to include columns: course_id, source_course_id, old_start_date, old_end_date, new_start_date, new_end_date
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>range_notation</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">A1 notation. if not provided, use the current selected range.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>shiftdate</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="clientfuncs_contentmigrationsfunc.js.html">clientfuncs/contentmigrationsfunc.js</a>, <a href="clientfuncs_contentmigrationsfunc.js.html#line12">line 12</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="dateDiff"><span class="type-signature"></span>dateDiff<span class="signature">(datepart, date1, date2)</span><span class="type-signature"> &rarr; {number}</span></h4>
     
 
@@ -1921,7 +2094,7 @@ Returns a list of AssignmentOverrides
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="clientfuncs_clintFuncs.js.html">clientfuncs/clintFuncs.js</a>, <a href="clientfuncs_clintFuncs.js.html#line66">line 66</a>
+        <a href="clientfuncs_clintFuncs.js.html">clientfuncs/clintFuncs.js</a>, <a href="clientfuncs_clintFuncs.js.html#line69">line 69</a>
     </li></ul></dd>
     
 
@@ -2208,6 +2381,94 @@ Returns an AssignmentOverride
     
 
     
+    <h4 class="name" id="getContentMigrationTemplate"><span class="type-signature"></span>getContentMigrationTemplate<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Get column headers for content migrations
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="clientfuncs_contentmigrationsfunc.js.html">clientfuncs/contentmigrationsfunc.js</a>, <a href="clientfuncs_contentmigrationsfunc.js.html#line72">line 72</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="getCoursesInfo"><span class="type-signature"></span>getCoursesInfo<span class="signature">(range_notation)</span><span class="type-signature"></span></h4>
     
 
@@ -2309,7 +2570,7 @@ Returns an AssignmentOverride
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="clientfuncs_coursesfuncs.js.html">clientfuncs/coursesfuncs.js</a>, <a href="clientfuncs_coursesfuncs.js.html#line108">line 108</a>
+        <a href="clientfuncs_coursesfuncs.js.html">clientfuncs/coursesfuncs.js</a>, <a href="clientfuncs_coursesfuncs.js.html#line110">line 110</a>
     </li></ul></dd>
     
 
@@ -2805,7 +3066,7 @@ function (in HTML file) can populate it in the text field
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="clientfuncs_clintFuncs.js.html">clientfuncs/clintFuncs.js</a>, <a href="clientfuncs_clintFuncs.js.html#line79">line 79</a>
+        <a href="clientfuncs_clintFuncs.js.html">clientfuncs/clintFuncs.js</a>, <a href="clientfuncs_clintFuncs.js.html#line82">line 82</a>
     </li></ul></dd>
     
 
@@ -2931,7 +3192,7 @@ Returns the paginated list of assignments for the current course or assignment g
     
 
     
-    <h4 class="name" id="listPagesWithCourseID"><span class="type-signature"></span>listPagesWithCourseID<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="listPagesWithCourseID"><span class="type-signature"></span>listPagesWithCourseID<span class="signature">(includebody)</span><span class="type-signature"></span></h4>
     
 
     
@@ -2948,6 +3209,55 @@ Returns the paginated list of assignments for the current course or assignment g
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>includebody</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">True to includebody</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -2983,7 +3293,7 @@ Returns the paginated list of assignments for the current course or assignment g
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="clientfuncs_pagesfuncs.js.html">clientfuncs/pagesfuncs.js</a>, <a href="clientfuncs_pagesfuncs.js.html#line11">line 11</a>
+        <a href="clientfuncs_pagesfuncs.js.html">clientfuncs/pagesfuncs.js</a>, <a href="clientfuncs_pagesfuncs.js.html#line12">line 12</a>
     </li></ul></dd>
     
 
@@ -3211,7 +3521,7 @@ PUT /api/v1/accounts/:account_id/courses
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="clientfuncs_coursesfuncs.js.html">clientfuncs/coursesfuncs.js</a>, <a href="clientfuncs_coursesfuncs.js.html#line152">line 152</a>
+        <a href="clientfuncs_coursesfuncs.js.html">clientfuncs/coursesfuncs.js</a>, <a href="clientfuncs_coursesfuncs.js.html#line156">line 156</a>
     </li></ul></dd>
     
 
@@ -3640,7 +3950,7 @@ Override dates are not handled.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="clientfuncs_assignmentsfuncs.js.html">clientfuncs/assignmentsfuncs.js</a>, <a href="clientfuncs_assignmentsfuncs.js.html#line34">line 34</a>
+        <a href="clientfuncs_assignmentsfuncs.js.html">clientfuncs/assignmentsfuncs.js</a>, <a href="clientfuncs_assignmentsfuncs.js.html#line36">line 36</a>
     </li></ul></dd>
     
 
@@ -4442,7 +4752,7 @@ Override dates are not handled.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="clientfuncs_assignmentsfuncs.js.html">clientfuncs/assignmentsfuncs.js</a>, <a href="clientfuncs_assignmentsfuncs.js.html#line62">line 62</a>
+        <a href="clientfuncs_assignmentsfuncs.js.html">clientfuncs/assignmentsfuncs.js</a>, <a href="clientfuncs_assignmentsfuncs.js.html#line66">line 66</a>
     </li></ul></dd>
     
 
@@ -4739,7 +5049,7 @@ Override dates are not handled.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="clientfuncs_pagesfuncs.js.html">clientfuncs/pagesfuncs.js</a>, <a href="clientfuncs_pagesfuncs.js.html#line75">line 75</a>
+        <a href="clientfuncs_pagesfuncs.js.html">clientfuncs/pagesfuncs.js</a>, <a href="clientfuncs_pagesfuncs.js.html#line85">line 85</a>
     </li></ul></dd>
     
 
@@ -4876,7 +5186,7 @@ Override dates are not handled.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="clientfuncs_pagesfuncs.js.html">clientfuncs/pagesfuncs.js</a>, <a href="clientfuncs_pagesfuncs.js.html#line36">line 36</a>
+        <a href="clientfuncs_pagesfuncs.js.html">clientfuncs/pagesfuncs.js</a>, <a href="clientfuncs_pagesfuncs.js.html#line44">line 44</a>
     </li></ul></dd>
     
 
@@ -5220,13 +5530,13 @@ Override dates are not handled.
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Accounts.html">Accounts</a></li><li><a href="Assignments.html">Assignments</a></li><li><a href="Courses.html">Courses</a></li><li><a href="Helper.html">Helper</a></li><li><a href="Pages.html">Pages</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#APIAction">APIAction</a></li><li><a href="global.html#APIController">APIController</a></li><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#calculateDateDiff">calculateDateDiff</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#DATECOLUMNS">DATECOLUMNS</a></li><li><a href="global.html#dateDiff">dateDiff</a></li><li><a href="global.html#DatePart">DatePart</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getCoursesInfo">getCoursesInfo</a></li><li><a href="global.html#getHost">getHost</a></li><li><a href="global.html#getProgress">getProgress</a></li><li><a href="global.html#getSelectedRange">getSelectedRange</a></li><li><a href="global.html#increaseDays">increaseDays</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#listPagesWithCourseID">listPagesWithCourseID</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#publishCourses">publishCourses</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#RawAPIAction">RawAPIAction</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftAssignmentDates">shiftAssignmentDates</a></li><li><a href="global.html#shiftDates">shiftDates</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#showPagesGuide">showPagesGuide</a></li><li><a href="global.html#testConfig">testConfig</a></li><li><a href="global.html#TFCOLUMNS">TFCOLUMNS</a></li><li><a href="global.html#TFCOLUMNS_RO">TFCOLUMNS_RO</a></li><li><a href="global.html#updateAssignmentsDates">updateAssignmentsDates</a></li><li><a href="global.html#updateCourseDates">updateCourseDates</a></li><li><a href="global.html#updatePages">updatePages</a></li><li><a href="global.html#updatePagesToDoDates">updatePagesToDoDates</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Accounts.html">Accounts</a></li><li><a href="Assignments.html">Assignments</a></li><li><a href="ContentMigrations.html">ContentMigrations</a></li><li><a href="Courses.html">Courses</a></li><li><a href="Helper.html">Helper</a></li><li><a href="Pages.html">Pages</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#APIAction">APIAction</a></li><li><a href="global.html#APIController">APIController</a></li><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#calculateDateDiff">calculateDateDiff</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#createContentMigrationCourses">createContentMigrationCourses</a></li><li><a href="global.html#DATECOLUMNS">DATECOLUMNS</a></li><li><a href="global.html#dateDiff">dateDiff</a></li><li><a href="global.html#DatePart">DatePart</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getContentMigrationTemplate">getContentMigrationTemplate</a></li><li><a href="global.html#getCoursesInfo">getCoursesInfo</a></li><li><a href="global.html#getHost">getHost</a></li><li><a href="global.html#getProgress">getProgress</a></li><li><a href="global.html#getSelectedRange">getSelectedRange</a></li><li><a href="global.html#increaseDays">increaseDays</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#listPagesWithCourseID">listPagesWithCourseID</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#publishCourses">publishCourses</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#RawAPIAction">RawAPIAction</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftAssignmentDates">shiftAssignmentDates</a></li><li><a href="global.html#shiftDates">shiftDates</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#showPagesGuide">showPagesGuide</a></li><li><a href="global.html#testConfig">testConfig</a></li><li><a href="global.html#TFCOLUMNS">TFCOLUMNS</a></li><li><a href="global.html#TFCOLUMNS_RO">TFCOLUMNS_RO</a></li><li><a href="global.html#updateAssignmentsDates">updateAssignmentsDates</a></li><li><a href="global.html#updateCourseDates">updateCourseDates</a></li><li><a href="global.html#updatePages">updatePages</a></li><li><a href="global.html#updatePagesToDoDates">updatePagesToDoDates</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Feb 18 2021 13:27:05 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Feb 24 2021 09:26:32 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

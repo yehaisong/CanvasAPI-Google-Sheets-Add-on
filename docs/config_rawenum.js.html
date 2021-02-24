@@ -43,6 +43,7 @@
 	ASSIGNMENT_GROUPS:'assignment_groups',
 	ASSIGNMENTS:'assignments',
 	BLUEPRINT_COURSES:'blueprint_courses',
+	CONTENT_MIGRATIONS:'content_migrations',
 	COURSES:'courses',
 	DISCUSSION_TOPICS:'discussion_topics',
 	ENROLLMENT_TERMS:'enrollment_terms',
@@ -122,6 +123,7 @@
 		LIST_ASSIGNMENTS_ASSIGNMENTS:'assignments.list_assignments_assignments',
 		LIST_ASSIGNMENTS_ASSIGNMENT_GROUPS:'assignments.list_assignments_assignment_groups',
 		LIST_ASSIGNMENTS_FOR_USER:'assignments.list_assignments_for_user',
+		DUPLICATE_ASSIGNNMENT:'assignments.duplicate_assignnment',
 		GET_SINGLE_ASSIGNMENT:'assignments.get_single_assignment',
 		CREATE_ASSIGNMENT:'assignments.create_assignment',
 		EDIT_ASSIGNMENT:'assignments.edit_assignment',
@@ -152,9 +154,48 @@
 		SHOW_BLUEPRINT_IMPORT:'blueprint_courses.show_blueprint_import',
 		GET_IMPORT_DETAILS:'blueprint_courses.get_import_details',
 	},
+	CONTENT_MIGRATIONS:{
+		LIST_MIGRATION_ISSUES_ACCOUNTS:'content_migrations.list_migration_issues_accounts',
+		LIST_MIGRATION_ISSUES_COURSES:'content_migrations.list_migration_issues_courses',
+		LIST_MIGRATION_ISSUES_GROUPS:'content_migrations.list_migration_issues_groups',
+		LIST_MIGRATION_ISSUES_USERS:'content_migrations.list_migration_issues_users',
+		GET_MIGRATION_ISSUE_ACCOUNTS:'content_migrations.get_migration_issue_accounts',
+		GET_MIGRATION_ISSUE_COURSES:'content_migrations.get_migration_issue_courses',
+		GET_MIGRATION_ISSUE_GROUPS:'content_migrations.get_migration_issue_groups',
+		GET_MIGRATION_ISSUE_USERS:'content_migrations.get_migration_issue_users',
+		UPDATE_MIGRATION_ISSUE_ACCOUNTS:'content_migrations.update_migration_issue_accounts',
+		UPDATE_MIGRATION_ISSUE_COURSES:'content_migrations.update_migration_issue_courses',
+		UPDATE_MIGRATION_ISSUE_GROUPS:'content_migrations.update_migration_issue_groups',
+		UPDATE_MIGRATION_ISSUE_USERS:'content_migrations.update_migration_issue_users',
+		LIST_CONTENT_MIGRATIONS_ACCOUNTS:'content_migrations.list_content_migrations_accounts',
+		LIST_CONTENT_MIGRATIONS_COURSES:'content_migrations.list_content_migrations_courses',
+		LIST_CONTENT_MIGRATIONS_GROUPS:'content_migrations.list_content_migrations_groups',
+		LIST_CONTENT_MIGRATIONS_USERS:'content_migrations.list_content_migrations_users',
+		GET_CONTENT_MIGRATION_ACCOUNTS:'content_migrations.get_content_migration_accounts',
+		GET_CONTENT_MIGRATION_COURSES:'content_migrations.get_content_migration_courses',
+		GET_CONTENT_MIGRATION_GROUPS:'content_migrations.get_content_migration_groups',
+		GET_CONTENT_MIGRATION_USERS:'content_migrations.get_content_migration_users',
+		CREATE_CONTENT_MIGRATION_ACCOUNTS:'content_migrations.create_content_migration_accounts',
+		CREATE_CONTENT_MIGRATION_COURSES:'content_migrations.create_content_migration_courses',
+		CREATE_CONTENT_MIGRATION_GROUPS:'content_migrations.create_content_migration_groups',
+		CREATE_CONTENT_MIGRATION_USERS:'content_migrations.create_content_migration_users',
+		UPDATE_CONTENT_MIGRATION_ACCOUNTS:'content_migrations.update_content_migration_accounts',
+		UPDATE_CONTENT_MIGRATION_COURSES:'content_migrations.update_content_migration_courses',
+		UPDATE_CONTENT_MIGRATION_GROUPS:'content_migrations.update_content_migration_groups',
+		UPDATE_CONTENT_MIGRATION_USERS:'content_migrations.update_content_migration_users',
+		LIST_MIGRATION_SYSTEMS_ACCOUNTS:'content_migrations.list_migration_systems_accounts',
+		LIST_MIGRATION_SYSTEMS_COURSES:'content_migrations.list_migration_systems_courses',
+		LIST_MIGRATION_SYSTEMS_GROUPS:'content_migrations.list_migration_systems_groups',
+		LIST_MIGRATION_SYSTEMS_USERS:'content_migrations.list_migration_systems_users',
+		LIST_ITEMS_FOR_SELECTIVE_IMPORT_ACCOUNTS:'content_migrations.list_items_for_selective_import_accounts',
+		LIST_ITEMS_FOR_SELECTIVE_IMPORT_COURSES:'content_migrations.list_items_for_selective_import_courses',
+		LIST_ITEMS_FOR_SELECTIVE_IMPORT_GROUPS:'content_migrations.list_items_for_selective_import_groups',
+		LIST_ITEMS_FOR_SELECTIVE_IMPORT_USERS:'content_migrations.list_items_for_selective_import_users',
+	},
 	COURSES:{
 		LIST_YOUR_COURSES:'courses.list_your_courses',
 		LIST_COURSES_FOR_USER:'courses.list_courses_for_user',
+		GET_USER_PROGRESS:'courses.get_user_progress',
 		CREATE_NEW_COURSE:'courses.create_new_course',
 		UPLOAD_FILE:'courses.upload_file',
 		LIST_STUDENTS:'courses.list_students',
@@ -202,6 +243,8 @@
 		GET_FULL_TOPIC_GROUPS:'discussion_topics.get_full_topic_groups',
 		POST_ENTRY_COURSES:'discussion_topics.post_entry_courses',
 		POST_ENTRY_GROUPS:'discussion_topics.post_entry_groups',
+		DUPLICATE_DISCUSSION_TOPIC_COURSES:'discussion_topics.duplicate_discussion_topic_courses',
+		DUPLICATE_DISCUSSION_TOPIC_GROUPS:'discussion_topics.duplicate_discussion_topic_groups',
 		LIST_TOPIC_ENTRIES_COURSES:'discussion_topics.list_topic_entries_courses',
 		LIST_TOPIC_ENTRIES_GROUPS:'discussion_topics.list_topic_entries_groups',
 		POST_REPLY_COURSES:'discussion_topics.post_reply_courses',
@@ -536,13 +579,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Accounts.html">Accounts</a></li><li><a href="Assignments.html">Assignments</a></li><li><a href="Courses.html">Courses</a></li><li><a href="Helper.html">Helper</a></li><li><a href="Pages.html">Pages</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#APIAction">APIAction</a></li><li><a href="global.html#APIController">APIController</a></li><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#calculateDateDiff">calculateDateDiff</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#DATECOLUMNS">DATECOLUMNS</a></li><li><a href="global.html#dateDiff">dateDiff</a></li><li><a href="global.html#DatePart">DatePart</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getCoursesInfo">getCoursesInfo</a></li><li><a href="global.html#getHost">getHost</a></li><li><a href="global.html#getProgress">getProgress</a></li><li><a href="global.html#getSelectedRange">getSelectedRange</a></li><li><a href="global.html#increaseDays">increaseDays</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#listPagesWithCourseID">listPagesWithCourseID</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#publishCourses">publishCourses</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#RawAPIAction">RawAPIAction</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftAssignmentDates">shiftAssignmentDates</a></li><li><a href="global.html#shiftDates">shiftDates</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#showPagesGuide">showPagesGuide</a></li><li><a href="global.html#testConfig">testConfig</a></li><li><a href="global.html#TFCOLUMNS">TFCOLUMNS</a></li><li><a href="global.html#TFCOLUMNS_RO">TFCOLUMNS_RO</a></li><li><a href="global.html#updateAssignmentsDates">updateAssignmentsDates</a></li><li><a href="global.html#updateCourseDates">updateCourseDates</a></li><li><a href="global.html#updatePages">updatePages</a></li><li><a href="global.html#updatePagesToDoDates">updatePagesToDoDates</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Accounts.html">Accounts</a></li><li><a href="Assignments.html">Assignments</a></li><li><a href="ContentMigrations.html">ContentMigrations</a></li><li><a href="Courses.html">Courses</a></li><li><a href="Helper.html">Helper</a></li><li><a href="Pages.html">Pages</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#APIAction">APIAction</a></li><li><a href="global.html#APIController">APIController</a></li><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#calculateDateDiff">calculateDateDiff</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#createContentMigrationCourses">createContentMigrationCourses</a></li><li><a href="global.html#DATECOLUMNS">DATECOLUMNS</a></li><li><a href="global.html#dateDiff">dateDiff</a></li><li><a href="global.html#DatePart">DatePart</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getContentMigrationTemplate">getContentMigrationTemplate</a></li><li><a href="global.html#getCoursesInfo">getCoursesInfo</a></li><li><a href="global.html#getHost">getHost</a></li><li><a href="global.html#getProgress">getProgress</a></li><li><a href="global.html#getSelectedRange">getSelectedRange</a></li><li><a href="global.html#increaseDays">increaseDays</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#listPagesWithCourseID">listPagesWithCourseID</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#publishCourses">publishCourses</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#RawAPIAction">RawAPIAction</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftAssignmentDates">shiftAssignmentDates</a></li><li><a href="global.html#shiftDates">shiftDates</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#showPagesGuide">showPagesGuide</a></li><li><a href="global.html#testConfig">testConfig</a></li><li><a href="global.html#TFCOLUMNS">TFCOLUMNS</a></li><li><a href="global.html#TFCOLUMNS_RO">TFCOLUMNS_RO</a></li><li><a href="global.html#updateAssignmentsDates">updateAssignmentsDates</a></li><li><a href="global.html#updateCourseDates">updateCourseDates</a></li><li><a href="global.html#updatePages">updatePages</a></li><li><a href="global.html#updatePagesToDoDates">updatePagesToDoDates</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Feb 18 2021 13:27:04 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Feb 24 2021 09:26:32 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

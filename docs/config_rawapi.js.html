@@ -1124,7 +1124,7 @@ const RAWCANVASAPIS = {
           "name": "assignment_ids[]",
           "type": "array",
           "default_value": "",
-          "desc": "If \"assignments\" are included, optionally return only assignments having their ID in this array.",
+          "desc": "If \"assignments\" are included, optionally return only assignments having their ID in this array. This argument may also be passed as\na comma separated string.",
           "example": ""
         },
         {
@@ -1567,6 +1567,39 @@ const RAWCANVASAPIS = {
           "default_value": "",
           "desc": "ID",
           "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Duplicate assignnment",
+      "controller": "assignments",
+      "description": "Duplicate an assignment and return a json based on result_type argument.",
+      "name": "duplicate_assignnment",
+      "endpoint": "POST /v1/courses/:course_id/assignments/:assignment_id/duplicate",
+      "reference": "https://canvas.instructure.com/doc/api/assignments.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "assignment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "result_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "Optional information:\nWhen the root account has the feature `newquizzes_on_quiz_page` enabled\nand this argument is set to \"Quiz\" the response will be serialized into a\nquiz format({file:doc/api/quizzes.html#Quiz});\nWhen this argument isn't specified the response will be serialized into an\nassignment format;",
+          "example": [
+            "Quiz"
+          ]
         }
       ]
     },
@@ -2990,6 +3023,1692 @@ const RAWCANVASAPIS = {
       ]
     }
   ],
+  "content_migrations": [
+    {
+      "display_name": "List migration issues",
+      "controller": "content_migrations",
+      "description": "Returns paginated migration issues",
+      "name": "list_migration_issues_accounts",
+      "endpoint": "GET /v1/accounts/:account_id/content_migrations/:content_migration_id/migration_issues",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "content_migration_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List migration issues",
+      "controller": "content_migrations",
+      "description": "Returns paginated migration issues",
+      "name": "list_migration_issues_courses",
+      "endpoint": "GET /v1/courses/:course_id/content_migrations/:content_migration_id/migration_issues",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "content_migration_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List migration issues",
+      "controller": "content_migrations",
+      "description": "Returns paginated migration issues",
+      "name": "list_migration_issues_groups",
+      "endpoint": "GET /v1/groups/:group_id/content_migrations/:content_migration_id/migration_issues",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "group_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "content_migration_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List migration issues",
+      "controller": "content_migrations",
+      "description": "Returns paginated migration issues",
+      "name": "list_migration_issues_users",
+      "endpoint": "GET /v1/users/:user_id/content_migrations/:content_migration_id/migration_issues",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "content_migration_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get a migration issue",
+      "controller": "content_migrations",
+      "description": "Returns data on an individual migration issue",
+      "name": "get_migration_issue_accounts",
+      "endpoint": "GET /v1/accounts/:account_id/content_migrations/:content_migration_id/migration_issues/:id",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "content_migration_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get a migration issue",
+      "controller": "content_migrations",
+      "description": "Returns data on an individual migration issue",
+      "name": "get_migration_issue_courses",
+      "endpoint": "GET /v1/courses/:course_id/content_migrations/:content_migration_id/migration_issues/:id",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "content_migration_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get a migration issue",
+      "controller": "content_migrations",
+      "description": "Returns data on an individual migration issue",
+      "name": "get_migration_issue_groups",
+      "endpoint": "GET /v1/groups/:group_id/content_migrations/:content_migration_id/migration_issues/:id",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "group_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "content_migration_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get a migration issue",
+      "controller": "content_migrations",
+      "description": "Returns data on an individual migration issue",
+      "name": "get_migration_issue_users",
+      "endpoint": "GET /v1/users/:user_id/content_migrations/:content_migration_id/migration_issues/:id",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "content_migration_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Update a migration issue",
+      "controller": "content_migrations",
+      "description": "Update the workflow_state of a migration issue",
+      "name": "update_migration_issue_accounts",
+      "endpoint": "PUT /v1/accounts/:account_id/content_migrations/:content_migration_id/migration_issues/:id",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "content_migration_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "workflow_state",
+          "type": "string",
+          "default_value": "",
+          "desc": "Set the workflow_state of the issue.",
+          "example": [
+            "active",
+            "resolved"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Update a migration issue",
+      "controller": "content_migrations",
+      "description": "Update the workflow_state of a migration issue",
+      "name": "update_migration_issue_courses",
+      "endpoint": "PUT /v1/courses/:course_id/content_migrations/:content_migration_id/migration_issues/:id",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "content_migration_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "workflow_state",
+          "type": "string",
+          "default_value": "",
+          "desc": "Set the workflow_state of the issue.",
+          "example": [
+            "active",
+            "resolved"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Update a migration issue",
+      "controller": "content_migrations",
+      "description": "Update the workflow_state of a migration issue",
+      "name": "update_migration_issue_groups",
+      "endpoint": "PUT /v1/groups/:group_id/content_migrations/:content_migration_id/migration_issues/:id",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "group_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "content_migration_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "workflow_state",
+          "type": "string",
+          "default_value": "",
+          "desc": "Set the workflow_state of the issue.",
+          "example": [
+            "active",
+            "resolved"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Update a migration issue",
+      "controller": "content_migrations",
+      "description": "Update the workflow_state of a migration issue",
+      "name": "update_migration_issue_users",
+      "endpoint": "PUT /v1/users/:user_id/content_migrations/:content_migration_id/migration_issues/:id",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "content_migration_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "workflow_state",
+          "type": "string",
+          "default_value": "",
+          "desc": "Set the workflow_state of the issue.",
+          "example": [
+            "active",
+            "resolved"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "List content migrations",
+      "controller": "content_migrations",
+      "description": "Returns paginated content migrations",
+      "name": "list_content_migrations_accounts",
+      "endpoint": "GET /v1/accounts/:account_id/content_migrations",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List content migrations",
+      "controller": "content_migrations",
+      "description": "Returns paginated content migrations",
+      "name": "list_content_migrations_courses",
+      "endpoint": "GET /v1/courses/:course_id/content_migrations",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List content migrations",
+      "controller": "content_migrations",
+      "description": "Returns paginated content migrations",
+      "name": "list_content_migrations_groups",
+      "endpoint": "GET /v1/groups/:group_id/content_migrations",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "group_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List content migrations",
+      "controller": "content_migrations",
+      "description": "Returns paginated content migrations",
+      "name": "list_content_migrations_users",
+      "endpoint": "GET /v1/users/:user_id/content_migrations",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get a content migration",
+      "controller": "content_migrations",
+      "description": "Returns data on an individual content migration",
+      "name": "get_content_migration_accounts",
+      "endpoint": "GET /v1/accounts/:account_id/content_migrations/:id",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get a content migration",
+      "controller": "content_migrations",
+      "description": "Returns data on an individual content migration",
+      "name": "get_content_migration_courses",
+      "endpoint": "GET /v1/courses/:course_id/content_migrations/:id",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get a content migration",
+      "controller": "content_migrations",
+      "description": "Returns data on an individual content migration",
+      "name": "get_content_migration_groups",
+      "endpoint": "GET /v1/groups/:group_id/content_migrations/:id",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "group_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get a content migration",
+      "controller": "content_migrations",
+      "description": "Returns data on an individual content migration",
+      "name": "get_content_migration_users",
+      "endpoint": "GET /v1/users/:user_id/content_migrations/:id",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Create a content migration",
+      "controller": "content_migrations",
+      "description": "Create a content migration. If the migration requires a file to be uploaded\nthe actual processing of the file will start once the file upload process is completed.\nFile uploading works as described in the {file:file_uploads.html File Upload Documentation}\nexcept that the values are set on a *pre_attachment* sub-hash.\n\nFor migrations that don't require a file to be uploaded, like course copy, the\nprocessing will begin as soon as the migration is created.\n\nYou can use the {api:ProgressController#show Progress API} to track the\nprogress of the migration. The migration's progress is linked to with the\n_progress_url_ value.\n\nThe two general workflows are:\n\nIf no file upload is needed:\n\n1. POST to create\n2. Use the {api:ProgressController#show Progress} specified in _progress_url_ to monitor progress\n\nFor file uploading:\n\n1. POST to create with file info in *pre_attachment*\n2. Do {file:file_uploads.html file upload processing} using the data in the *pre_attachment* data\n3. {api:ContentMigrationsController#show GET} the ContentMigration\n4. Use the {api:ProgressController#show Progress} specified in _progress_url_ to monitor progress\n\n (required if doing .zip file upload)",
+      "name": "create_content_migration_accounts",
+      "endpoint": "POST /v1/accounts/:account_id/content_migrations",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "migration_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "The type of the migration. Use the\n{api:ContentMigrationsController#available_migrators Migrator} endpoint to\nsee all available migrators. Default allowed values:\ncanvas_cartridge_importer, common_cartridge_importer,\ncourse_copy_importer, zip_file_importer, qti_converter, moodle_converter",
+          "example": ""
+        },
+        {
+          "name": "pre_attachment.name",
+          "type": "string",
+          "default_value": "",
+          "desc": "Required if uploading a file. This is the first step in uploading a file\nto the content migration. See the {file:file_uploads.html File Upload\nDocumentation} for details on the file upload workflow.",
+          "example": ""
+        },
+        {
+          "name": "pre_attachment.*",
+          "type": "string",
+          "default_value": "",
+          "desc": "Other file upload properties, See {file:file_uploads.html File Upload\nDocumentation}",
+          "example": ""
+        },
+        {
+          "name": "settings.file_url",
+          "type": "string",
+          "default_value": "",
+          "desc": "A URL to download the file from. Must not require authentication.",
+          "example": ""
+        },
+        {
+          "name": "settings.content_export_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The id of a ContentExport to import. This allows you to import content previously exported from Canvas\nwithout needing to download and re-upload it.",
+          "example": ""
+        },
+        {
+          "name": "settings.source_course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The course to copy from for a course copy migration. (required if doing\ncourse copy)",
+          "example": ""
+        },
+        {
+          "name": "settings.folder_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The folder to unzip the .zip file into for a zip_file_import.",
+          "example": ""
+        },
+        {
+          "name": "settings.overwrite_quizzes",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Whether to overwrite quizzes with the same identifiers between content\npackages.",
+          "example": ""
+        },
+        {
+          "name": "settings.question_bank_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The existing question bank ID to import questions into if not specified in\nthe content package.",
+          "example": ""
+        },
+        {
+          "name": "settings.question_bank_name",
+          "type": "string",
+          "default_value": "",
+          "desc": "The question bank to import questions into if not specified in the content\npackage, if both bank id and name are set, id will take precedence.",
+          "example": ""
+        },
+        {
+          "name": "settings.insert_into_module_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The id of a module in the target course. This will add all imported items\n(that can be added to a module) to the given module.",
+          "example": ""
+        },
+        {
+          "name": "settings.insert_into_module_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "If provided (and +insert_into_module_id+ is supplied),\nonly add objects of the specified type to the module.",
+          "example": [
+            "assignment",
+            "discussion_topic",
+            "file",
+            "page",
+            "quiz"
+          ]
+        },
+        {
+          "name": "settings.insert_into_module_position",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The (1-based) position to insert the imported items into the course\n(if +insert_into_module_id+ is supplied). If this parameter\nis omitted, items will be added to the end of the module.",
+          "example": ""
+        },
+        {
+          "name": "settings.move_to_assignment_group_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The id of an assignment group in the target course. If provided, all\nimported assignments will be moved to the given assignment group.",
+          "example": ""
+        },
+        {
+          "name": "date_shift_options.shift_dates",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Whether to shift dates in the copied course",
+          "example": ""
+        },
+        {
+          "name": "date_shift_options.old_start_date",
+          "type": "Date",
+          "default_value": "",
+          "desc": "The original start date of the source content/course",
+          "example": ""
+        },
+        {
+          "name": "date_shift_options.old_end_date",
+          "type": "Date",
+          "default_value": "",
+          "desc": "The original end date of the source content/course",
+          "example": ""
+        },
+        {
+          "name": "date_shift_options.new_start_date",
+          "type": "Date",
+          "default_value": "",
+          "desc": "The new start date for the content/course",
+          "example": ""
+        },
+        {
+          "name": "date_shift_options.new_end_date",
+          "type": "Date",
+          "default_value": "",
+          "desc": "The new end date for the source content/course",
+          "example": ""
+        },
+        {
+          "name": "date_shift_options.day_substitutions.X",
+          "type": "integer",
+          "default_value": "",
+          "desc": "Move anything scheduled for day 'X' to the specified day. (0-Sunday,\n1-Monday, 2-Tuesday, 3-Wednesday, 4-Thursday, 5-Friday, 6-Saturday)",
+          "example": ""
+        },
+        {
+          "name": "date_shift_options.remove_dates",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Whether to remove dates in the copied course. Cannot be used\nin conjunction with *shift_dates*.",
+          "example": ""
+        },
+        {
+          "name": "selective_import",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "If set, perform a selective import instead of importing all content.\nThe migration will identify the contents of the package and then stop\nin the +waiting_for_select+ workflow state. At this point, use the\n{api:ContentMigrationsController#content_list List items endpoint}\nto enumerate the contents of the package, identifying the copy\nparameters for the desired content. Then call the\n{api:ContentMigrationsController#update Update endpoint} and provide these\ncopy parameters to start the import.",
+          "example": ""
+        },
+        {
+          "name": "select",
+          "type": "Hash",
+          "default_value": "",
+          "desc": "For +course_copy_importer+ migrations, this parameter allows you to select\nthe objects to copy without using the +selective_import+ argument and\n+waiting_for_select+ state as is required for uploaded imports (though that\nworkflow is also supported for course copy migrations).\nThe keys are object types like 'files', 'folders', 'pages', etc. The value\nfor each key is a list of object ids. An id can be an integer or a string.\nMultiple object types can be selected in the same call.",
+          "example": [
+            "folders",
+            "files",
+            "attachments",
+            "quizzes",
+            "assignments",
+            "announcements",
+            "calendar_events",
+            "discussion_topics",
+            "modules",
+            "module_items",
+            "pages",
+            "rubrics"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Create a content migration",
+      "controller": "content_migrations",
+      "description": "Create a content migration. If the migration requires a file to be uploaded\nthe actual processing of the file will start once the file upload process is completed.\nFile uploading works as described in the {file:file_uploads.html File Upload Documentation}\nexcept that the values are set on a *pre_attachment* sub-hash.\n\nFor migrations that don't require a file to be uploaded, like course copy, the\nprocessing will begin as soon as the migration is created.\n\nYou can use the {api:ProgressController#show Progress API} to track the\nprogress of the migration. The migration's progress is linked to with the\n_progress_url_ value.\n\nThe two general workflows are:\n\nIf no file upload is needed:\n\n1. POST to create\n2. Use the {api:ProgressController#show Progress} specified in _progress_url_ to monitor progress\n\nFor file uploading:\n\n1. POST to create with file info in *pre_attachment*\n2. Do {file:file_uploads.html file upload processing} using the data in the *pre_attachment* data\n3. {api:ContentMigrationsController#show GET} the ContentMigration\n4. Use the {api:ProgressController#show Progress} specified in _progress_url_ to monitor progress\n\n (required if doing .zip file upload)",
+      "name": "create_content_migration_courses",
+      "endpoint": "POST /v1/courses/:course_id/content_migrations",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "migration_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "The type of the migration. Use the\n{api:ContentMigrationsController#available_migrators Migrator} endpoint to\nsee all available migrators. Default allowed values:\ncanvas_cartridge_importer, common_cartridge_importer,\ncourse_copy_importer, zip_file_importer, qti_converter, moodle_converter",
+          "example": ""
+        },
+        {
+          "name": "pre_attachment.name",
+          "type": "string",
+          "default_value": "",
+          "desc": "Required if uploading a file. This is the first step in uploading a file\nto the content migration. See the {file:file_uploads.html File Upload\nDocumentation} for details on the file upload workflow.",
+          "example": ""
+        },
+        {
+          "name": "pre_attachment.*",
+          "type": "string",
+          "default_value": "",
+          "desc": "Other file upload properties, See {file:file_uploads.html File Upload\nDocumentation}",
+          "example": ""
+        },
+        {
+          "name": "settings.file_url",
+          "type": "string",
+          "default_value": "",
+          "desc": "A URL to download the file from. Must not require authentication.",
+          "example": ""
+        },
+        {
+          "name": "settings.content_export_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The id of a ContentExport to import. This allows you to import content previously exported from Canvas\nwithout needing to download and re-upload it.",
+          "example": ""
+        },
+        {
+          "name": "settings.source_course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The course to copy from for a course copy migration. (required if doing\ncourse copy)",
+          "example": ""
+        },
+        {
+          "name": "settings.folder_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The folder to unzip the .zip file into for a zip_file_import.",
+          "example": ""
+        },
+        {
+          "name": "settings.overwrite_quizzes",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Whether to overwrite quizzes with the same identifiers between content\npackages.",
+          "example": ""
+        },
+        {
+          "name": "settings.question_bank_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The existing question bank ID to import questions into if not specified in\nthe content package.",
+          "example": ""
+        },
+        {
+          "name": "settings.question_bank_name",
+          "type": "string",
+          "default_value": "",
+          "desc": "The question bank to import questions into if not specified in the content\npackage, if both bank id and name are set, id will take precedence.",
+          "example": ""
+        },
+        {
+          "name": "settings.insert_into_module_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The id of a module in the target course. This will add all imported items\n(that can be added to a module) to the given module.",
+          "example": ""
+        },
+        {
+          "name": "settings.insert_into_module_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "If provided (and +insert_into_module_id+ is supplied),\nonly add objects of the specified type to the module.",
+          "example": [
+            "assignment",
+            "discussion_topic",
+            "file",
+            "page",
+            "quiz"
+          ]
+        },
+        {
+          "name": "settings.insert_into_module_position",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The (1-based) position to insert the imported items into the course\n(if +insert_into_module_id+ is supplied). If this parameter\nis omitted, items will be added to the end of the module.",
+          "example": ""
+        },
+        {
+          "name": "settings.move_to_assignment_group_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The id of an assignment group in the target course. If provided, all\nimported assignments will be moved to the given assignment group.",
+          "example": ""
+        },
+        {
+          "name": "date_shift_options.shift_dates",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Whether to shift dates in the copied course",
+          "example": ""
+        },
+        {
+          "name": "date_shift_options.old_start_date",
+          "type": "Date",
+          "default_value": "",
+          "desc": "The original start date of the source content/course",
+          "example": ""
+        },
+        {
+          "name": "date_shift_options.old_end_date",
+          "type": "Date",
+          "default_value": "",
+          "desc": "The original end date of the source content/course",
+          "example": ""
+        },
+        {
+          "name": "date_shift_options.new_start_date",
+          "type": "Date",
+          "default_value": "",
+          "desc": "The new start date for the content/course",
+          "example": ""
+        },
+        {
+          "name": "date_shift_options.new_end_date",
+          "type": "Date",
+          "default_value": "",
+          "desc": "The new end date for the source content/course",
+          "example": ""
+        },
+        {
+          "name": "date_shift_options.day_substitutions.X",
+          "type": "integer",
+          "default_value": "",
+          "desc": "Move anything scheduled for day 'X' to the specified day. (0-Sunday,\n1-Monday, 2-Tuesday, 3-Wednesday, 4-Thursday, 5-Friday, 6-Saturday)",
+          "example": ""
+        },
+        {
+          "name": "date_shift_options.remove_dates",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Whether to remove dates in the copied course. Cannot be used\nin conjunction with *shift_dates*.",
+          "example": ""
+        },
+        {
+          "name": "selective_import",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "If set, perform a selective import instead of importing all content.\nThe migration will identify the contents of the package and then stop\nin the +waiting_for_select+ workflow state. At this point, use the\n{api:ContentMigrationsController#content_list List items endpoint}\nto enumerate the contents of the package, identifying the copy\nparameters for the desired content. Then call the\n{api:ContentMigrationsController#update Update endpoint} and provide these\ncopy parameters to start the import.",
+          "example": ""
+        },
+        {
+          "name": "select",
+          "type": "Hash",
+          "default_value": "",
+          "desc": "For +course_copy_importer+ migrations, this parameter allows you to select\nthe objects to copy without using the +selective_import+ argument and\n+waiting_for_select+ state as is required for uploaded imports (though that\nworkflow is also supported for course copy migrations).\nThe keys are object types like 'files', 'folders', 'pages', etc. The value\nfor each key is a list of object ids. An id can be an integer or a string.\nMultiple object types can be selected in the same call.",
+          "example": [
+            "folders",
+            "files",
+            "attachments",
+            "quizzes",
+            "assignments",
+            "announcements",
+            "calendar_events",
+            "discussion_topics",
+            "modules",
+            "module_items",
+            "pages",
+            "rubrics"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Create a content migration",
+      "controller": "content_migrations",
+      "description": "Create a content migration. If the migration requires a file to be uploaded\nthe actual processing of the file will start once the file upload process is completed.\nFile uploading works as described in the {file:file_uploads.html File Upload Documentation}\nexcept that the values are set on a *pre_attachment* sub-hash.\n\nFor migrations that don't require a file to be uploaded, like course copy, the\nprocessing will begin as soon as the migration is created.\n\nYou can use the {api:ProgressController#show Progress API} to track the\nprogress of the migration. The migration's progress is linked to with the\n_progress_url_ value.\n\nThe two general workflows are:\n\nIf no file upload is needed:\n\n1. POST to create\n2. Use the {api:ProgressController#show Progress} specified in _progress_url_ to monitor progress\n\nFor file uploading:\n\n1. POST to create with file info in *pre_attachment*\n2. Do {file:file_uploads.html file upload processing} using the data in the *pre_attachment* data\n3. {api:ContentMigrationsController#show GET} the ContentMigration\n4. Use the {api:ProgressController#show Progress} specified in _progress_url_ to monitor progress\n\n (required if doing .zip file upload)",
+      "name": "create_content_migration_groups",
+      "endpoint": "POST /v1/groups/:group_id/content_migrations",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "group_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "migration_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "The type of the migration. Use the\n{api:ContentMigrationsController#available_migrators Migrator} endpoint to\nsee all available migrators. Default allowed values:\ncanvas_cartridge_importer, common_cartridge_importer,\ncourse_copy_importer, zip_file_importer, qti_converter, moodle_converter",
+          "example": ""
+        },
+        {
+          "name": "pre_attachment.name",
+          "type": "string",
+          "default_value": "",
+          "desc": "Required if uploading a file. This is the first step in uploading a file\nto the content migration. See the {file:file_uploads.html File Upload\nDocumentation} for details on the file upload workflow.",
+          "example": ""
+        },
+        {
+          "name": "pre_attachment.*",
+          "type": "string",
+          "default_value": "",
+          "desc": "Other file upload properties, See {file:file_uploads.html File Upload\nDocumentation}",
+          "example": ""
+        },
+        {
+          "name": "settings.file_url",
+          "type": "string",
+          "default_value": "",
+          "desc": "A URL to download the file from. Must not require authentication.",
+          "example": ""
+        },
+        {
+          "name": "settings.content_export_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The id of a ContentExport to import. This allows you to import content previously exported from Canvas\nwithout needing to download and re-upload it.",
+          "example": ""
+        },
+        {
+          "name": "settings.source_course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The course to copy from for a course copy migration. (required if doing\ncourse copy)",
+          "example": ""
+        },
+        {
+          "name": "settings.folder_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The folder to unzip the .zip file into for a zip_file_import.",
+          "example": ""
+        },
+        {
+          "name": "settings.overwrite_quizzes",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Whether to overwrite quizzes with the same identifiers between content\npackages.",
+          "example": ""
+        },
+        {
+          "name": "settings.question_bank_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The existing question bank ID to import questions into if not specified in\nthe content package.",
+          "example": ""
+        },
+        {
+          "name": "settings.question_bank_name",
+          "type": "string",
+          "default_value": "",
+          "desc": "The question bank to import questions into if not specified in the content\npackage, if both bank id and name are set, id will take precedence.",
+          "example": ""
+        },
+        {
+          "name": "settings.insert_into_module_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The id of a module in the target course. This will add all imported items\n(that can be added to a module) to the given module.",
+          "example": ""
+        },
+        {
+          "name": "settings.insert_into_module_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "If provided (and +insert_into_module_id+ is supplied),\nonly add objects of the specified type to the module.",
+          "example": [
+            "assignment",
+            "discussion_topic",
+            "file",
+            "page",
+            "quiz"
+          ]
+        },
+        {
+          "name": "settings.insert_into_module_position",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The (1-based) position to insert the imported items into the course\n(if +insert_into_module_id+ is supplied). If this parameter\nis omitted, items will be added to the end of the module.",
+          "example": ""
+        },
+        {
+          "name": "settings.move_to_assignment_group_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The id of an assignment group in the target course. If provided, all\nimported assignments will be moved to the given assignment group.",
+          "example": ""
+        },
+        {
+          "name": "date_shift_options.shift_dates",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Whether to shift dates in the copied course",
+          "example": ""
+        },
+        {
+          "name": "date_shift_options.old_start_date",
+          "type": "Date",
+          "default_value": "",
+          "desc": "The original start date of the source content/course",
+          "example": ""
+        },
+        {
+          "name": "date_shift_options.old_end_date",
+          "type": "Date",
+          "default_value": "",
+          "desc": "The original end date of the source content/course",
+          "example": ""
+        },
+        {
+          "name": "date_shift_options.new_start_date",
+          "type": "Date",
+          "default_value": "",
+          "desc": "The new start date for the content/course",
+          "example": ""
+        },
+        {
+          "name": "date_shift_options.new_end_date",
+          "type": "Date",
+          "default_value": "",
+          "desc": "The new end date for the source content/course",
+          "example": ""
+        },
+        {
+          "name": "date_shift_options.day_substitutions.X",
+          "type": "integer",
+          "default_value": "",
+          "desc": "Move anything scheduled for day 'X' to the specified day. (0-Sunday,\n1-Monday, 2-Tuesday, 3-Wednesday, 4-Thursday, 5-Friday, 6-Saturday)",
+          "example": ""
+        },
+        {
+          "name": "date_shift_options.remove_dates",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Whether to remove dates in the copied course. Cannot be used\nin conjunction with *shift_dates*.",
+          "example": ""
+        },
+        {
+          "name": "selective_import",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "If set, perform a selective import instead of importing all content.\nThe migration will identify the contents of the package and then stop\nin the +waiting_for_select+ workflow state. At this point, use the\n{api:ContentMigrationsController#content_list List items endpoint}\nto enumerate the contents of the package, identifying the copy\nparameters for the desired content. Then call the\n{api:ContentMigrationsController#update Update endpoint} and provide these\ncopy parameters to start the import.",
+          "example": ""
+        },
+        {
+          "name": "select",
+          "type": "Hash",
+          "default_value": "",
+          "desc": "For +course_copy_importer+ migrations, this parameter allows you to select\nthe objects to copy without using the +selective_import+ argument and\n+waiting_for_select+ state as is required for uploaded imports (though that\nworkflow is also supported for course copy migrations).\nThe keys are object types like 'files', 'folders', 'pages', etc. The value\nfor each key is a list of object ids. An id can be an integer or a string.\nMultiple object types can be selected in the same call.",
+          "example": [
+            "folders",
+            "files",
+            "attachments",
+            "quizzes",
+            "assignments",
+            "announcements",
+            "calendar_events",
+            "discussion_topics",
+            "modules",
+            "module_items",
+            "pages",
+            "rubrics"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Create a content migration",
+      "controller": "content_migrations",
+      "description": "Create a content migration. If the migration requires a file to be uploaded\nthe actual processing of the file will start once the file upload process is completed.\nFile uploading works as described in the {file:file_uploads.html File Upload Documentation}\nexcept that the values are set on a *pre_attachment* sub-hash.\n\nFor migrations that don't require a file to be uploaded, like course copy, the\nprocessing will begin as soon as the migration is created.\n\nYou can use the {api:ProgressController#show Progress API} to track the\nprogress of the migration. The migration's progress is linked to with the\n_progress_url_ value.\n\nThe two general workflows are:\n\nIf no file upload is needed:\n\n1. POST to create\n2. Use the {api:ProgressController#show Progress} specified in _progress_url_ to monitor progress\n\nFor file uploading:\n\n1. POST to create with file info in *pre_attachment*\n2. Do {file:file_uploads.html file upload processing} using the data in the *pre_attachment* data\n3. {api:ContentMigrationsController#show GET} the ContentMigration\n4. Use the {api:ProgressController#show Progress} specified in _progress_url_ to monitor progress\n\n (required if doing .zip file upload)",
+      "name": "create_content_migration_users",
+      "endpoint": "POST /v1/users/:user_id/content_migrations",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "migration_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "The type of the migration. Use the\n{api:ContentMigrationsController#available_migrators Migrator} endpoint to\nsee all available migrators. Default allowed values:\ncanvas_cartridge_importer, common_cartridge_importer,\ncourse_copy_importer, zip_file_importer, qti_converter, moodle_converter",
+          "example": ""
+        },
+        {
+          "name": "pre_attachment.name",
+          "type": "string",
+          "default_value": "",
+          "desc": "Required if uploading a file. This is the first step in uploading a file\nto the content migration. See the {file:file_uploads.html File Upload\nDocumentation} for details on the file upload workflow.",
+          "example": ""
+        },
+        {
+          "name": "pre_attachment.*",
+          "type": "string",
+          "default_value": "",
+          "desc": "Other file upload properties, See {file:file_uploads.html File Upload\nDocumentation}",
+          "example": ""
+        },
+        {
+          "name": "settings.file_url",
+          "type": "string",
+          "default_value": "",
+          "desc": "A URL to download the file from. Must not require authentication.",
+          "example": ""
+        },
+        {
+          "name": "settings.content_export_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The id of a ContentExport to import. This allows you to import content previously exported from Canvas\nwithout needing to download and re-upload it.",
+          "example": ""
+        },
+        {
+          "name": "settings.source_course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The course to copy from for a course copy migration. (required if doing\ncourse copy)",
+          "example": ""
+        },
+        {
+          "name": "settings.folder_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The folder to unzip the .zip file into for a zip_file_import.",
+          "example": ""
+        },
+        {
+          "name": "settings.overwrite_quizzes",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Whether to overwrite quizzes with the same identifiers between content\npackages.",
+          "example": ""
+        },
+        {
+          "name": "settings.question_bank_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The existing question bank ID to import questions into if not specified in\nthe content package.",
+          "example": ""
+        },
+        {
+          "name": "settings.question_bank_name",
+          "type": "string",
+          "default_value": "",
+          "desc": "The question bank to import questions into if not specified in the content\npackage, if both bank id and name are set, id will take precedence.",
+          "example": ""
+        },
+        {
+          "name": "settings.insert_into_module_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The id of a module in the target course. This will add all imported items\n(that can be added to a module) to the given module.",
+          "example": ""
+        },
+        {
+          "name": "settings.insert_into_module_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "If provided (and +insert_into_module_id+ is supplied),\nonly add objects of the specified type to the module.",
+          "example": [
+            "assignment",
+            "discussion_topic",
+            "file",
+            "page",
+            "quiz"
+          ]
+        },
+        {
+          "name": "settings.insert_into_module_position",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The (1-based) position to insert the imported items into the course\n(if +insert_into_module_id+ is supplied). If this parameter\nis omitted, items will be added to the end of the module.",
+          "example": ""
+        },
+        {
+          "name": "settings.move_to_assignment_group_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The id of an assignment group in the target course. If provided, all\nimported assignments will be moved to the given assignment group.",
+          "example": ""
+        },
+        {
+          "name": "date_shift_options.shift_dates",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Whether to shift dates in the copied course",
+          "example": ""
+        },
+        {
+          "name": "date_shift_options.old_start_date",
+          "type": "Date",
+          "default_value": "",
+          "desc": "The original start date of the source content/course",
+          "example": ""
+        },
+        {
+          "name": "date_shift_options.old_end_date",
+          "type": "Date",
+          "default_value": "",
+          "desc": "The original end date of the source content/course",
+          "example": ""
+        },
+        {
+          "name": "date_shift_options.new_start_date",
+          "type": "Date",
+          "default_value": "",
+          "desc": "The new start date for the content/course",
+          "example": ""
+        },
+        {
+          "name": "date_shift_options.new_end_date",
+          "type": "Date",
+          "default_value": "",
+          "desc": "The new end date for the source content/course",
+          "example": ""
+        },
+        {
+          "name": "date_shift_options.day_substitutions.X",
+          "type": "integer",
+          "default_value": "",
+          "desc": "Move anything scheduled for day 'X' to the specified day. (0-Sunday,\n1-Monday, 2-Tuesday, 3-Wednesday, 4-Thursday, 5-Friday, 6-Saturday)",
+          "example": ""
+        },
+        {
+          "name": "date_shift_options.remove_dates",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Whether to remove dates in the copied course. Cannot be used\nin conjunction with *shift_dates*.",
+          "example": ""
+        },
+        {
+          "name": "selective_import",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "If set, perform a selective import instead of importing all content.\nThe migration will identify the contents of the package and then stop\nin the +waiting_for_select+ workflow state. At this point, use the\n{api:ContentMigrationsController#content_list List items endpoint}\nto enumerate the contents of the package, identifying the copy\nparameters for the desired content. Then call the\n{api:ContentMigrationsController#update Update endpoint} and provide these\ncopy parameters to start the import.",
+          "example": ""
+        },
+        {
+          "name": "select",
+          "type": "Hash",
+          "default_value": "",
+          "desc": "For +course_copy_importer+ migrations, this parameter allows you to select\nthe objects to copy without using the +selective_import+ argument and\n+waiting_for_select+ state as is required for uploaded imports (though that\nworkflow is also supported for course copy migrations).\nThe keys are object types like 'files', 'folders', 'pages', etc. The value\nfor each key is a list of object ids. An id can be an integer or a string.\nMultiple object types can be selected in the same call.",
+          "example": [
+            "folders",
+            "files",
+            "attachments",
+            "quizzes",
+            "assignments",
+            "announcements",
+            "calendar_events",
+            "discussion_topics",
+            "modules",
+            "module_items",
+            "pages",
+            "rubrics"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Update a content migration",
+      "controller": "content_migrations",
+      "description": "Update a content migration. Takes same arguments as {api:ContentMigrationsController#create create} except that you\ncan't change the migration type. However, changing most settings after the\nmigration process has started will not do anything. Generally updating the\ncontent migration will be used when there is a file upload problem, or when\nimporting content selectively. If the first upload has a problem you can\nsupply new _pre_attachment_ values to start the process again.",
+      "name": "update_content_migration_accounts",
+      "endpoint": "PUT /v1/accounts/:account_id/content_migrations/:id",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Update a content migration",
+      "controller": "content_migrations",
+      "description": "Update a content migration. Takes same arguments as {api:ContentMigrationsController#create create} except that you\ncan't change the migration type. However, changing most settings after the\nmigration process has started will not do anything. Generally updating the\ncontent migration will be used when there is a file upload problem, or when\nimporting content selectively. If the first upload has a problem you can\nsupply new _pre_attachment_ values to start the process again.",
+      "name": "update_content_migration_courses",
+      "endpoint": "PUT /v1/courses/:course_id/content_migrations/:id",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Update a content migration",
+      "controller": "content_migrations",
+      "description": "Update a content migration. Takes same arguments as {api:ContentMigrationsController#create create} except that you\ncan't change the migration type. However, changing most settings after the\nmigration process has started will not do anything. Generally updating the\ncontent migration will be used when there is a file upload problem, or when\nimporting content selectively. If the first upload has a problem you can\nsupply new _pre_attachment_ values to start the process again.",
+      "name": "update_content_migration_groups",
+      "endpoint": "PUT /v1/groups/:group_id/content_migrations/:id",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "group_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Update a content migration",
+      "controller": "content_migrations",
+      "description": "Update a content migration. Takes same arguments as {api:ContentMigrationsController#create create} except that you\ncan't change the migration type. However, changing most settings after the\nmigration process has started will not do anything. Generally updating the\ncontent migration will be used when there is a file upload problem, or when\nimporting content selectively. If the first upload has a problem you can\nsupply new _pre_attachment_ values to start the process again.",
+      "name": "update_content_migration_users",
+      "endpoint": "PUT /v1/users/:user_id/content_migrations/:id",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List Migration Systems",
+      "controller": "content_migrations",
+      "description": "Lists the currently available migration types. These values may change.",
+      "name": "list_migration_systems_accounts",
+      "endpoint": "GET /v1/accounts/:account_id/content_migrations/migrators",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List Migration Systems",
+      "controller": "content_migrations",
+      "description": "Lists the currently available migration types. These values may change.",
+      "name": "list_migration_systems_courses",
+      "endpoint": "GET /v1/courses/:course_id/content_migrations/migrators",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List Migration Systems",
+      "controller": "content_migrations",
+      "description": "Lists the currently available migration types. These values may change.",
+      "name": "list_migration_systems_groups",
+      "endpoint": "GET /v1/groups/:group_id/content_migrations/migrators",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "group_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List Migration Systems",
+      "controller": "content_migrations",
+      "description": "Lists the currently available migration types. These values may change.",
+      "name": "list_migration_systems_users",
+      "endpoint": "GET /v1/users/:user_id/content_migrations/migrators",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List items for selective import",
+      "controller": "content_migrations",
+      "description": "Enumerates the content available for selective import in a tree structure. Each node provides\na +property+ copy argument that can be supplied to the {api:ContentMigrationsController#update Update endpoint}\nto selectively copy the content associated with that tree node and its children. Each node may also\nprovide a +sub_items_url+ or an array of +sub_items+ which you can use to obtain copy parameters\nfor a subset of the resources in a given node.\n\nIf no +type+ is sent you will get a list of the top-level sections in the content. It will look something like this:\n\n  [{\n    \"type\": \"course_settings\",\n    \"property\": \"copy[all_course_settings]\",\n    \"title\": \"Course Settings\"\n  },\n  {\n    \"type\": \"context_modules\",\n    \"property\": \"copy[all_context_modules]\",\n    \"title\": \"Modules\",\n    \"count\": 5,\n    \"sub_items_url\": \"http://example.com/api/v1/courses/22/content_migrations/77/selective_data?type=context_modules\"\n  },\n  {\n    \"type\": \"assignments\",\n    \"property\": \"copy[all_assignments]\",\n    \"title\": \"Assignments\",\n    \"count\": 2,\n    \"sub_items_url\": \"http://localhost:3000/api/v1/courses/22/content_migrations/77/selective_data?type=assignments\"\n  }]\n\nWhen a +type+ is provided, nodes may be further divided via +sub_items+. For example, using +type=assignments+\nresults in a node for each assignment group and a sub_item for each assignment, like this:\n\n  [{\n    \"type\": \"assignment_groups\",\n    \"title\": \"An Assignment Group\",\n    \"property\": \"copy[assignment_groups][id_i855cf145e5acc7435e1bf1c6e2126e5f]\",\n    \"sub_items\": [{\n        \"type\": \"assignments\",\n        \"title\": \"Assignment 1\",\n        \"property\": \"copy[assignments][id_i2102a7fa93b29226774949298626719d]\"\n    }, {\n        \"type\": \"assignments\",\n        \"title\": \"Assignment 2\",\n        \"property\": \"copy[assignments][id_i310cba275dc3f4aa8a3306bbbe380979]\"\n    }]\n  }]\n\n\nTo import the items corresponding to a particular tree node, use the +property+ as a parameter to the\n{api:ContentMigrationsController#update Update endpoint} and assign a value of 1, for example:\n\n  copy[assignments][id_i310cba275dc3f4aa8a3306bbbe380979]=1\n\nYou can include multiple copy parameters to selectively import multiple items or groups of items.",
+      "name": "list_items_for_selective_import_accounts",
+      "endpoint": "GET /v1/accounts/:account_id/content_migrations/:id/selective_data",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "default_value": "",
+          "desc": "The type of content to enumerate.",
+          "example": [
+            "context_modules",
+            "assignments",
+            "quizzes",
+            "assessment_question_banks",
+            "discussion_topics",
+            "wiki_pages",
+            "context_external_tools",
+            "tool_profiles",
+            "announcements",
+            "calendar_events",
+            "rubrics",
+            "groups",
+            "learning_outcomes",
+            "attachments"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "List items for selective import",
+      "controller": "content_migrations",
+      "description": "Enumerates the content available for selective import in a tree structure. Each node provides\na +property+ copy argument that can be supplied to the {api:ContentMigrationsController#update Update endpoint}\nto selectively copy the content associated with that tree node and its children. Each node may also\nprovide a +sub_items_url+ or an array of +sub_items+ which you can use to obtain copy parameters\nfor a subset of the resources in a given node.\n\nIf no +type+ is sent you will get a list of the top-level sections in the content. It will look something like this:\n\n  [{\n    \"type\": \"course_settings\",\n    \"property\": \"copy[all_course_settings]\",\n    \"title\": \"Course Settings\"\n  },\n  {\n    \"type\": \"context_modules\",\n    \"property\": \"copy[all_context_modules]\",\n    \"title\": \"Modules\",\n    \"count\": 5,\n    \"sub_items_url\": \"http://example.com/api/v1/courses/22/content_migrations/77/selective_data?type=context_modules\"\n  },\n  {\n    \"type\": \"assignments\",\n    \"property\": \"copy[all_assignments]\",\n    \"title\": \"Assignments\",\n    \"count\": 2,\n    \"sub_items_url\": \"http://localhost:3000/api/v1/courses/22/content_migrations/77/selective_data?type=assignments\"\n  }]\n\nWhen a +type+ is provided, nodes may be further divided via +sub_items+. For example, using +type=assignments+\nresults in a node for each assignment group and a sub_item for each assignment, like this:\n\n  [{\n    \"type\": \"assignment_groups\",\n    \"title\": \"An Assignment Group\",\n    \"property\": \"copy[assignment_groups][id_i855cf145e5acc7435e1bf1c6e2126e5f]\",\n    \"sub_items\": [{\n        \"type\": \"assignments\",\n        \"title\": \"Assignment 1\",\n        \"property\": \"copy[assignments][id_i2102a7fa93b29226774949298626719d]\"\n    }, {\n        \"type\": \"assignments\",\n        \"title\": \"Assignment 2\",\n        \"property\": \"copy[assignments][id_i310cba275dc3f4aa8a3306bbbe380979]\"\n    }]\n  }]\n\n\nTo import the items corresponding to a particular tree node, use the +property+ as a parameter to the\n{api:ContentMigrationsController#update Update endpoint} and assign a value of 1, for example:\n\n  copy[assignments][id_i310cba275dc3f4aa8a3306bbbe380979]=1\n\nYou can include multiple copy parameters to selectively import multiple items or groups of items.",
+      "name": "list_items_for_selective_import_courses",
+      "endpoint": "GET /v1/courses/:course_id/content_migrations/:id/selective_data",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "default_value": "",
+          "desc": "The type of content to enumerate.",
+          "example": [
+            "context_modules",
+            "assignments",
+            "quizzes",
+            "assessment_question_banks",
+            "discussion_topics",
+            "wiki_pages",
+            "context_external_tools",
+            "tool_profiles",
+            "announcements",
+            "calendar_events",
+            "rubrics",
+            "groups",
+            "learning_outcomes",
+            "attachments"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "List items for selective import",
+      "controller": "content_migrations",
+      "description": "Enumerates the content available for selective import in a tree structure. Each node provides\na +property+ copy argument that can be supplied to the {api:ContentMigrationsController#update Update endpoint}\nto selectively copy the content associated with that tree node and its children. Each node may also\nprovide a +sub_items_url+ or an array of +sub_items+ which you can use to obtain copy parameters\nfor a subset of the resources in a given node.\n\nIf no +type+ is sent you will get a list of the top-level sections in the content. It will look something like this:\n\n  [{\n    \"type\": \"course_settings\",\n    \"property\": \"copy[all_course_settings]\",\n    \"title\": \"Course Settings\"\n  },\n  {\n    \"type\": \"context_modules\",\n    \"property\": \"copy[all_context_modules]\",\n    \"title\": \"Modules\",\n    \"count\": 5,\n    \"sub_items_url\": \"http://example.com/api/v1/courses/22/content_migrations/77/selective_data?type=context_modules\"\n  },\n  {\n    \"type\": \"assignments\",\n    \"property\": \"copy[all_assignments]\",\n    \"title\": \"Assignments\",\n    \"count\": 2,\n    \"sub_items_url\": \"http://localhost:3000/api/v1/courses/22/content_migrations/77/selective_data?type=assignments\"\n  }]\n\nWhen a +type+ is provided, nodes may be further divided via +sub_items+. For example, using +type=assignments+\nresults in a node for each assignment group and a sub_item for each assignment, like this:\n\n  [{\n    \"type\": \"assignment_groups\",\n    \"title\": \"An Assignment Group\",\n    \"property\": \"copy[assignment_groups][id_i855cf145e5acc7435e1bf1c6e2126e5f]\",\n    \"sub_items\": [{\n        \"type\": \"assignments\",\n        \"title\": \"Assignment 1\",\n        \"property\": \"copy[assignments][id_i2102a7fa93b29226774949298626719d]\"\n    }, {\n        \"type\": \"assignments\",\n        \"title\": \"Assignment 2\",\n        \"property\": \"copy[assignments][id_i310cba275dc3f4aa8a3306bbbe380979]\"\n    }]\n  }]\n\n\nTo import the items corresponding to a particular tree node, use the +property+ as a parameter to the\n{api:ContentMigrationsController#update Update endpoint} and assign a value of 1, for example:\n\n  copy[assignments][id_i310cba275dc3f4aa8a3306bbbe380979]=1\n\nYou can include multiple copy parameters to selectively import multiple items or groups of items.",
+      "name": "list_items_for_selective_import_groups",
+      "endpoint": "GET /v1/groups/:group_id/content_migrations/:id/selective_data",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "group_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "default_value": "",
+          "desc": "The type of content to enumerate.",
+          "example": [
+            "context_modules",
+            "assignments",
+            "quizzes",
+            "assessment_question_banks",
+            "discussion_topics",
+            "wiki_pages",
+            "context_external_tools",
+            "tool_profiles",
+            "announcements",
+            "calendar_events",
+            "rubrics",
+            "groups",
+            "learning_outcomes",
+            "attachments"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "List items for selective import",
+      "controller": "content_migrations",
+      "description": "Enumerates the content available for selective import in a tree structure. Each node provides\na +property+ copy argument that can be supplied to the {api:ContentMigrationsController#update Update endpoint}\nto selectively copy the content associated with that tree node and its children. Each node may also\nprovide a +sub_items_url+ or an array of +sub_items+ which you can use to obtain copy parameters\nfor a subset of the resources in a given node.\n\nIf no +type+ is sent you will get a list of the top-level sections in the content. It will look something like this:\n\n  [{\n    \"type\": \"course_settings\",\n    \"property\": \"copy[all_course_settings]\",\n    \"title\": \"Course Settings\"\n  },\n  {\n    \"type\": \"context_modules\",\n    \"property\": \"copy[all_context_modules]\",\n    \"title\": \"Modules\",\n    \"count\": 5,\n    \"sub_items_url\": \"http://example.com/api/v1/courses/22/content_migrations/77/selective_data?type=context_modules\"\n  },\n  {\n    \"type\": \"assignments\",\n    \"property\": \"copy[all_assignments]\",\n    \"title\": \"Assignments\",\n    \"count\": 2,\n    \"sub_items_url\": \"http://localhost:3000/api/v1/courses/22/content_migrations/77/selective_data?type=assignments\"\n  }]\n\nWhen a +type+ is provided, nodes may be further divided via +sub_items+. For example, using +type=assignments+\nresults in a node for each assignment group and a sub_item for each assignment, like this:\n\n  [{\n    \"type\": \"assignment_groups\",\n    \"title\": \"An Assignment Group\",\n    \"property\": \"copy[assignment_groups][id_i855cf145e5acc7435e1bf1c6e2126e5f]\",\n    \"sub_items\": [{\n        \"type\": \"assignments\",\n        \"title\": \"Assignment 1\",\n        \"property\": \"copy[assignments][id_i2102a7fa93b29226774949298626719d]\"\n    }, {\n        \"type\": \"assignments\",\n        \"title\": \"Assignment 2\",\n        \"property\": \"copy[assignments][id_i310cba275dc3f4aa8a3306bbbe380979]\"\n    }]\n  }]\n\n\nTo import the items corresponding to a particular tree node, use the +property+ as a parameter to the\n{api:ContentMigrationsController#update Update endpoint} and assign a value of 1, for example:\n\n  copy[assignments][id_i310cba275dc3f4aa8a3306bbbe380979]=1\n\nYou can include multiple copy parameters to selectively import multiple items or groups of items.",
+      "name": "list_items_for_selective_import_users",
+      "endpoint": "GET /v1/users/:user_id/content_migrations/:id/selective_data",
+      "reference": "https://canvas.instructure.com/doc/api/content_migrations.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "default_value": "",
+          "desc": "The type of content to enumerate.",
+          "example": [
+            "context_modules",
+            "assignments",
+            "quizzes",
+            "assessment_question_banks",
+            "discussion_topics",
+            "wiki_pages",
+            "context_external_tools",
+            "tool_profiles",
+            "announcements",
+            "calendar_events",
+            "rubrics",
+            "groups",
+            "learning_outcomes",
+            "attachments"
+          ]
+        }
+      ]
+    }
+  ],
   "courses": [
     {
       "display_name": "List your courses",
@@ -3145,6 +4864,30 @@ const RAWCANVASAPIS = {
             "invited_or_pending",
             "completed"
           ]
+        }
+      ]
+    },
+    {
+      "display_name": "Get user progress",
+      "controller": "courses",
+      "description": "Return progress information for the user and course\n\nYou can supply +self+ as the user_id to query your own progress in a course. To query another user's progress,\nyou must be a teacher in the course, an administrator, or a linked observer of the user.",
+      "name": "get_user_progress",
+      "endpoint": "GET /v1/courses/:course_id/users/:user_id/progress",
+      "reference": "https://canvas.instructure.com/doc/api/courses.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
         }
       ]
     },
@@ -4361,6 +6104,13 @@ const RAWCANVASAPIS = {
           "type": "multiple BlueprintRestrictions",
           "default_value": "",
           "desc": "Allows setting multiple {api:Blueprint_Courses:BlueprintRestriction Blueprint Restriction}\nto apply to blueprint course objects of the matching type when restricted.\nThe possible object types are \"assignment\", \"attachment\", \"discussion_topic\", \"quiz\" and \"wiki_page\".\nExample usage:\n  course[blueprint_restrictions_by_object_type][assignment][content]=1",
+          "example": ""
+        },
+        {
+          "name": "course.homeroom_course",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Sets the course as a homeroom course. The setting takes effect only when the Canvas for Elementary feature\nis enabled in the course's account.",
           "example": ""
         }
       ]
@@ -5756,6 +7506,54 @@ const RAWCANVASAPIS = {
           "type": "string",
           "default_value": "",
           "desc": "a multipart/form-data form-field-style\nattachment. Attachments larger than 1 kilobyte are subject to quota\nrestrictions.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Duplicate discussion topic",
+      "controller": "discussion_topics",
+      "description": "Duplicate a discussion topic according to context (Course/Group)",
+      "name": "duplicate_discussion_topic_courses",
+      "endpoint": "POST /v1/courses/:course_id/discussion_topics/:topic_id/duplicate",
+      "reference": "https://canvas.instructure.com/doc/api/discussion_topics.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "topic_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Duplicate discussion topic",
+      "controller": "discussion_topics",
+      "description": "Duplicate a discussion topic according to context (Course/Group)",
+      "name": "duplicate_discussion_topic_groups",
+      "endpoint": "POST /v1/groups/:group_id/discussion_topics/:topic_id/duplicate",
+      "reference": "https://canvas.instructure.com/doc/api/discussion_topics.html",
+      "params": [
+        {
+          "name": "group_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "topic_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
           "example": ""
         }
       ]
@@ -13380,7 +15178,7 @@ const RAWCANVASAPIS = {
           "name": "permissions.&lt;X>.enabled",
           "type": "boolean",
           "default_value": "",
-          "desc": "If explicit is 1 and enabled is 1, permission &lt;X> will be explicitly\ngranted to this role. If explicit is 1 and enabled has any other value\n(typically 0), permission &lt;X> will be explicitly denied to this role. If\nexplicit is any other value (typically 0) or absent, or if enabled is\nabsent, the value for permission &lt;X> will be inherited from upstream.\nIgnored if permission &lt;X> is locked upstream (in an ancestor account).\n\nMay occur multiple times with unique values for &lt;X>. Recognized\npermission names for &lt;X> are:\n\n  [For Account-Level Roles Only]\n  become_user                      -- Users - act as\n  import_sis                       -- SIS Data - import\n  manage_account_memberships       -- Admins - add / remove\n  manage_account_settings          -- Account-level settings - manage\n  manage_alerts                    -- Global announcements - add / edit / delete\n  manage_catalog                   -- Catalog - manage\n  manage_courses                   -- Courses - add / edit / delete\n  manage_developer_keys            -- Developer keys - manage\n  manage_feature_flags             -- Feature Options - enable / disable\n  manage_global_outcomes           -- Manage learning outcomes\n  manage_jobs                      -- Manage background jobs\n  manage_master_courses            -- Blueprint Courses - add / edit / associate / delete\n  manage_role_overrides            -- Permissions - manage\n  manage_storage_quotas            -- Storage Quotas - manage\n  manage_sis                       -- SIS data - manage\n  manage_site_settings             -- Manage site-wide and plugin settings\n  manage_user_logins               -- Users - manage login details\n  manage_user_observers            -- Users - add / remove observers\n  moderate_user_content            -- Users - moderate user-created content\n  read_course_content              -- Course Content - view\n  read_course_list                 -- Courses - view list\n  read_messages                    -- View notifications sent to users\n  reset_any_mfa                    -- Reset multi-factor authentication\n  site_admin                       -- Use the Site Admin section and admin all other accounts\n  view_course_changes              -- Courses - view change logs\n  view_error_reports               -- View error reports\n  view_feature_flags               -- Feature Options - view\n  view_grade_changes               -- Grades - view change logs\n  view_jobs                        -- View background jobs\n  view_notifications               -- Notifications - view\n  view_quiz_answer_audits          -- Quizzes - view submission log\n  view_statistics                  -- Statistics - view\n  undelete_courses                 -- Courses - undelete\n\n  [For both Account-Level and Course-Level roles]\n   Note: Applicable enrollment types for course-level roles are given in brackets:\n         S = student, T = teacher, A = TA, D = designer, O = observer.\n         Lower-case letters indicate permissions that are off by default.\n         A missing letter indicates the permission cannot be enabled for the role\n         or any derived custom roles.\n  change_course_state              -- [ TaD ] Course State - manage\n  create_collaborations            -- [STADo] Student Collaborations - create\n  create_conferences               -- [STADo] Web conferences - create\n  create_forum                     -- [STADo] Discussions - create\n  generate_observer_pairing_code   -- [ tado] Users - Generate observer pairing codes for students\n  import_outcomes                  -- [ TaDo] Learning Outcomes - import\n  lti_add_edit                     -- [ TAD ] LTI - add / edit / delete\n  manage_admin_users               -- [ Tad ] Users - add / remove teachers, course designers, or TAs in courses\n  manage_assignments               -- [ TADo] Assignments and Quizzes - add / edit / delete\n  manage_calendar                  -- [sTADo] Course Calendar - add / edit / delete events\n  manage_content                   -- [ TADo] Course Content - add / edit / delete\n  manage_course_visibility         -- [ TAD ] Course - change visibility\n  manage_files                     -- [ TADo] Course Files - add / edit / delete\n  manage_grades                    -- [ TA  ] Grades - edit\n  manage_groups                    -- [ TAD ] Groups - add / edit / delete\n  manage_interaction_alerts        -- [ Ta  ] Alerts - add / edit / delete\n  manage_outcomes                  -- [sTaDo] Learning Outcomes - add / edit / delete\n  manage_proficiency_calculations  -- [ t d ] Outcome Proficiency Calculations - add / edit / delete\n  manage_proficiency_scales        -- [ t d ] Outcome Proficiency/Mastery Scales - add / edit / delete\n  manage_sections                  -- [ TaD ] Course Sections - add / edit / delete\n  manage_students                  -- [ TAD ] Users - add / remove students in courses\n  manage_user_notes                -- [ TA  ] Faculty Journal - manage entries\n  manage_rubrics                   -- [ TAD ] Rubrics - add / edit / delete\n  manage_wiki_create               -- [ TADo] Pages - create\n  manage_wiki_delete               -- [ TADo] Pages - delete\n  manage_wiki_update               -- [ TADo] Pages - update\n  moderate_forum                   -- [sTADo] Discussions - moderate\n  post_to_forum                    -- [STADo] Discussions - post\n  read_announcements               -- [STADO] Announcements - view\n  read_email_addresses             -- [sTAdo] Users - view primary email address\n  read_forum                       -- [STADO] Discussions - view\n  read_question_banks              -- [ TADo] Question banks - view and link\n  read_reports                     -- [ TAD ] Courses - view usage reports\n  read_roster                      -- [STADo] Users - view list\n  read_sis                         -- [sTa  ] SIS Data - read\n  select_final_grade               -- [ TA  ] Grades - select final grade for moderation\n  send_messages                    -- [STADo] Conversations - send messages to individual course members\n  send_messages_all                -- [sTADo] Conversations - send messages to entire class\n  view_all_grades                  -- [ TAd ] Grades - view all grades\n  view_audit_trail                 -- [ t   ] Grades - view audit trail\n  view_group_pages                 -- [sTADo] Groups - view all student groups\n  view_user_logins                 -- [ TA  ] Users - view login IDs\n\nSome of these permissions are applicable only for roles on the site admin\naccount, on a root account, or for course-level roles with a particular base role type;\nif a specified permission is inapplicable, it will be ignored.\n\nAdditional permissions may exist based on installed plugins.",
+          "desc": "If explicit is 1 and enabled is 1, permission &lt;X> will be explicitly\ngranted to this role. If explicit is 1 and enabled has any other value\n(typically 0), permission &lt;X> will be explicitly denied to this role. If\nexplicit is any other value (typically 0) or absent, or if enabled is\nabsent, the value for permission &lt;X> will be inherited from upstream.\nIgnored if permission &lt;X> is locked upstream (in an ancestor account).\n\nMay occur multiple times with unique values for &lt;X>. Recognized\npermission names for &lt;X> are:\n\n  [For Account-Level Roles Only]\n  become_user                      -- Users - act as\n  import_sis                       -- SIS Data - import\n  manage_account_memberships       -- Admins - add / remove\n  manage_account_settings          -- Account-level settings - manage\n  manage_alerts                    -- Global announcements - add / edit / delete\n  manage_catalog                   -- Catalog - manage\n  manage_courses                   -- Courses - add / edit / delete\n  manage_developer_keys            -- Developer keys - manage\n  manage_feature_flags             -- Feature Options - enable / disable\n  manage_global_outcomes           -- Manage learning outcomes\n  manage_jobs                      -- Manage background jobs\n  manage_master_courses            -- Blueprint Courses - add / edit / associate / delete\n  manage_role_overrides            -- Permissions - manage\n  manage_storage_quotas            -- Storage Quotas - manage\n  manage_sis                       -- SIS data - manage\n  manage_site_settings             -- Manage site-wide and plugin settings\n  manage_user_logins               -- Users - manage login details\n  manage_user_observers            -- Users - add / remove observers\n  moderate_user_content            -- Users - moderate user-created content\n  read_course_content              -- Course Content - view\n  read_course_list                 -- Courses - view list\n  read_messages                    -- View notifications sent to users\n  reset_any_mfa                    -- Reset multi-factor authentication\n  site_admin                       -- Use the Site Admin section and admin all other accounts\n  view_course_changes              -- Courses - view change logs\n  view_error_reports               -- View error reports\n  view_feature_flags               -- Feature Options - view\n  view_grade_changes               -- Grades - view change logs\n  view_jobs                        -- View background jobs\n  view_notifications               -- Notifications - view\n  view_quiz_answer_audits          -- Quizzes - view submission log\n  view_statistics                  -- Statistics - view\n  undelete_courses                 -- Courses - undelete\n\n  [For both Account-Level and Course-Level roles]\n   Note: Applicable enrollment types for course-level roles are given in brackets:\n         S = student, T = teacher, A = TA, D = designer, O = observer.\n         Lower-case letters indicate permissions that are off by default.\n         A missing letter indicates the permission cannot be enabled for the role\n         or any derived custom roles.\n  change_course_state              -- [ TaD ] Course State - manage\n  create_collaborations            -- [STADo] Student Collaborations - create\n  create_conferences               -- [STADo] Web conferences - create\n  create_forum                     -- [STADo] Discussions - create\n  generate_observer_pairing_code   -- [ tado] Users - Generate observer pairing codes for students\n  import_outcomes                  -- [ TaDo] Learning Outcomes - import\n  lti_add_edit                     -- [ TAD ] LTI - add / edit / delete\n  manage_admin_users               -- [ Tad ] Users - add / remove teachers, course designers, or TAs in courses\n  manage_assignments               -- [ TADo] Assignments and Quizzes - add / edit / delete\n  manage_calendar                  -- [sTADo] Course Calendar - add / edit / delete events\n  manage_content                   -- [ TADo] Course Content - add / edit / delete\n  manage_course_visibility         -- [ TAD ] Course - change visibility\n  manage_files                     -- [ TADo] Course Files - add / edit / delete\n  manage_grades                    -- [ TA  ] Grades - edit\n  manage_groups                    -- [ TAD ] Groups - add / edit / delete\n  manage_interaction_alerts        -- [ Ta  ] Alerts - add / edit / delete\n  manage_outcomes                  -- [sTaDo] Learning Outcomes - add / edit / delete\n  manage_proficiency_calculations  -- [ t d ] Outcome Proficiency Calculations - add / edit / delete\n  manage_proficiency_scales        -- [ t d ] Outcome Proficiency/Mastery Scales - add / edit / delete\n  manage_sections_add              -- [ TaD ] Course Sections - add\n  manage_sections_edit             -- [ TaD ] Course Sections - edit\n  manage_sections_delete           -- [ TaD ] Course Sections - delete\n  manage_students                  -- [ TAD ] Users - add / remove students in courses\n  manage_user_notes                -- [ TA  ] Faculty Journal - manage entries\n  manage_rubrics                   -- [ TAD ] Rubrics - add / edit / delete\n  manage_wiki_create               -- [ TADo] Pages - create\n  manage_wiki_delete               -- [ TADo] Pages - delete\n  manage_wiki_update               -- [ TADo] Pages - update\n  moderate_forum                   -- [sTADo] Discussions - moderate\n  post_to_forum                    -- [STADo] Discussions - post\n  read_announcements               -- [STADO] Announcements - view\n  read_email_addresses             -- [sTAdo] Users - view primary email address\n  read_forum                       -- [STADO] Discussions - view\n  read_question_banks              -- [ TADo] Question banks - view and link\n  read_reports                     -- [ TAD ] Courses - view usage reports\n  read_roster                      -- [STADo] Users - view list\n  read_sis                         -- [sTa  ] SIS Data - read\n  select_final_grade               -- [ TA  ] Grades - select final grade for moderation\n  send_messages                    -- [STADo] Conversations - send messages to individual course members\n  send_messages_all                -- [sTADo] Conversations - send messages to entire class\n  view_all_grades                  -- [ TAd ] Grades - view all grades\n  view_audit_trail                 -- [ t   ] Grades - view audit trail\n  view_group_pages                 -- [sTADo] Groups - view all student groups\n  view_user_logins                 -- [ TA  ] Users - view login IDs\n\nSome of these permissions are applicable only for roles on the site admin\naccount, on a root account, or for course-level roles with a particular base role type;\nif a specified permission is inapplicable, it will be ignored.\n\nAdditional permissions may exist based on installed plugins.",
           "example": ""
         },
         {
@@ -14252,7 +16050,7 @@ const RAWCANVASAPIS = {
           "name": "userId",
           "type": "string",
           "default_value": "",
-          "desc": "The lti_user_id or the Canvas user_id.\nReturns a 412 if user not found in Canvas or is not a student.",
+          "desc": "The lti_user_id or the Canvas user_id.\nReturns a 422 if user not found in Canvas or is not a student.",
           "example": ""
         },
         {
@@ -16919,13 +18717,13 @@ const RAWCANVASAPIS = {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Accounts.html">Accounts</a></li><li><a href="Assignments.html">Assignments</a></li><li><a href="Courses.html">Courses</a></li><li><a href="Helper.html">Helper</a></li><li><a href="Pages.html">Pages</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#APIAction">APIAction</a></li><li><a href="global.html#APIController">APIController</a></li><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#calculateDateDiff">calculateDateDiff</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#DATECOLUMNS">DATECOLUMNS</a></li><li><a href="global.html#dateDiff">dateDiff</a></li><li><a href="global.html#DatePart">DatePart</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getCoursesInfo">getCoursesInfo</a></li><li><a href="global.html#getHost">getHost</a></li><li><a href="global.html#getProgress">getProgress</a></li><li><a href="global.html#getSelectedRange">getSelectedRange</a></li><li><a href="global.html#increaseDays">increaseDays</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#listPagesWithCourseID">listPagesWithCourseID</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#publishCourses">publishCourses</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#RawAPIAction">RawAPIAction</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftAssignmentDates">shiftAssignmentDates</a></li><li><a href="global.html#shiftDates">shiftDates</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#showPagesGuide">showPagesGuide</a></li><li><a href="global.html#testConfig">testConfig</a></li><li><a href="global.html#TFCOLUMNS">TFCOLUMNS</a></li><li><a href="global.html#TFCOLUMNS_RO">TFCOLUMNS_RO</a></li><li><a href="global.html#updateAssignmentsDates">updateAssignmentsDates</a></li><li><a href="global.html#updateCourseDates">updateCourseDates</a></li><li><a href="global.html#updatePages">updatePages</a></li><li><a href="global.html#updatePagesToDoDates">updatePagesToDoDates</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Accounts.html">Accounts</a></li><li><a href="Assignments.html">Assignments</a></li><li><a href="ContentMigrations.html">ContentMigrations</a></li><li><a href="Courses.html">Courses</a></li><li><a href="Helper.html">Helper</a></li><li><a href="Pages.html">Pages</a></li><li><a href="SideBar.html">SideBar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#APIAction">APIAction</a></li><li><a href="global.html#APIController">APIController</a></li><li><a href="global.html#batchCreateAssignmentsOverrides">batchCreateAssignmentsOverrides</a></li><li><a href="global.html#calculateDateDiff">calculateDateDiff</a></li><li><a href="global.html#callCanvasAPINoParam">callCanvasAPINoParam</a></li><li><a href="global.html#callCanvasAPIwithRangeParams">callCanvasAPIwithRangeParams</a></li><li><a href="global.html#callCanvasAPIwithSingleParam">callCanvasAPIwithSingleParam</a></li><li><a href="global.html#canvasAPI">canvasAPI</a></li><li><a href="global.html#CANVASAPIS">CANVASAPIS</a></li><li><a href="global.html#createContentMigrationCourses">createContentMigrationCourses</a></li><li><a href="global.html#DATECOLUMNS">DATECOLUMNS</a></li><li><a href="global.html#dateDiff">dateDiff</a></li><li><a href="global.html#DatePart">DatePart</a></li><li><a href="global.html#deleteAssignmentOverride">deleteAssignmentOverride</a></li><li><a href="global.html#DISPLAYCOLUMNS">DISPLAYCOLUMNS</a></li><li><a href="global.html#generateParamTemplate">generateParamTemplate</a></li><li><a href="global.html#getContentMigrationTemplate">getContentMigrationTemplate</a></li><li><a href="global.html#getCoursesInfo">getCoursesInfo</a></li><li><a href="global.html#getHost">getHost</a></li><li><a href="global.html#getProgress">getProgress</a></li><li><a href="global.html#getSelectedRange">getSelectedRange</a></li><li><a href="global.html#increaseDays">increaseDays</a></li><li><a href="global.html#listAssignmentsDate">listAssignmentsDate</a></li><li><a href="global.html#listPagesWithCourseID">listPagesWithCourseID</a></li><li><a href="global.html#LOGMESSAGE">LOGMESSAGE</a></li><li><a href="global.html#onOpen">onOpen</a></li><li><a href="global.html#publishCourses">publishCourses</a></li><li><a href="global.html#queryProgress">queryProgress</a></li><li><a href="global.html#RawAPIAction">RawAPIAction</a></li><li><a href="global.html#setHost">setHost</a></li><li><a href="global.html#setToken">setToken</a></li><li><a href="global.html#shiftAssignmentDates">shiftAssignmentDates</a></li><li><a href="global.html#shiftDates">shiftDates</a></li><li><a href="global.html#showAccountsGuide">showAccountsGuide</a></li><li><a href="global.html#showAssignmentsGuide">showAssignmentsGuide</a></li><li><a href="global.html#showBlueprintsGuide">showBlueprintsGuide</a></li><li><a href="global.html#showCoursesGuide">showCoursesGuide</a></li><li><a href="global.html#showPagesGuide">showPagesGuide</a></li><li><a href="global.html#testConfig">testConfig</a></li><li><a href="global.html#TFCOLUMNS">TFCOLUMNS</a></li><li><a href="global.html#TFCOLUMNS_RO">TFCOLUMNS_RO</a></li><li><a href="global.html#updateAssignmentsDates">updateAssignmentsDates</a></li><li><a href="global.html#updateCourseDates">updateCourseDates</a></li><li><a href="global.html#updatePages">updatePages</a></li><li><a href="global.html#updatePagesToDoDates">updatePagesToDoDates</a></li><li><a href="global.html#userConfiguration">userConfiguration</a></li><li><a href="global.html#validateParams">validateParams</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Feb 18 2021 13:27:05 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Feb 24 2021 09:26:32 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: controller/pages.js</title>
+    <title>JSDoc: Source: clientfuncs/contentmigrationsfunc.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: controller/pages.js</h1>
+    <h1 class="page-title">Source: clientfuncs/contentmigrationsfunc.js</h1>
 
     
 
@@ -27,72 +27,83 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * @fileoverview Pages API
+ * @fileoverview Defines client funcs related to content migrations
  * @author hye@cedarville.edu (Haisong Ye)
  */
 
-/**
- * Show the sidebar for courses APIs
- */
-function showPagesGuide()
-{
-  SideBar.show("_pages");
-}
+ /**
+  * Copy content from sources courses to target courses in the selected range.
+  * The range needs to include columns: course_id, source_course_id, old_start_date, old_end_date, new_start_date, new_end_date
+  * @param {string} range_notation A1 notation. if not provided, use the current selected range.
+  * @param {boolean} shiftdate
+  */
+ function createContentMigrationCourses(range_notation,shiftdate=true)
+ {
+    if(!Helper.confirmHost())
+        return; 
+    //get range
+    let range=SpreadsheetApp.getActiveSheet().getActiveRange();
+    if(range_notation!=null)
+        range=SpreadsheetApp.getActiveSheet().getRange(range_notation);
+    //check header
+    if(!Helper.checkRequiredColumns(range,["course_id","source_course_id", "old_start_date", "old_end_date", "new_start_date", "new_end_date"])){
+        //Browser.msgBox("Please select a range with the required column: name");
+        return;
+    }
+    //get course data
+    let migrations=Helper.convertRangeToObjectArray(range);
+    let results=[];
 
-/**
- * The Pages class
- */
-class Pages{
-
-    /**
-     * Update a page's todo date
-     * PUT /api/v1/courses/:course_id/pages/:url
-     * @param {object} page A page object with new todo_date.
-     * @param {number} course_id A course id.
-     * @returns {object} A updated page.
-     */
-    static changePageToDoDate(page, course_id){
-        //get API info
-        const action=Helper.getAPIAction2(APIAction.PAGES.UPDATE_PAGES_TODO);
-        //get pages with todo_date
+    //verify dates. only proceed when all dates meet requirements.
+    for(let i=0;i&lt;migrations.length;i++){
+        let migration=migrations[i];
+        //verify dates
+        if(Helper.daysDiff(migration.old_start_date,migration.old_end_date)>Helper.daysDiff(migration.new_start_date,migration.new_end_date)){
+            Browser.msgBox(`Cannot shift dates for course ${migration.course_id} because the source course ${migration.source_course_id} had more days than current course. You can extend new_end_date to proceed.`);
+            return;
+        }
+    }
+    
+    //create migrations
+    for(let i=0;i&lt;migrations.length;i++){
+        let migration=migrations[i];
+        //get the migration settings
         let opts={
-            "course_id":course_id,
-            "url":page.url,
-            "wiki_page":{
-                "student_todo_at":Helper.getISODate(page.todo_date)
+            "course_id":migration.course_id,
+            "migration_type":"course_copy_importer",
+            "settings":{
+                "source_course_id":migration.source_course_id,
+            },
+            "date_shift_options":{
+                "shift_dates":shiftdate,
+                "old_start_date":Helper.getISODate(migration.old_start_date),
+                "old_end_date":Helper.getISODate(migration.old_end_date),
+                "new_start_date":Helper.getISODate(migration.new_start_date),
+                "new_end_date":Helper.getISODate(migration.new_end_date)
             }
         };
-        
-        return canvasAPI(action.endpoint,opts);
+        //call create content migration api
+        let return_migration=ContentMigrations.createContentMigrationCourses(opts);
+        //notification
+        Helper.toast(`Migration for course ${migration.course_id} queued!`,"Course Migration",2)
+        //track progress
+        let progress_result=queryProgress(return_migration.id);
+        results.push(progress_result);
     }
+    //display queued_migrations
+    Helper.fillValues(range.getLastRow()+1,range.getColumn(),results,null,null);
+ }
 
-    /**
-     * Get pages in a course.
-     * @param {number} course_id course id
-     * @param {string} search_term The partial title of the pages to match and return.
-     * @param {string} sort Determines the order of the assignments. Defaults to “title”. title|created_at|updated_at
-     * @param {boolean} published If true, include only published paqes. If false, exclude published pages. If not present, do not filter on published status.
-     * @returns {Array} A list of pages in a course
-     */
-    static listPages(course_id,search_term,sort,published){
-        const action=Helper.getAPIAction2(APIAction.PAGES.LIST_PAGES);
-        //build opts
-        let opts={};
-        if(course_id!=null)
-            opts["course_id"]=course_id;
-        if(search_term!=null)
-            opts["search_term"]=search_term;
-        if(sort!=null)
-            opts["sort"]=sort;
-        if(published!=null)
-            opts["published"]=published;
-        //call api
-        return canvasAPI(action.endpoint,opts);
-    }
-
-}
-
-</code></pre>
+ /**
+  * Get column headers for content migrations
+  */
+ function getContentMigrationTemplate()
+ {
+    const cell=SpreadsheetApp.getActiveSheet().getCurrentCell();
+    const range=SpreadsheetApp.getActiveSheet().getRange(cell.getLastRow(),cell.getLastColumn(),1,6);
+    const values=[["course_id","source_course_id", "old_start_date", "old_end_date", "new_start_date", "new_end_date"]];
+    range.setValues(values);
+ }</code></pre>
         </article>
     </section>
 

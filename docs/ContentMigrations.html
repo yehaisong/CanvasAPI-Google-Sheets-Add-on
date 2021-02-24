@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: controller/pages.js</title>
+    <title>JSDoc: Class: ContentMigrations</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,84 +17,327 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: controller/pages.js</h1>
+    <h1 class="page-title">Class: ContentMigrations</h1>
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/**
- * @fileoverview Pages API
- * @author hye@cedarville.edu (Haisong Ye)
- */
-
-/**
- * Show the sidebar for courses APIs
- */
-function showPagesGuide()
-{
-  SideBar.show("_pages");
-}
-
-/**
- * The Pages class
- */
-class Pages{
-
-    /**
-     * Update a page's todo date
-     * PUT /api/v1/courses/:course_id/pages/:url
-     * @param {object} page A page object with new todo_date.
-     * @param {number} course_id A course id.
-     * @returns {object} A updated page.
-     */
-    static changePageToDoDate(page, course_id){
-        //get API info
-        const action=Helper.getAPIAction2(APIAction.PAGES.UPDATE_PAGES_TODO);
-        //get pages with todo_date
-        let opts={
-            "course_id":course_id,
-            "url":page.url,
-            "wiki_page":{
-                "student_todo_at":Helper.getISODate(page.todo_date)
-            }
-        };
+        <h2><span class="attribs"><span class="type-signature"></span></span>ContentMigrations<span class="signature">()</span><span class="type-signature"></span></h2>
         
-        return canvasAPI(action.endpoint,opts);
-    }
+            <div class="class-description">The content_migrations class</div>
+        
+    
+</header>
 
-    /**
-     * Get pages in a course.
-     * @param {number} course_id course id
-     * @param {string} search_term The partial title of the pages to match and return.
-     * @param {string} sort Determines the order of the assignments. Defaults to “title”. title|created_at|updated_at
-     * @param {boolean} published If true, include only published paqes. If false, exclude published pages. If not present, do not filter on published status.
-     * @returns {Array} A list of pages in a course
-     */
-    static listPages(course_id,search_term,sort,published){
-        const action=Helper.getAPIAction2(APIAction.PAGES.LIST_PAGES);
-        //build opts
-        let opts={};
-        if(course_id!=null)
-            opts["course_id"]=course_id;
-        if(search_term!=null)
-            opts["search_term"]=search_term;
-        if(sort!=null)
-            opts["sort"]=sort;
-        if(published!=null)
-            opts["published"]=published;
-        //call api
-        return canvasAPI(action.endpoint,opts);
-    }
+<article>
+    <div class="container-overview">
+    
+        
 
-}
+    
+    <h2>Constructor</h2>
+    
 
-</code></pre>
-        </article>
-    </section>
+    
+    <h4 class="name" id="ContentMigrations"><span class="type-signature"></span>new ContentMigrations<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controller_content_migrations.js.html">controller/content_migrations.js</a>, <a href="controller_content_migrations.js.html#line9">line 9</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".createContentMigrationCourses"><span class="type-signature">(static) </span>createContentMigrationCourses<span class="signature">(migrationsettings)</span><span class="type-signature"> &rarr; {object}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Create a content migration. It will copy all content from a source course to this course.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>migrationsettings</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">A content migration object
+{
+ "course_id":0,
+ "migration_type":"course_copy_importer",
+ "settings":{
+     "source_course_id":0
+ }
+ "date_shift_options":{
+     "shift_dates":true,
+     "old_start_date":date,
+     "old_end_date":date,
+     "new_start_date":date,
+     "new_end_date":date
+ }
+}</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controller_content_migrations.js.html">controller/content_migrations.js</a>, <a href="controller_content_migrations.js.html#line43">line 43</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    a content migration object
+{
+        "id": 370663,
+        "migration_type": "common_cartridge_importer",
+        "migration_type_title": "Canvas Cartridge Importer",
+        "migration_issues_url": "https://example.com/api/v1/courses/1/content_migrations/1/migration_issues",
+        "attachment": "{"url"=>"https://example.com/api/v1/courses/1/content_migrations/1/download_archive"}",
+        "progress_url": "https://example.com/api/v1/progress/4",
+        "user_id": 4,
+        "workflow_state": "running",
+        "started_at": "2012-06-01T00:00:00-06:00",
+        "finished_at": "2012-06-01T00:00:00-06:00",
+        "pre_attachment": "{"upload_url"=>"", "message"=>"file exceeded quota", "upload_params"=>{}}"
+        }
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">object</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
