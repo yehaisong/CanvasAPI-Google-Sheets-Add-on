@@ -15,8 +15,8 @@ function onOpen() {
     .addItem("Create course migration","SideBar.showCreateCourseMigrationSideBar"))
   //apis
   .addSeparator()
-  .addItem("Customized APIs","SideBar.showAllAPIs")
-  .addSubMenu(ui.createMenu('Original APIs by group')
+  .addItem("Customized functions","SideBar.showAllAPIs")
+  .addSubMenu(ui.createMenu('Raw APIs by group')
     .addSubMenu(ui.createMenu('A-L')
     .addItem('Accounts','SideBar.showAccountsAPIs')
     .addItem('Admins','SideBar.showAdminsAPIs')
