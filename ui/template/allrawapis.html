@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <style>
+      html {
+        font-size: 12px;
+        word-wrap: break-word;
+      }
+
+      ol {
+        list-style-type: none;
+        counter-reset: elementcounter;
+        padding-left: 0;
+      }
+
+      li:before {
+        content: "Step " counter(elementcounter) ". ";
+        counter-increment: elementcounter;
+        font-weight: bold;
+      }
+   </style>
+  </head>
+  <body style="padding:0px">
+    <div class="accordion-flush" id="controllerwrapper">
+    <?
+    let controllers=["api_token_scopes","account_domain_lookups","account_notifications","account_reports","accounts","admins","analytics","announcement_external_feeds","announcements","appointment_groups","assignment_extensions","assignment_groups","assignments","authentication_providers","authentications_log","blueprint_courses","bookmarks","brand_configs","calendar_events","collaborations","comm_messages","communication_channels","conferences","content_exports","content_migrations","content_security_policy_settings","content_shares","conversations","course_audit_log","course_quiz_extensions","courses","custom_gradebook_columns","discussion_topics","document_previews","enrollment_terms","enrollments","error_reports","external_tools","favorites","feature_flags","files","grade_change_log","gradebook_history","grading_periods","grading_standards","group_categories","groups","history","image_search","immersive_reader","jw_ts","late_policy","line_items","live_assessments","logins","media_objects","moderated_grading","modules","names_and_role","notification_preferences","originality_reports","outcome_groups","outcome_imports","outcome_results","outcomes","pages","peer_reviews","plagiarism_detection_platform_assignments","plagiarism_detection_platform_users","plagiarism_detection_submissions","planner","poll_sessions","poll_choices","poll_submissions","polls","proficiency_ratings","progress","public_jwk","quiz_assignment_overrides","quiz_extensions","quiz_ip_filters","quiz_question_groups","quiz_questions","quiz_reports","quiz_statistics","quiz_submission_events","quiz_submission_files","quiz_submission_questions","quiz_submission_user_list","quiz_submissions","quizzes","result","roles","rubrics","sis_import_errors","sis_imports","sis_integration","score","search","sections","services","shared_brand_configs","submission_comments","submissions","tabs","user_observees","users","webhooks_subscriptions"];
+    for (let n=0;n<controllers.length;n++){
+      let controller=data[controllers[n].toLowerCase()];?>
+      <div class="accordion-item">
+        <h2 class="accordion-header bg-info" id="<?=('heading'+n)?>">
+          <button class="accordion-button collapsed fw-bold fs-4" 
+            type="button" 
+            data-bs-toggle="collapse" 
+            data-bs-target="<?=('#collapse'+n)?>" 
+            aria-expanded="false" aria-controls="<?=('collapse'+n)?>">
+            <?=controllers[n]?>
+          </button>
+        </h2>
+        <div id="<?=('collapse'+n)?>" 
+          class="accordion-collapse collapse" 
+          aria-labelledby="<?=('heading'+n)?>"
+          data-bs-parent="#controllerwrapper">
+          <div class="accordion-body m-0 p-0">
+            <div class="accordion-flush" id="apiwrapper_<?=n?>">
+              <?for (var i=0;i<controller.length;i++) {
+                var action=controller[i]?>
+                <div class="accordion-item">
+                  <h2 class="accordion-header bg-light" id="<?=('heading'+n+'_'+i)?>">
+                    <button class="accordion-button collapsed" 
+                      type="button" 
+                      title="<?=action.description?>"
+                      data-bs-toggle="collapse" 
+                      data-bs-target="<?=('#collapse'+n+'_'+i)?>" 
+                      aria-expanded="false" aria-controls="<?=('collapse'+n+'_'+i)?>">
+                      <?=action.display_name?>
+                    </button>
+                  </h2>
+                  <div id="<?=('collapse'+n+'_'+i)?>" 
+                    class="accordion-collapse collapse" 
+                    aria-labelledby="<?=('heading'+n+'_'+i)?>"
+                    data-bs-parent="#apiwrapper_<?=n?>">
+                    <div class="accordion-body">
+                      <div title="automated" class="text-end">
+                      <?if (action.automated=='false'){?> 
+                        <span class="badge bg-warning">customized</span> 
+                        <?} else {?>
+                        <span class="badge bg-success">automated</span>
+                        <?}?>
+                      </div>
+                      <div><?=action.description?></div>
+                      <hr>
+                      <div title="endpoint"><?=action.endpoint?></div>
+                      <div title="reference"><a href="<?=action.reference?>" target="_blank">Canvas API reference</a></div>
+                      <hr/>
+                      <ol title="steps">
+                      <?
+                        var steps=action.guide
+                        if(steps==null){?>
+                            <?for (var j=0;j<steps.length;j++) {?>
+                                <li><?!=steps[j]?></li>
+                            <?}?>
+                        <?}?>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              <?}?>
+              </div>
+          </div>
+        </div>
+      </div>
+    <?}?>
+    
+    <div class="fixed-bottom alert alert-primary m-2 text-center d-none" id="result">
+      <div class="float-start" id="status">status</div>
+      <a href="#" class="float-end text-decoration-none" data-dismiss="alert" onclick="closeStatus()">&times;</a>
+    </div>
+    <script>
+      /**********************************************
+       * API call feedback
+       * *******************************************/
+      function onSuccess() {
+        changeStyle('alert-success');
+        updateStatus('<div>API Call Completed!</div>');
+      }
+      function onFailure(error) {
+        changeStyle('alert-danger');
+        updateStatus('<div>API Call Failed!</div><div class="text-start">'+error+'</div>');
+      }
+      function onCall(){
+        showStatus();
+        changeStyle('alert-primary');
+        updateStatus('<div class="spinner-border spinner-border-sm pr-2" role="status"></div><span> Working...</span>');
+      }
+      function closeStatus(){
+        var div = document.getElementById('result');
+        div.classList.add("d-none");    
+      }
+      function showStatus(){
+        var div = document.getElementById('result');
+        div.classList.remove("d-none");
+      }
+      function changeStyle(newstyle){
+        var div = document.getElementById('result');
+        div.classList.remove("alert-success");
+        div.classList.remove("alert-danger");
+        div.classList.remove("alert-primary");
+        div.classList.add(newstyle);
+      }
+      function updateStatus(status){
+        var div_status = document.getElementById('status');
+        div_status.innerHTML = status;
+      }
+
+
+
+    </script>
+  </body>
+</html>

@@ -16,6 +16,8 @@ function onOpen() {
   //.addSeparator()
   //apis
   .addItem("Customized functions","SideBar.showAllAPIs")
+  .addSeparator()
+  //.addItem("All Raw APIs","SideBar.showAllRawAPIs")
   .addSubMenu(ui.createMenu('Raw APIs by group')
     .addSubMenu(ui.createMenu('A-B')
       .addItem('Api_token_scopes','SideBar.showApi_token_scopesAPIs')
