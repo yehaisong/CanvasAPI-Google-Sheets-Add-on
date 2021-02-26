@@ -90,12 +90,130 @@
         </div>
       </div>
     <?}?>
+    <!--CUSTOMIZED FUNCTIONS-->
+    <div class="accordion-item">
+      <h2 class="accordion-header bg-warning" id="bo_head">
+        <button class="accordion-button collapsed fw-bold fs-4" 
+          type="button" 
+          data-bs-toggle="collapse" 
+          data-bs-target="#bo_body" 
+          aria-expanded="false" aria-controls="bo_body">
+          Bulk operations
+        </button>
+      </h2>
+      <div id="bo_body" 
+        class="accordion-collapse collapse" 
+        aria-labelledby="bo_head"
+        data-bs-parent="#controllerwrapper">
+        <div class="accordion-body m-0 p-0">
+          <div class="accordion-flush" id="bo_0">
+              <!--UPDATE COURSE DATES-->
+              <div class="accordion-item">
+                <h2 class="accordion-header bg-light" id="ucd_head">
+                  <button class="accordion-button collapsed" 
+                    type="button" 
+                    title="Update course dates"
+                    data-bs-toggle="collapse" 
+                    data-bs-target="#ucd_body" 
+                    aria-expanded="false" aria-controls="ucd_body">
+                    Change course dates
+                  </button>
+                </h2>
+                <div id="ucd_body" 
+                  class="accordion-collapse collapse" 
+                  aria-labelledby="ucd_head"
+                  data-bs-parent="#bo_0">
+                  <div class="accordion-body">
+                    <div title="automated" class="text-end">
+                      <span class="badge bg-warning">customized</span> 
+                    </div>
+                    <div>Bulk change course dates from old start dates to new start dates</div>
+                    <hr>
+                    <form>
+                      <ol>
+                          <li>
+                              <div class="form-group">
+                                  <label for="coursenames">Select course name range</label>
+                                  <small id="coursenamesHelp" class="form-text text-muted">Must include a column with header "name". A column of course ids with header "id" will be helpful.</small>
+                              </div>
+                          </li>
+                          <li><button type="button" class="btn btn-primary" onclick="getCourseInfo();">Get Courses Info</button></li>
+                          <li>
+                              <div class="form-group">
+                                  <label for="courseinfo">Select all courses range</label>
+                                  <small id="courseinfoHelp" class="form-text text-muted">Must include columns with headers course_id, start_at, end_at</small>
+                              </div>
+                              <div class="form-check">
+                                  <input type="checkbox" class="form-check-input" checked id="updateduedate">
+                                  <label class="form-check-label" for="updateduedate">Update assignments date</label>
+                              </div>
+                          </li>
+                          <li><button type="button" class="btn btn-primary" onclick="updateCourseDates();">Update Courses</button></li>
+                      </ol>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <!--CREATE CONTENT MIGARATION-->
+              <div class="accordion-item">
+                <h2 class="accordion-header bg-light" id="ccm_head">
+                  <button class="accordion-button collapsed" 
+                    type="button" 
+                    title="Update course dates"
+                    data-bs-toggle="collapse" 
+                    data-bs-target="#ccm_body" 
+                    aria-expanded="false" aria-controls="ccm_body">
+                    Create content migrations
+                  </button>
+                </h2>
+                <div id="ccm_body" 
+                  class="accordion-collapse collapse" 
+                  aria-labelledby="ccm_head"
+                  data-bs-parent="#bo_0">
+                  <div class="accordion-body">
+                    <div title="automated" class="text-end">
+                      <span class="badge bg-warning">customized</span> 
+                    </div>
+                    <div>Create content migrations for courses.</div>
+                    <hr>
+                    <form>
+                      <ol>
+                          <li>
+                              <div class="form-group">
+                                  <label for="coursenames">Select a empty cell to start</label>
+                              </div>
+                          </li>
+                          <li><button type="button" class="btn btn-primary" onclick="getTemplate();">Get Course Migration Template</button></li>
+                          <li>
+                              <div class="form-group">
+                                  <label for="courseinfo">Select all courses range</label>
+                                  <small id="courseinfoHelp" class="form-text text-muted">Must include columns with headers course_id, source_course_id, old_start_date, old_end_date, new_start_date, new_end_date</small>
+                              </div>
+                              <div class="form-check">
+                                  <input type="checkbox" class="form-check-input" checked id="shiftdate">
+                                  <label class="form-check-label" for="shiftdate">Shift date</label>
+                              </div>
+                          </li>
+                          <li><button type="button" class="btn btn-primary" onclick="createCourseMigration();">Migrate</button></li>
+                      </ol>
+                      
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
     </div>
     <div class="fixed-bottom alert alert-primary m-2 text-center d-none" id="result">
       <div class="float-start" id="status">status</div>
       <a href="#" class="float-end text-decoration-none" data-dismiss="alert" onclick="closeStatus()">&times;</a>
     </div>
     <script>
+      /**********************************************
+       * API call feedback
+       * *******************************************/
       function onSuccess() {
         changeStyle('alert-success');
         updateStatus('<div>API Call Completed!</div>');
@@ -128,6 +246,76 @@
         var div_status = document.getElementById('status');
         div_status.innerHTML = status;
       }
+
+
+      /**********************************************
+       * get and set Selected Range A1 notion to target textbox
+       * *******************************************/
+       function getSelectedRange(txtbox){
+        onCall();
+        google.script.run                       // Executes a Apps Script JS Function
+          .withSuccessHandler(updateTextField)  // function to be called upon successfull completion of Apps Script function
+          .withUserObject(txtbox)          // To pass the event element object
+          .getSelectedRange();                  // Apps Sript JS Function
+        return;
+      }
+      
+      // Function to be called on success
+      function updateTextField(range,txtbox){
+        changeStyle('alert-success');
+        updateStatus('<div>Range was copied.</div>');
+
+        txtbox.value = range; // Update the text field value
+        txtbox.select();
+
+      }
+
+      /**********************************************
+       * updateCourseDates
+       * *******************************************/
+      function getCourseInfo(){
+        onCall();
+        //var txtrng=document.getElementById("coursenames")
+        google.script.run                       // Executes a Apps Script JS Function
+          .withSuccessHandler(onSuccess)    // function to be called upon successfull completion of Apps Script function
+          .withFailureHandler(onFailure)
+          .getCoursesInfo();                  // Apps Sript JS Function
+        return;
+      }
+
+      function updateCourseDates(){
+        onCall();
+        var chkUpdate=document.getElementById("updateduedate")
+        google.script.run                       // Executes a Apps Script JS Function
+          .withSuccessHandler(onSuccess)    // function to be called upon successfull completion of Apps Script function
+          .withFailureHandler(onFailure)
+          .updateCourseDates(null,chkUpdate.checked);                  // Apps Sript JS Function
+        return;
+      }
+
+      /**********************************************
+       * createContentMigration
+       * *******************************************/
+      function getTemplate(){
+        onCall();
+        //var txtrng=document.getElementById("coursenames")
+        google.script.run                       // Executes a Apps Script JS Function
+          .withSuccessHandler(onSuccess)    // function to be called upon successfull completion of Apps Script function
+          .withFailureHandler(onFailure)
+          .getContentMigrationTemplate();                  // Apps Sript JS Function
+        return;
+      }
+
+      function createCourseMigration(){
+        onCall();
+        var chkUpdate=document.getElementById("shiftdate")
+        google.script.run                       // Executes a Apps Script JS Function
+          .withSuccessHandler(onSuccess)    // function to be called upon successfull completion of Apps Script function
+          .withFailureHandler(onFailure)
+          .createContentMigrationCourses(null,chkUpdate.checked);                  // Apps Sript JS Function
+        return;
+      }
+
     </script>
   </body>
 </html>

@@ -16,7 +16,8 @@ enumoutput=Path(__file__).parent / "../config/rawenum.js"
 
 baseurl="https://canvas.instructure.com/doc/api"
 response = json.loads(requests.get(baseurl+"/api-docs.json").text)
-insterested=["accounts",
+include_all=True
+interested=["accounts",
             "admins",
             "analytics",
             "announcements",
@@ -54,11 +55,11 @@ controllers={}
 
 for api in response["apis"]:
     name=api["path"].replace("(","").replace(")","").replace("/","").replace(".json","")
-    if name in insterested:
+    if include_all or (name in interested):
         #print(name)
         controller=cc.Controller(name,[])
         controller.deserialize(baseurl+api["path"])
-        #print(controller.name)
+        print(controller.name)
         ##save each controller to a file
         #controller.dumpscript(os.path.join("../config/apis",controller.name+".js"),False)
         ##combine all controller to a file

@@ -25,6 +25,10 @@
         }
         
         Helper.log(progress.toFixed(0)+"% "+results);
+
+        //check status. if failed, return the progress obj.
+        if(data.workflow_state=="failed")
+            return data;
         
         if(progress>50)
         {

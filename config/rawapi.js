@@ -3,6 +3,435 @@
  * @author hye@cedarville.edu (Haisong Ye) 
  */
 const RAWCANVASAPIS = {
+  "api_token_scopes": [
+    {
+      "display_name": "List scopes",
+      "controller": "api_token_scopes",
+      "description": "A list of scopes that can be applied to developer keys and access tokens.",
+      "name": "list_scopes",
+      "endpoint": "GET /v1/accounts/:account_id/scopes",
+      "reference": "https://canvas.instructure.com/doc/api/api_token_scopes.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "group_by",
+          "type": "string",
+          "default_value": "",
+          "desc": "The attribute to group the scopes by. By default no grouping is done.",
+          "example": [
+            "resource_name"
+          ]
+        }
+      ]
+    }
+  ],
+  "account_domain_lookups": [
+    {
+      "display_name": "Search account domains",
+      "controller": "account_domain_lookups",
+      "description": "Returns a list of up to 5 matching account domains\n\nPartial match on name / domain are supported",
+      "name": "search_account_domains",
+      "endpoint": "GET /v1/accounts/search",
+      "reference": "https://canvas.instructure.com/doc/api/account_domain_lookups.html",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "default_value": "",
+          "desc": "campus name",
+          "example": ""
+        },
+        {
+          "name": "domain",
+          "type": "string",
+          "default_value": "",
+          "desc": "no description",
+          "example": ""
+        },
+        {
+          "name": "latitude",
+          "type": "number",
+          "default_value": "",
+          "desc": "no description",
+          "example": ""
+        },
+        {
+          "name": "longitude",
+          "type": "number",
+          "default_value": "",
+          "desc": "no description",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "account_notifications": [
+    {
+      "display_name": "Index of active global notification for the user",
+      "controller": "account_notifications",
+      "description": "Returns a list of all global notifications in the account for the current user\nAny notifications that have been closed by the user will not be returned, unless\na include_past parameter is passed in as true.",
+      "name": "index_of_active_global_notification_for_user",
+      "endpoint": "GET /v1/accounts/:account_id/account_notifications",
+      "reference": "https://canvas.instructure.com/doc/api/account_notifications.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "include_past",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Include past and dismissed global announcements.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Show a global notification",
+      "controller": "account_notifications",
+      "description": "Returns a global notification for the current user\nA notification that has been closed by the user will not be returned",
+      "name": "show_global_notification",
+      "endpoint": "GET /v1/accounts/:account_id/account_notifications/:id",
+      "reference": "https://canvas.instructure.com/doc/api/account_notifications.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Close notification for user",
+      "controller": "account_notifications",
+      "description": "If the current user no long wants to see this notification it can be excused with this call",
+      "name": "close_notification_for_user",
+      "endpoint": "DELETE /v1/accounts/:account_id/account_notifications/:id",
+      "reference": "https://canvas.instructure.com/doc/api/account_notifications.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Create a global notification",
+      "controller": "account_notifications",
+      "description": "Create and return a new global notification for an account.",
+      "name": "create_global_notification",
+      "endpoint": "POST /v1/accounts/:account_id/account_notifications",
+      "reference": "https://canvas.instructure.com/doc/api/account_notifications.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "account_notification.subject",
+          "type": "string",
+          "default_value": "",
+          "desc": "The subject of the notification.",
+          "example": ""
+        },
+        {
+          "name": "account_notification.message",
+          "type": "string",
+          "default_value": "",
+          "desc": "The message body of the notification.",
+          "example": ""
+        },
+        {
+          "name": "account_notification.start_at",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "The start date and time of the notification in ISO8601 format.\ne.g. 2014-01-01T01:00Z",
+          "example": ""
+        },
+        {
+          "name": "account_notification.end_at",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "The end date and time of the notification in ISO8601 format.\ne.g. 2014-01-01T01:00Z",
+          "example": ""
+        },
+        {
+          "name": "account_notification.icon",
+          "type": "string",
+          "default_value": "",
+          "desc": "The icon to display with the notification.\nNote: Defaults to warning.",
+          "example": [
+            "warning",
+            "information",
+            "question",
+            "error",
+            "calendar"
+          ]
+        },
+        {
+          "name": "account_notification_roles[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The role(s) to send global notification to.  Note:  ommitting this field will send to everyone\nExample:\n  account_notification_roles: [\"StudentEnrollment\", \"TeacherEnrollment\"]",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Update a global notification",
+      "controller": "account_notifications",
+      "description": "Update global notification for an account.",
+      "name": "update_global_notification",
+      "endpoint": "PUT /v1/accounts/:account_id/account_notifications/:id",
+      "reference": "https://canvas.instructure.com/doc/api/account_notifications.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "account_notification.subject",
+          "type": "string",
+          "default_value": "",
+          "desc": "The subject of the notification.",
+          "example": ""
+        },
+        {
+          "name": "account_notification.message",
+          "type": "string",
+          "default_value": "",
+          "desc": "The message body of the notification.",
+          "example": ""
+        },
+        {
+          "name": "account_notification.start_at",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "The start date and time of the notification in ISO8601 format.\ne.g. 2014-01-01T01:00Z",
+          "example": ""
+        },
+        {
+          "name": "account_notification.end_at",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "The end date and time of the notification in ISO8601 format.\ne.g. 2014-01-01T01:00Z",
+          "example": ""
+        },
+        {
+          "name": "account_notification.icon",
+          "type": "string",
+          "default_value": "",
+          "desc": "The icon to display with the notification.",
+          "example": [
+            "warning",
+            "information",
+            "question",
+            "error",
+            "calendar"
+          ]
+        },
+        {
+          "name": "account_notification_roles[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The role(s) to send global notification to.  Note:  ommitting this field will send to everyone\nExample:\n  account_notification_roles: [\"StudentEnrollment\", \"TeacherEnrollment\"]",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "account_reports": [
+    {
+      "display_name": "List Available Reports",
+      "controller": "account_reports",
+      "description": "Returns a paginated list of reports for the current context.",
+      "name": "list_available_reports",
+      "endpoint": "GET /v1/accounts/:account_id/reports",
+      "reference": "https://canvas.instructure.com/doc/api/account_reports.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Start a Report",
+      "controller": "account_reports",
+      "description": "Generates a report instance for the account. Note that \"report\" in the\nrequest must match one of the available report names. To fetch a list of\navailable report names and parameters for each report (including whether or\nnot those parameters are required), see\n{api:AccountReportsController#available_reports List Available Reports}.",
+      "name": "start_report",
+      "endpoint": "POST /v1/accounts/:account_id/reports/:report",
+      "reference": "https://canvas.instructure.com/doc/api/account_reports.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "report",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "parameters",
+          "type": "string",
+          "default_value": "",
+          "desc": "The parameters will vary for each report. To fetch a list\nof available parameters for each report, see {api:AccountReportsController#available_reports List Available Reports}.\nA few example parameters have been provided below. Note that the example\nparameters provided below may not be valid for every report.",
+          "example": ""
+        },
+        {
+          "name": "parameters.course_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The id of the course to report on.\nNote: this parameter has been listed to serve as an example and may not be\nvalid for every report.",
+          "example": ""
+        },
+        {
+          "name": "parameters.users",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "If true, user data will be included. If\nfalse, user data will be omitted. Note: this parameter has been listed to\nserve as an example and may not be valid for every report.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Index of Reports",
+      "controller": "account_reports",
+      "description": "Shows all reports that have been run for the account of a specific type.",
+      "name": "index_of_reports",
+      "endpoint": "GET /v1/accounts/:account_id/reports/:report",
+      "reference": "https://canvas.instructure.com/doc/api/account_reports.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "report",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Status of a Report",
+      "controller": "account_reports",
+      "description": "Returns the status of a report.",
+      "name": "status_of_report",
+      "endpoint": "GET /v1/accounts/:account_id/reports/:report/:id",
+      "reference": "https://canvas.instructure.com/doc/api/account_reports.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "report",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Delete a Report",
+      "controller": "account_reports",
+      "description": "Deletes a generated report instance.",
+      "name": "delete_report",
+      "endpoint": "DELETE /v1/accounts/:account_id/reports/:report/:id",
+      "reference": "https://canvas.instructure.com/doc/api/account_reports.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "report",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    }
+  ],
   "accounts": [
     {
       "display_name": "List accounts",
@@ -574,6 +1003,25 @@ const RAWCANVASAPIS = {
       ]
     }
   ],
+  "accounts_(lti)": [
+    {
+      "display_name": "Get account",
+      "controller": "accounts_(lti)",
+      "description": "Retrieve information on an individual account, given by local or global ID.",
+      "name": "get_account",
+      "endpoint": "GET /lti/accounts/:account_id",
+      "reference": "https://canvas.instructure.com/doc/api/accounts_(lti).html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    }
+  ],
   "admins": [
     {
       "display_name": "Make an account admin",
@@ -1012,6 +1460,174 @@ const RAWCANVASAPIS = {
       ]
     }
   ],
+  "announcement_external_feeds": [
+    {
+      "display_name": "List external feeds",
+      "controller": "announcement_external_feeds",
+      "description": "Returns the paginated list of External Feeds this course or group.",
+      "name": "list_external_feeds_courses",
+      "endpoint": "GET /v1/courses/:course_id/external_feeds",
+      "reference": "https://canvas.instructure.com/doc/api/announcement_external_feeds.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List external feeds",
+      "controller": "announcement_external_feeds",
+      "description": "Returns the paginated list of External Feeds this course or group.",
+      "name": "list_external_feeds_groups",
+      "endpoint": "GET /v1/groups/:group_id/external_feeds",
+      "reference": "https://canvas.instructure.com/doc/api/announcement_external_feeds.html",
+      "params": [
+        {
+          "name": "group_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Create an external feed",
+      "controller": "announcement_external_feeds",
+      "description": "Create a new external feed for the course or group.",
+      "name": "create_external_feed_courses",
+      "endpoint": "POST /v1/courses/:course_id/external_feeds",
+      "reference": "https://canvas.instructure.com/doc/api/announcement_external_feeds.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The url to the external rss or atom feed",
+          "example": ""
+        },
+        {
+          "name": "header_match",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "If given, only feed entries that contain this string in their title will be imported",
+          "example": ""
+        },
+        {
+          "name": "verbosity",
+          "type": "string",
+          "default_value": "",
+          "desc": "Defaults to \"full\"",
+          "example": [
+            "full",
+            "truncate",
+            "link_only"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Create an external feed",
+      "controller": "announcement_external_feeds",
+      "description": "Create a new external feed for the course or group.",
+      "name": "create_external_feed_groups",
+      "endpoint": "POST /v1/groups/:group_id/external_feeds",
+      "reference": "https://canvas.instructure.com/doc/api/announcement_external_feeds.html",
+      "params": [
+        {
+          "name": "group_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The url to the external rss or atom feed",
+          "example": ""
+        },
+        {
+          "name": "header_match",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "If given, only feed entries that contain this string in their title will be imported",
+          "example": ""
+        },
+        {
+          "name": "verbosity",
+          "type": "string",
+          "default_value": "",
+          "desc": "Defaults to \"full\"",
+          "example": [
+            "full",
+            "truncate",
+            "link_only"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Delete an external feed",
+      "controller": "announcement_external_feeds",
+      "description": "Deletes the external feed.",
+      "name": "delete_external_feed_courses",
+      "endpoint": "DELETE /v1/courses/:course_id/external_feeds/:external_feed_id",
+      "reference": "https://canvas.instructure.com/doc/api/announcement_external_feeds.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "external_feed_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Delete an external feed",
+      "controller": "announcement_external_feeds",
+      "description": "Deletes the external feed.",
+      "name": "delete_external_feed_groups",
+      "endpoint": "DELETE /v1/groups/:group_id/external_feeds/:external_feed_id",
+      "reference": "https://canvas.instructure.com/doc/api/announcement_external_feeds.html",
+      "params": [
+        {
+          "name": "group_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "external_feed_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    }
+  ],
   "announcements": [
     {
       "display_name": "List announcements",
@@ -1054,6 +1670,421 @@ const RAWCANVASAPIS = {
           "type": "array",
           "default_value": "",
           "desc": "Optional list of resources to include with the response. May include\na string of the name of the resource. Possible values are:\n\"sections\", \"sections_user_count\"\nif \"sections\" is passed, includes the course sections that are associated\nwith the topic, if the topic is specific to certain sections of the course.\nIf \"sections_user_count\" is passed, then:\n  (a) If sections were asked for *and* the topic is specific to certain\n      course sections sections, includes the number of users in each\n      section. (as part of the section json asked for above)\n  (b) Else, includes at the root level the total number of users in the\n      topic's context (group or course) that the topic applies to.",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "appointment_groups": [
+    {
+      "display_name": "List appointment groups",
+      "controller": "appointment_groups",
+      "description": "Retrieve the paginated list of appointment groups that can be reserved or\nmanaged by the current user.",
+      "name": "list_appointment_groups",
+      "endpoint": "GET /v1/appointment_groups",
+      "reference": "https://canvas.instructure.com/doc/api/appointment_groups.html",
+      "params": [
+        {
+          "name": "scope",
+          "type": "string",
+          "default_value": "",
+          "desc": "Defaults to \"reservable\"",
+          "example": [
+            "reservable",
+            "manageable"
+          ]
+        },
+        {
+          "name": "context_codes[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Array of context codes used to limit returned results.",
+          "example": ""
+        },
+        {
+          "name": "include_past_appointments",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Defaults to false. If true, includes past appointment groups",
+          "example": ""
+        },
+        {
+          "name": "include[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Array of additional information to include.\n\n\"appointments\":: calendar event time slots for this appointment group\n\"child_events\":: reservations of those time slots\n\"participant_count\":: number of reservations\n\"reserved_times\":: the event id, start time and end time of reservations\n                   the current user has made)\n\"all_context_codes\":: all context codes associated with this appointment group",
+          "example": [
+            "appointments",
+            "child_events",
+            "participant_count",
+            "reserved_times",
+            "all_context_codes"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Create an appointment group",
+      "controller": "appointment_groups",
+      "description": "Create and return a new appointment group. If new_appointments are\nspecified, the response will return a new_appointments array (same format\nas appointments array, see \"List appointment groups\" action)",
+      "name": "create_appointment_group",
+      "endpoint": "POST /v1/appointment_groups",
+      "reference": "https://canvas.instructure.com/doc/api/appointment_groups.html",
+      "params": [
+        {
+          "name": "appointment_group.context_codes[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Array of context codes (courses, e.g. course_1) this group should be\nlinked to (1 or more). Users in the course(s) with appropriate permissions\nwill be able to sign up for this appointment group.",
+          "example": ""
+        },
+        {
+          "name": "appointment_group.sub_context_codes[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Array of sub context codes (course sections or a single group category)\nthis group should be linked to. Used to limit the appointment group to\nparticular sections. If a group category is specified, students will sign\nup in groups and the participant_type will be \"Group\" instead of \"User\".",
+          "example": ""
+        },
+        {
+          "name": "appointment_group.title",
+          "type": "string",
+          "default_value": "",
+          "desc": "Short title for the appointment group.",
+          "example": ""
+        },
+        {
+          "name": "appointment_group.description",
+          "type": "string",
+          "default_value": "",
+          "desc": "Longer text description of the appointment group.",
+          "example": ""
+        },
+        {
+          "name": "appointment_group.location_name",
+          "type": "string",
+          "default_value": "",
+          "desc": "Location name of the appointment group.",
+          "example": ""
+        },
+        {
+          "name": "appointment_group.location_address",
+          "type": "string",
+          "default_value": "",
+          "desc": "Location address.",
+          "example": ""
+        },
+        {
+          "name": "appointment_group.publish",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Indicates whether this appointment group should be published (i.e. made\navailable for signup). Once published, an appointment group cannot be\nunpublished. Defaults to false.",
+          "example": ""
+        },
+        {
+          "name": "appointment_group.participants_per_appointment",
+          "type": "integer",
+          "default_value": "",
+          "desc": "Maximum number of participants that may register for each time slot.\nDefaults to null (no limit).",
+          "example": ""
+        },
+        {
+          "name": "appointment_group.min_appointments_per_participant",
+          "type": "integer",
+          "default_value": "",
+          "desc": "Minimum number of time slots a user must register for. If not set, users\ndo not need to sign up for any time slots.",
+          "example": ""
+        },
+        {
+          "name": "appointment_group.max_appointments_per_participant",
+          "type": "integer",
+          "default_value": "",
+          "desc": "Maximum number of time slots a user may register for.",
+          "example": ""
+        },
+        {
+          "name": "appointment_group.new_appointments.X[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Nested array of start time/end time pairs indicating time slots for this\nappointment group. Refer to the example request.",
+          "example": ""
+        },
+        {
+          "name": "appointment_group.participant_visibility",
+          "type": "string",
+          "default_value": "",
+          "desc": "\"private\":: participants cannot see who has signed up for a particular\n            time slot\n\"protected\":: participants can see who has signed up.  Defaults to\n              \"private\".",
+          "example": [
+            "private",
+            "protected"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Get a single appointment group",
+      "controller": "appointment_groups",
+      "description": "Returns information for a single appointment group",
+      "name": "get_single_appointment_group",
+      "endpoint": "GET /v1/appointment_groups/:id",
+      "reference": "https://canvas.instructure.com/doc/api/appointment_groups.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "include[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Array of additional information to include. See include[] argument of\n\"List appointment groups\" action.\n\n\"child_events\":: reservations of time slots time slots\n\"appointments\":: will always be returned\n\"all_context_codes\":: all context codes associated with this appointment group",
+          "example": [
+            "child_events",
+            "appointments",
+            "all_context_codes"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Update an appointment group",
+      "controller": "appointment_groups",
+      "description": "Update and return an appointment group. If new_appointments are specified,\nthe response will return a new_appointments array (same format as\nappointments array, see \"List appointment groups\" action).",
+      "name": "update_appointment_group",
+      "endpoint": "PUT /v1/appointment_groups/:id",
+      "reference": "https://canvas.instructure.com/doc/api/appointment_groups.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "appointment_group.context_codes[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Array of context codes (courses, e.g. course_1) this group should be\nlinked to (1 or more). Users in the course(s) with appropriate permissions\nwill be able to sign up for this appointment group.",
+          "example": ""
+        },
+        {
+          "name": "appointment_group.sub_context_codes[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Array of sub context codes (course sections or a single group category)\nthis group should be linked to. Used to limit the appointment group to\nparticular sections. If a group category is specified, students will sign\nup in groups and the participant_type will be \"Group\" instead of \"User\".",
+          "example": ""
+        },
+        {
+          "name": "appointment_group.title",
+          "type": "string",
+          "default_value": "",
+          "desc": "Short title for the appointment group.",
+          "example": ""
+        },
+        {
+          "name": "appointment_group.description",
+          "type": "string",
+          "default_value": "",
+          "desc": "Longer text description of the appointment group.",
+          "example": ""
+        },
+        {
+          "name": "appointment_group.location_name",
+          "type": "string",
+          "default_value": "",
+          "desc": "Location name of the appointment group.",
+          "example": ""
+        },
+        {
+          "name": "appointment_group.location_address",
+          "type": "string",
+          "default_value": "",
+          "desc": "Location address.",
+          "example": ""
+        },
+        {
+          "name": "appointment_group.publish",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Indicates whether this appointment group should be published (i.e. made\navailable for signup). Once published, an appointment group cannot be\nunpublished. Defaults to false.",
+          "example": ""
+        },
+        {
+          "name": "appointment_group.participants_per_appointment",
+          "type": "integer",
+          "default_value": "",
+          "desc": "Maximum number of participants that may register for each time slot.\nDefaults to null (no limit).",
+          "example": ""
+        },
+        {
+          "name": "appointment_group.min_appointments_per_participant",
+          "type": "integer",
+          "default_value": "",
+          "desc": "Minimum number of time slots a user must register for. If not set, users\ndo not need to sign up for any time slots.",
+          "example": ""
+        },
+        {
+          "name": "appointment_group.max_appointments_per_participant",
+          "type": "integer",
+          "default_value": "",
+          "desc": "Maximum number of time slots a user may register for.",
+          "example": ""
+        },
+        {
+          "name": "appointment_group.new_appointments.X[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Nested array of start time/end time pairs indicating time slots for this\nappointment group. Refer to the example request.",
+          "example": ""
+        },
+        {
+          "name": "appointment_group.participant_visibility",
+          "type": "string",
+          "default_value": "",
+          "desc": "\"private\":: participants cannot see who has signed up for a particular\n            time slot\n\"protected\":: participants can see who has signed up. Defaults to \"private\".",
+          "example": [
+            "private",
+            "protected"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Delete an appointment group",
+      "controller": "appointment_groups",
+      "description": "Delete an appointment group (and associated time slots and reservations)\nand return the deleted group",
+      "name": "delete_appointment_group",
+      "endpoint": "DELETE /v1/appointment_groups/:id",
+      "reference": "https://canvas.instructure.com/doc/api/appointment_groups.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "cancel_reason",
+          "type": "string",
+          "default_value": "",
+          "desc": "Reason for deleting/canceling the appointment group.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List user participants",
+      "controller": "appointment_groups",
+      "description": "A paginated list of users that are (or may be) participating in this\nappointment group.  Refer to the Users API for the response fields. Returns\nno results for appointment groups with the \"Group\" participant_type.",
+      "name": "list_user_participants",
+      "endpoint": "GET /v1/appointment_groups/:id/users",
+      "reference": "https://canvas.instructure.com/doc/api/appointment_groups.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "registration_status",
+          "type": "string",
+          "default_value": "",
+          "desc": "Limits results to the a given participation status, defaults to \"all\"",
+          "example": [
+            "all",
+            "registered",
+            "registered"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "List student group participants",
+      "controller": "appointment_groups",
+      "description": "A paginated list of student groups that are (or may be) participating in\nthis appointment group. Refer to the Groups API for the response fields.\nReturns no results for appointment groups with the \"User\" participant_type.",
+      "name": "list_student_group_participants",
+      "endpoint": "GET /v1/appointment_groups/:id/groups",
+      "reference": "https://canvas.instructure.com/doc/api/appointment_groups.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "registration_status",
+          "type": "string",
+          "default_value": "",
+          "desc": "Limits results to the a given participation status, defaults to \"all\"",
+          "example": [
+            "all",
+            "registered",
+            "registered"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Get next appointment",
+      "controller": "appointment_groups",
+      "description": "Return the next appointment available to sign up for. The appointment\nis returned in a one-element array. If no future appointments are\navailable, an empty array is returned.",
+      "name": "get_next_appointment",
+      "endpoint": "GET /v1/appointment_groups/next_appointment",
+      "reference": "https://canvas.instructure.com/doc/api/appointment_groups.html",
+      "params": [
+        {
+          "name": "appointment_group_ids[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "List of ids of appointment groups to search.",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "assignment_extensions": [
+    {
+      "display_name": "Set extensions for student assignment submissions",
+      "controller": "assignment_extensions",
+      "description": "<b>Responses</b>\n\n* <b>200 OK</b> if the request was successful\n* <b>403 Forbidden</b> if you are not allowed to extend assignments for this course\n* <b>400 Bad Request</b> if any of the extensions are invalid",
+      "name": "set_extensions_for_student_assignment_submissions",
+      "endpoint": "POST /v1/courses/:course_id/assignments/:assignment_id/extensions",
+      "reference": "https://canvas.instructure.com/doc/api/assignment_extensions.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "assignment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "assignment_extensions.user_id[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The ID of the user we want to add assignment extensions for.",
+          "example": ""
+        },
+        {
+          "name": "assignment_extensions.extra_attempts[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Number of times the student is allowed to re-take the assignment over the\nlimit.",
           "example": ""
         }
       ]
@@ -2583,6 +3614,243 @@ const RAWCANVASAPIS = {
       ]
     }
   ],
+  "authentication_providers": [
+    {
+      "display_name": "List authentication providers",
+      "controller": "authentication_providers",
+      "description": "Returns a paginated list of authentication providers",
+      "name": "list_authentication_providers",
+      "endpoint": "GET /v1/accounts/:account_id/authentication_providers",
+      "reference": "https://canvas.instructure.com/doc/api/authentication_providers.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Add authentication provider",
+      "controller": "authentication_providers",
+      "description": "Add external authentication provider(s) for the account.\nServices may be Apple, CAS, Facebook, GitHub, Google, LDAP, LinkedIn,\nMicrosoft, OpenID Connect, SAML, or Twitter.\n\nEach authentication provider is specified as a set of parameters as\ndescribed below. A provider specification must include an 'auth_type'\nparameter with a value of 'apple', 'canvas', 'cas', 'clever', 'facebook',\n'github', 'google', 'ldap', 'linkedin', 'microsoft', 'openid_connect',\n'saml', or 'twitter'. The other recognized parameters depend on this\nauth_type; unrecognized parameters are discarded. Provider specifications\nnot specifying a valid auth_type are ignored.\n\nYou can set the 'position' for any configuration. The config in the 1st position\nis considered the default. You can set 'jit_provisioning' for any configuration\nbesides Canvas.\n\nFor Apple, the additional recognized parameters are:\n\n- client_id [Required]\n\n  The developer\u2019s client identifier, as provided by WWDR. Not available if\n  configured globally for Canvas.\n\n- login_attribute [Optional]\n\n  The attribute to use to look up the user's login in Canvas. Either\n  'sub' (the default), or 'email'\n\n- federated_attributes [Optional]\n\n  See FederatedAttributesConfig. Valid provider attributes are 'email',\n  'firstName', 'lastName', and 'sub'.\n\nFor Canvas, the additional recognized parameter is:\n\n- self_registration\n\n  'all', 'none', or 'observer' - who is allowed to register as a new user\n\nFor CAS, the additional recognized parameters are:\n\n- auth_base\n\n  The CAS server's URL.\n\n- log_in_url [Optional]\n\n  An alternate SSO URL for logging into CAS. You probably should not set\n  this.\n\nFor Clever, the additional recognized parameters are:\n\n- client_id [Required]\n\n  The Clever application's Client ID. Not available if configured globally\n  for Canvas.\n\n- client_secret [Required]\n\n  The Clever application's Client Secret. Not available if configured\n  globally for Canvas.\n\n- district_id [Optional]\n\n  A district's Clever ID. Leave this blank to let Clever handle the details\n  with its District Picker. This is required for Clever Instant Login to\n  work in a multi-tenant environment.\n\n- login_attribute [Optional]\n\n  The attribute to use to look up the user's login in Canvas. Either\n  'id' (the default), 'sis_id', 'email', 'student_number', or\n  'teacher_number'. Note that some fields may not be populated for\n  all users at Clever.\n\n- federated_attributes [Optional]\n\n  See FederatedAttributesConfig. Valid provider attributes are 'id',\n  'sis_id', 'email', 'student_number', and 'teacher_number'.\n\nFor Facebook, the additional recognized parameters are:\n\n- app_id [Required]\n\n  The Facebook App ID. Not available if configured globally for Canvas.\n\n- app_secret [Required]\n\n  The Facebook App Secret. Not available if configured globally for Canvas.\n\n- login_attribute [Optional]\n\n  The attribute to use to look up the user's login in Canvas. Either\n  'id' (the default), or 'email'\n\n- federated_attributes [Optional]\n\n  See FederatedAttributesConfig. Valid provider attributes are 'email',\n  'first_name', 'id', 'last_name', 'locale', and 'name'.\n\nFor GitHub, the additional recognized parameters are:\n\n- domain [Optional]\n\n  The domain of a GitHub Enterprise installation. I.e.\n  github.mycompany.com. If not set, it will default to the public\n  github.com.\n\n- client_id [Required]\n\n  The GitHub application's Client ID. Not available if configured globally\n  for Canvas.\n\n- client_secret [Required]\n\n  The GitHub application's Client Secret. Not available if configured\n  globally for Canvas.\n\n- login_attribute [Optional]\n\n  The attribute to use to look up the user's login in Canvas. Either\n  'id' (the default), or 'login'\n\n- federated_attributes [Optional]\n\n  See FederatedAttributesConfig. Valid provider attributes are 'email',\n  'id', 'login', and 'name'.\n\nFor Google, the additional recognized parameters are:\n\n- client_id [Required]\n\n  The Google application's Client ID. Not available if configured globally\n  for Canvas.\n\n- client_secret [Required]\n\n  The Google application's Client Secret. Not available if configured\n  globally for Canvas.\n\n- hosted_domain [Optional]\n\n  A Google Apps domain to restrict logins to. See\n  https://developers.google.com/identity/protocols/OpenIDConnect?hl=en#hd-param\n\n- login_attribute [Optional]\n\n  The attribute to use to look up the user's login in Canvas. Either\n  'sub' (the default), or 'email'\n\n- federated_attributes [Optional]\n\n  See FederatedAttributesConfig. Valid provider attributes are 'email',\n  'family_name', 'given_name', 'locale', 'name', and 'sub'.\n\nFor LDAP, the additional recognized parameters are:\n\n- auth_host\n\n  The LDAP server's URL.\n\n- auth_port [Optional, Integer]\n\n  The LDAP server's TCP port. (default: 389)\n\n- auth_over_tls [Optional]\n\n  Whether to use TLS. Can be 'simple_tls', or 'start_tls'. For backwards\n  compatibility, booleans are also accepted, with true meaning simple_tls.\n  If not provided, it will default to start_tls.\n\n- auth_base [Optional]\n\n  A default treebase parameter for searches performed against the LDAP\n  server.\n\n- auth_filter\n\n  LDAP search filter. Use !{{login}} as a placeholder for the username\n  supplied by the user. For example: \"(sAMAccountName=!{{login}})\".\n\n- identifier_format [Optional]\n\n  The LDAP attribute to use to look up the Canvas login. Omit to use\n  the username supplied by the user.\n\n- auth_username\n\n  Username\n\n- auth_password\n\n  Password\n\nFor LinkedIn, the additional recognized parameters are:\n\n- client_id [Required]\n\n  The LinkedIn application's Client ID. Not available if configured globally\n  for Canvas.\n\n- client_secret [Required]\n\n  The LinkedIn application's Client Secret. Not available if configured\n  globally for Canvas.\n\n- login_attribute [Optional]\n\n  The attribute to use to look up the user's login in Canvas. Either\n  'id' (the default), or 'emailAddress'\n\n- federated_attributes [Optional]\n\n  See FederatedAttributesConfig. Valid provider attributes are 'emailAddress',\n  'firstName', 'id', 'formattedName', and 'lastName'.\n\nFor Microsoft, the additional recognized parameters are:\n\n- application_id [Required]\n\n  The application's ID.\n\n- application_secret [Required]\n\n  The application's Client Secret (Password)\n\n- tenant [Optional]\n\n  See https://azure.microsoft.com/en-us/documentation/articles/active-directory-v2-protocols/\n  Valid values are 'common', 'organizations', 'consumers', or an Azure Active Directory Tenant\n  (as either a UUID or domain, such as contoso.onmicrosoft.com). Defaults to 'common'\n\n- login_attribute [Optional]\n\n  See https://azure.microsoft.com/en-us/documentation/articles/active-directory-v2-tokens/#idtokens\n  Valid values are 'sub', 'email', 'oid', or 'preferred_username'. Note\n  that email may not always be populated in the user's profile at\n  Microsoft. Oid will not be populated for personal Microsoft accounts.\n  Defaults to 'sub'\n\n- federated_attributes [Optional]\n\n  See FederatedAttributesConfig. Valid provider attributes are 'email',\n  'name', 'preferred_username', 'oid', and 'sub'.\n\nFor OpenID Connect, the additional recognized parameters are:\n\n- client_id [Required]\n\n  The application's Client ID.\n\n- client_secret [Required]\n\n  The application's Client Secret.\n\n- authorize_url [Required]\n\n  The URL for getting starting the OAuth 2.0 web flow\n\n- token_url [Required]\n\n  The URL for exchanging the OAuth 2.0 authorization code for an Access\n  Token and ID Token\n\n- scope [Optional]\n\n  Space separated additional scopes to request for the token. Note that\n  you need not specify the 'openid' scope, or any scopes that can be\n  automatically inferred by the rules defined at\n  http://openid.net/specs/openid-connect-core-1_0.html#ScopeClaims\n\n- end_session_endpoint [Optional]\n\n  URL to send the end user to after logging out of Canvas. See\n  https://openid.net/specs/openid-connect-session-1_0.html#RPLogout\n\n- userinfo_endpoint [Optional]\n\n  URL to request additional claims from. If the initial ID Token received\n  from the provider cannot be used to satisfy the login_attribute and\n  all federated_attributes, this endpoint will be queried for additional\n  information.\n\n- login_attribute [Optional]\n\n  The attribute of the ID Token to look up the user's login in Canvas.\n  Defaults to 'sub'.\n\n- federated_attributes [Optional]\n\n  See FederatedAttributesConfig. Any value is allowed for the provider\n  attribute names, but standard claims are listed at\n  http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims\n\nFor SAML, the additional recognized parameters are:\n\n- metadata [Optional]\n\n  An XML document to parse as SAML metadata, and automatically populate idp_entity_id,\n  log_in_url, log_out_url, certificate_fingerprint, and identifier_format\n\n- metadata_uri [Optional]\n\n  A URI to download the SAML metadata from, and automatically populate idp_entity_id,\n  log_in_url, log_out_url, certificate_fingerprint, and identifier_format. This URI\n  will also be saved, and the metadata periodically refreshed, automatically. If\n  the metadata contains multiple entities, also supply idp_entity_id to distinguish\n  which one you want (otherwise the only entity in the metadata will be inferred).\n  If you provide the URI 'urn:mace:incommon' or 'http://ukfederation.org.uk',\n  the InCommon or UK Access Management Federation metadata aggregate, respectively,\n  will be used instead, and additional validation checks will happen (including\n  validating that the metadata has been properly signed with the\n  appropriate key).\n\n- idp_entity_id\n\n  The SAML IdP's entity ID\n\n- log_in_url\n\n  The SAML service's SSO target URL\n\n- log_out_url [Optional]\n\n  The SAML service's SLO target URL\n\n- certificate_fingerprint\n\n  The SAML service's certificate fingerprint.\n\n- identifier_format\n\n  The SAML service's identifier format. Must be one of:\n\n  - urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress\n  - urn:oasis:names:tc:SAML:2.0:nameid-format:entity\n  - urn:oasis:names:tc:SAML:2.0:nameid-format:kerberos\n  - urn:oasis:names:tc:SAML:2.0:nameid-format:persistent\n  - urn:oasis:names:tc:SAML:2.0:nameid-format:transient\n  - urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified\n  - urn:oasis:names:tc:SAML:1.1:nameid-format:WindowsDomainQualifiedName\n  - urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName\n\n- requested_authn_context [Optional]\n\n  The SAML AuthnContext\n\n- sig_alg [Optional]\n\n  If set, +AuthnRequest+, +LogoutRequest+, and +LogoutResponse+ messages\n  are signed with the corresponding algorithm. Supported algorithms are:\n\n  - {http://www.w3.org/2000/09/xmldsig#rsa-sha1}\n  - {http://www.w3.org/2001/04/xmldsig-more#rsa-sha256}\n\n  RSA-SHA1 and RSA-SHA256 are acceptable aliases.\n\n- federated_attributes [Optional]\n\n  See FederatedAttributesConfig. Any value is allowed for the provider attribute names.\n\nFor Twitter, the additional recognized parameters are:\n\n- consumer_key [Required]\n\n  The Twitter Consumer Key. Not available if configured globally for Canvas.\n\n- consumer_secret [Required]\n\n  The Twitter Consumer Secret. Not available if configured globally for Canvas.\n\n- login_attribute [Optional]\n\n  The attribute to use to look up the user's login in Canvas. Either\n  'user_id' (the default), or 'screen_name'\n\n- parent_registration [Optional] - DEPRECATED 2017-11-03\n\n  Accepts a boolean value, true designates the authentication service\n  for use on parent registrations.  Only one service can be selected\n  at a time so if set to true all others will be set to false\n\n- federated_attributes [Optional]\n\n  See FederatedAttributesConfig. Valid provider attributes are 'name',\n  'screen_name', 'time_zone', and 'user_id'.",
+      "name": "add_authentication_provider",
+      "endpoint": "POST /v1/accounts/:account_id/authentication_providers",
+      "reference": "https://canvas.instructure.com/doc/api/authentication_providers.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Update authentication provider",
+      "controller": "authentication_providers",
+      "description": "Update an authentication provider using the same options as the create endpoint.\nYou can not update an existing provider to a new authentication type.",
+      "name": "update_authentication_provider",
+      "endpoint": "PUT /v1/accounts/:account_id/authentication_providers/:id",
+      "reference": "https://canvas.instructure.com/doc/api/authentication_providers.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get authentication provider",
+      "controller": "authentication_providers",
+      "description": "Get the specified authentication provider",
+      "name": "get_authentication_provider",
+      "endpoint": "GET /v1/accounts/:account_id/authentication_providers/:id",
+      "reference": "https://canvas.instructure.com/doc/api/authentication_providers.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Delete authentication provider",
+      "controller": "authentication_providers",
+      "description": "Delete the config",
+      "name": "delete_authentication_provider",
+      "endpoint": "DELETE /v1/accounts/:account_id/authentication_providers/:id",
+      "reference": "https://canvas.instructure.com/doc/api/authentication_providers.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "show account auth settings",
+      "controller": "authentication_providers",
+      "description": "The way to get the current state of each account level setting\nthat's relevant to Single Sign On configuration\n\nYou can list the current state of each setting with \"update_sso_settings\"",
+      "name": "show_account_auth_settings",
+      "endpoint": "GET /v1/accounts/:account_id/sso_settings",
+      "reference": "https://canvas.instructure.com/doc/api/authentication_providers.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "update account auth settings",
+      "controller": "authentication_providers",
+      "description": "For various cases of mixed SSO configurations, you may need to set some\nconfiguration at the account level to handle the particulars of your\nsetup.\n\nThis endpoint accepts a PUT request to set several possible account\nsettings. All setting are optional on each request, any that are not\nprovided at all are simply retained as is.  Any that provide the key but\na null-ish value (blank string, null, undefined) will be UN-set.\n\nYou can list the current state of each setting with \"show_sso_settings\"",
+      "name": "update_account_auth_settings",
+      "endpoint": "PUT /v1/accounts/:account_id/sso_settings",
+      "reference": "https://canvas.instructure.com/doc/api/authentication_providers.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "authentications_log": [
+    {
+      "display_name": "Query by login.",
+      "controller": "authentications_log",
+      "description": "List authentication events for a given login.",
+      "name": "query_by_login",
+      "endpoint": "GET /v1/audit/authentication/logins/:login_id",
+      "reference": "https://canvas.instructure.com/doc/api/authentications_log.html",
+      "params": [
+        {
+          "name": "login_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "start_time",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "The beginning of the time range from which you want events.\nEvents are stored for one year.",
+          "example": ""
+        },
+        {
+          "name": "end_time",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "The end of the time range from which you want events.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Query by account.",
+      "controller": "authentications_log",
+      "description": "List authentication events for a given account.",
+      "name": "query_by_account",
+      "endpoint": "GET /v1/audit/authentication/accounts/:account_id",
+      "reference": "https://canvas.instructure.com/doc/api/authentications_log.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "start_time",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "The beginning of the time range from which you want events.\nEvents are stored for one year.",
+          "example": ""
+        },
+        {
+          "name": "end_time",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "The end of the time range from which you want events.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Query by user.",
+      "controller": "authentications_log",
+      "description": "List authentication events for a given user.",
+      "name": "query_by_user",
+      "endpoint": "GET /v1/audit/authentication/users/:user_id",
+      "reference": "https://canvas.instructure.com/doc/api/authentications_log.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "start_time",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "The beginning of the time range from which you want events.\nEvents are stored for one year.",
+          "example": ""
+        },
+        {
+          "name": "end_time",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "The end of the time range from which you want events.",
+          "example": ""
+        }
+      ]
+    }
+  ],
   "blueprint_courses": [
     {
       "display_name": "Get blueprint information",
@@ -2991,6 +4259,1376 @@ const RAWCANVASAPIS = {
           "default_value": "",
           "desc": "ID",
           "example": ""
+        }
+      ]
+    }
+  ],
+  "bookmarks": [
+    {
+      "display_name": "List bookmarks",
+      "controller": "bookmarks",
+      "description": "Returns the paginated list of bookmarks.",
+      "name": "list_bookmarks",
+      "endpoint": "GET /v1/users/self/bookmarks",
+      "reference": "https://canvas.instructure.com/doc/api/bookmarks.html",
+      "params": []
+    },
+    {
+      "display_name": "Create bookmark",
+      "controller": "bookmarks",
+      "description": "Creates a bookmark.",
+      "name": "create_bookmark",
+      "endpoint": "POST /v1/users/self/bookmarks",
+      "reference": "https://canvas.instructure.com/doc/api/bookmarks.html",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "default_value": "",
+          "desc": "The name of the bookmark",
+          "example": ""
+        },
+        {
+          "name": "url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The url of the bookmark",
+          "example": ""
+        },
+        {
+          "name": "position",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The position of the bookmark. Defaults to the bottom.",
+          "example": ""
+        },
+        {
+          "name": "data",
+          "type": "string",
+          "default_value": "",
+          "desc": "The data associated with the bookmark",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get bookmark",
+      "controller": "bookmarks",
+      "description": "Returns the details for a bookmark.",
+      "name": "get_bookmark",
+      "endpoint": "GET /v1/users/self/bookmarks/:id",
+      "reference": "https://canvas.instructure.com/doc/api/bookmarks.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Update bookmark",
+      "controller": "bookmarks",
+      "description": "Updates a bookmark",
+      "name": "update_bookmark",
+      "endpoint": "PUT /v1/users/self/bookmarks/:id",
+      "reference": "https://canvas.instructure.com/doc/api/bookmarks.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "default_value": "",
+          "desc": "The name of the bookmark",
+          "example": ""
+        },
+        {
+          "name": "url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The url of the bookmark",
+          "example": ""
+        },
+        {
+          "name": "position",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The position of the bookmark. Defaults to the bottom.",
+          "example": ""
+        },
+        {
+          "name": "data",
+          "type": "string",
+          "default_value": "",
+          "desc": "The data associated with the bookmark",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Delete bookmark",
+      "controller": "bookmarks",
+      "description": "Deletes a bookmark",
+      "name": "delete_bookmark",
+      "endpoint": "DELETE /v1/users/self/bookmarks/:id",
+      "reference": "https://canvas.instructure.com/doc/api/bookmarks.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "brand_configs": [
+    {
+      "display_name": "Get the brand config variables that should be used for this domain",
+      "controller": "brand_configs",
+      "description": "Will redirect to a static json file that has all of the brand\nvariables used by this account. Even though this is a redirect,\ndo not store the redirected url since if the account makes any changes\nit will redirect to a new url. Needs no authentication.",
+      "name": "get_brand_config_variables_that_should_be_used_for_this_domain",
+      "endpoint": "GET /v1/brand_variables",
+      "reference": "https://canvas.instructure.com/doc/api/brand_configs.html",
+      "params": []
+    }
+  ],
+  "calendar_events": [
+    {
+      "display_name": "List calendar events",
+      "controller": "calendar_events",
+      "description": "Retrieve the paginated list of calendar events or assignments for the current user",
+      "name": "list_calendar_events",
+      "endpoint": "GET /v1/calendar_events",
+      "reference": "https://canvas.instructure.com/doc/api/calendar_events.html",
+      "params": [
+        {
+          "name": "type",
+          "type": "string",
+          "default_value": "",
+          "desc": "Defaults to \"event\"",
+          "example": [
+            "event",
+            "assignment"
+          ]
+        },
+        {
+          "name": "start_date",
+          "type": "Date",
+          "default_value": "",
+          "desc": "Only return events since the start_date (inclusive).\nDefaults to today. The value should be formatted as: yyyy-mm-dd or ISO 8601 YYYY-MM-DDTHH:MM:SSZ.",
+          "example": ""
+        },
+        {
+          "name": "end_date",
+          "type": "Date",
+          "default_value": "",
+          "desc": "Only return events before the end_date (inclusive).\nDefaults to start_date. The value should be formatted as: yyyy-mm-dd or ISO 8601 YYYY-MM-DDTHH:MM:SSZ.\nIf end_date is the same as start_date, then only events on that day are\nreturned.",
+          "example": ""
+        },
+        {
+          "name": "undated",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Defaults to false (dated events only).\nIf true, only return undated events and ignore start_date and end_date.",
+          "example": ""
+        },
+        {
+          "name": "all_events",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Defaults to false (uses start_date, end_date, and undated criteria).\nIf true, all events are returned, ignoring start_date, end_date, and undated criteria.",
+          "example": ""
+        },
+        {
+          "name": "context_codes[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "List of context codes of courses/groups/users whose events you want to see.\nIf not specified, defaults to the current user (i.e personal calendar,\nno course/group events). Limited to 10 context codes, additional ones are\nignored. The format of this field is the context type, followed by an\nunderscore, followed by the context id. For example: course_42",
+          "example": ""
+        },
+        {
+          "name": "excludes[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Array of attributes to exclude. Possible values are \"description\", \"child_events\" and \"assignment\"",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List calendar events for a user",
+      "controller": "calendar_events",
+      "description": "Retrieve the paginated list of calendar events or assignments for the specified user.\nTo view calendar events for a user other than yourself,\nyou must either be an observer of that user or an administrator.",
+      "name": "list_calendar_events_for_user",
+      "endpoint": "GET /v1/users/:user_id/calendar_events",
+      "reference": "https://canvas.instructure.com/doc/api/calendar_events.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "default_value": "",
+          "desc": "Defaults to \"event\"",
+          "example": [
+            "event",
+            "assignment"
+          ]
+        },
+        {
+          "name": "start_date",
+          "type": "Date",
+          "default_value": "",
+          "desc": "Only return events since the start_date (inclusive).\nDefaults to today. The value should be formatted as: yyyy-mm-dd or ISO 8601 YYYY-MM-DDTHH:MM:SSZ.",
+          "example": ""
+        },
+        {
+          "name": "end_date",
+          "type": "Date",
+          "default_value": "",
+          "desc": "Only return events before the end_date (inclusive).\nDefaults to start_date. The value should be formatted as: yyyy-mm-dd or ISO 8601 YYYY-MM-DDTHH:MM:SSZ.\nIf end_date is the same as start_date, then only events on that day are\nreturned.",
+          "example": ""
+        },
+        {
+          "name": "undated",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Defaults to false (dated events only).\nIf true, only return undated events and ignore start_date and end_date.",
+          "example": ""
+        },
+        {
+          "name": "all_events",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Defaults to false (uses start_date, end_date, and undated criteria).\nIf true, all events are returned, ignoring start_date, end_date, and undated criteria.",
+          "example": ""
+        },
+        {
+          "name": "context_codes[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "List of context codes of courses/groups/users whose events you want to see.\nIf not specified, defaults to the current user (i.e personal calendar,\nno course/group events). Limited to 10 context codes, additional ones are\nignored. The format of this field is the context type, followed by an\nunderscore, followed by the context id. For example: course_42",
+          "example": ""
+        },
+        {
+          "name": "excludes[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Array of attributes to exclude. Possible values are \"description\", \"child_events\" and \"assignment\"",
+          "example": ""
+        },
+        {
+          "name": "submission_types[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "When type is \"assignment\", specifies the allowable submission types for returned assignments.\nIgnored if type is not \"assignment\" or if exclude_submission_types is provided.",
+          "example": ""
+        },
+        {
+          "name": "exclude_submission_types[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "When type is \"assignment\", specifies the submission types to be excluded from the returned\nassignments. Ignored if type is not \"assignment\".",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Create a calendar event",
+      "controller": "calendar_events",
+      "description": "Create and return a new calendar event",
+      "name": "create_calendar_event",
+      "endpoint": "POST /v1/calendar_events",
+      "reference": "https://canvas.instructure.com/doc/api/calendar_events.html",
+      "params": [
+        {
+          "name": "calendar_event.context_code",
+          "type": "string",
+          "default_value": "",
+          "desc": "Context code of the course/group/user whose calendar this event should be\nadded to.",
+          "example": ""
+        },
+        {
+          "name": "calendar_event.title",
+          "type": "string",
+          "default_value": "",
+          "desc": "Short title for the calendar event.",
+          "example": ""
+        },
+        {
+          "name": "calendar_event.description",
+          "type": "string",
+          "default_value": "",
+          "desc": "Longer HTML description of the event.",
+          "example": ""
+        },
+        {
+          "name": "calendar_event.start_at",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "Start date/time of the event.",
+          "example": ""
+        },
+        {
+          "name": "calendar_event.end_at",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "End date/time of the event.",
+          "example": ""
+        },
+        {
+          "name": "calendar_event.location_name",
+          "type": "string",
+          "default_value": "",
+          "desc": "Location name of the event.",
+          "example": ""
+        },
+        {
+          "name": "calendar_event.location_address",
+          "type": "string",
+          "default_value": "",
+          "desc": "Location address",
+          "example": ""
+        },
+        {
+          "name": "calendar_event.time_zone_edited",
+          "type": "string",
+          "default_value": "",
+          "desc": "Time zone of the user editing the event. Allowed time zones are\n{http://www.iana.org/time-zones IANA time zones} or friendlier\n{http://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html Ruby on Rails time zones}.",
+          "example": ""
+        },
+        {
+          "name": "calendar_event.all_day",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "When true event is considered to span the whole day and times are ignored.",
+          "example": ""
+        },
+        {
+          "name": "calendar_event.child_event_data.X.start_at",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "Section-level start time(s) if this is a course event. X can be any\nidentifier, provided that it is consistent across the start_at, end_at\nand context_code",
+          "example": ""
+        },
+        {
+          "name": "calendar_event.child_event_data.X.end_at",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "Section-level end time(s) if this is a course event.",
+          "example": ""
+        },
+        {
+          "name": "calendar_event.child_event_data.X.context_code",
+          "type": "string",
+          "default_value": "",
+          "desc": "Context code(s) corresponding to the section-level start and end time(s).",
+          "example": ""
+        },
+        {
+          "name": "calendar_event.duplicate.count",
+          "type": "number",
+          "default_value": "",
+          "desc": "Number of times to copy/duplicate the event.  Count cannot exceed 200.",
+          "example": ""
+        },
+        {
+          "name": "calendar_event.duplicate.interval",
+          "type": "number",
+          "default_value": "",
+          "desc": "Defaults to 1 if duplicate `count` is set.  The interval between the duplicated events.",
+          "example": ""
+        },
+        {
+          "name": "calendar_event.duplicate.frequency",
+          "type": "string",
+          "default_value": "",
+          "desc": "Defaults to \"weekly\".  The frequency at which to duplicate the event",
+          "example": [
+            "daily",
+            "weekly",
+            "monthly"
+          ]
+        },
+        {
+          "name": "calendar_event.duplicate.append_iterator",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Defaults to false.  If set to `true`, an increasing counter number will be appended to the event title\nwhen the event is duplicated.  (e.g. Event 1, Event 2, Event 3, etc)",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get a single calendar event or assignment",
+      "controller": "calendar_events",
+      "description": "",
+      "name": "get_single_calendar_event_or_assignment",
+      "endpoint": "GET /v1/calendar_events/:id",
+      "reference": "https://canvas.instructure.com/doc/api/calendar_events.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Reserve a time slot",
+      "controller": "calendar_events",
+      "description": "Reserves a particular time slot and return the new reservation",
+      "name": "reserve_time_slot",
+      "endpoint": "POST /v1/calendar_events/:id/reservations",
+      "reference": "https://canvas.instructure.com/doc/api/calendar_events.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "participant_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "User or group id for whom you are making the reservation (depends on the\nparticipant type). Defaults to the current user (or user's candidate group).",
+          "example": ""
+        },
+        {
+          "name": "comments",
+          "type": "string",
+          "default_value": "",
+          "desc": "Comments to associate with this reservation",
+          "example": ""
+        },
+        {
+          "name": "cancel_existing",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Defaults to false. If true, cancel any previous reservation(s) for this\nparticipant and appointment group.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Reserve a time slot",
+      "controller": "calendar_events",
+      "description": "Reserves a particular time slot and return the new reservation",
+      "name": "reserve_time_slot_participant_id",
+      "endpoint": "POST /v1/calendar_events/:id/reservations/:participant_id",
+      "reference": "https://canvas.instructure.com/doc/api/calendar_events.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "participant_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "User or group id for whom you are making the reservation (depends on the\nparticipant type). Defaults to the current user (or user's candidate group).",
+          "example": ""
+        },
+        {
+          "name": "comments",
+          "type": "string",
+          "default_value": "",
+          "desc": "Comments to associate with this reservation",
+          "example": ""
+        },
+        {
+          "name": "cancel_existing",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Defaults to false. If true, cancel any previous reservation(s) for this\nparticipant and appointment group.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Update a calendar event",
+      "controller": "calendar_events",
+      "description": "Update and return a calendar event",
+      "name": "update_calendar_event",
+      "endpoint": "PUT /v1/calendar_events/:id",
+      "reference": "https://canvas.instructure.com/doc/api/calendar_events.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "calendar_event.context_code",
+          "type": "string",
+          "default_value": "",
+          "desc": "Context code of the course/group/user to move this event to.\nScheduler appointments and events with section-specific times cannot be moved between calendars.",
+          "example": ""
+        },
+        {
+          "name": "calendar_event.title",
+          "type": "string",
+          "default_value": "",
+          "desc": "Short title for the calendar event.",
+          "example": ""
+        },
+        {
+          "name": "calendar_event.description",
+          "type": "string",
+          "default_value": "",
+          "desc": "Longer HTML description of the event.",
+          "example": ""
+        },
+        {
+          "name": "calendar_event.start_at",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "Start date/time of the event.",
+          "example": ""
+        },
+        {
+          "name": "calendar_event.end_at",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "End date/time of the event.",
+          "example": ""
+        },
+        {
+          "name": "calendar_event.location_name",
+          "type": "string",
+          "default_value": "",
+          "desc": "Location name of the event.",
+          "example": ""
+        },
+        {
+          "name": "calendar_event.location_address",
+          "type": "string",
+          "default_value": "",
+          "desc": "Location address",
+          "example": ""
+        },
+        {
+          "name": "calendar_event.time_zone_edited",
+          "type": "string",
+          "default_value": "",
+          "desc": "Time zone of the user editing the event. Allowed time zones are\n{http://www.iana.org/time-zones IANA time zones} or friendlier\n{http://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html Ruby on Rails time zones}.",
+          "example": ""
+        },
+        {
+          "name": "calendar_event.all_day",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "When true event is considered to span the whole day and times are ignored.",
+          "example": ""
+        },
+        {
+          "name": "calendar_event.child_event_data.X.start_at",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "Section-level start time(s) if this is a course event. X can be any\nidentifier, provided that it is consistent across the start_at, end_at\nand context_code",
+          "example": ""
+        },
+        {
+          "name": "calendar_event.child_event_data.X.end_at",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "Section-level end time(s) if this is a course event.",
+          "example": ""
+        },
+        {
+          "name": "calendar_event.child_event_data.X.context_code",
+          "type": "string",
+          "default_value": "",
+          "desc": "Context code(s) corresponding to the section-level start and end time(s).",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Delete a calendar event",
+      "controller": "calendar_events",
+      "description": "Delete an event from the calendar and return the deleted event",
+      "name": "delete_calendar_event",
+      "endpoint": "DELETE /v1/calendar_events/:id",
+      "reference": "https://canvas.instructure.com/doc/api/calendar_events.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "cancel_reason",
+          "type": "string",
+          "default_value": "",
+          "desc": "Reason for deleting/canceling the event.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Set a course timetable",
+      "controller": "calendar_events",
+      "description": "Creates and updates \"timetable\" events for a course.\nCan automaticaly generate a series of calendar events based on simple schedules\n(e.g. \"Monday and Wednesday at 2:00pm\" )\n\nExisting timetable events for the course and course sections\nwill be updated if they still are part of the timetable.\nOtherwise, they will be deleted.",
+      "name": "set_course_timetable",
+      "endpoint": "POST /v1/courses/:course_id/calendar_events/timetable",
+      "reference": "https://canvas.instructure.com/doc/api/calendar_events.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "timetables.course_section_id[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "An array of timetable objects for the course section specified by course_section_id.\nIf course_section_id is set to \"all\", events will be created for the entire course.",
+          "example": ""
+        },
+        {
+          "name": "timetables.course_section_id.weekdays[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "A comma-separated list of abbreviated weekdays\n(Mon-Monday, Tue-Tuesday, Wed-Wednesday, Thu-Thursday, Fri-Friday, Sat-Saturday, Sun-Sunday)",
+          "example": ""
+        },
+        {
+          "name": "timetables.course_section_id.start_time[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Time to start each event at (e.g. \"9:00 am\")",
+          "example": ""
+        },
+        {
+          "name": "timetables.course_section_id.end_time[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Time to end each event at (e.g. \"9:00 am\")",
+          "example": ""
+        },
+        {
+          "name": "timetables.course_section_id.location_name[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "A location name to set for each event",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get course timetable",
+      "controller": "calendar_events",
+      "description": "Returns the last timetable set by the\n{api:CalendarEventsApiController#set_course_timetable Set a course timetable} endpoint",
+      "name": "get_course_timetable",
+      "endpoint": "GET /v1/courses/:course_id/calendar_events/timetable",
+      "reference": "https://canvas.instructure.com/doc/api/calendar_events.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Create or update events directly for a course timetable",
+      "controller": "calendar_events",
+      "description": "Creates and updates \"timetable\" events for a course or course section.\nSimilar to {api:CalendarEventsApiController#set_course_timetable setting a course timetable},\nbut instead of generating a list of events based on a timetable schedule,\nthis endpoint expects a complete list of events.",
+      "name": "create_or_update_events_directly_for_course_timetable",
+      "endpoint": "POST /v1/courses/:course_id/calendar_events/timetable_events",
+      "reference": "https://canvas.instructure.com/doc/api/calendar_events.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "course_section_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "Events will be created for the course section specified by course_section_id.\nIf not present, events will be created for the entire course.",
+          "example": ""
+        },
+        {
+          "name": "events[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "An array of event objects to use.",
+          "example": ""
+        },
+        {
+          "name": "events.start_at[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Start time for the event",
+          "example": ""
+        },
+        {
+          "name": "events.end_at[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "End time for the event",
+          "example": ""
+        },
+        {
+          "name": "events.location_name[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Location name for the event",
+          "example": ""
+        },
+        {
+          "name": "events.code[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "A unique identifier that can be used to update the event at a later time\nIf one is not specified, an identifier will be generated based on the start and end times",
+          "example": ""
+        },
+        {
+          "name": "events.title[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Title for the meeting. If not present, will default to the associated course's name",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "collaborations": [
+    {
+      "display_name": "List collaborations",
+      "controller": "collaborations",
+      "description": "A paginated list of collaborations the current user has access to in the\ncontext of the course provided in the url. NOTE: this only returns\nExternalToolCollaboration type collaborations.\n\n  curl https://<canvas>/api/v1/courses/1/collaborations/",
+      "name": "list_collaborations_courses",
+      "endpoint": "GET /v1/courses/:course_id/collaborations",
+      "reference": "https://canvas.instructure.com/doc/api/collaborations.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List collaborations",
+      "controller": "collaborations",
+      "description": "A paginated list of collaborations the current user has access to in the\ncontext of the course provided in the url. NOTE: this only returns\nExternalToolCollaboration type collaborations.\n\n  curl https://<canvas>/api/v1/courses/1/collaborations/",
+      "name": "list_collaborations_groups",
+      "endpoint": "GET /v1/groups/:group_id/collaborations",
+      "reference": "https://canvas.instructure.com/doc/api/collaborations.html",
+      "params": [
+        {
+          "name": "group_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List members of a collaboration.",
+      "controller": "collaborations",
+      "description": "A paginated list of the collaborators of a given collaboration",
+      "name": "list_members_of_collaboration",
+      "endpoint": "GET /v1/collaborations/:id/members",
+      "reference": "https://canvas.instructure.com/doc/api/collaborations.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "include[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "- \"collaborator_lti_id\": Optional information to include with each member.\n  Represents an identifier to be used for the member in an LTI context.\n- \"avatar_image_url\": Optional information to include with each member.\n  The url for the avatar of a collaborator with type 'user'.",
+          "example": [
+            "collaborator_lti_id",
+            "avatar_image_url"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "List potential members",
+      "controller": "collaborations",
+      "description": "A paginated list of the users who can potentially be added to a\ncollaboration in the given context.\n\nFor courses, this consists of all enrolled users.  For groups, it is comprised of the\ngroup members plus the admins of the course containing the group.",
+      "name": "list_potential_members_courses",
+      "endpoint": "GET /v1/courses/:course_id/potential_collaborators",
+      "reference": "https://canvas.instructure.com/doc/api/collaborations.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List potential members",
+      "controller": "collaborations",
+      "description": "A paginated list of the users who can potentially be added to a\ncollaboration in the given context.\n\nFor courses, this consists of all enrolled users.  For groups, it is comprised of the\ngroup members plus the admins of the course containing the group.",
+      "name": "list_potential_members_groups",
+      "endpoint": "GET /v1/groups/:group_id/potential_collaborators",
+      "reference": "https://canvas.instructure.com/doc/api/collaborations.html",
+      "params": [
+        {
+          "name": "group_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "comm_messages": [
+    {
+      "display_name": "List of CommMessages for a user",
+      "controller": "comm_messages",
+      "description": "Retrieve a paginated list of messages sent to a user.",
+      "name": "list_of_commmessages_for_user",
+      "endpoint": "GET /v1/comm_messages",
+      "reference": "https://canvas.instructure.com/doc/api/comm_messages.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The user id for whom you want to retrieve CommMessages",
+          "example": ""
+        },
+        {
+          "name": "start_time",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "The beginning of the time range you want to retrieve message from.\nUp to a year prior to the current date is available.",
+          "example": ""
+        },
+        {
+          "name": "end_time",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "The end of the time range you want to retrieve messages for.\nUp to a year prior to the current date is available.",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "communication_channels": [
+    {
+      "display_name": "List user communication channels",
+      "controller": "communication_channels",
+      "description": "Returns a paginated list of communication channels for the specified user,\nsorted by position.",
+      "name": "list_user_communication_channels",
+      "endpoint": "GET /v1/users/:user_id/communication_channels",
+      "reference": "https://canvas.instructure.com/doc/api/communication_channels.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Create a communication channel",
+      "controller": "communication_channels",
+      "description": "Creates a new communication channel for the specified user.",
+      "name": "create_communication_channel",
+      "endpoint": "POST /v1/users/:user_id/communication_channels",
+      "reference": "https://canvas.instructure.com/doc/api/communication_channels.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "communication_channel.address",
+          "type": "string",
+          "default_value": "",
+          "desc": "An email address or SMS number. Not required for \"push\" type channels.",
+          "example": ""
+        },
+        {
+          "name": "communication_channel.type",
+          "type": "string",
+          "default_value": "",
+          "desc": "The type of communication channel.\n\nIn order to enable push notification support, the server must be\nproperly configured (via sns.yml) to communicate with Amazon\nSimple Notification Services, and the developer key used to create\nthe access token from this request must have an SNS ARN configured on\nit.",
+          "example": [
+            "email",
+            "sms",
+            "push"
+          ]
+        },
+        {
+          "name": "communication_channel.token",
+          "type": "string",
+          "default_value": "",
+          "desc": "A registration id, device token, or equivalent token given to an app when\nregistering with a push notification provider. Only valid for \"push\" type channels.",
+          "example": ""
+        },
+        {
+          "name": "skip_confirmation",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Only valid for site admins and account admins making requests; If true, the channel is\nautomatically validated and no confirmation email or SMS is sent.\nOtherwise, the user must respond to a confirmation message to confirm the\nchannel.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Delete a communication channel",
+      "controller": "communication_channels",
+      "description": "Delete an existing communication channel.",
+      "name": "delete_communication_channel_id",
+      "endpoint": "DELETE /v1/users/:user_id/communication_channels/:id",
+      "reference": "https://canvas.instructure.com/doc/api/communication_channels.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Delete a communication channel",
+      "controller": "communication_channels",
+      "description": "Delete an existing communication channel.",
+      "name": "delete_communication_channel_type",
+      "endpoint": "DELETE /v1/users/:user_id/communication_channels/:type/:address",
+      "reference": "https://canvas.instructure.com/doc/api/communication_channels.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "address",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Delete a push notification endpoint",
+      "controller": "communication_channels",
+      "description": "",
+      "name": "delete_push_notification_endpoint",
+      "endpoint": "DELETE /v1/users/self/communication_channels/push",
+      "reference": "https://canvas.instructure.com/doc/api/communication_channels.html",
+      "params": []
+    }
+  ],
+  "conferences": [
+    {
+      "display_name": "List conferences",
+      "controller": "conferences",
+      "description": "Retrieve the paginated list of conferences for this context\n\nThis API returns a JSON object containing the list of conferences,\nthe key for the list of conferences is \"conferences\"",
+      "name": "list_conferences_courses",
+      "endpoint": "GET /v1/courses/:course_id/conferences",
+      "reference": "https://canvas.instructure.com/doc/api/conferences.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List conferences",
+      "controller": "conferences",
+      "description": "Retrieve the paginated list of conferences for this context\n\nThis API returns a JSON object containing the list of conferences,\nthe key for the list of conferences is \"conferences\"",
+      "name": "list_conferences_groups",
+      "endpoint": "GET /v1/groups/:group_id/conferences",
+      "reference": "https://canvas.instructure.com/doc/api/conferences.html",
+      "params": [
+        {
+          "name": "group_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List conferences for the current user",
+      "controller": "conferences",
+      "description": "Retrieve the paginated list of conferences for all courses and groups\nthe current user belongs to\n\nThis API returns a JSON object containing the list of conferences.\nThe key for the list of conferences is \"conferences\".",
+      "name": "list_conferences_for_current_user",
+      "endpoint": "GET /v1/conferences",
+      "reference": "https://canvas.instructure.com/doc/api/conferences.html",
+      "params": [
+        {
+          "name": "state",
+          "type": "string",
+          "default_value": "",
+          "desc": "If set to \"live\", returns only conferences that are live (i.e., have\nstarted and not finished yet). If omitted, returns all conferences for\nthis user's groups and courses.",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "content_exports": [
+    {
+      "display_name": "List content exports",
+      "controller": "content_exports",
+      "description": "A paginated list of the past and pending content export jobs for a course,\ngroup, or user. Exports are returned newest first.",
+      "name": "list_content_exports_courses",
+      "endpoint": "GET /v1/courses/:course_id/content_exports",
+      "reference": "https://canvas.instructure.com/doc/api/content_exports.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List content exports",
+      "controller": "content_exports",
+      "description": "A paginated list of the past and pending content export jobs for a course,\ngroup, or user. Exports are returned newest first.",
+      "name": "list_content_exports_groups",
+      "endpoint": "GET /v1/groups/:group_id/content_exports",
+      "reference": "https://canvas.instructure.com/doc/api/content_exports.html",
+      "params": [
+        {
+          "name": "group_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List content exports",
+      "controller": "content_exports",
+      "description": "A paginated list of the past and pending content export jobs for a course,\ngroup, or user. Exports are returned newest first.",
+      "name": "list_content_exports_users",
+      "endpoint": "GET /v1/users/:user_id/content_exports",
+      "reference": "https://canvas.instructure.com/doc/api/content_exports.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Show content export",
+      "controller": "content_exports",
+      "description": "Get information about a single content export.",
+      "name": "show_content_export_courses",
+      "endpoint": "GET /v1/courses/:course_id/content_exports/:id",
+      "reference": "https://canvas.instructure.com/doc/api/content_exports.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Show content export",
+      "controller": "content_exports",
+      "description": "Get information about a single content export.",
+      "name": "show_content_export_groups",
+      "endpoint": "GET /v1/groups/:group_id/content_exports/:id",
+      "reference": "https://canvas.instructure.com/doc/api/content_exports.html",
+      "params": [
+        {
+          "name": "group_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Show content export",
+      "controller": "content_exports",
+      "description": "Get information about a single content export.",
+      "name": "show_content_export_users",
+      "endpoint": "GET /v1/users/:user_id/content_exports/:id",
+      "reference": "https://canvas.instructure.com/doc/api/content_exports.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Export content",
+      "controller": "content_exports",
+      "description": "Begin a content export job for a course, group, or user.\n\nYou can use the {api:ProgressController#show Progress API} to track the\nprogress of the export. The migration's progress is linked to with the\n_progress_url_ value.\n\nWhen the export completes, use the {api:ContentExportsApiController#show Show content export} endpoint\nto retrieve a download URL for the exported content.",
+      "name": "export_content_courses",
+      "endpoint": "POST /v1/courses/:course_id/content_exports",
+      "reference": "https://canvas.instructure.com/doc/api/content_exports.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "export_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "\"common_cartridge\":: Export the contents of the course in the Common Cartridge (.imscc) format\n\"qti\":: Export quizzes from a course in the QTI format\n\"zip\":: Export files from a course, group, or user in a zip file",
+          "example": [
+            "common_cartridge",
+            "qti",
+            "zip"
+          ]
+        },
+        {
+          "name": "skip_notifications",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Don't send the notifications about the export to the user. Default: false",
+          "example": ""
+        },
+        {
+          "name": "select",
+          "type": "Hash",
+          "default_value": "",
+          "desc": "The select parameter allows exporting specific data. The keys are object types like 'files',\n'folders', 'pages', etc. The value for each key is a list of object ids. An id can be an\ninteger or a string.\n\nMultiple object types can be selected in the same call. However, not all object types are\nvalid for every export_type. Common Cartridge supports all object types. Zip and QTI only\nsupport the object types as described below.\n\n\"folders\":: Also supported for zip export_type.\n\"files\":: Also supported for zip export_type.\n\"quizzes\":: Also supported for qti export_type.",
+          "example": [
+            "folders",
+            "files",
+            "attachments",
+            "quizzes",
+            "assignments",
+            "announcements",
+            "calendar_events",
+            "discussion_topics",
+            "modules",
+            "module_items",
+            "pages",
+            "rubrics"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Export content",
+      "controller": "content_exports",
+      "description": "Begin a content export job for a course, group, or user.\n\nYou can use the {api:ProgressController#show Progress API} to track the\nprogress of the export. The migration's progress is linked to with the\n_progress_url_ value.\n\nWhen the export completes, use the {api:ContentExportsApiController#show Show content export} endpoint\nto retrieve a download URL for the exported content.",
+      "name": "export_content_groups",
+      "endpoint": "POST /v1/groups/:group_id/content_exports",
+      "reference": "https://canvas.instructure.com/doc/api/content_exports.html",
+      "params": [
+        {
+          "name": "group_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "export_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "\"common_cartridge\":: Export the contents of the course in the Common Cartridge (.imscc) format\n\"qti\":: Export quizzes from a course in the QTI format\n\"zip\":: Export files from a course, group, or user in a zip file",
+          "example": [
+            "common_cartridge",
+            "qti",
+            "zip"
+          ]
+        },
+        {
+          "name": "skip_notifications",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Don't send the notifications about the export to the user. Default: false",
+          "example": ""
+        },
+        {
+          "name": "select",
+          "type": "Hash",
+          "default_value": "",
+          "desc": "The select parameter allows exporting specific data. The keys are object types like 'files',\n'folders', 'pages', etc. The value for each key is a list of object ids. An id can be an\ninteger or a string.\n\nMultiple object types can be selected in the same call. However, not all object types are\nvalid for every export_type. Common Cartridge supports all object types. Zip and QTI only\nsupport the object types as described below.\n\n\"folders\":: Also supported for zip export_type.\n\"files\":: Also supported for zip export_type.\n\"quizzes\":: Also supported for qti export_type.",
+          "example": [
+            "folders",
+            "files",
+            "attachments",
+            "quizzes",
+            "assignments",
+            "announcements",
+            "calendar_events",
+            "discussion_topics",
+            "modules",
+            "module_items",
+            "pages",
+            "rubrics"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Export content",
+      "controller": "content_exports",
+      "description": "Begin a content export job for a course, group, or user.\n\nYou can use the {api:ProgressController#show Progress API} to track the\nprogress of the export. The migration's progress is linked to with the\n_progress_url_ value.\n\nWhen the export completes, use the {api:ContentExportsApiController#show Show content export} endpoint\nto retrieve a download URL for the exported content.",
+      "name": "export_content_users",
+      "endpoint": "POST /v1/users/:user_id/content_exports",
+      "reference": "https://canvas.instructure.com/doc/api/content_exports.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "export_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "\"common_cartridge\":: Export the contents of the course in the Common Cartridge (.imscc) format\n\"qti\":: Export quizzes from a course in the QTI format\n\"zip\":: Export files from a course, group, or user in a zip file",
+          "example": [
+            "common_cartridge",
+            "qti",
+            "zip"
+          ]
+        },
+        {
+          "name": "skip_notifications",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Don't send the notifications about the export to the user. Default: false",
+          "example": ""
+        },
+        {
+          "name": "select",
+          "type": "Hash",
+          "default_value": "",
+          "desc": "The select parameter allows exporting specific data. The keys are object types like 'files',\n'folders', 'pages', etc. The value for each key is a list of object ids. An id can be an\ninteger or a string.\n\nMultiple object types can be selected in the same call. However, not all object types are\nvalid for every export_type. Common Cartridge supports all object types. Zip and QTI only\nsupport the object types as described below.\n\n\"folders\":: Also supported for zip export_type.\n\"files\":: Also supported for zip export_type.\n\"quizzes\":: Also supported for qti export_type.",
+          "example": [
+            "folders",
+            "files",
+            "attachments",
+            "quizzes",
+            "assignments",
+            "announcements",
+            "calendar_events",
+            "discussion_topics",
+            "modules",
+            "module_items",
+            "pages",
+            "rubrics"
+          ]
         }
       ]
     }
@@ -4681,6 +7319,1065 @@ const RAWCANVASAPIS = {
       ]
     }
   ],
+  "content_security_policy_settings": [
+    {
+      "display_name": "Get current settings for account or course",
+      "controller": "content_security_policy_settings",
+      "description": "Update multiple modules in an account.",
+      "name": "get_current_settings_for_account_or_course_courses",
+      "endpoint": "GET /v1/courses/:course_id/csp_settings",
+      "reference": "https://canvas.instructure.com/doc/api/content_security_policy_settings.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get current settings for account or course",
+      "controller": "content_security_policy_settings",
+      "description": "Update multiple modules in an account.",
+      "name": "get_current_settings_for_account_or_course_accounts",
+      "endpoint": "GET /v1/accounts/:account_id/csp_settings",
+      "reference": "https://canvas.instructure.com/doc/api/content_security_policy_settings.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Enable, disable, or clear explicit CSP setting",
+      "controller": "content_security_policy_settings",
+      "description": "Either explicitly sets CSP to be on or off for courses and sub-accounts,\nor clear the explicit settings to default to those set by a parent account\n\nNote: If \"inherited\" and \"settings_locked\" are both true for this account or course,\nthen the CSP setting cannot be modified.",
+      "name": "enable_disable_or_clear_explicit_csp_setting_courses",
+      "endpoint": "PUT /v1/courses/:course_id/csp_settings",
+      "reference": "https://canvas.instructure.com/doc/api/content_security_policy_settings.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "default_value": "",
+          "desc": "If set to \"enabled\" for an account, CSP will be enabled for all its courses and sub-accounts (that\nhave not explicitly enabled or disabled it), using the allowed domains set on this account.\nIf set to \"disabled\", CSP will be disabled for this account or course and for all sub-accounts\nthat have not explicitly re-enabled it.\nIf set to \"inherited\", this account or course will reset to the default state where CSP settings\nare inherited from the first parent account to have them explicitly set.",
+          "example": [
+            "enabled",
+            "disabled",
+            "inherited"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Enable, disable, or clear explicit CSP setting",
+      "controller": "content_security_policy_settings",
+      "description": "Either explicitly sets CSP to be on or off for courses and sub-accounts,\nor clear the explicit settings to default to those set by a parent account\n\nNote: If \"inherited\" and \"settings_locked\" are both true for this account or course,\nthen the CSP setting cannot be modified.",
+      "name": "enable_disable_or_clear_explicit_csp_setting_accounts",
+      "endpoint": "PUT /v1/accounts/:account_id/csp_settings",
+      "reference": "https://canvas.instructure.com/doc/api/content_security_policy_settings.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "default_value": "",
+          "desc": "If set to \"enabled\" for an account, CSP will be enabled for all its courses and sub-accounts (that\nhave not explicitly enabled or disabled it), using the allowed domains set on this account.\nIf set to \"disabled\", CSP will be disabled for this account or course and for all sub-accounts\nthat have not explicitly re-enabled it.\nIf set to \"inherited\", this account or course will reset to the default state where CSP settings\nare inherited from the first parent account to have them explicitly set.",
+          "example": [
+            "enabled",
+            "disabled",
+            "inherited"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Lock or unlock current CSP settings for sub-accounts and courses",
+      "controller": "content_security_policy_settings",
+      "description": "Can only be set if CSP is explicitly enabled or disabled on this account (i.e. \"inherited\" is false).",
+      "name": "lock_or_unlock_current_csp_settings_for_sub_accounts_and_courses",
+      "endpoint": "PUT /v1/accounts/:account_id/csp_settings/lock",
+      "reference": "https://canvas.instructure.com/doc/api/content_security_policy_settings.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "settings_locked",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Whether sub-accounts and courses will be prevented from overriding settings inherited from this account.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Add an allowed domain to account",
+      "controller": "content_security_policy_settings",
+      "description": "Adds an allowed domain for the current account. Note: this will not take effect\nunless CSP is explicitly enabled on this account.",
+      "name": "add_allowed_domain_to_account",
+      "endpoint": "POST /v1/accounts/:account_id/csp_settings/domains",
+      "reference": "https://canvas.instructure.com/doc/api/content_security_policy_settings.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "domain",
+          "type": "string",
+          "default_value": "",
+          "desc": "no description",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Add multiple allowed domains to an account",
+      "controller": "content_security_policy_settings",
+      "description": "Adds multiple allowed domains for the current account. Note: this will not take effect\nunless CSP is explicitly enabled on this account.",
+      "name": "add_multiple_allowed_domains_to_account",
+      "endpoint": "POST /v1/accounts/:account_id/csp_settings/domains/batch_create",
+      "reference": "https://canvas.instructure.com/doc/api/content_security_policy_settings.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "domains",
+          "type": "Array",
+          "default_value": "",
+          "desc": "no description",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Retrieve reported CSP Violations for account",
+      "controller": "content_security_policy_settings",
+      "description": "Must be called on a root account.",
+      "name": "retrieve_reported_csp_violations_for_account",
+      "endpoint": "GET /v1/accounts/:account_id/csp_log",
+      "reference": "https://canvas.instructure.com/doc/api/content_security_policy_settings.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Remove a domain from account",
+      "controller": "content_security_policy_settings",
+      "description": "Removes an allowed domain from the current account.",
+      "name": "remove_domain_from_account",
+      "endpoint": "DELETE /v1/accounts/:account_id/csp_settings/domains",
+      "reference": "https://canvas.instructure.com/doc/api/content_security_policy_settings.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "domain",
+          "type": "string",
+          "default_value": "",
+          "desc": "no description",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "content_shares": [
+    {
+      "display_name": "Create a content share",
+      "controller": "content_shares",
+      "description": "Share content directly between two or more users",
+      "name": "create_content_share",
+      "endpoint": "POST /v1/users/:user_id/content_shares",
+      "reference": "https://canvas.instructure.com/doc/api/content_shares.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "receiver_ids",
+          "type": "Array",
+          "default_value": "",
+          "desc": "IDs of users to share the content with.",
+          "example": ""
+        },
+        {
+          "name": "content_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "Type of content you are sharing.",
+          "example": [
+            "assignment",
+            "discussion_topic",
+            "page",
+            "quiz",
+            "module",
+            "module_item"
+          ]
+        },
+        {
+          "name": "content_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The id of the content that you are sharing",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List content shares",
+      "controller": "content_shares",
+      "description": "Return a paginated list of content shares a user has sent or received. Use +self+ as the user_id\nto retrieve your own content shares. Only linked observers and administrators may view other users'\ncontent shares.",
+      "name": "list_content_shares_sent",
+      "endpoint": "GET /v1/users/:user_id/content_shares/sent",
+      "reference": "https://canvas.instructure.com/doc/api/content_shares.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List content shares",
+      "controller": "content_shares",
+      "description": "Return a paginated list of content shares a user has sent or received. Use +self+ as the user_id\nto retrieve your own content shares. Only linked observers and administrators may view other users'\ncontent shares.",
+      "name": "list_content_shares_received",
+      "endpoint": "GET /v1/users/:user_id/content_shares/received",
+      "reference": "https://canvas.instructure.com/doc/api/content_shares.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get unread shares count",
+      "controller": "content_shares",
+      "description": "Return the number of content shares a user has received that have not yet been read. Use +self+ as the user_id\nto retrieve your own content shares. Only linked observers and administrators may view other users'\ncontent shares.",
+      "name": "get_unread_shares_count",
+      "endpoint": "GET /v1/users/:user_id/content_shares/unread_count",
+      "reference": "https://canvas.instructure.com/doc/api/content_shares.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get content share",
+      "controller": "content_shares",
+      "description": "Return information about a single content share. You may use +self+ as the user_id to retrieve your own content share.",
+      "name": "get_content_share",
+      "endpoint": "GET /v1/users/:user_id/content_shares/:id",
+      "reference": "https://canvas.instructure.com/doc/api/content_shares.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Remove content share",
+      "controller": "content_shares",
+      "description": "Remove a content share from your list. Use +self+ as the user_id. Note that this endpoint does not delete other users'\ncopies of the content share.",
+      "name": "remove_content_share",
+      "endpoint": "DELETE /v1/users/:user_id/content_shares/:id",
+      "reference": "https://canvas.instructure.com/doc/api/content_shares.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Add users to content share",
+      "controller": "content_shares",
+      "description": "Send a previously created content share to additional users",
+      "name": "add_users_to_content_share",
+      "endpoint": "POST /v1/users/:user_id/content_shares/:id/add_users",
+      "reference": "https://canvas.instructure.com/doc/api/content_shares.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "receiver_ids",
+          "type": "Array",
+          "default_value": "",
+          "desc": "IDs of users to share the content with.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Update a content share",
+      "controller": "content_shares",
+      "description": "Mark a content share read or unread",
+      "name": "update_content_share",
+      "endpoint": "PUT /v1/users/:user_id/content_shares/:id",
+      "reference": "https://canvas.instructure.com/doc/api/content_shares.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "read_state",
+          "type": "string",
+          "default_value": "",
+          "desc": "Read state for the content share",
+          "example": [
+            "read",
+            "unread"
+          ]
+        }
+      ]
+    }
+  ],
+  "conversations": [
+    {
+      "display_name": "List conversations",
+      "controller": "conversations",
+      "description": "Returns the paginated list of conversations for the current user, most\nrecent ones first.",
+      "name": "list_conversations",
+      "endpoint": "GET /v1/conversations",
+      "reference": "https://canvas.instructure.com/doc/api/conversations.html",
+      "params": [
+        {
+          "name": "scope",
+          "type": "string",
+          "default_value": "",
+          "desc": "When set, only return conversations of the specified type. For example,\nset to \"unread\" to return only conversations that haven't been read.\nThe default behavior is to return all non-archived conversations (i.e.\nread and unread).",
+          "example": [
+            "unread",
+            "starred",
+            "archived"
+          ]
+        },
+        {
+          "name": "filter[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "When set, only return conversations for the specified courses, groups\nor users. The id should be prefixed with its type, e.g. \"user_123\" or\n\"course_456\". Can be an array (by setting \"filter[]\") or single value\n(by setting \"filter\")",
+          "example": ""
+        },
+        {
+          "name": "filter_mode",
+          "type": "string",
+          "default_value": "",
+          "desc": "When filter[] contains multiple filters, combine them with this mode,\nfiltering conversations that at have at least all of the contexts (\"and\")\nor at least one of the contexts (\"or\")",
+          "example": [
+            "and",
+            "or",
+            "default or"
+          ]
+        },
+        {
+          "name": "interleave_submissions",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "(Obsolete) Submissions are no\nlonger linked to conversations. This parameter is ignored.",
+          "example": ""
+        },
+        {
+          "name": "include_all_conversation_ids",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Default is false. If true,\nthe top-level element of the response will be an object rather than\nan array, and will have the keys \"conversations\" which will contain the\npaged conversation data, and \"conversation_ids\" which will contain the\nids of all conversations under this scope/filter in the same order.",
+          "example": ""
+        },
+        {
+          "name": "include[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "\"participant_avatars\":: Optionally include an \"avatar_url\" key for each user participanting in the conversation",
+          "example": [
+            "participant_avatars"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Create a conversation",
+      "controller": "conversations",
+      "description": "Create a new conversation with one or more recipients. If there is already\nan existing private conversation with the given recipients, it will be\nreused.",
+      "name": "create_conversation",
+      "endpoint": "POST /v1/conversations",
+      "reference": "https://canvas.instructure.com/doc/api/conversations.html",
+      "params": [
+        {
+          "name": "recipients[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "An array of recipient ids. These may be user ids or course/group ids\nprefixed with \"course_\" or \"group_\" respectively, e.g.\nrecipients[]=1&recipients[]=2&recipients[]=course_3. If the course/group\nhas over 100 enrollments, 'bulk_message' and 'group_conversation' must be\nset to true.",
+          "example": ""
+        },
+        {
+          "name": "subject",
+          "type": "string",
+          "default_value": "",
+          "desc": "The subject of the conversation. This is ignored when reusing a\nconversation. Maximum length is 255 characters.",
+          "example": ""
+        },
+        {
+          "name": "body",
+          "type": "string",
+          "default_value": "",
+          "desc": "The message to be sent",
+          "example": ""
+        },
+        {
+          "name": "force_new",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Forces a new message to be created, even if there is an existing private conversation.",
+          "example": ""
+        },
+        {
+          "name": "group_conversation",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Defaults to false.  When false, individual private conversations will be\ncreated with each recipient. If true, this will be a group conversation\n(i.e. all recipients may see all messages and replies). Must be set true if\nthe number of recipients is over the set maximum (default is 100).",
+          "example": ""
+        },
+        {
+          "name": "attachment_ids[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "An array of attachments ids. These must be files that have been previously\nuploaded to the sender's \"conversation attachments\" folder.",
+          "example": ""
+        },
+        {
+          "name": "media_comment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "Media comment id of an audio of video file to be associated with this\nmessage.",
+          "example": ""
+        },
+        {
+          "name": "media_comment_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "Type of the associated media file",
+          "example": [
+            "audio",
+            "video"
+          ]
+        },
+        {
+          "name": "user_note",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Will add a faculty journal entry for each recipient as long as the user\nmaking the api call has permission, the recipient is a student and\nfaculty journals are enabled in the account.",
+          "example": ""
+        },
+        {
+          "name": "mode",
+          "type": "string",
+          "default_value": "",
+          "desc": "Determines whether the messages will be created/sent synchronously or\nasynchronously. Defaults to sync, and this option is ignored if this is a\ngroup conversation or there is just one recipient (i.e. it must be a bulk\nprivate message). When sent async, the response will be an empty array\n(batch status can be queried via the {api:ConversationsController#batches batches API})",
+          "example": [
+            "sync",
+            "async"
+          ]
+        },
+        {
+          "name": "scope",
+          "type": "string",
+          "default_value": "",
+          "desc": "Used when generating \"visible\" in the API response. See the explanation\nunder the {api:ConversationsController#index index API action}",
+          "example": [
+            "unread",
+            "starred",
+            "archived"
+          ]
+        },
+        {
+          "name": "filter[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Used when generating \"visible\" in the API response. See the explanation\nunder the {api:ConversationsController#index index API action}",
+          "example": ""
+        },
+        {
+          "name": "filter_mode",
+          "type": "string",
+          "default_value": "",
+          "desc": "Used when generating \"visible\" in the API response. See the explanation\nunder the {api:ConversationsController#index index API action}",
+          "example": [
+            "and",
+            "or",
+            "default or"
+          ]
+        },
+        {
+          "name": "context_code",
+          "type": "string",
+          "default_value": "",
+          "desc": "The course or group that is the context for this conversation. Same format\nas courses or groups in the recipients argument.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get running batches",
+      "controller": "conversations",
+      "description": "Returns any currently running conversation batches for the current user.\nConversation batches are created when a bulk private message is sent\nasynchronously (see the mode argument to the {api:ConversationsController#create create API action}).",
+      "name": "get_running_batches",
+      "endpoint": "GET /v1/conversations/batches",
+      "reference": "https://canvas.instructure.com/doc/api/conversations.html",
+      "params": []
+    },
+    {
+      "display_name": "Get a single conversation",
+      "controller": "conversations",
+      "description": "Returns information for a single conversation for the current user. Response includes all\nfields that are present in the list/index action as well as messages\nand extended participant information.",
+      "name": "get_single_conversation",
+      "endpoint": "GET /v1/conversations/:id",
+      "reference": "https://canvas.instructure.com/doc/api/conversations.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "interleave_submissions",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "(Obsolete) Submissions are no\nlonger linked to conversations. This parameter is ignored.",
+          "example": ""
+        },
+        {
+          "name": "scope",
+          "type": "string",
+          "default_value": "",
+          "desc": "Used when generating \"visible\" in the API response. See the explanation\nunder the {api:ConversationsController#index index API action}",
+          "example": [
+            "unread",
+            "starred",
+            "archived"
+          ]
+        },
+        {
+          "name": "filter[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Used when generating \"visible\" in the API response. See the explanation\nunder the {api:ConversationsController#index index API action}",
+          "example": ""
+        },
+        {
+          "name": "filter_mode",
+          "type": "string",
+          "default_value": "",
+          "desc": "Used when generating \"visible\" in the API response. See the explanation\nunder the {api:ConversationsController#index index API action}",
+          "example": [
+            "and",
+            "or",
+            "default or"
+          ]
+        },
+        {
+          "name": "auto_mark_as_read",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Default true. If true, unread\nconversations will be automatically marked as read. This will default\nto false in a future API release, so clients should explicitly send\ntrue if that is the desired behavior.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Edit a conversation",
+      "controller": "conversations",
+      "description": "Updates attributes for a single conversation.",
+      "name": "edit_conversation",
+      "endpoint": "PUT /v1/conversations/:id",
+      "reference": "https://canvas.instructure.com/doc/api/conversations.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "conversation.workflow_state",
+          "type": "string",
+          "default_value": "",
+          "desc": "Change the state of this conversation",
+          "example": [
+            "read",
+            "unread",
+            "archived"
+          ]
+        },
+        {
+          "name": "conversation.subscribed",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Toggle the current user's subscription to the conversation (only valid for\ngroup conversations). If unsubscribed, the user will still have access to\nthe latest messages, but the conversation won't be automatically flagged\nas unread, nor will it jump to the top of the inbox.",
+          "example": ""
+        },
+        {
+          "name": "conversation.starred",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Toggle the starred state of the current user's view of the conversation.",
+          "example": ""
+        },
+        {
+          "name": "scope",
+          "type": "string",
+          "default_value": "",
+          "desc": "Used when generating \"visible\" in the API response. See the explanation\nunder the {api:ConversationsController#index index API action}",
+          "example": [
+            "unread",
+            "starred",
+            "archived"
+          ]
+        },
+        {
+          "name": "filter[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Used when generating \"visible\" in the API response. See the explanation\nunder the {api:ConversationsController#index index API action}",
+          "example": ""
+        },
+        {
+          "name": "filter_mode",
+          "type": "string",
+          "default_value": "",
+          "desc": "Used when generating \"visible\" in the API response. See the explanation\nunder the {api:ConversationsController#index index API action}",
+          "example": [
+            "and",
+            "or",
+            "default or"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Mark all as read",
+      "controller": "conversations",
+      "description": "Mark all conversations as read.",
+      "name": "mark_all_as_read",
+      "endpoint": "POST /v1/conversations/mark_all_as_read",
+      "reference": "https://canvas.instructure.com/doc/api/conversations.html",
+      "params": []
+    },
+    {
+      "display_name": "Delete a conversation",
+      "controller": "conversations",
+      "description": "Delete this conversation and its messages. Note that this only deletes\nthis user's view of the conversation.\n\nResponse includes same fields as UPDATE action",
+      "name": "delete_conversation",
+      "endpoint": "DELETE /v1/conversations/:id",
+      "reference": "https://canvas.instructure.com/doc/api/conversations.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Add recipients",
+      "controller": "conversations",
+      "description": "Add recipients to an existing group conversation. Response is similar to\nthe GET/show action, except that only includes the\nlatest message (e.g. \"joe was added to the conversation by bob\")",
+      "name": "add_recipients",
+      "endpoint": "POST /v1/conversations/:id/add_recipients",
+      "reference": "https://canvas.instructure.com/doc/api/conversations.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "recipients[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "An array of recipient ids. These may be user ids or course/group ids\nprefixed with \"course_\" or \"group_\" respectively, e.g.\nrecipients[]=1&recipients[]=2&recipients[]=course_3",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Add a message",
+      "controller": "conversations",
+      "description": "Add a message to an existing conversation. Response is similar to the\nGET/show action, except that only includes the\nlatest message (i.e. what we just sent)\n\nAn array of user ids. Defaults to all of the current conversation\nrecipients. To explicitly send a message to no other recipients,\nthis array should consist of the logged-in user id.\n\nAn array of message ids from this conversation to send to recipients\nof the new message. Recipients who already had a copy of included\nmessages will not be affected.",
+      "name": "add_message",
+      "endpoint": "POST /v1/conversations/:id/add_message",
+      "reference": "https://canvas.instructure.com/doc/api/conversations.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "body",
+          "type": "string",
+          "default_value": "",
+          "desc": "The message to be sent.",
+          "example": ""
+        },
+        {
+          "name": "attachment_ids[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "An array of attachments ids. These must be files that have been previously\nuploaded to the sender's \"conversation attachments\" folder.",
+          "example": ""
+        },
+        {
+          "name": "media_comment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "Media comment id of an audio of video file to be associated with this\nmessage.",
+          "example": ""
+        },
+        {
+          "name": "media_comment_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "Type of the associated media file.",
+          "example": [
+            "audio",
+            "video"
+          ]
+        },
+        {
+          "name": "recipients[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "no description",
+          "example": ""
+        },
+        {
+          "name": "included_messages[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "no description",
+          "example": ""
+        },
+        {
+          "name": "user_note",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Will add a faculty journal entry for each recipient as long as the user\nmaking the api call has permission, the recipient is a student and\nfaculty journals are enabled in the account.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Delete a message",
+      "controller": "conversations",
+      "description": "Delete messages from this conversation. Note that this only affects this\nuser's view of the conversation. If all messages are deleted, the\nconversation will be as well (equivalent to DELETE)",
+      "name": "delete_message",
+      "endpoint": "POST /v1/conversations/:id/remove_messages",
+      "reference": "https://canvas.instructure.com/doc/api/conversations.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "remove[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Array of message ids to be deleted",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Batch update conversations",
+      "controller": "conversations",
+      "description": "Perform a change on a set of conversations. Operates asynchronously; use the {api:ProgressController#show progress endpoint}\nto query the status of an operation.",
+      "name": "batch_update_conversations",
+      "endpoint": "PUT /v1/conversations",
+      "reference": "https://canvas.instructure.com/doc/api/conversations.html",
+      "params": [
+        {
+          "name": "conversation_ids[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "List of conversations to update. Limited to 500 conversations.",
+          "example": ""
+        },
+        {
+          "name": "event",
+          "type": "string",
+          "default_value": "",
+          "desc": "The action to take on each conversation.",
+          "example": [
+            "mark_as_read",
+            "mark_as_unread",
+            "star",
+            "unstar",
+            "archive",
+            "destroy"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Find recipients",
+      "controller": "conversations",
+      "description": "Deprecated, see the {api:SearchController#recipients Find recipients endpoint} in the Search API",
+      "name": "find_recipients",
+      "endpoint": "GET /v1/conversations/find_recipients",
+      "reference": "https://canvas.instructure.com/doc/api/conversations.html",
+      "params": []
+    },
+    {
+      "display_name": "Unread count",
+      "controller": "conversations",
+      "description": "Get the number of unread conversations for the current user",
+      "name": "unread_count",
+      "endpoint": "GET /v1/conversations/unread_count",
+      "reference": "https://canvas.instructure.com/doc/api/conversations.html",
+      "params": []
+    }
+  ],
+  "course_audit_log": [
+    {
+      "display_name": "Query by course.",
+      "controller": "course_audit_log",
+      "description": "List course change events for a given course.",
+      "name": "query_by_course",
+      "endpoint": "GET /v1/audit/course/courses/:course_id",
+      "reference": "https://canvas.instructure.com/doc/api/course_audit_log.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "start_time",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "The beginning of the time range from which you want events.",
+          "example": ""
+        },
+        {
+          "name": "end_time",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "The end of the time range from which you want events.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Query by account.",
+      "controller": "course_audit_log",
+      "description": "List course change events for a given account.",
+      "name": "query_by_account",
+      "endpoint": "GET /v1/audit/course/accounts/:account_id",
+      "reference": "https://canvas.instructure.com/doc/api/course_audit_log.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "start_time",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "The beginning of the time range from which you want events.",
+          "example": ""
+        },
+        {
+          "name": "end_time",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "The end of the time range from which you want events.",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "course_quiz_extensions": [
+    {
+      "display_name": "Set extensions for student quiz submissions",
+      "controller": "course_quiz_extensions",
+      "description": "<b>Responses</b>\n\n* <b>200 OK</b> if the request was successful\n* <b>403 Forbidden</b> if you are not allowed to extend quizzes for this course",
+      "name": "set_extensions_for_student_quiz_submissions",
+      "endpoint": "POST /v1/courses/:course_id/quiz_extensions",
+      "reference": "https://canvas.instructure.com/doc/api/course_quiz_extensions.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "user_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The ID of the user we want to add quiz extensions for.",
+          "example": ""
+        },
+        {
+          "name": "extra_attempts",
+          "type": "integer",
+          "default_value": "",
+          "desc": "Number of times the student is allowed to re-take the quiz over the\nmultiple-attempt limit. This is limited to 1000 attempts or less.",
+          "example": ""
+        },
+        {
+          "name": "extra_time",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The number of extra minutes to allow for all attempts. This will\nadd to the existing time limit on the submission. This is limited to\n10080 minutes (1 week)",
+          "example": ""
+        },
+        {
+          "name": "manually_unlocked",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Allow the student to take the quiz even if it's locked for\neveryone else.",
+          "example": ""
+        },
+        {
+          "name": "extend_from_now",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The number of minutes to extend the quiz from the current time. This is\nmutually exclusive to extend_from_end_at. This is limited to 1440\nminutes (24 hours)",
+          "example": ""
+        },
+        {
+          "name": "extend_from_end_at",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The number of minutes to extend the quiz beyond the quiz's current\nending time. This is mutually exclusive to extend_from_now. This is\nlimited to 1440 minutes (24 hours)",
+          "example": ""
+        }
+      ]
+    }
+  ],
   "courses": [
     {
       "display_name": "List your courses",
@@ -6269,6 +9966,249 @@ const RAWCANVASAPIS = {
             "modules",
             "outcomes"
           ]
+        }
+      ]
+    }
+  ],
+  "custom_gradebook_columns": [
+    {
+      "display_name": "List custom gradebook columns",
+      "controller": "custom_gradebook_columns",
+      "description": "A paginated list of all custom gradebook columns for a course",
+      "name": "list_custom_gradebook_columns",
+      "endpoint": "GET /v1/courses/:course_id/custom_gradebook_columns",
+      "reference": "https://canvas.instructure.com/doc/api/custom_gradebook_columns.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "include_hidden",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Include hidden parameters (defaults to false)",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Create a custom gradebook column",
+      "controller": "custom_gradebook_columns",
+      "description": "Create a custom gradebook column",
+      "name": "create_custom_gradebook_column",
+      "endpoint": "POST /v1/courses/:course_id/custom_gradebook_columns",
+      "reference": "https://canvas.instructure.com/doc/api/custom_gradebook_columns.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "column.title",
+          "type": "string",
+          "default_value": "",
+          "desc": "no description",
+          "example": ""
+        },
+        {
+          "name": "column.position",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The position of the column relative to other custom columns",
+          "example": ""
+        },
+        {
+          "name": "column.hidden",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Hidden columns are not displayed in the gradebook",
+          "example": ""
+        },
+        {
+          "name": "column.teacher_notes",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Set this if the column is created by a teacher.  The gradebook only\nsupports one teacher_notes column.",
+          "example": ""
+        },
+        {
+          "name": "column.read_only",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Set this to prevent the column from being editable in the gradebook ui",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Update a custom gradebook column",
+      "controller": "custom_gradebook_columns",
+      "description": "Accepts the same parameters as custom gradebook column creation",
+      "name": "update_custom_gradebook_column",
+      "endpoint": "PUT /v1/courses/:course_id/custom_gradebook_columns/:id",
+      "reference": "https://canvas.instructure.com/doc/api/custom_gradebook_columns.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Delete a custom gradebook column",
+      "controller": "custom_gradebook_columns",
+      "description": "Permanently deletes a custom column and its associated data",
+      "name": "delete_custom_gradebook_column",
+      "endpoint": "DELETE /v1/courses/:course_id/custom_gradebook_columns/:id",
+      "reference": "https://canvas.instructure.com/doc/api/custom_gradebook_columns.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Reorder custom columns",
+      "controller": "custom_gradebook_columns",
+      "description": "Puts the given columns in the specified order\n\n<b>200 OK</b> is returned if successful",
+      "name": "reorder_custom_columns",
+      "endpoint": "POST /v1/courses/:course_id/custom_gradebook_columns/reorder",
+      "reference": "https://canvas.instructure.com/doc/api/custom_gradebook_columns.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "order[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "no description",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List entries for a column",
+      "controller": "custom_gradebook_columns",
+      "description": "This does not list entries for students without associated data.",
+      "name": "list_entries_for_column",
+      "endpoint": "GET /v1/courses/:course_id/custom_gradebook_columns/:id/data",
+      "reference": "https://canvas.instructure.com/doc/api/custom_gradebook_columns.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "include_hidden",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "If true, hidden columns will be included in the\nresult. If false or absent, only visible columns\nwill be returned.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Update column data",
+      "controller": "custom_gradebook_columns",
+      "description": "Set the content of a custom column",
+      "name": "update_column_data",
+      "endpoint": "PUT /v1/courses/:course_id/custom_gradebook_columns/:id/data/:user_id",
+      "reference": "https://canvas.instructure.com/doc/api/custom_gradebook_columns.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "column_data.content",
+          "type": "string",
+          "default_value": "",
+          "desc": "Column content.  Setting this to blank will delete the datum object.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Bulk update column data",
+      "controller": "custom_gradebook_columns",
+      "description": "Set the content of custom columns\n\n{\n  \"column_data\": [\n    {\n      \"column_id\": example_column_id,\n      \"user_id\": example_student_id,\n      \"content\": example_content\n      },\n      {\n      \"column_id\": example_column_id,\n      \"user_id\": example_student_id,\n      \"content: example_content\n    }\n  ]\n}",
+      "name": "bulk_update_column_data",
+      "endpoint": "PUT /v1/courses/:course_id/custom_gradebook_column_data",
+      "reference": "https://canvas.instructure.com/doc/api/custom_gradebook_columns.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "column_data[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Column content. Setting this to an empty string will delete the data object.",
+          "example": ""
         }
       ]
     }
@@ -8337,6 +12277,7 @@ const RAWCANVASAPIS = {
       ]
     }
   ],
+  "document_previews": [],
   "enrollment_terms": [
     {
       "display_name": "Create enrollment term",
@@ -8541,6 +12482,2644 @@ const RAWCANVASAPIS = {
         },
         {
           "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "enrollments": [
+    {
+      "display_name": "List enrollments",
+      "controller": "enrollments",
+      "description": "Depending on the URL given, return a paginated list of either (1) all of\nthe enrollments in a course, (2) all of the enrollments in a section or (3)\nall of a user's enrollments. This includes student, teacher, TA, and\nobserver enrollments.\n\nIf a user has multiple enrollments in a context (e.g. as a teacher\nand a student or in multiple course sections), each enrollment will be\nlisted separately.\n\nnote: Currently, only a root level admin user can return other users' enrollments. A\nuser can, however, return his/her own enrollments.",
+      "name": "list_enrollments_courses",
+      "endpoint": "GET /v1/courses/:course_id/enrollments",
+      "reference": "https://canvas.instructure.com/doc/api/enrollments.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "type[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "A list of enrollment types to return. Accepted values are\n'StudentEnrollment', 'TeacherEnrollment', 'TaEnrollment',\n'DesignerEnrollment', and 'ObserverEnrollment.' If omitted, all enrollment\ntypes are returned. This argument is ignored if `role` is given.",
+          "example": ""
+        },
+        {
+          "name": "role[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "A list of enrollment roles to return. Accepted values include course-level\nroles created by the {api:RoleOverridesController#add_role Add Role API}\nas well as the base enrollment types accepted by the `type` argument above.",
+          "example": ""
+        },
+        {
+          "name": "state[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Filter by enrollment state. If omitted, 'active' and 'invited' enrollments\nare returned. The following synthetic states are supported only when\nquerying a user's enrollments (either via user_id argument or via user\nenrollments endpoint): +current_and_invited+, +current_and_future+, +current_and_concluded+",
+          "example": [
+            "active",
+            "invited",
+            "creation_pending",
+            "deleted",
+            "rejected",
+            "completed",
+            "inactive",
+            "current_and_invited",
+            "current_and_future",
+            "current_and_concluded"
+          ]
+        },
+        {
+          "name": "include[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Array of additional information to include on the enrollment or user records.\n\"avatar_url\" and \"group_ids\" will be returned on the user record. If \"current_points\"\nis specified, the fields \"current_points\" and (if the caller has\npermissions to manage grades) \"unposted_current_points\" will be included\nin the \"grades\" hash for student enrollments.",
+          "example": [
+            "avatar_url",
+            "group_ids",
+            "locked",
+            "observed_users",
+            "can_be_removed",
+            "uuid",
+            "current_points"
+          ]
+        },
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "Filter by user_id (only valid for course or section enrollment\nqueries). If set to the current user's id, this is a way to\ndetermine if the user has any enrollments in the course or section,\nindependent of whether the user has permission to view other people\non the roster.",
+          "example": ""
+        },
+        {
+          "name": "grading_period_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "Return grades for the given grading_period.  If this parameter is not\nspecified, the returned grades will be for the whole course.",
+          "example": ""
+        },
+        {
+          "name": "enrollment_term_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "Returns only enrollments for the specified enrollment term. This parameter\nonly applies to the user enrollments path. May pass the ID from the\nenrollment terms api or the SIS id prepended with 'sis_term_id:'.",
+          "example": ""
+        },
+        {
+          "name": "sis_account_id[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Returns only enrollments for the specified SIS account ID(s). Does not\nlook into sub_accounts. May pass in array or string.",
+          "example": ""
+        },
+        {
+          "name": "sis_course_id[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Returns only enrollments matching the specified SIS course ID(s).\nMay pass in array or string.",
+          "example": ""
+        },
+        {
+          "name": "sis_section_id[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Returns only section enrollments matching the specified SIS section ID(s).\nMay pass in array or string.",
+          "example": ""
+        },
+        {
+          "name": "sis_user_id[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Returns only enrollments for the specified SIS user ID(s). May pass in\narray or string.",
+          "example": ""
+        },
+        {
+          "name": "created_for_sis_id[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "If sis_user_id is present and created_for_sis_id is true, Returns only\nenrollments for the specified SIS ID(s).\nIf a user has two sis_id's, one enrollment may be created using one of the\ntwo ids. This would limit the enrollments returned from the endpoint to\nenrollments that were created from a sis_import with that sis_user_id",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List enrollments",
+      "controller": "enrollments",
+      "description": "Depending on the URL given, return a paginated list of either (1) all of\nthe enrollments in a course, (2) all of the enrollments in a section or (3)\nall of a user's enrollments. This includes student, teacher, TA, and\nobserver enrollments.\n\nIf a user has multiple enrollments in a context (e.g. as a teacher\nand a student or in multiple course sections), each enrollment will be\nlisted separately.\n\nnote: Currently, only a root level admin user can return other users' enrollments. A\nuser can, however, return his/her own enrollments.",
+      "name": "list_enrollments_sections",
+      "endpoint": "GET /v1/sections/:section_id/enrollments",
+      "reference": "https://canvas.instructure.com/doc/api/enrollments.html",
+      "params": [
+        {
+          "name": "section_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "type[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "A list of enrollment types to return. Accepted values are\n'StudentEnrollment', 'TeacherEnrollment', 'TaEnrollment',\n'DesignerEnrollment', and 'ObserverEnrollment.' If omitted, all enrollment\ntypes are returned. This argument is ignored if `role` is given.",
+          "example": ""
+        },
+        {
+          "name": "role[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "A list of enrollment roles to return. Accepted values include course-level\nroles created by the {api:RoleOverridesController#add_role Add Role API}\nas well as the base enrollment types accepted by the `type` argument above.",
+          "example": ""
+        },
+        {
+          "name": "state[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Filter by enrollment state. If omitted, 'active' and 'invited' enrollments\nare returned. The following synthetic states are supported only when\nquerying a user's enrollments (either via user_id argument or via user\nenrollments endpoint): +current_and_invited+, +current_and_future+, +current_and_concluded+",
+          "example": [
+            "active",
+            "invited",
+            "creation_pending",
+            "deleted",
+            "rejected",
+            "completed",
+            "inactive",
+            "current_and_invited",
+            "current_and_future",
+            "current_and_concluded"
+          ]
+        },
+        {
+          "name": "include[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Array of additional information to include on the enrollment or user records.\n\"avatar_url\" and \"group_ids\" will be returned on the user record. If \"current_points\"\nis specified, the fields \"current_points\" and (if the caller has\npermissions to manage grades) \"unposted_current_points\" will be included\nin the \"grades\" hash for student enrollments.",
+          "example": [
+            "avatar_url",
+            "group_ids",
+            "locked",
+            "observed_users",
+            "can_be_removed",
+            "uuid",
+            "current_points"
+          ]
+        },
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "Filter by user_id (only valid for course or section enrollment\nqueries). If set to the current user's id, this is a way to\ndetermine if the user has any enrollments in the course or section,\nindependent of whether the user has permission to view other people\non the roster.",
+          "example": ""
+        },
+        {
+          "name": "grading_period_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "Return grades for the given grading_period.  If this parameter is not\nspecified, the returned grades will be for the whole course.",
+          "example": ""
+        },
+        {
+          "name": "enrollment_term_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "Returns only enrollments for the specified enrollment term. This parameter\nonly applies to the user enrollments path. May pass the ID from the\nenrollment terms api or the SIS id prepended with 'sis_term_id:'.",
+          "example": ""
+        },
+        {
+          "name": "sis_account_id[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Returns only enrollments for the specified SIS account ID(s). Does not\nlook into sub_accounts. May pass in array or string.",
+          "example": ""
+        },
+        {
+          "name": "sis_course_id[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Returns only enrollments matching the specified SIS course ID(s).\nMay pass in array or string.",
+          "example": ""
+        },
+        {
+          "name": "sis_section_id[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Returns only section enrollments matching the specified SIS section ID(s).\nMay pass in array or string.",
+          "example": ""
+        },
+        {
+          "name": "sis_user_id[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Returns only enrollments for the specified SIS user ID(s). May pass in\narray or string.",
+          "example": ""
+        },
+        {
+          "name": "created_for_sis_id[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "If sis_user_id is present and created_for_sis_id is true, Returns only\nenrollments for the specified SIS ID(s).\nIf a user has two sis_id's, one enrollment may be created using one of the\ntwo ids. This would limit the enrollments returned from the endpoint to\nenrollments that were created from a sis_import with that sis_user_id",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List enrollments",
+      "controller": "enrollments",
+      "description": "Depending on the URL given, return a paginated list of either (1) all of\nthe enrollments in a course, (2) all of the enrollments in a section or (3)\nall of a user's enrollments. This includes student, teacher, TA, and\nobserver enrollments.\n\nIf a user has multiple enrollments in a context (e.g. as a teacher\nand a student or in multiple course sections), each enrollment will be\nlisted separately.\n\nnote: Currently, only a root level admin user can return other users' enrollments. A\nuser can, however, return his/her own enrollments.",
+      "name": "list_enrollments_users",
+      "endpoint": "GET /v1/users/:user_id/enrollments",
+      "reference": "https://canvas.instructure.com/doc/api/enrollments.html",
+      "params": [
+        {
+          "name": "type[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "A list of enrollment types to return. Accepted values are\n'StudentEnrollment', 'TeacherEnrollment', 'TaEnrollment',\n'DesignerEnrollment', and 'ObserverEnrollment.' If omitted, all enrollment\ntypes are returned. This argument is ignored if `role` is given.",
+          "example": ""
+        },
+        {
+          "name": "role[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "A list of enrollment roles to return. Accepted values include course-level\nroles created by the {api:RoleOverridesController#add_role Add Role API}\nas well as the base enrollment types accepted by the `type` argument above.",
+          "example": ""
+        },
+        {
+          "name": "state[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Filter by enrollment state. If omitted, 'active' and 'invited' enrollments\nare returned. The following synthetic states are supported only when\nquerying a user's enrollments (either via user_id argument or via user\nenrollments endpoint): +current_and_invited+, +current_and_future+, +current_and_concluded+",
+          "example": [
+            "active",
+            "invited",
+            "creation_pending",
+            "deleted",
+            "rejected",
+            "completed",
+            "inactive",
+            "current_and_invited",
+            "current_and_future",
+            "current_and_concluded"
+          ]
+        },
+        {
+          "name": "include[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Array of additional information to include on the enrollment or user records.\n\"avatar_url\" and \"group_ids\" will be returned on the user record. If \"current_points\"\nis specified, the fields \"current_points\" and (if the caller has\npermissions to manage grades) \"unposted_current_points\" will be included\nin the \"grades\" hash for student enrollments.",
+          "example": [
+            "avatar_url",
+            "group_ids",
+            "locked",
+            "observed_users",
+            "can_be_removed",
+            "uuid",
+            "current_points"
+          ]
+        },
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "Filter by user_id (only valid for course or section enrollment\nqueries). If set to the current user's id, this is a way to\ndetermine if the user has any enrollments in the course or section,\nindependent of whether the user has permission to view other people\non the roster.",
+          "example": ""
+        },
+        {
+          "name": "grading_period_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "Return grades for the given grading_period.  If this parameter is not\nspecified, the returned grades will be for the whole course.",
+          "example": ""
+        },
+        {
+          "name": "enrollment_term_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "Returns only enrollments for the specified enrollment term. This parameter\nonly applies to the user enrollments path. May pass the ID from the\nenrollment terms api or the SIS id prepended with 'sis_term_id:'.",
+          "example": ""
+        },
+        {
+          "name": "sis_account_id[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Returns only enrollments for the specified SIS account ID(s). Does not\nlook into sub_accounts. May pass in array or string.",
+          "example": ""
+        },
+        {
+          "name": "sis_course_id[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Returns only enrollments matching the specified SIS course ID(s).\nMay pass in array or string.",
+          "example": ""
+        },
+        {
+          "name": "sis_section_id[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Returns only section enrollments matching the specified SIS section ID(s).\nMay pass in array or string.",
+          "example": ""
+        },
+        {
+          "name": "sis_user_id[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Returns only enrollments for the specified SIS user ID(s). May pass in\narray or string.",
+          "example": ""
+        },
+        {
+          "name": "created_for_sis_id[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "If sis_user_id is present and created_for_sis_id is true, Returns only\nenrollments for the specified SIS ID(s).\nIf a user has two sis_id's, one enrollment may be created using one of the\ntwo ids. This would limit the enrollments returned from the endpoint to\nenrollments that were created from a sis_import with that sis_user_id",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Enrollment by ID",
+      "controller": "enrollments",
+      "description": "Get an Enrollment object by Enrollment ID",
+      "name": "enrollment_by_id",
+      "endpoint": "GET /v1/accounts/:account_id/enrollments/:id",
+      "reference": "https://canvas.instructure.com/doc/api/enrollments.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The ID of the enrollment object",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Enroll a user",
+      "controller": "enrollments",
+      "description": "Create a new user enrollment for a course or section.",
+      "name": "enroll_user_courses",
+      "endpoint": "POST /v1/courses/:course_id/enrollments",
+      "reference": "https://canvas.instructure.com/doc/api/enrollments.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "enrollment.start_at",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "The start time of the enrollment, in ISO8601 format. e.g. 2012-04-18T23:08:51Z",
+          "example": ""
+        },
+        {
+          "name": "enrollment.end_at",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "The end time of the enrollment, in ISO8601 format. e.g. 2012-04-18T23:08:51Z",
+          "example": ""
+        },
+        {
+          "name": "enrollment.user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The ID of the user to be enrolled in the course.",
+          "example": ""
+        },
+        {
+          "name": "enrollment.type",
+          "type": "string",
+          "default_value": "",
+          "desc": "Enroll the user as a student, teacher, TA, observer, or designer. If no\nvalue is given, the type will be inferred by enrollment[role] if supplied,\notherwise 'StudentEnrollment' will be used.",
+          "example": [
+            "StudentEnrollment",
+            "TeacherEnrollment",
+            "TaEnrollment",
+            "ObserverEnrollment",
+            "DesignerEnrollment"
+          ]
+        },
+        {
+          "name": "enrollment.role",
+          "type": "Deprecated",
+          "default_value": "",
+          "desc": "Assigns a custom course-level role to the user.",
+          "example": ""
+        },
+        {
+          "name": "enrollment.role_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "Assigns a custom course-level role to the user.",
+          "example": ""
+        },
+        {
+          "name": "enrollment.enrollment_state",
+          "type": "string",
+          "default_value": "",
+          "desc": "If set to 'active,' student will be immediately enrolled in the course.\nOtherwise they will be required to accept a course invitation. Default is\n'invited.'.\n\nIf set to 'inactive', student will be listed in the course roster for\nteachers, but will not be able to participate in the course until\ntheir enrollment is activated.",
+          "example": [
+            "active",
+            "invited",
+            "inactive"
+          ]
+        },
+        {
+          "name": "enrollment.course_section_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The ID of the course section to enroll the student in. If the\nsection-specific URL is used, this argument is redundant and will be\nignored.",
+          "example": ""
+        },
+        {
+          "name": "enrollment.limit_privileges_to_course_section",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "If set, the enrollment will only allow the user to see and interact with\nusers enrolled in the section given by course_section_id.\n* For teachers and TAs, this includes grading privileges.\n* Section-limited students will not see any users (including teachers\n  and TAs) not enrolled in their sections.\n* Users may have other enrollments that grant privileges to\n  multiple sections in the same course.",
+          "example": ""
+        },
+        {
+          "name": "enrollment.notify",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "If true, a notification will be sent to the enrolled user.\nNotifications are not sent by default.",
+          "example": ""
+        },
+        {
+          "name": "enrollment.self_enrollment_code",
+          "type": "string",
+          "default_value": "",
+          "desc": "If the current user is not allowed to manage enrollments in this\ncourse, but the course allows self-enrollment, the user can self-\nenroll as a student in the default section by passing in a valid\ncode. When self-enrolling, the user_id must be 'self'. The\nenrollment_state will be set to 'active' and all other arguments\nwill be ignored.",
+          "example": ""
+        },
+        {
+          "name": "enrollment.self_enrolled",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "If true, marks the enrollment as a self-enrollment, which gives\nstudents the ability to drop the course if desired. Defaults to false.",
+          "example": ""
+        },
+        {
+          "name": "enrollment.associated_user_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "For an observer enrollment, the ID of a student to observe. The\ncaller must have +manage_students+ permission in the course.\nThis is a one-off operation; to automatically observe all a\nstudent's enrollments (for example, as a parent), please use\nthe {api:UserObserveesController#create User Observees API}.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Enroll a user",
+      "controller": "enrollments",
+      "description": "Create a new user enrollment for a course or section.",
+      "name": "enroll_user_sections",
+      "endpoint": "POST /v1/sections/:section_id/enrollments",
+      "reference": "https://canvas.instructure.com/doc/api/enrollments.html",
+      "params": [
+        {
+          "name": "section_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "enrollment.start_at",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "The start time of the enrollment, in ISO8601 format. e.g. 2012-04-18T23:08:51Z",
+          "example": ""
+        },
+        {
+          "name": "enrollment.end_at",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "The end time of the enrollment, in ISO8601 format. e.g. 2012-04-18T23:08:51Z",
+          "example": ""
+        },
+        {
+          "name": "enrollment.user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The ID of the user to be enrolled in the course.",
+          "example": ""
+        },
+        {
+          "name": "enrollment.type",
+          "type": "string",
+          "default_value": "",
+          "desc": "Enroll the user as a student, teacher, TA, observer, or designer. If no\nvalue is given, the type will be inferred by enrollment[role] if supplied,\notherwise 'StudentEnrollment' will be used.",
+          "example": [
+            "StudentEnrollment",
+            "TeacherEnrollment",
+            "TaEnrollment",
+            "ObserverEnrollment",
+            "DesignerEnrollment"
+          ]
+        },
+        {
+          "name": "enrollment.role",
+          "type": "Deprecated",
+          "default_value": "",
+          "desc": "Assigns a custom course-level role to the user.",
+          "example": ""
+        },
+        {
+          "name": "enrollment.role_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "Assigns a custom course-level role to the user.",
+          "example": ""
+        },
+        {
+          "name": "enrollment.enrollment_state",
+          "type": "string",
+          "default_value": "",
+          "desc": "If set to 'active,' student will be immediately enrolled in the course.\nOtherwise they will be required to accept a course invitation. Default is\n'invited.'.\n\nIf set to 'inactive', student will be listed in the course roster for\nteachers, but will not be able to participate in the course until\ntheir enrollment is activated.",
+          "example": [
+            "active",
+            "invited",
+            "inactive"
+          ]
+        },
+        {
+          "name": "enrollment.course_section_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The ID of the course section to enroll the student in. If the\nsection-specific URL is used, this argument is redundant and will be\nignored.",
+          "example": ""
+        },
+        {
+          "name": "enrollment.limit_privileges_to_course_section",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "If set, the enrollment will only allow the user to see and interact with\nusers enrolled in the section given by course_section_id.\n* For teachers and TAs, this includes grading privileges.\n* Section-limited students will not see any users (including teachers\n  and TAs) not enrolled in their sections.\n* Users may have other enrollments that grant privileges to\n  multiple sections in the same course.",
+          "example": ""
+        },
+        {
+          "name": "enrollment.notify",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "If true, a notification will be sent to the enrolled user.\nNotifications are not sent by default.",
+          "example": ""
+        },
+        {
+          "name": "enrollment.self_enrollment_code",
+          "type": "string",
+          "default_value": "",
+          "desc": "If the current user is not allowed to manage enrollments in this\ncourse, but the course allows self-enrollment, the user can self-\nenroll as a student in the default section by passing in a valid\ncode. When self-enrolling, the user_id must be 'self'. The\nenrollment_state will be set to 'active' and all other arguments\nwill be ignored.",
+          "example": ""
+        },
+        {
+          "name": "enrollment.self_enrolled",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "If true, marks the enrollment as a self-enrollment, which gives\nstudents the ability to drop the course if desired. Defaults to false.",
+          "example": ""
+        },
+        {
+          "name": "enrollment.associated_user_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "For an observer enrollment, the ID of a student to observe. The\ncaller must have +manage_students+ permission in the course.\nThis is a one-off operation; to automatically observe all a\nstudent's enrollments (for example, as a parent), please use\nthe {api:UserObserveesController#create User Observees API}.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Conclude, deactivate, or delete an enrollment",
+      "controller": "enrollments",
+      "description": "Conclude, deactivate, or delete an enrollment. If the +task+ argument isn't given, the enrollment\nwill be concluded.",
+      "name": "conclude_deactivate_or_delete_enrollment",
+      "endpoint": "DELETE /v1/courses/:course_id/enrollments/:id",
+      "reference": "https://canvas.instructure.com/doc/api/enrollments.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "task",
+          "type": "string",
+          "default_value": "",
+          "desc": "The action to take on the enrollment.\nWhen inactive, a user will still appear in the course roster to admins, but be unable to participate.\n(\"inactivate\" and \"deactivate\" are equivalent tasks)",
+          "example": [
+            "conclude",
+            "delete",
+            "inactivate",
+            "deactivate"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Accept Course Invitation",
+      "controller": "enrollments",
+      "description": "accepts a pending course invitation for the current user",
+      "name": "accept_course_invitation",
+      "endpoint": "POST /v1/courses/:course_id/enrollments/:id/accept",
+      "reference": "https://canvas.instructure.com/doc/api/enrollments.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Reject Course Invitation",
+      "controller": "enrollments",
+      "description": "rejects a pending course invitation for the current user",
+      "name": "reject_course_invitation",
+      "endpoint": "POST /v1/courses/:course_id/enrollments/:id/reject",
+      "reference": "https://canvas.instructure.com/doc/api/enrollments.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Re-activate an enrollment",
+      "controller": "enrollments",
+      "description": "Activates an inactive enrollment",
+      "name": "re_activate_enrollment",
+      "endpoint": "PUT /v1/courses/:course_id/enrollments/:id/reactivate",
+      "reference": "https://canvas.instructure.com/doc/api/enrollments.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Adds last attended date to student enrollment in course",
+      "controller": "enrollments",
+      "description": "",
+      "name": "adds_last_attended_date_to_student_enrollment_in_course",
+      "endpoint": "PUT /v1/courses/:course_id/users/:user_id/last_attended",
+      "reference": "https://canvas.instructure.com/doc/api/enrollments.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "error_reports": [
+    {
+      "display_name": "Create Error Report",
+      "controller": "error_reports",
+      "description": "Create a new error report documenting an experienced problem\n\nPerforms the same action as when a user uses the \"help -> report a problem\"\ndialog.",
+      "name": "create_error_report",
+      "endpoint": "POST /v1/error_reports",
+      "reference": "https://canvas.instructure.com/doc/api/error_reports.html",
+      "params": [
+        {
+          "name": "error.subject",
+          "type": "string",
+          "default_value": "",
+          "desc": "The summary of the problem",
+          "example": ""
+        },
+        {
+          "name": "error.url",
+          "type": "string",
+          "default_value": "",
+          "desc": "URL from which the report was issued",
+          "example": ""
+        },
+        {
+          "name": "error.email",
+          "type": "string",
+          "default_value": "",
+          "desc": "Email address for the reporting user",
+          "example": ""
+        },
+        {
+          "name": "error.comments",
+          "type": "string",
+          "default_value": "",
+          "desc": "The long version of the story from the user one what they experienced",
+          "example": ""
+        },
+        {
+          "name": "error.http_env",
+          "type": "SerializedHash",
+          "default_value": "",
+          "desc": "A collection of metadata about the users' environment.  If not provided,\ncanvas will collect it based on information found in the request.\n(Doesn't have to be HTTPENV info, could be anything JSON object that can be\nserialized as a hash, a mobile app might include relevant metadata for\nitself)",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "external_tools": [
+    {
+      "display_name": "List external tools",
+      "controller": "external_tools",
+      "description": "Returns the paginated list of external tools for the current context.\nSee the get request docs for a single tool for a list of properties on an external tool.",
+      "name": "list_external_tools_courses",
+      "endpoint": "GET /v1/courses/:course_id/external_tools",
+      "reference": "https://canvas.instructure.com/doc/api/external_tools.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "search_term",
+          "type": "string",
+          "default_value": "",
+          "desc": "The partial name of the tools to match and return.",
+          "example": ""
+        },
+        {
+          "name": "selectable",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "If true, then only tools that are meant to be selectable are returned",
+          "example": ""
+        },
+        {
+          "name": "include_parents",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "If true, then include tools installed in all accounts above the current context",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List external tools",
+      "controller": "external_tools",
+      "description": "Returns the paginated list of external tools for the current context.\nSee the get request docs for a single tool for a list of properties on an external tool.",
+      "name": "list_external_tools_accounts",
+      "endpoint": "GET /v1/accounts/:account_id/external_tools",
+      "reference": "https://canvas.instructure.com/doc/api/external_tools.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "search_term",
+          "type": "string",
+          "default_value": "",
+          "desc": "The partial name of the tools to match and return.",
+          "example": ""
+        },
+        {
+          "name": "selectable",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "If true, then only tools that are meant to be selectable are returned",
+          "example": ""
+        },
+        {
+          "name": "include_parents",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "If true, then include tools installed in all accounts above the current context",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List external tools",
+      "controller": "external_tools",
+      "description": "Returns the paginated list of external tools for the current context.\nSee the get request docs for a single tool for a list of properties on an external tool.",
+      "name": "list_external_tools_groups",
+      "endpoint": "GET /v1/groups/:group_id/external_tools",
+      "reference": "https://canvas.instructure.com/doc/api/external_tools.html",
+      "params": [
+        {
+          "name": "group_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "search_term",
+          "type": "string",
+          "default_value": "",
+          "desc": "The partial name of the tools to match and return.",
+          "example": ""
+        },
+        {
+          "name": "selectable",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "If true, then only tools that are meant to be selectable are returned",
+          "example": ""
+        },
+        {
+          "name": "include_parents",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "If true, then include tools installed in all accounts above the current context",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get a sessionless launch url for an external tool.",
+      "controller": "external_tools",
+      "description": "Returns a sessionless launch url for an external tool.\n\nNOTE: Either the id or url must be provided unless launch_type is assessment or module_item.",
+      "name": "get_sessionless_launch_url_for_external_tool_courses",
+      "endpoint": "GET /v1/courses/:course_id/external_tools/sessionless_launch",
+      "reference": "https://canvas.instructure.com/doc/api/external_tools.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The external id of the tool to launch.",
+          "example": ""
+        },
+        {
+          "name": "url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The LTI launch url for the external tool.",
+          "example": ""
+        },
+        {
+          "name": "assignment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The assignment id for an assignment launch. Required if launch_type is set to \"assessment\".",
+          "example": ""
+        },
+        {
+          "name": "module_item_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The assignment id for a module item launch. Required if launch_type is set to \"module_item\".",
+          "example": ""
+        },
+        {
+          "name": "launch_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "The type of launch to perform on the external tool. Placement names (eg. \"course_navigation\")\ncan also be specified to use the custom launch url for that placement; if done, the tool id\nmust be provided.",
+          "example": [
+            "assessment",
+            "module_item"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Get a sessionless launch url for an external tool.",
+      "controller": "external_tools",
+      "description": "Returns a sessionless launch url for an external tool.\n\nNOTE: Either the id or url must be provided unless launch_type is assessment or module_item.",
+      "name": "get_sessionless_launch_url_for_external_tool_accounts",
+      "endpoint": "GET /v1/accounts/:account_id/external_tools/sessionless_launch",
+      "reference": "https://canvas.instructure.com/doc/api/external_tools.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The external id of the tool to launch.",
+          "example": ""
+        },
+        {
+          "name": "url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The LTI launch url for the external tool.",
+          "example": ""
+        },
+        {
+          "name": "assignment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The assignment id for an assignment launch. Required if launch_type is set to \"assessment\".",
+          "example": ""
+        },
+        {
+          "name": "module_item_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The assignment id for a module item launch. Required if launch_type is set to \"module_item\".",
+          "example": ""
+        },
+        {
+          "name": "launch_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "The type of launch to perform on the external tool. Placement names (eg. \"course_navigation\")\ncan also be specified to use the custom launch url for that placement; if done, the tool id\nmust be provided.",
+          "example": [
+            "assessment",
+            "module_item"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Get a single external tool",
+      "controller": "external_tools",
+      "description": "Returns the specified external tool.",
+      "name": "get_single_external_tool_courses",
+      "endpoint": "GET /v1/courses/:course_id/external_tools/:external_tool_id",
+      "reference": "https://canvas.instructure.com/doc/api/external_tools.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "external_tool_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get a single external tool",
+      "controller": "external_tools",
+      "description": "Returns the specified external tool.",
+      "name": "get_single_external_tool_accounts",
+      "endpoint": "GET /v1/accounts/:account_id/external_tools/:external_tool_id",
+      "reference": "https://canvas.instructure.com/doc/api/external_tools.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "external_tool_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Create an external tool",
+      "controller": "external_tools",
+      "description": "Create an external tool in the specified course/account.\nThe created tool will be returned, see the \"show\" endpoint for an example.\nIf a client ID is supplied canvas will attempt to create a context external\ntool using the LTI 1.3 standard.",
+      "name": "create_external_tool_courses",
+      "endpoint": "POST /v1/courses/:course_id/external_tools",
+      "reference": "https://canvas.instructure.com/doc/api/external_tools.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "client_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The client id is attached to the developer key.\nIf supplied all other parameters are unnecessary and will be ignored",
+          "example": ""
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "default_value": "",
+          "desc": "The name of the tool",
+          "example": ""
+        },
+        {
+          "name": "privacy_level",
+          "type": "string",
+          "default_value": "",
+          "desc": "What information to send to the external tool.",
+          "example": [
+            "anonymous",
+            "name_only",
+            "public"
+          ]
+        },
+        {
+          "name": "consumer_key",
+          "type": "string",
+          "default_value": "",
+          "desc": "The consumer key for the external tool",
+          "example": ""
+        },
+        {
+          "name": "shared_secret",
+          "type": "string",
+          "default_value": "",
+          "desc": "The shared secret with the external tool",
+          "example": ""
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "default_value": "",
+          "desc": "A description of the tool",
+          "example": ""
+        },
+        {
+          "name": "url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The url to match links against. Either \"url\" or \"domain\" should be set,\nnot both.",
+          "example": ""
+        },
+        {
+          "name": "domain",
+          "type": "string",
+          "default_value": "",
+          "desc": "The domain to match links against. Either \"url\" or \"domain\" should be\nset, not both.",
+          "example": ""
+        },
+        {
+          "name": "icon_url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The url of the icon to show for this tool",
+          "example": ""
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "default_value": "",
+          "desc": "The default text to show for this tool",
+          "example": ""
+        },
+        {
+          "name": "custom_fields.field_name",
+          "type": "string",
+          "default_value": "",
+          "desc": "Custom fields that will be sent to the tool consumer; can be used\nmultiple times",
+          "example": ""
+        },
+        {
+          "name": "is_rce_favorite",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "(Deprecated in favor of {api:ExternalToolsController#add_rce_favorite Add tool to RCE Favorites} and\n{api:ExternalToolsController#remove_rce_favorite Remove tool from RCE Favorites})\nWhether this tool should appear in a preferred location in the RCE.\nThis only applies to tools in root account contexts that have an editor\nbutton placement.",
+          "example": ""
+        },
+        {
+          "name": "account_navigation.url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The url of the external tool for account navigation",
+          "example": ""
+        },
+        {
+          "name": "account_navigation.enabled",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Set this to enable this feature",
+          "example": ""
+        },
+        {
+          "name": "account_navigation.text",
+          "type": "string",
+          "default_value": "",
+          "desc": "The text that will show on the left-tab in the account navigation",
+          "example": ""
+        },
+        {
+          "name": "account_navigation.selection_width",
+          "type": "string",
+          "default_value": "",
+          "desc": "The width of the dialog the tool is launched in",
+          "example": ""
+        },
+        {
+          "name": "account_navigation.selection_height",
+          "type": "string",
+          "default_value": "",
+          "desc": "The height of the dialog the tool is launched in",
+          "example": ""
+        },
+        {
+          "name": "account_navigation.display_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "The layout type to use when launching the tool. Must be\n\"full_width\", \"full_width_in_context\", \"borderless\", or \"default\"",
+          "example": ""
+        },
+        {
+          "name": "user_navigation.url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The url of the external tool for user navigation",
+          "example": ""
+        },
+        {
+          "name": "user_navigation.enabled",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Set this to enable this feature",
+          "example": ""
+        },
+        {
+          "name": "user_navigation.text",
+          "type": "string",
+          "default_value": "",
+          "desc": "The text that will show on the left-tab in the user navigation",
+          "example": ""
+        },
+        {
+          "name": "user_navigation.visibility",
+          "type": "string",
+          "default_value": "",
+          "desc": "Who will see the navigation tab. \"admins\" for admins, \"public\" or\n\"members\" for everyone",
+          "example": [
+            "admins",
+            "members",
+            "public"
+          ]
+        },
+        {
+          "name": "course_home_sub_navigation.url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The url of the external tool for right-side course home navigation menu",
+          "example": ""
+        },
+        {
+          "name": "course_home_sub_navigation.enabled",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Set this to enable this feature",
+          "example": ""
+        },
+        {
+          "name": "course_home_sub_navigation.text",
+          "type": "string",
+          "default_value": "",
+          "desc": "The text that will show on the right-side course home navigation menu",
+          "example": ""
+        },
+        {
+          "name": "course_home_sub_navigation.icon_url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The url of the icon to show in the right-side course home navigation menu",
+          "example": ""
+        },
+        {
+          "name": "course_navigation.enabled",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Set this to enable this feature",
+          "example": ""
+        },
+        {
+          "name": "course_navigation.text",
+          "type": "string",
+          "default_value": "",
+          "desc": "The text that will show on the left-tab in the course navigation",
+          "example": ""
+        },
+        {
+          "name": "course_navigation.visibility",
+          "type": "string",
+          "default_value": "",
+          "desc": "Who will see the navigation tab. \"admins\" for course admins, \"members\" for\nstudents, null for everyone",
+          "example": [
+            "admins",
+            "members"
+          ]
+        },
+        {
+          "name": "course_navigation.windowTarget",
+          "type": "string",
+          "default_value": "",
+          "desc": "Determines how the navigation tab will be opened.\n\"_blank\"\tLaunches the external tool in a new window or tab.\n\"_self\"\t(Default) Launches the external tool in an iframe inside of Canvas.",
+          "example": [
+            "_blank",
+            "_self"
+          ]
+        },
+        {
+          "name": "course_navigation.default",
+          "type": "string",
+          "default_value": "",
+          "desc": "If set to \"disabled\" the tool will not appear in the course navigation\nuntil a teacher explicitly enables it.\n\nIf set to \"enabled\" the tool will appear in the course navigation\nwithout requiring a teacher to explicitly enable it.\n\ndefaults to \"enabled\"",
+          "example": [
+            "disabled",
+            "enabled"
+          ]
+        },
+        {
+          "name": "course_navigation.display_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "The layout type to use when launching the tool. Must be\n\"full_width\", \"full_width_in_context\", \"borderless\", or \"default\"",
+          "example": ""
+        },
+        {
+          "name": "editor_button.url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The url of the external tool",
+          "example": ""
+        },
+        {
+          "name": "editor_button.enabled",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Set this to enable this feature",
+          "example": ""
+        },
+        {
+          "name": "editor_button.icon_url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The url of the icon to show in the WYSIWYG editor",
+          "example": ""
+        },
+        {
+          "name": "editor_button.selection_width",
+          "type": "string",
+          "default_value": "",
+          "desc": "The width of the dialog the tool is launched in",
+          "example": ""
+        },
+        {
+          "name": "editor_button.selection_height",
+          "type": "string",
+          "default_value": "",
+          "desc": "The height of the dialog the tool is launched in",
+          "example": ""
+        },
+        {
+          "name": "editor_button.message_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "Set this to ContentItemSelectionRequest to tell the tool to use\ncontent-item; otherwise, omit",
+          "example": ""
+        },
+        {
+          "name": "homework_submission.url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The url of the external tool",
+          "example": ""
+        },
+        {
+          "name": "homework_submission.enabled",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Set this to enable this feature",
+          "example": ""
+        },
+        {
+          "name": "homework_submission.text",
+          "type": "string",
+          "default_value": "",
+          "desc": "The text that will show on the homework submission tab",
+          "example": ""
+        },
+        {
+          "name": "homework_submission.message_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "Set this to ContentItemSelectionRequest to tell the tool to use\ncontent-item; otherwise, omit",
+          "example": ""
+        },
+        {
+          "name": "link_selection.url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The url of the external tool",
+          "example": ""
+        },
+        {
+          "name": "link_selection.enabled",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Set this to enable this feature",
+          "example": ""
+        },
+        {
+          "name": "link_selection.text",
+          "type": "string",
+          "default_value": "",
+          "desc": "The text that will show for the link selection text",
+          "example": ""
+        },
+        {
+          "name": "link_selection.message_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "Set this to ContentItemSelectionRequest to tell the tool to use\ncontent-item; otherwise, omit",
+          "example": ""
+        },
+        {
+          "name": "migration_selection.url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The url of the external tool",
+          "example": ""
+        },
+        {
+          "name": "migration_selection.enabled",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Set this to enable this feature",
+          "example": ""
+        },
+        {
+          "name": "migration_selection.message_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "Set this to ContentItemSelectionRequest to tell the tool to use\ncontent-item; otherwise, omit",
+          "example": ""
+        },
+        {
+          "name": "tool_configuration.url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The url of the external tool",
+          "example": ""
+        },
+        {
+          "name": "tool_configuration.enabled",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Set this to enable this feature",
+          "example": ""
+        },
+        {
+          "name": "tool_configuration.message_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "Set this to ContentItemSelectionRequest to tell the tool to use\ncontent-item; otherwise, omit",
+          "example": ""
+        },
+        {
+          "name": "tool_configuration.prefer_sis_email",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Set this to default the lis_person_contact_email_primary to prefer\nprovisioned sis_email; otherwise, omit",
+          "example": ""
+        },
+        {
+          "name": "resource_selection.url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The url of the external tool",
+          "example": ""
+        },
+        {
+          "name": "resource_selection.enabled",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Set this to enable this feature. If set to false,\nnot_selectable must also be set to true in order to hide this tool\nfrom the selection UI in modules and assignments.",
+          "example": ""
+        },
+        {
+          "name": "resource_selection.icon_url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The url of the icon to show in the module external tool list",
+          "example": ""
+        },
+        {
+          "name": "resource_selection.selection_width",
+          "type": "string",
+          "default_value": "",
+          "desc": "The width of the dialog the tool is launched in",
+          "example": ""
+        },
+        {
+          "name": "resource_selection.selection_height",
+          "type": "string",
+          "default_value": "",
+          "desc": "The height of the dialog the tool is launched in",
+          "example": ""
+        },
+        {
+          "name": "config_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "Configuration can be passed in as CC xml instead of using query\nparameters. If this value is \"by_url\" or \"by_xml\" then an xml\nconfiguration will be expected in either the \"config_xml\" or \"config_url\"\nparameter. Note that the name parameter overrides the tool name provided\nin the xml",
+          "example": ""
+        },
+        {
+          "name": "config_xml",
+          "type": "string",
+          "default_value": "",
+          "desc": "XML tool configuration, as specified in the CC xml specification. This is\nrequired if \"config_type\" is set to \"by_xml\"",
+          "example": ""
+        },
+        {
+          "name": "config_url",
+          "type": "string",
+          "default_value": "",
+          "desc": "URL where the server can retrieve an XML tool configuration, as specified\nin the CC xml specification. This is required if \"config_type\" is set to\n\"by_url\"",
+          "example": ""
+        },
+        {
+          "name": "not_selectable",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Default: false. If set to true, and if resource_selection is set to false,\nthe tool won't show up in the external tool\nselection UI in modules and assignments",
+          "example": ""
+        },
+        {
+          "name": "oauth_compliant",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Default: false, if set to true LTI query params will not be copied to the\npost body.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Create an external tool",
+      "controller": "external_tools",
+      "description": "Create an external tool in the specified course/account.\nThe created tool will be returned, see the \"show\" endpoint for an example.\nIf a client ID is supplied canvas will attempt to create a context external\ntool using the LTI 1.3 standard.",
+      "name": "create_external_tool_accounts",
+      "endpoint": "POST /v1/accounts/:account_id/external_tools",
+      "reference": "https://canvas.instructure.com/doc/api/external_tools.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "client_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The client id is attached to the developer key.\nIf supplied all other parameters are unnecessary and will be ignored",
+          "example": ""
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "default_value": "",
+          "desc": "The name of the tool",
+          "example": ""
+        },
+        {
+          "name": "privacy_level",
+          "type": "string",
+          "default_value": "",
+          "desc": "What information to send to the external tool.",
+          "example": [
+            "anonymous",
+            "name_only",
+            "public"
+          ]
+        },
+        {
+          "name": "consumer_key",
+          "type": "string",
+          "default_value": "",
+          "desc": "The consumer key for the external tool",
+          "example": ""
+        },
+        {
+          "name": "shared_secret",
+          "type": "string",
+          "default_value": "",
+          "desc": "The shared secret with the external tool",
+          "example": ""
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "default_value": "",
+          "desc": "A description of the tool",
+          "example": ""
+        },
+        {
+          "name": "url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The url to match links against. Either \"url\" or \"domain\" should be set,\nnot both.",
+          "example": ""
+        },
+        {
+          "name": "domain",
+          "type": "string",
+          "default_value": "",
+          "desc": "The domain to match links against. Either \"url\" or \"domain\" should be\nset, not both.",
+          "example": ""
+        },
+        {
+          "name": "icon_url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The url of the icon to show for this tool",
+          "example": ""
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "default_value": "",
+          "desc": "The default text to show for this tool",
+          "example": ""
+        },
+        {
+          "name": "custom_fields.field_name",
+          "type": "string",
+          "default_value": "",
+          "desc": "Custom fields that will be sent to the tool consumer; can be used\nmultiple times",
+          "example": ""
+        },
+        {
+          "name": "is_rce_favorite",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "(Deprecated in favor of {api:ExternalToolsController#add_rce_favorite Add tool to RCE Favorites} and\n{api:ExternalToolsController#remove_rce_favorite Remove tool from RCE Favorites})\nWhether this tool should appear in a preferred location in the RCE.\nThis only applies to tools in root account contexts that have an editor\nbutton placement.",
+          "example": ""
+        },
+        {
+          "name": "account_navigation.url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The url of the external tool for account navigation",
+          "example": ""
+        },
+        {
+          "name": "account_navigation.enabled",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Set this to enable this feature",
+          "example": ""
+        },
+        {
+          "name": "account_navigation.text",
+          "type": "string",
+          "default_value": "",
+          "desc": "The text that will show on the left-tab in the account navigation",
+          "example": ""
+        },
+        {
+          "name": "account_navigation.selection_width",
+          "type": "string",
+          "default_value": "",
+          "desc": "The width of the dialog the tool is launched in",
+          "example": ""
+        },
+        {
+          "name": "account_navigation.selection_height",
+          "type": "string",
+          "default_value": "",
+          "desc": "The height of the dialog the tool is launched in",
+          "example": ""
+        },
+        {
+          "name": "account_navigation.display_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "The layout type to use when launching the tool. Must be\n\"full_width\", \"full_width_in_context\", \"borderless\", or \"default\"",
+          "example": ""
+        },
+        {
+          "name": "user_navigation.url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The url of the external tool for user navigation",
+          "example": ""
+        },
+        {
+          "name": "user_navigation.enabled",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Set this to enable this feature",
+          "example": ""
+        },
+        {
+          "name": "user_navigation.text",
+          "type": "string",
+          "default_value": "",
+          "desc": "The text that will show on the left-tab in the user navigation",
+          "example": ""
+        },
+        {
+          "name": "user_navigation.visibility",
+          "type": "string",
+          "default_value": "",
+          "desc": "Who will see the navigation tab. \"admins\" for admins, \"public\" or\n\"members\" for everyone",
+          "example": [
+            "admins",
+            "members",
+            "public"
+          ]
+        },
+        {
+          "name": "course_home_sub_navigation.url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The url of the external tool for right-side course home navigation menu",
+          "example": ""
+        },
+        {
+          "name": "course_home_sub_navigation.enabled",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Set this to enable this feature",
+          "example": ""
+        },
+        {
+          "name": "course_home_sub_navigation.text",
+          "type": "string",
+          "default_value": "",
+          "desc": "The text that will show on the right-side course home navigation menu",
+          "example": ""
+        },
+        {
+          "name": "course_home_sub_navigation.icon_url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The url of the icon to show in the right-side course home navigation menu",
+          "example": ""
+        },
+        {
+          "name": "course_navigation.enabled",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Set this to enable this feature",
+          "example": ""
+        },
+        {
+          "name": "course_navigation.text",
+          "type": "string",
+          "default_value": "",
+          "desc": "The text that will show on the left-tab in the course navigation",
+          "example": ""
+        },
+        {
+          "name": "course_navigation.visibility",
+          "type": "string",
+          "default_value": "",
+          "desc": "Who will see the navigation tab. \"admins\" for course admins, \"members\" for\nstudents, null for everyone",
+          "example": [
+            "admins",
+            "members"
+          ]
+        },
+        {
+          "name": "course_navigation.windowTarget",
+          "type": "string",
+          "default_value": "",
+          "desc": "Determines how the navigation tab will be opened.\n\"_blank\"\tLaunches the external tool in a new window or tab.\n\"_self\"\t(Default) Launches the external tool in an iframe inside of Canvas.",
+          "example": [
+            "_blank",
+            "_self"
+          ]
+        },
+        {
+          "name": "course_navigation.default",
+          "type": "string",
+          "default_value": "",
+          "desc": "If set to \"disabled\" the tool will not appear in the course navigation\nuntil a teacher explicitly enables it.\n\nIf set to \"enabled\" the tool will appear in the course navigation\nwithout requiring a teacher to explicitly enable it.\n\ndefaults to \"enabled\"",
+          "example": [
+            "disabled",
+            "enabled"
+          ]
+        },
+        {
+          "name": "course_navigation.display_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "The layout type to use when launching the tool. Must be\n\"full_width\", \"full_width_in_context\", \"borderless\", or \"default\"",
+          "example": ""
+        },
+        {
+          "name": "editor_button.url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The url of the external tool",
+          "example": ""
+        },
+        {
+          "name": "editor_button.enabled",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Set this to enable this feature",
+          "example": ""
+        },
+        {
+          "name": "editor_button.icon_url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The url of the icon to show in the WYSIWYG editor",
+          "example": ""
+        },
+        {
+          "name": "editor_button.selection_width",
+          "type": "string",
+          "default_value": "",
+          "desc": "The width of the dialog the tool is launched in",
+          "example": ""
+        },
+        {
+          "name": "editor_button.selection_height",
+          "type": "string",
+          "default_value": "",
+          "desc": "The height of the dialog the tool is launched in",
+          "example": ""
+        },
+        {
+          "name": "editor_button.message_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "Set this to ContentItemSelectionRequest to tell the tool to use\ncontent-item; otherwise, omit",
+          "example": ""
+        },
+        {
+          "name": "homework_submission.url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The url of the external tool",
+          "example": ""
+        },
+        {
+          "name": "homework_submission.enabled",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Set this to enable this feature",
+          "example": ""
+        },
+        {
+          "name": "homework_submission.text",
+          "type": "string",
+          "default_value": "",
+          "desc": "The text that will show on the homework submission tab",
+          "example": ""
+        },
+        {
+          "name": "homework_submission.message_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "Set this to ContentItemSelectionRequest to tell the tool to use\ncontent-item; otherwise, omit",
+          "example": ""
+        },
+        {
+          "name": "link_selection.url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The url of the external tool",
+          "example": ""
+        },
+        {
+          "name": "link_selection.enabled",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Set this to enable this feature",
+          "example": ""
+        },
+        {
+          "name": "link_selection.text",
+          "type": "string",
+          "default_value": "",
+          "desc": "The text that will show for the link selection text",
+          "example": ""
+        },
+        {
+          "name": "link_selection.message_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "Set this to ContentItemSelectionRequest to tell the tool to use\ncontent-item; otherwise, omit",
+          "example": ""
+        },
+        {
+          "name": "migration_selection.url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The url of the external tool",
+          "example": ""
+        },
+        {
+          "name": "migration_selection.enabled",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Set this to enable this feature",
+          "example": ""
+        },
+        {
+          "name": "migration_selection.message_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "Set this to ContentItemSelectionRequest to tell the tool to use\ncontent-item; otherwise, omit",
+          "example": ""
+        },
+        {
+          "name": "tool_configuration.url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The url of the external tool",
+          "example": ""
+        },
+        {
+          "name": "tool_configuration.enabled",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Set this to enable this feature",
+          "example": ""
+        },
+        {
+          "name": "tool_configuration.message_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "Set this to ContentItemSelectionRequest to tell the tool to use\ncontent-item; otherwise, omit",
+          "example": ""
+        },
+        {
+          "name": "tool_configuration.prefer_sis_email",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Set this to default the lis_person_contact_email_primary to prefer\nprovisioned sis_email; otherwise, omit",
+          "example": ""
+        },
+        {
+          "name": "resource_selection.url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The url of the external tool",
+          "example": ""
+        },
+        {
+          "name": "resource_selection.enabled",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Set this to enable this feature. If set to false,\nnot_selectable must also be set to true in order to hide this tool\nfrom the selection UI in modules and assignments.",
+          "example": ""
+        },
+        {
+          "name": "resource_selection.icon_url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The url of the icon to show in the module external tool list",
+          "example": ""
+        },
+        {
+          "name": "resource_selection.selection_width",
+          "type": "string",
+          "default_value": "",
+          "desc": "The width of the dialog the tool is launched in",
+          "example": ""
+        },
+        {
+          "name": "resource_selection.selection_height",
+          "type": "string",
+          "default_value": "",
+          "desc": "The height of the dialog the tool is launched in",
+          "example": ""
+        },
+        {
+          "name": "config_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "Configuration can be passed in as CC xml instead of using query\nparameters. If this value is \"by_url\" or \"by_xml\" then an xml\nconfiguration will be expected in either the \"config_xml\" or \"config_url\"\nparameter. Note that the name parameter overrides the tool name provided\nin the xml",
+          "example": ""
+        },
+        {
+          "name": "config_xml",
+          "type": "string",
+          "default_value": "",
+          "desc": "XML tool configuration, as specified in the CC xml specification. This is\nrequired if \"config_type\" is set to \"by_xml\"",
+          "example": ""
+        },
+        {
+          "name": "config_url",
+          "type": "string",
+          "default_value": "",
+          "desc": "URL where the server can retrieve an XML tool configuration, as specified\nin the CC xml specification. This is required if \"config_type\" is set to\n\"by_url\"",
+          "example": ""
+        },
+        {
+          "name": "not_selectable",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Default: false. If set to true, and if resource_selection is set to false,\nthe tool won't show up in the external tool\nselection UI in modules and assignments",
+          "example": ""
+        },
+        {
+          "name": "oauth_compliant",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Default: false, if set to true LTI query params will not be copied to the\npost body.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Edit an external tool",
+      "controller": "external_tools",
+      "description": "Update the specified external tool. Uses same parameters as create",
+      "name": "edit_external_tool_courses",
+      "endpoint": "PUT /v1/courses/:course_id/external_tools/:external_tool_id",
+      "reference": "https://canvas.instructure.com/doc/api/external_tools.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "external_tool_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Edit an external tool",
+      "controller": "external_tools",
+      "description": "Update the specified external tool. Uses same parameters as create",
+      "name": "edit_external_tool_accounts",
+      "endpoint": "PUT /v1/accounts/:account_id/external_tools/:external_tool_id",
+      "reference": "https://canvas.instructure.com/doc/api/external_tools.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "external_tool_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Delete an external tool",
+      "controller": "external_tools",
+      "description": "Remove the specified external tool",
+      "name": "delete_external_tool_courses",
+      "endpoint": "DELETE /v1/courses/:course_id/external_tools/:external_tool_id",
+      "reference": "https://canvas.instructure.com/doc/api/external_tools.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "external_tool_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Delete an external tool",
+      "controller": "external_tools",
+      "description": "Remove the specified external tool",
+      "name": "delete_external_tool_accounts",
+      "endpoint": "DELETE /v1/accounts/:account_id/external_tools/:external_tool_id",
+      "reference": "https://canvas.instructure.com/doc/api/external_tools.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "external_tool_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Add tool to RCE Favorites",
+      "controller": "external_tools",
+      "description": "Add the specified editor_button external tool to a preferred location in the RCE\nfor courses in the given account and its subaccounts (if the subaccounts\nhaven't set their own RCE Favorites). Cannot set more than 2 RCE Favorites.",
+      "name": "add_tool_to_rce_favorites",
+      "endpoint": "POST /v1/accounts/:account_id/external_tools/rce_favorites/:id",
+      "reference": "https://canvas.instructure.com/doc/api/external_tools.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Remove tool from RCE Favorites",
+      "controller": "external_tools",
+      "description": "Remove the specified external tool from a preferred location in the RCE\nfor the given account",
+      "name": "remove_tool_from_rce_favorites",
+      "endpoint": "DELETE /v1/accounts/:account_id/external_tools/rce_favorites/:id",
+      "reference": "https://canvas.instructure.com/doc/api/external_tools.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "favorites": [
+    {
+      "display_name": "List favorite courses",
+      "controller": "favorites",
+      "description": "Retrieve the paginated list of favorite courses for the current user. If the user has not chosen\nany favorites, then a selection of currently enrolled courses will be returned.\n\nSee the {api:CoursesController#index List courses API} for details on accepted include[] parameters.",
+      "name": "list_favorite_courses",
+      "endpoint": "GET /v1/users/self/favorites/courses",
+      "reference": "https://canvas.instructure.com/doc/api/favorites.html",
+      "params": [
+        {
+          "name": "exclude_blueprint_courses",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "When set, only return courses that are not configured as blueprint courses.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List favorite groups",
+      "controller": "favorites",
+      "description": "Retrieve the paginated list of favorite groups for the current user. If the user has not chosen\nany favorites, then a selection of groups that the user is a member of will be returned.",
+      "name": "list_favorite_groups",
+      "endpoint": "GET /v1/users/self/favorites/groups",
+      "reference": "https://canvas.instructure.com/doc/api/favorites.html",
+      "params": []
+    },
+    {
+      "display_name": "Add course to favorites",
+      "controller": "favorites",
+      "description": "Add a course to the current user's favorites.  If the course is already\nin the user's favorites, nothing happens.",
+      "name": "add_course_to_favorites",
+      "endpoint": "POST /v1/users/self/favorites/courses/:id",
+      "reference": "https://canvas.instructure.com/doc/api/favorites.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The ID or SIS ID of the course to add.  The current user must be\nregistered in the course.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Add group to favorites",
+      "controller": "favorites",
+      "description": "Add a group to the current user's favorites.  If the group is already\nin the user's favorites, nothing happens.",
+      "name": "add_group_to_favorites",
+      "endpoint": "POST /v1/users/self/favorites/groups/:id",
+      "reference": "https://canvas.instructure.com/doc/api/favorites.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The ID or SIS ID of the group to add.  The current user must be\na member of the group.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Remove course from favorites",
+      "controller": "favorites",
+      "description": "Remove a course from the current user's favorites.",
+      "name": "remove_course_from_favorites",
+      "endpoint": "DELETE /v1/users/self/favorites/courses/:id",
+      "reference": "https://canvas.instructure.com/doc/api/favorites.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "the ID or SIS ID of the course to remove",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Remove group from favorites",
+      "controller": "favorites",
+      "description": "Remove a group from the current user's favorites.",
+      "name": "remove_group_from_favorites",
+      "endpoint": "DELETE /v1/users/self/favorites/groups/:id",
+      "reference": "https://canvas.instructure.com/doc/api/favorites.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "the ID or SIS ID of the group to remove",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Reset course favorites",
+      "controller": "favorites",
+      "description": "Reset the current user's course favorites to the default\nautomatically generated list of enrolled courses",
+      "name": "reset_course_favorites",
+      "endpoint": "DELETE /v1/users/self/favorites/courses",
+      "reference": "https://canvas.instructure.com/doc/api/favorites.html",
+      "params": []
+    },
+    {
+      "display_name": "Reset group favorites",
+      "controller": "favorites",
+      "description": "Reset the current user's group favorites to the default\nautomatically generated list of enrolled group",
+      "name": "reset_group_favorites",
+      "endpoint": "DELETE /v1/users/self/favorites/groups",
+      "reference": "https://canvas.instructure.com/doc/api/favorites.html",
+      "params": []
+    }
+  ],
+  "feature_flags": [
+    {
+      "display_name": "List features",
+      "controller": "feature_flags",
+      "description": "A paginated list of all features that apply to a given Account, Course, or User.",
+      "name": "list_features_courses",
+      "endpoint": "GET /v1/courses/:course_id/features",
+      "reference": "https://canvas.instructure.com/doc/api/feature_flags.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List features",
+      "controller": "feature_flags",
+      "description": "A paginated list of all features that apply to a given Account, Course, or User.",
+      "name": "list_features_accounts",
+      "endpoint": "GET /v1/accounts/:account_id/features",
+      "reference": "https://canvas.instructure.com/doc/api/feature_flags.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List features",
+      "controller": "feature_flags",
+      "description": "A paginated list of all features that apply to a given Account, Course, or User.",
+      "name": "list_features_users",
+      "endpoint": "GET /v1/users/:user_id/features",
+      "reference": "https://canvas.instructure.com/doc/api/feature_flags.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List enabled features",
+      "controller": "feature_flags",
+      "description": "A paginated list of all features that are enabled on a given Account, Course, or User.\nOnly the feature names are returned.",
+      "name": "list_enabled_features_courses",
+      "endpoint": "GET /v1/courses/:course_id/features/enabled",
+      "reference": "https://canvas.instructure.com/doc/api/feature_flags.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List enabled features",
+      "controller": "feature_flags",
+      "description": "A paginated list of all features that are enabled on a given Account, Course, or User.\nOnly the feature names are returned.",
+      "name": "list_enabled_features_accounts",
+      "endpoint": "GET /v1/accounts/:account_id/features/enabled",
+      "reference": "https://canvas.instructure.com/doc/api/feature_flags.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List enabled features",
+      "controller": "feature_flags",
+      "description": "A paginated list of all features that are enabled on a given Account, Course, or User.\nOnly the feature names are returned.",
+      "name": "list_enabled_features_users",
+      "endpoint": "GET /v1/users/:user_id/features/enabled",
+      "reference": "https://canvas.instructure.com/doc/api/feature_flags.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List environment features",
+      "controller": "feature_flags",
+      "description": "Return a hash of global feature settings that pertain to the\nCanvas user interface. This is the same information supplied to the\nweb interface as +ENV.FEATURES+.",
+      "name": "list_environment_features",
+      "endpoint": "GET /v1/features/environment",
+      "reference": "https://canvas.instructure.com/doc/api/feature_flags.html",
+      "params": []
+    },
+    {
+      "display_name": "Get feature flag",
+      "controller": "feature_flags",
+      "description": "Get the feature flag that applies to a given Account, Course, or User.\nThe flag may be defined on the object, or it may be inherited from a parent\naccount. You can look at the context_id and context_type of the returned object\nto determine which is the case. If these fields are missing, then the object\nis the global Canvas default.",
+      "name": "get_feature_flag_courses",
+      "endpoint": "GET /v1/courses/:course_id/features/flags/:feature",
+      "reference": "https://canvas.instructure.com/doc/api/feature_flags.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "feature",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get feature flag",
+      "controller": "feature_flags",
+      "description": "Get the feature flag that applies to a given Account, Course, or User.\nThe flag may be defined on the object, or it may be inherited from a parent\naccount. You can look at the context_id and context_type of the returned object\nto determine which is the case. If these fields are missing, then the object\nis the global Canvas default.",
+      "name": "get_feature_flag_accounts",
+      "endpoint": "GET /v1/accounts/:account_id/features/flags/:feature",
+      "reference": "https://canvas.instructure.com/doc/api/feature_flags.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "feature",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get feature flag",
+      "controller": "feature_flags",
+      "description": "Get the feature flag that applies to a given Account, Course, or User.\nThe flag may be defined on the object, or it may be inherited from a parent\naccount. You can look at the context_id and context_type of the returned object\nto determine which is the case. If these fields are missing, then the object\nis the global Canvas default.",
+      "name": "get_feature_flag_users",
+      "endpoint": "GET /v1/users/:user_id/features/flags/:feature",
+      "reference": "https://canvas.instructure.com/doc/api/feature_flags.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "feature",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Set feature flag",
+      "controller": "feature_flags",
+      "description": "Set a feature flag for a given Account, Course, or User. This call will fail if a parent account sets\na feature flag for the same feature in any state other than \"allowed\".",
+      "name": "set_feature_flag_courses",
+      "endpoint": "PUT /v1/courses/:course_id/features/flags/:feature",
+      "reference": "https://canvas.instructure.com/doc/api/feature_flags.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "feature",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "state",
+          "type": "string",
+          "default_value": "",
+          "desc": "\"off\":: The feature is not available for the course, user, or account and sub-accounts.\n\"allowed\":: (valid only on accounts) The feature is off in the account, but may be enabled in\n            sub-accounts and courses by setting a feature flag on the sub-account or course.\n\"on\":: The feature is turned on unconditionally for the user, course, or account and sub-accounts.",
+          "example": [
+            "off",
+            "allowed",
+            "on"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Set feature flag",
+      "controller": "feature_flags",
+      "description": "Set a feature flag for a given Account, Course, or User. This call will fail if a parent account sets\na feature flag for the same feature in any state other than \"allowed\".",
+      "name": "set_feature_flag_accounts",
+      "endpoint": "PUT /v1/accounts/:account_id/features/flags/:feature",
+      "reference": "https://canvas.instructure.com/doc/api/feature_flags.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "feature",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "state",
+          "type": "string",
+          "default_value": "",
+          "desc": "\"off\":: The feature is not available for the course, user, or account and sub-accounts.\n\"allowed\":: (valid only on accounts) The feature is off in the account, but may be enabled in\n            sub-accounts and courses by setting a feature flag on the sub-account or course.\n\"on\":: The feature is turned on unconditionally for the user, course, or account and sub-accounts.",
+          "example": [
+            "off",
+            "allowed",
+            "on"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Set feature flag",
+      "controller": "feature_flags",
+      "description": "Set a feature flag for a given Account, Course, or User. This call will fail if a parent account sets\na feature flag for the same feature in any state other than \"allowed\".",
+      "name": "set_feature_flag_users",
+      "endpoint": "PUT /v1/users/:user_id/features/flags/:feature",
+      "reference": "https://canvas.instructure.com/doc/api/feature_flags.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "feature",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "state",
+          "type": "string",
+          "default_value": "",
+          "desc": "\"off\":: The feature is not available for the course, user, or account and sub-accounts.\n\"allowed\":: (valid only on accounts) The feature is off in the account, but may be enabled in\n            sub-accounts and courses by setting a feature flag on the sub-account or course.\n\"on\":: The feature is turned on unconditionally for the user, course, or account and sub-accounts.",
+          "example": [
+            "off",
+            "allowed",
+            "on"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Remove feature flag",
+      "controller": "feature_flags",
+      "description": "Remove feature flag for a given Account, Course, or User.  (Note that the flag must\nbe defined on the Account, Course, or User directly.)  The object will then inherit\nthe feature flags from a higher account, if any exist.  If this flag was 'on' or 'off',\nthen lower-level account flags that were masked by this one will apply again.",
+      "name": "remove_feature_flag_courses",
+      "endpoint": "DELETE /v1/courses/:course_id/features/flags/:feature",
+      "reference": "https://canvas.instructure.com/doc/api/feature_flags.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "feature",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Remove feature flag",
+      "controller": "feature_flags",
+      "description": "Remove feature flag for a given Account, Course, or User.  (Note that the flag must\nbe defined on the Account, Course, or User directly.)  The object will then inherit\nthe feature flags from a higher account, if any exist.  If this flag was 'on' or 'off',\nthen lower-level account flags that were masked by this one will apply again.",
+      "name": "remove_feature_flag_accounts",
+      "endpoint": "DELETE /v1/accounts/:account_id/features/flags/:feature",
+      "reference": "https://canvas.instructure.com/doc/api/feature_flags.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "feature",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Remove feature flag",
+      "controller": "feature_flags",
+      "description": "Remove feature flag for a given Account, Course, or User.  (Note that the flag must\nbe defined on the Account, Course, or User directly.)  The object will then inherit\nthe feature flags from a higher account, if any exist.  If this flag was 'on' or 'off',\nthen lower-level account flags that were masked by this one will apply again.",
+      "name": "remove_feature_flag_users",
+      "endpoint": "DELETE /v1/users/:user_id/features/flags/:feature",
+      "reference": "https://canvas.instructure.com/doc/api/feature_flags.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "feature",
           "type": "string",
           "default_value": "",
           "desc": "ID",
@@ -10262,6 +16841,184 @@ const RAWCANVASAPIS = {
       ]
     }
   ],
+  "grade_change_log": [
+    {
+      "display_name": "Query by assignment",
+      "controller": "grade_change_log",
+      "description": "List grade change events for a given assignment.",
+      "name": "query_by_assignment",
+      "endpoint": "GET /v1/audit/grade_change/assignments/:assignment_id",
+      "reference": "https://canvas.instructure.com/doc/api/grade_change_log.html",
+      "params": [
+        {
+          "name": "assignment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "start_time",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "The beginning of the time range from which you want events.",
+          "example": ""
+        },
+        {
+          "name": "end_time",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "The end of the time range from which you want events.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Query by course",
+      "controller": "grade_change_log",
+      "description": "List grade change events for a given course.",
+      "name": "query_by_course",
+      "endpoint": "GET /v1/audit/grade_change/courses/:course_id",
+      "reference": "https://canvas.instructure.com/doc/api/grade_change_log.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "start_time",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "The beginning of the time range from which you want events.",
+          "example": ""
+        },
+        {
+          "name": "end_time",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "The end of the time range from which you want events.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Query by student",
+      "controller": "grade_change_log",
+      "description": "List grade change events for a given student.",
+      "name": "query_by_student",
+      "endpoint": "GET /v1/audit/grade_change/students/:student_id",
+      "reference": "https://canvas.instructure.com/doc/api/grade_change_log.html",
+      "params": [
+        {
+          "name": "student_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "start_time",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "The beginning of the time range from which you want events.",
+          "example": ""
+        },
+        {
+          "name": "end_time",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "The end of the time range from which you want events.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Query by grader",
+      "controller": "grade_change_log",
+      "description": "List grade change events for a given grader.",
+      "name": "query_by_grader",
+      "endpoint": "GET /v1/audit/grade_change/graders/:grader_id",
+      "reference": "https://canvas.instructure.com/doc/api/grade_change_log.html",
+      "params": [
+        {
+          "name": "grader_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "start_time",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "The beginning of the time range from which you want events.",
+          "example": ""
+        },
+        {
+          "name": "end_time",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "The end of the time range from which you want events.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Advanced query",
+      "controller": "grade_change_log",
+      "description": "List grade change events satisfying all given parameters. Teachers may query for events in courses they teach.\nQueries without +course_id+ require account administrator rights.\n\nAt least one of +course_id+, +assignment_id+, +student_id+, or +grader_id+ must be specified.",
+      "name": "advanced_query",
+      "endpoint": "GET /v1/audit/grade_change",
+      "reference": "https://canvas.instructure.com/doc/api/grade_change_log.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "Restrict query to events in the specified course.",
+          "example": ""
+        },
+        {
+          "name": "assignment_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "Restrict query to the given assignment. If \"override\" is given, query the course final grade override instead.",
+          "example": ""
+        },
+        {
+          "name": "student_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "User id of a student to search grading events for.",
+          "example": ""
+        },
+        {
+          "name": "grader_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "User id of a grader to search grading events for.",
+          "example": ""
+        },
+        {
+          "name": "start_time",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "The beginning of the time range from which you want events.",
+          "example": ""
+        },
+        {
+          "name": "end_time",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "The end of the time range from which you want events.",
+          "example": ""
+        }
+      ]
+    }
+  ],
   "gradebook_history": [
     {
       "display_name": "Days in gradebook history for this course",
@@ -10376,6 +17133,718 @@ const RAWCANVASAPIS = {
           "type": "boolean",
           "default_value": "",
           "desc": "Returns submission versions in ascending date order (oldest first). If\nabsent, returns submission versions in descending date order (newest\nfirst).",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "grading_periods": [
+    {
+      "display_name": "List grading periods",
+      "controller": "grading_periods",
+      "description": "Returns the paginated list of grading periods for the current course.",
+      "name": "list_grading_periods_accounts",
+      "endpoint": "GET /v1/accounts/:account_id/grading_periods",
+      "reference": "https://canvas.instructure.com/doc/api/grading_periods.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List grading periods",
+      "controller": "grading_periods",
+      "description": "Returns the paginated list of grading periods for the current course.",
+      "name": "list_grading_periods_courses",
+      "endpoint": "GET /v1/courses/:course_id/grading_periods",
+      "reference": "https://canvas.instructure.com/doc/api/grading_periods.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get a single grading period",
+      "controller": "grading_periods",
+      "description": "Returns the grading period with the given id",
+      "name": "get_single_grading_period",
+      "endpoint": "GET /v1/courses/:course_id/grading_periods/:id",
+      "reference": "https://canvas.instructure.com/doc/api/grading_periods.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Update a single grading period",
+      "controller": "grading_periods",
+      "description": "Update an existing grading period.",
+      "name": "update_single_grading_period",
+      "endpoint": "PUT /v1/courses/:course_id/grading_periods/:id",
+      "reference": "https://canvas.instructure.com/doc/api/grading_periods.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "grading_periods.start_date[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The date the grading period starts.",
+          "example": ""
+        },
+        {
+          "name": "grading_periods.end_date[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "no description",
+          "example": ""
+        },
+        {
+          "name": "grading_periods.weight[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "A weight value that contributes to the overall weight of a grading period set which is used to calculate how much assignments in this period contribute to the total grade",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Delete a grading period",
+      "controller": "grading_periods",
+      "description": "<b>204 No Content</b> response code is returned if the deletion was\nsuccessful.",
+      "name": "delete_grading_period_courses",
+      "endpoint": "DELETE /v1/courses/:course_id/grading_periods/:id",
+      "reference": "https://canvas.instructure.com/doc/api/grading_periods.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Delete a grading period",
+      "controller": "grading_periods",
+      "description": "<b>204 No Content</b> response code is returned if the deletion was\nsuccessful.",
+      "name": "delete_grading_period_accounts",
+      "endpoint": "DELETE /v1/accounts/:account_id/grading_periods/:id",
+      "reference": "https://canvas.instructure.com/doc/api/grading_periods.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "grading_standards": [
+    {
+      "display_name": "Create a new grading standard",
+      "controller": "grading_standards",
+      "description": "Create a new grading standard\n\nIf grading_scheme_entry arguments are omitted, then a default grading scheme\nwill be set. The default scheme is as follows:\n     \"A\" : 94,\n     \"A-\" : 90,\n     \"B+\" : 87,\n     \"B\" : 84,\n     \"B-\" : 80,\n     \"C+\" : 77,\n     \"C\" : 74,\n     \"C-\" : 70,\n     \"D+\" : 67,\n     \"D\" : 64,\n     \"D-\" : 61,\n     \"F\" : 0,",
+      "name": "create_new_grading_standard_accounts",
+      "endpoint": "POST /v1/accounts/:account_id/grading_standards",
+      "reference": "https://canvas.instructure.com/doc/api/grading_standards.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "default_value": "",
+          "desc": "The title for the Grading Standard.",
+          "example": ""
+        },
+        {
+          "name": "grading_scheme_entry.name[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The name for an entry value within a GradingStandard that describes the range of the value\ne.g. A-",
+          "example": ""
+        },
+        {
+          "name": "grading_scheme_entry.value[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The value for the name of the entry within a GradingStandard.\nThe entry represents the lower bound of the range for the entry.\nThis range includes the value up to the next entry in the GradingStandard,\nor 100 if there is no upper bound. The lowest value will have a lower bound range of 0.\ne.g. 93",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Create a new grading standard",
+      "controller": "grading_standards",
+      "description": "Create a new grading standard\n\nIf grading_scheme_entry arguments are omitted, then a default grading scheme\nwill be set. The default scheme is as follows:\n     \"A\" : 94,\n     \"A-\" : 90,\n     \"B+\" : 87,\n     \"B\" : 84,\n     \"B-\" : 80,\n     \"C+\" : 77,\n     \"C\" : 74,\n     \"C-\" : 70,\n     \"D+\" : 67,\n     \"D\" : 64,\n     \"D-\" : 61,\n     \"F\" : 0,",
+      "name": "create_new_grading_standard_courses",
+      "endpoint": "POST /v1/courses/:course_id/grading_standards",
+      "reference": "https://canvas.instructure.com/doc/api/grading_standards.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "default_value": "",
+          "desc": "The title for the Grading Standard.",
+          "example": ""
+        },
+        {
+          "name": "grading_scheme_entry.name[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The name for an entry value within a GradingStandard that describes the range of the value\ne.g. A-",
+          "example": ""
+        },
+        {
+          "name": "grading_scheme_entry.value[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The value for the name of the entry within a GradingStandard.\nThe entry represents the lower bound of the range for the entry.\nThis range includes the value up to the next entry in the GradingStandard,\nor 100 if there is no upper bound. The lowest value will have a lower bound range of 0.\ne.g. 93",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List the grading standards available in a context.",
+      "controller": "grading_standards",
+      "description": "Returns the paginated list of grading standards for the given context that are visible to the user.",
+      "name": "list_grading_standards_available_in_context_courses",
+      "endpoint": "GET /v1/courses/:course_id/grading_standards",
+      "reference": "https://canvas.instructure.com/doc/api/grading_standards.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List the grading standards available in a context.",
+      "controller": "grading_standards",
+      "description": "Returns the paginated list of grading standards for the given context that are visible to the user.",
+      "name": "list_grading_standards_available_in_context_accounts",
+      "endpoint": "GET /v1/accounts/:account_id/grading_standards",
+      "reference": "https://canvas.instructure.com/doc/api/grading_standards.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get a single grading standard in a context.",
+      "controller": "grading_standards",
+      "description": "Returns a grading standard for the given context that is visible to the user.",
+      "name": "get_single_grading_standard_in_context_courses",
+      "endpoint": "GET /v1/courses/:course_id/grading_standards/:grading_standard_id",
+      "reference": "https://canvas.instructure.com/doc/api/grading_standards.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "grading_standard_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get a single grading standard in a context.",
+      "controller": "grading_standards",
+      "description": "Returns a grading standard for the given context that is visible to the user.",
+      "name": "get_single_grading_standard_in_context_accounts",
+      "endpoint": "GET /v1/accounts/:account_id/grading_standards/:grading_standard_id",
+      "reference": "https://canvas.instructure.com/doc/api/grading_standards.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "grading_standard_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "group_categories": [
+    {
+      "display_name": "List group categories for a context",
+      "controller": "group_categories",
+      "description": "Returns a paginated list of group categories in a context",
+      "name": "list_group_categories_for_context_accounts",
+      "endpoint": "GET /v1/accounts/:account_id/group_categories",
+      "reference": "https://canvas.instructure.com/doc/api/group_categories.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List group categories for a context",
+      "controller": "group_categories",
+      "description": "Returns a paginated list of group categories in a context",
+      "name": "list_group_categories_for_context_courses",
+      "endpoint": "GET /v1/courses/:course_id/group_categories",
+      "reference": "https://canvas.instructure.com/doc/api/group_categories.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get a single group category",
+      "controller": "group_categories",
+      "description": "Returns the data for a single group category, or a 401 if the caller doesn't have\nthe rights to see it.",
+      "name": "get_single_group_category",
+      "endpoint": "GET /v1/group_categories/:group_category_id",
+      "reference": "https://canvas.instructure.com/doc/api/group_categories.html",
+      "params": [
+        {
+          "name": "group_category_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Create a Group Category",
+      "controller": "group_categories",
+      "description": "Create a new group category",
+      "name": "create_group_category_accounts",
+      "endpoint": "POST /v1/accounts/:account_id/group_categories",
+      "reference": "https://canvas.instructure.com/doc/api/group_categories.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "default_value": "",
+          "desc": "Name of the group category",
+          "example": ""
+        },
+        {
+          "name": "self_signup",
+          "type": "string",
+          "default_value": "",
+          "desc": "Allow students to sign up for a group themselves (Course Only).\nvalid values are:\n\"enabled\":: allows students to self sign up for any group in course\n\"restricted\":: allows students to self sign up only for groups in the\n               same section null disallows self sign up",
+          "example": [
+            "enabled",
+            "restricted"
+          ]
+        },
+        {
+          "name": "auto_leader",
+          "type": "string",
+          "default_value": "",
+          "desc": "Assigns group leaders automatically when generating and allocating students to groups\nValid values are:\n\"first\":: the first student to be allocated to a group is the leader\n\"random\":: a random student from all members is chosen as the leader",
+          "example": [
+            "first",
+            "random"
+          ]
+        },
+        {
+          "name": "group_limit",
+          "type": "integer",
+          "default_value": "",
+          "desc": "Limit the maximum number of users in each group (Course Only). Requires\nself signup.",
+          "example": ""
+        },
+        {
+          "name": "sis_group_category_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The unique SIS identifier.",
+          "example": ""
+        },
+        {
+          "name": "create_group_count",
+          "type": "integer",
+          "default_value": "",
+          "desc": "Create this number of groups (Course Only).",
+          "example": ""
+        },
+        {
+          "name": "split_group_count",
+          "type": "string",
+          "default_value": "",
+          "desc": "(Deprecated)\nCreate this number of groups, and evenly distribute students\namong them. not allowed with \"enable_self_signup\". because\nthe group assignment happens synchronously, it's recommended\nthat you instead use the assign_unassigned_members endpoint.\n(Course Only)",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Create a Group Category",
+      "controller": "group_categories",
+      "description": "Create a new group category",
+      "name": "create_group_category_courses",
+      "endpoint": "POST /v1/courses/:course_id/group_categories",
+      "reference": "https://canvas.instructure.com/doc/api/group_categories.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "default_value": "",
+          "desc": "Name of the group category",
+          "example": ""
+        },
+        {
+          "name": "self_signup",
+          "type": "string",
+          "default_value": "",
+          "desc": "Allow students to sign up for a group themselves (Course Only).\nvalid values are:\n\"enabled\":: allows students to self sign up for any group in course\n\"restricted\":: allows students to self sign up only for groups in the\n               same section null disallows self sign up",
+          "example": [
+            "enabled",
+            "restricted"
+          ]
+        },
+        {
+          "name": "auto_leader",
+          "type": "string",
+          "default_value": "",
+          "desc": "Assigns group leaders automatically when generating and allocating students to groups\nValid values are:\n\"first\":: the first student to be allocated to a group is the leader\n\"random\":: a random student from all members is chosen as the leader",
+          "example": [
+            "first",
+            "random"
+          ]
+        },
+        {
+          "name": "group_limit",
+          "type": "integer",
+          "default_value": "",
+          "desc": "Limit the maximum number of users in each group (Course Only). Requires\nself signup.",
+          "example": ""
+        },
+        {
+          "name": "sis_group_category_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The unique SIS identifier.",
+          "example": ""
+        },
+        {
+          "name": "create_group_count",
+          "type": "integer",
+          "default_value": "",
+          "desc": "Create this number of groups (Course Only).",
+          "example": ""
+        },
+        {
+          "name": "split_group_count",
+          "type": "string",
+          "default_value": "",
+          "desc": "(Deprecated)\nCreate this number of groups, and evenly distribute students\namong them. not allowed with \"enable_self_signup\". because\nthe group assignment happens synchronously, it's recommended\nthat you instead use the assign_unassigned_members endpoint.\n(Course Only)",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Import category groups",
+      "controller": "group_categories",
+      "description": "Create Groups in a Group Category through a CSV import\n\nFor more information on the format that's expected here, please see the\n\"Group Category CSV\" section in the API docs.",
+      "name": "import_category_groups",
+      "endpoint": "POST /v1/group_categories/:group_category_id/import",
+      "reference": "https://canvas.instructure.com/doc/api/group_categories.html",
+      "params": [
+        {
+          "name": "group_category_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "attachment",
+          "type": "string",
+          "default_value": "",
+          "desc": "There are two ways to post group category import data - either via a\nmultipart/form-data form-field-style attachment, or via a non-multipart\nraw post request.\n\n'attachment' is required for multipart/form-data style posts. Assumed to\nbe outcome data from a file upload form field named 'attachment'.\n\nExamples:\n  curl -F attachment=@<filename> -H \"Authorization: Bearer <token>\" \\\n      'https://<canvas>/api/v1/group_categories/<category_id>/import'\n\nIf you decide to do a raw post, you can skip the 'attachment' argument,\nbut you will then be required to provide a suitable Content-Type header.\nYou are encouraged to also provide the 'extension' argument.\n\nExamples:\n  curl -H 'Content-Type: text/csv' --data-binary @<filename>.csv \\\n      -H \"Authorization: Bearer <token>\" \\\n      'https://<canvas>/api/v1/group_categories/<category_id>/import'",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Update a Group Category",
+      "controller": "group_categories",
+      "description": "Modifies an existing group category.",
+      "name": "update_group_category",
+      "endpoint": "PUT /v1/group_categories/:group_category_id",
+      "reference": "https://canvas.instructure.com/doc/api/group_categories.html",
+      "params": [
+        {
+          "name": "group_category_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "default_value": "",
+          "desc": "Name of the group category",
+          "example": ""
+        },
+        {
+          "name": "self_signup",
+          "type": "string",
+          "default_value": "",
+          "desc": "Allow students to sign up for a group themselves (Course Only).\nValid values are:\n\"enabled\":: allows students to self sign up for any group in course\n\"restricted\":: allows students to self sign up only for groups in the\n               same section null disallows self sign up",
+          "example": [
+            "enabled",
+            "restricted"
+          ]
+        },
+        {
+          "name": "auto_leader",
+          "type": "string",
+          "default_value": "",
+          "desc": "Assigns group leaders automatically when generating and allocating students to groups\nValid values are:\n\"first\":: the first student to be allocated to a group is the leader\n\"random\":: a random student from all members is chosen as the leader",
+          "example": [
+            "first",
+            "random"
+          ]
+        },
+        {
+          "name": "group_limit",
+          "type": "integer",
+          "default_value": "",
+          "desc": "Limit the maximum number of users in each group (Course Only). Requires\nself signup.",
+          "example": ""
+        },
+        {
+          "name": "sis_group_category_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The unique SIS identifier.",
+          "example": ""
+        },
+        {
+          "name": "create_group_count",
+          "type": "integer",
+          "default_value": "",
+          "desc": "Create this number of groups (Course Only).",
+          "example": ""
+        },
+        {
+          "name": "split_group_count",
+          "type": "string",
+          "default_value": "",
+          "desc": "(Deprecated)\nCreate this number of groups, and evenly distribute students\namong them. not allowed with \"enable_self_signup\". because\nthe group assignment happens synchronously, it's recommended\nthat you instead use the assign_unassigned_members endpoint.\n(Course Only)",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Delete a Group Category",
+      "controller": "group_categories",
+      "description": "Deletes a group category and all groups under it. Protected group\ncategories can not be deleted, i.e. \"communities\" and \"student_organized\".",
+      "name": "delete_group_category",
+      "endpoint": "DELETE /v1/group_categories/:group_category_id",
+      "reference": "https://canvas.instructure.com/doc/api/group_categories.html",
+      "params": [
+        {
+          "name": "group_category_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List groups in group category",
+      "controller": "group_categories",
+      "description": "Returns a paginated list of groups in a group category",
+      "name": "list_groups_in_group_category",
+      "endpoint": "GET /v1/group_categories/:group_category_id/groups",
+      "reference": "https://canvas.instructure.com/doc/api/group_categories.html",
+      "params": [
+        {
+          "name": "group_category_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "export groups in and users in category",
+      "controller": "group_categories",
+      "description": "Returns a csv file of users in format ready to import.",
+      "name": "export_groups_in_and_users_in_category",
+      "endpoint": "GET /v1/group_categories/:group_category_id/export",
+      "reference": "https://canvas.instructure.com/doc/api/group_categories.html",
+      "params": [
+        {
+          "name": "group_category_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List users in group category",
+      "controller": "group_categories",
+      "description": "Returns a paginated list of users in the group category.",
+      "name": "list_users_in_group_category",
+      "endpoint": "GET /v1/group_categories/:group_category_id/users",
+      "reference": "https://canvas.instructure.com/doc/api/group_categories.html",
+      "params": [
+        {
+          "name": "group_category_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "search_term",
+          "type": "string",
+          "default_value": "",
+          "desc": "The partial name or full ID of the users to match and return in the results\nlist. Must be at least 3 characters.",
+          "example": ""
+        },
+        {
+          "name": "unassigned",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Set this value to true if you wish only to search unassigned users in the\ngroup category.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Assign unassigned members",
+      "controller": "group_categories",
+      "description": "Assign all unassigned members as evenly as possible among the existing\nstudent groups.",
+      "name": "assign_unassigned_members",
+      "endpoint": "POST /v1/group_categories/:group_category_id/assign_unassigned_members",
+      "reference": "https://canvas.instructure.com/doc/api/group_categories.html",
+      "params": [
+        {
+          "name": "group_category_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "sync",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "The assigning is done asynchronously by default. If you would like to\noverride this and have the assigning done synchronously, set this value\nto true.",
           "example": ""
         }
       ]
@@ -11109,6 +18578,538 @@ const RAWCANVASAPIS = {
       ]
     }
   ],
+  "history": [
+    {
+      "display_name": "List recent history for a user",
+      "controller": "history",
+      "description": "Return a paginated list of the user's recent history. History entries are returned in descending order,\nnewest to oldest. You may list history entries for yourself (use +self+ as the user_id), for a student you observe,\nor for a user you manage as an administrator. Note that the +per_page+ pagination argument is not supported\nand the number of history entries returned per page will vary.",
+      "name": "list_recent_history_for_user",
+      "endpoint": "GET /v1/users/:user_id/history",
+      "reference": "https://canvas.instructure.com/doc/api/history.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "image_search": [
+    {
+      "display_name": "Find images",
+      "controller": "image_search",
+      "description": "Find public domain images for use in courses and user content.  If you select an image using this API, please use the {api:InternetImageController#image_selection Confirm image selection API} to indicate photo usage to the server.",
+      "name": "find_images",
+      "endpoint": "GET /v1/image_search",
+      "reference": "https://canvas.instructure.com/doc/api/image_search.html",
+      "params": [
+        {
+          "name": "query",
+          "type": "string",
+          "default_value": "",
+          "desc": "Search terms used for matching images (e.g. \"cats\").",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Confirm image selection",
+      "controller": "image_search",
+      "description": "After you have used the search API, you should hit this API to indicate photo usage to the server.",
+      "name": "confirm_image_selection",
+      "endpoint": "POST /v1/image_selection/:id",
+      "reference": "https://canvas.instructure.com/doc/api/image_search.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The ID from the image_search result.",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "immersive_reader": [],
+  "jw_ts": [
+    {
+      "display_name": "Create JWT",
+      "controller": "jw_ts",
+      "description": "Create a unique jwt for using with other canvas services\n\nGenerates a different JWT each time it's called, each one expires\nafter a short window (1 hour)",
+      "name": "create_jwt",
+      "endpoint": "POST /v1/jwts",
+      "reference": "https://canvas.instructure.com/doc/api/jw_ts.html",
+      "params": []
+    },
+    {
+      "display_name": "Refresh JWT",
+      "controller": "jw_ts",
+      "description": "Refresh a JWT for use with other canvas services\n\nGenerates a different JWT each time it's called, each one expires\nafter a short window (1 hour).",
+      "name": "refresh_jwt",
+      "endpoint": "POST /v1/jwts/refresh",
+      "reference": "https://canvas.instructure.com/doc/api/jw_ts.html",
+      "params": [
+        {
+          "name": "jwt",
+          "type": "string",
+          "default_value": "",
+          "desc": "An existing JWT token to be refreshed. The new token will have\nthe same context and workflows as the existing token.",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "late_policy": [
+    {
+      "display_name": "Get a late policy",
+      "controller": "late_policy",
+      "description": "Returns the late policy for a course.",
+      "name": "get_late_policy",
+      "endpoint": "GET /v1/courses/:id/late_policy",
+      "reference": "https://canvas.instructure.com/doc/api/late_policy.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Create a late policy",
+      "controller": "late_policy",
+      "description": "Create a late policy. If the course already has a late policy, a\nbad_request is returned since there can only be one late policy\nper course.",
+      "name": "create_late_policy",
+      "endpoint": "POST /v1/courses/:id/late_policy",
+      "reference": "https://canvas.instructure.com/doc/api/late_policy.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "late_policy.missing_submission_deduction_enabled",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Whether to enable the missing submission deduction late policy.",
+          "example": ""
+        },
+        {
+          "name": "late_policy.missing_submission_deduction",
+          "type": "number",
+          "default_value": "",
+          "desc": "How many percentage points to deduct from a missing submission.",
+          "example": ""
+        },
+        {
+          "name": "late_policy.late_submission_deduction_enabled",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Whether to enable the late submission deduction late policy.",
+          "example": ""
+        },
+        {
+          "name": "late_policy.late_submission_deduction",
+          "type": "number",
+          "default_value": "",
+          "desc": "How many percentage points to deduct per the late submission interval.",
+          "example": ""
+        },
+        {
+          "name": "late_policy.late_submission_interval",
+          "type": "string",
+          "default_value": "",
+          "desc": "The interval for late policies.",
+          "example": ""
+        },
+        {
+          "name": "late_policy.late_submission_minimum_percent_enabled",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Whether to enable the late submission minimum percent for a late policy.",
+          "example": ""
+        },
+        {
+          "name": "late_policy.late_submission_minimum_percent",
+          "type": "number",
+          "default_value": "",
+          "desc": "The minimum grade a submissions can have in percentage points.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Patch a late policy",
+      "controller": "late_policy",
+      "description": "Patch a late policy. No body is returned upon success.",
+      "name": "patch_late_policy",
+      "endpoint": "PATCH /v1/courses/:id/late_policy",
+      "reference": "https://canvas.instructure.com/doc/api/late_policy.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "late_policy.missing_submission_deduction_enabled",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Whether to enable the missing submission deduction late policy.",
+          "example": ""
+        },
+        {
+          "name": "late_policy.missing_submission_deduction",
+          "type": "number",
+          "default_value": "",
+          "desc": "How many percentage points to deduct from a missing submission.",
+          "example": ""
+        },
+        {
+          "name": "late_policy.late_submission_deduction_enabled",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Whether to enable the late submission deduction late policy.",
+          "example": ""
+        },
+        {
+          "name": "late_policy.late_submission_deduction",
+          "type": "number",
+          "default_value": "",
+          "desc": "How many percentage points to deduct per the late submission interval.",
+          "example": ""
+        },
+        {
+          "name": "late_policy.late_submission_interval",
+          "type": "string",
+          "default_value": "",
+          "desc": "The interval for late policies.",
+          "example": ""
+        },
+        {
+          "name": "late_policy.late_submission_minimum_percent_enabled",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Whether to enable the late submission minimum percent for a late policy.",
+          "example": ""
+        },
+        {
+          "name": "late_policy.late_submission_minimum_percent",
+          "type": "number",
+          "default_value": "",
+          "desc": "The minimum grade a submissions can have in percentage points.",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "line_items": [
+    {
+      "display_name": "Create a Line Item",
+      "controller": "line_items",
+      "description": "Create a new Line Item",
+      "name": "create_line_item",
+      "endpoint": "POST /lti/courses/:course_id/line_items",
+      "reference": "https://canvas.instructure.com/doc/api/line_items.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "scoreMaximum",
+          "type": "number",
+          "default_value": "",
+          "desc": "The maximum score for the line item. Scores created for the Line Item may exceed this value.",
+          "example": ""
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "default_value": "",
+          "desc": "The label for the Line Item. If no resourceLinkId is specified this value will also be used\nas the name of the placeholder assignment.",
+          "example": ""
+        },
+        {
+          "name": "resourceId",
+          "type": "string",
+          "default_value": "",
+          "desc": "A Tool Provider specified id for the Line Item. Multiple line items may\nshare the same resourceId within a given context.",
+          "example": ""
+        },
+        {
+          "name": "tag",
+          "type": "string",
+          "default_value": "",
+          "desc": "A value used to qualify a line Item beyond its ids. Line Items may be queried\nby this value in the List endpoint. Multiple line items can share the same tag\nwithin a given context.",
+          "example": ""
+        },
+        {
+          "name": "resourceLinkId",
+          "type": "string",
+          "default_value": "",
+          "desc": "The resource link id the Line Item should be attached to. This value should\nmatch the LTI id of the Canvas assignment associated with the tool.",
+          "example": ""
+        },
+        {
+          "name": "https://canvas.instructure.com/lti/submission_type",
+          "type": "object",
+          "default_value": "",
+          "desc": "(EXTENSION) - Optional block to set Assignment Submission Type when creating a new assignment is created.\ntype - 'none' or 'external_tool'::\nexternal_tool_url - Submission URL only used when type: 'external_tool'::",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Update a Line Item",
+      "controller": "line_items",
+      "description": "Update new Line Item",
+      "name": "update_line_item",
+      "endpoint": "PUT /lti/courses/:course_id/line_items/:id",
+      "reference": "https://canvas.instructure.com/doc/api/line_items.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "scoreMaximum",
+          "type": "number",
+          "default_value": "",
+          "desc": "The maximum score for the line item. Scores created for the Line Item may exceed this value.",
+          "example": ""
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "default_value": "",
+          "desc": "The label for the Line Item. If no resourceLinkId is specified this value will also be used\nas the name of the placeholder assignment.",
+          "example": ""
+        },
+        {
+          "name": "resourceId",
+          "type": "string",
+          "default_value": "",
+          "desc": "A Tool Provider specified id for the Line Item. Multiple line items may\nshare the same resourceId within a given context.",
+          "example": ""
+        },
+        {
+          "name": "tag",
+          "type": "string",
+          "default_value": "",
+          "desc": "A value used to qualify a line Item beyond its ids. Line Items may be queried\nby this value in the List endpoint. Multiple line items can share the same tag\nwithin a given context.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Show a Line Item",
+      "controller": "line_items",
+      "description": "Show existing Line Item",
+      "name": "show_line_item",
+      "endpoint": "GET /lti/courses/:course_id/line_items/:id",
+      "reference": "https://canvas.instructure.com/doc/api/line_items.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List line Items",
+      "controller": "line_items",
+      "description": "",
+      "name": "list_line_items",
+      "endpoint": "GET /lti/courses/:course_id/line_items",
+      "reference": "https://canvas.instructure.com/doc/api/line_items.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "tag",
+          "type": "string",
+          "default_value": "",
+          "desc": "If specified only Line Items with this tag will be included.",
+          "example": ""
+        },
+        {
+          "name": "resource_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "If specified only Line Items with this resource_id will be included.",
+          "example": ""
+        },
+        {
+          "name": "resource_link_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "If specified only Line Items attached to the specified resource_link_id will be included.",
+          "example": ""
+        },
+        {
+          "name": "limit",
+          "type": "string",
+          "default_value": "",
+          "desc": "May be used to limit the number of Line Items returned in a page",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Delete a Line Item",
+      "controller": "line_items",
+      "description": "Delete an existing Line Item",
+      "name": "delete_line_item",
+      "endpoint": "DELETE /lti/courses/:course_id/line_items/:id",
+      "reference": "https://canvas.instructure.com/doc/api/line_items.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "live_assessments": [
+    {
+      "display_name": "Create live assessment results",
+      "controller": "live_assessments",
+      "description": "Creates live assessment results and adds them to a live assessment",
+      "name": "create_live_assessment_results",
+      "endpoint": "POST /v1/courses/:course_id/live_assessments/:assessment_id/results",
+      "reference": "https://canvas.instructure.com/doc/api/live_assessments.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "assessment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List live assessment results",
+      "controller": "live_assessments",
+      "description": "Returns a paginated list of live assessment results",
+      "name": "list_live_assessment_results",
+      "endpoint": "GET /v1/courses/:course_id/live_assessments/:assessment_id/results",
+      "reference": "https://canvas.instructure.com/doc/api/live_assessments.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "assessment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "user_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "If set, restrict results to those for this user",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Create or find a live assessment",
+      "controller": "live_assessments",
+      "description": "Creates or finds an existing live assessment with the given key and aligns it with\nthe linked outcome",
+      "name": "create_or_find_live_assessment",
+      "endpoint": "POST /v1/courses/:course_id/live_assessments",
+      "reference": "https://canvas.instructure.com/doc/api/live_assessments.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List live assessments",
+      "controller": "live_assessments",
+      "description": "Returns a paginated list of live assessments.",
+      "name": "list_live_assessments",
+      "endpoint": "GET /v1/courses/:course_id/live_assessments",
+      "reference": "https://canvas.instructure.com/doc/api/live_assessments.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    }
+  ],
   "logins": [
     {
       "display_name": "List user logins",
@@ -11282,6 +19283,417 @@ const RAWCANVASAPIS = {
           "type": "string",
           "default_value": "",
           "desc": "ID",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "media_objects": [
+    {
+      "display_name": "List media tracks for a Media Object",
+      "controller": "media_objects",
+      "description": "List the media tracks associated with a media object",
+      "name": "list_media_tracks_for_media_object",
+      "endpoint": "GET /v1/media_objects/:media_object_id/media_tracks",
+      "reference": "https://canvas.instructure.com/doc/api/media_objects.html",
+      "params": [
+        {
+          "name": "media_object_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "include[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "By default, index returns id, locale, kind, media_object_id, and user_id for each of the\nresult MediaTracks. Use include[] to\nadd additional fields. For example include[]=content",
+          "example": [
+            "content",
+            "webvtt_content",
+            "updated_at",
+            "created_at"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Update Media Tracks",
+      "controller": "media_objects",
+      "description": "Replace the media tracks associated with a media object with\nthe array of tracks provided in the body.\nUpdate will\ndelete any existing tracks not listed,\nleave untouched any tracks with no content field,\nand update or create tracks with a content field.",
+      "name": "update_media_tracks",
+      "endpoint": "PUT /v1/media_objects/:media_object_id/media_tracks",
+      "reference": "https://canvas.instructure.com/doc/api/media_objects.html",
+      "params": [
+        {
+          "name": "media_object_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "include[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Retuns a listing of the resulting set of MediaTracks.\nLike List Media Objects, use the include[] parameter to\nadd additional fields.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List Media Objects",
+      "controller": "media_objects",
+      "description": "Returns media objects created by the user making the request. When\nusing the second version, returns media objects associated with\nthe given course.",
+      "name": "list_media_objects_media_objects",
+      "endpoint": "GET /v1/media_objects",
+      "reference": "https://canvas.instructure.com/doc/api/media_objects.html",
+      "params": [
+        {
+          "name": "sort",
+          "type": "string",
+          "default_value": "",
+          "desc": "Field to sort on. Default is \"title\"\n\ntitle:: sorts on user_entered_title if available, title if not.\n\ncreated_at:: sorts on the object's creation time.",
+          "example": [
+            "title",
+            "created_at"
+          ]
+        },
+        {
+          "name": "order",
+          "type": "string",
+          "default_value": "",
+          "desc": "Sort direction. Default is \"asc\"",
+          "example": [
+            "asc",
+            "desc"
+          ]
+        },
+        {
+          "name": "exclude[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Array of data to exclude. By excluding \"sources\" and \"tracks\",\nthe api will not need to query kaltura, which greatly\nspeeds up its response.\n\nsources:: Do not query kaltura for media_sources\ntracks:: Do not query kaltura for media_tracks",
+          "example": [
+            "sources",
+            "tracks"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "List Media Objects",
+      "controller": "media_objects",
+      "description": "Returns media objects created by the user making the request. When\nusing the second version, returns media objects associated with\nthe given course.",
+      "name": "list_media_objects_courses",
+      "endpoint": "GET /v1/courses/:course_id/media_objects",
+      "reference": "https://canvas.instructure.com/doc/api/media_objects.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "sort",
+          "type": "string",
+          "default_value": "",
+          "desc": "Field to sort on. Default is \"title\"\n\ntitle:: sorts on user_entered_title if available, title if not.\n\ncreated_at:: sorts on the object's creation time.",
+          "example": [
+            "title",
+            "created_at"
+          ]
+        },
+        {
+          "name": "order",
+          "type": "string",
+          "default_value": "",
+          "desc": "Sort direction. Default is \"asc\"",
+          "example": [
+            "asc",
+            "desc"
+          ]
+        },
+        {
+          "name": "exclude[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Array of data to exclude. By excluding \"sources\" and \"tracks\",\nthe api will not need to query kaltura, which greatly\nspeeds up its response.\n\nsources:: Do not query kaltura for media_sources\ntracks:: Do not query kaltura for media_tracks",
+          "example": [
+            "sources",
+            "tracks"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "List Media Objects",
+      "controller": "media_objects",
+      "description": "Returns media objects created by the user making the request. When\nusing the second version, returns media objects associated with\nthe given course.",
+      "name": "list_media_objects_groups",
+      "endpoint": "GET /v1/groups/:group_id/media_objects",
+      "reference": "https://canvas.instructure.com/doc/api/media_objects.html",
+      "params": [
+        {
+          "name": "group_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "sort",
+          "type": "string",
+          "default_value": "",
+          "desc": "Field to sort on. Default is \"title\"\n\ntitle:: sorts on user_entered_title if available, title if not.\n\ncreated_at:: sorts on the object's creation time.",
+          "example": [
+            "title",
+            "created_at"
+          ]
+        },
+        {
+          "name": "order",
+          "type": "string",
+          "default_value": "",
+          "desc": "Sort direction. Default is \"asc\"",
+          "example": [
+            "asc",
+            "desc"
+          ]
+        },
+        {
+          "name": "exclude[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Array of data to exclude. By excluding \"sources\" and \"tracks\",\nthe api will not need to query kaltura, which greatly\nspeeds up its response.\n\nsources:: Do not query kaltura for media_sources\ntracks:: Do not query kaltura for media_tracks",
+          "example": [
+            "sources",
+            "tracks"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Update Media Object",
+      "controller": "media_objects",
+      "description": "",
+      "name": "update_media_object",
+      "endpoint": "PUT /v1/media_objects/:media_object_id",
+      "reference": "https://canvas.instructure.com/doc/api/media_objects.html",
+      "params": [
+        {
+          "name": "media_object_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "user_entered_title",
+          "type": "string",
+          "default_value": "",
+          "desc": "The new title.",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "moderated_grading": [
+    {
+      "display_name": "List students selected for moderation",
+      "controller": "moderated_grading",
+      "description": "Returns a paginated list of students selected for moderation",
+      "name": "list_students_selected_for_moderation",
+      "endpoint": "GET /v1/courses/:course_id/assignments/:assignment_id/moderated_students",
+      "reference": "https://canvas.instructure.com/doc/api/moderated_grading.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "assignment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Select students for moderation",
+      "controller": "moderated_grading",
+      "description": "Returns an array of users that were selected for moderation",
+      "name": "select_students_for_moderation",
+      "endpoint": "POST /v1/courses/:course_id/assignments/:assignment_id/moderated_students",
+      "reference": "https://canvas.instructure.com/doc/api/moderated_grading.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "assignment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "student_ids[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "user ids for students to select for moderation",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Bulk select provisional grades",
+      "controller": "moderated_grading",
+      "description": "Choose which provisional grades will be received by associated students for an assignment.\nThe caller must be the final grader for the assignment or an admin with :select_final_grade rights.",
+      "name": "bulk_select_provisional_grades",
+      "endpoint": "PUT /v1/courses/:course_id/assignments/:assignment_id/provisional_grades/bulk_select",
+      "reference": "https://canvas.instructure.com/doc/api/moderated_grading.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "assignment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Show provisional grade status for a student",
+      "controller": "moderated_grading",
+      "description": "Tell whether the student's submission needs one or more provisional grades.",
+      "name": "show_provisional_grade_status_for_student",
+      "endpoint": "GET /v1/courses/:course_id/assignments/:assignment_id/provisional_grades/status",
+      "reference": "https://canvas.instructure.com/doc/api/moderated_grading.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "assignment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "student_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The id of the student to show the status for",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Select provisional grade",
+      "controller": "moderated_grading",
+      "description": "Choose which provisional grade the student should receive for a submission.\nThe caller must be the final grader for the assignment or an admin with :select_final_grade rights.",
+      "name": "select_provisional_grade",
+      "endpoint": "PUT /v1/courses/:course_id/assignments/:assignment_id/provisional_grades/:provisional_grade_id/select",
+      "reference": "https://canvas.instructure.com/doc/api/moderated_grading.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "assignment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "provisional_grade_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Publish provisional grades for an assignment",
+      "controller": "moderated_grading",
+      "description": "Publish the selected provisional grade for all submissions to an assignment.\nUse the \"Select provisional grade\" endpoint to choose which provisional grade to publish\nfor a particular submission.\n\nStudents not in the moderation set will have their one and only provisional grade published.\n\nWARNING: This is irreversible. This will overwrite existing grades in the gradebook.",
+      "name": "publish_provisional_grades_for_assignment",
+      "endpoint": "POST /v1/courses/:course_id/assignments/:assignment_id/provisional_grades/publish",
+      "reference": "https://canvas.instructure.com/doc/api/moderated_grading.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "assignment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Show provisional grade status for a student",
+      "controller": "moderated_grading",
+      "description": "Determine whether or not the student's submission needs one or more provisional grades.",
+      "name": "show_provisional_grade_status_for_student",
+      "endpoint": "GET /v1/courses/:course_id/assignments/:assignment_id/anonymous_provisional_grades/status",
+      "reference": "https://canvas.instructure.com/doc/api/moderated_grading.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "assignment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "anonymous_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The id of the student to show the status for",
           "example": ""
         }
       ]
@@ -12021,6 +20433,686 @@ const RAWCANVASAPIS = {
         },
         {
           "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "names_and_role": [
+    {
+      "display_name": "List Course Memberships",
+      "controller": "names_and_role",
+      "description": "Return active NamesAndRoleMemberships in the given course.",
+      "name": "list_course_memberships",
+      "endpoint": "GET /lti/courses/:course_id/names_and_roles",
+      "reference": "https://canvas.instructure.com/doc/api/names_and_role.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "rlid",
+          "type": "string",
+          "default_value": "",
+          "desc": "If specified only NamesAndRoleMemberships with access to the LTI link references by this `rlid` will be included.\nAlso causes the member array to be included for each returned NamesAndRoleMembership.\nIf the `role` parameter is also present, it will be 'and-ed' together with this parameter",
+          "example": ""
+        },
+        {
+          "name": "role",
+          "type": "string",
+          "default_value": "",
+          "desc": "If specified only NamesAndRoleMemberships having this role in the given Course will be included.\nValue must be a fully-qualified LTI/LIS role URN.\nIf the `rlid` parameter is also present, it will be 'and-ed' together with this parameter",
+          "example": ""
+        },
+        {
+          "name": "limit",
+          "type": "string",
+          "default_value": "",
+          "desc": "May be used to limit the number of NamesAndRoleMemberships returned in a page. Defaults to 50.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List Group Memberships",
+      "controller": "names_and_role",
+      "description": "Return active NamesAndRoleMemberships in the given group.",
+      "name": "list_group_memberships",
+      "endpoint": "GET /lti/groups/:group_id/names_and_roles",
+      "reference": "https://canvas.instructure.com/doc/api/names_and_role.html",
+      "params": [
+        {
+          "name": "group_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "`rlid`",
+          "type": "string",
+          "default_value": "",
+          "desc": "If specified only NamesAndRoleMemberships with access to the LTI link references by this `rlid` will be included.\nAlso causes the member array to be included for each returned NamesAndRoleMembership.\nIf the role parameter is also present, it will be 'and-ed' together with this parameter",
+          "example": ""
+        },
+        {
+          "name": "role",
+          "type": "string",
+          "default_value": "",
+          "desc": "If specified only NamesAndRoleMemberships having this role in the given Group will be included.\nValue must be a fully-qualified LTI/LIS role URN. Further, only\nhttp://purl.imsglobal.org/vocab/lis/v2/membership#Member and\nhttp://purl.imsglobal.org/vocab/lis/v2/membership#Manager are supported.\nIf the `rlid` parameter is also present, it will be 'and-ed' together with this parameter",
+          "example": ""
+        },
+        {
+          "name": "limit",
+          "type": "string",
+          "default_value": "",
+          "desc": "May be used to limit the number of NamesAndRoleMemberships returned in a page. Defaults to 50.",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "notification_preferences": [
+    {
+      "display_name": "List preferences",
+      "controller": "notification_preferences",
+      "description": "Fetch all preferences for the given communication channel",
+      "name": "list_preferences_communication_channel_id",
+      "endpoint": "GET /v1/users/:user_id/communication_channels/:communication_channel_id/notification_preferences",
+      "reference": "https://canvas.instructure.com/doc/api/notification_preferences.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "communication_channel_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List preferences",
+      "controller": "notification_preferences",
+      "description": "Fetch all preferences for the given communication channel",
+      "name": "list_preferences_type",
+      "endpoint": "GET /v1/users/:user_id/communication_channels/:type/:address/notification_preferences",
+      "reference": "https://canvas.instructure.com/doc/api/notification_preferences.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "address",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List of preference categories",
+      "controller": "notification_preferences",
+      "description": "Fetch all notification preference categories for the given communication channel",
+      "name": "list_of_preference_categories",
+      "endpoint": "GET /v1/users/:user_id/communication_channels/:communication_channel_id/notification_preference_categories",
+      "reference": "https://canvas.instructure.com/doc/api/notification_preferences.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "communication_channel_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get a preference",
+      "controller": "notification_preferences",
+      "description": "Fetch the preference for the given notification for the given communication channel",
+      "name": "get_preference_communication_channel_id",
+      "endpoint": "GET /v1/users/:user_id/communication_channels/:communication_channel_id/notification_preferences/:notification",
+      "reference": "https://canvas.instructure.com/doc/api/notification_preferences.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "communication_channel_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "notification",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get a preference",
+      "controller": "notification_preferences",
+      "description": "Fetch the preference for the given notification for the given communication channel",
+      "name": "get_preference_type",
+      "endpoint": "GET /v1/users/:user_id/communication_channels/:type/:address/notification_preferences/:notification",
+      "reference": "https://canvas.instructure.com/doc/api/notification_preferences.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "address",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "notification",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Update a preference",
+      "controller": "notification_preferences",
+      "description": "Change the preference for a single notification for a single communication channel",
+      "name": "update_preference_communication_channel_id",
+      "endpoint": "PUT /v1/users/self/communication_channels/:communication_channel_id/notification_preferences/:notification",
+      "reference": "https://canvas.instructure.com/doc/api/notification_preferences.html",
+      "params": [
+        {
+          "name": "communication_channel_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "notification",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "notification_preferences.frequency",
+          "type": "string",
+          "default_value": "",
+          "desc": "The desired frequency for this notification",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Update a preference",
+      "controller": "notification_preferences",
+      "description": "Change the preference for a single notification for a single communication channel",
+      "name": "update_preference_type",
+      "endpoint": "PUT /v1/users/self/communication_channels/:type/:address/notification_preferences/:notification",
+      "reference": "https://canvas.instructure.com/doc/api/notification_preferences.html",
+      "params": [
+        {
+          "name": "type",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "address",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "notification",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "notification_preferences.frequency",
+          "type": "string",
+          "default_value": "",
+          "desc": "The desired frequency for this notification",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Update preferences by category",
+      "controller": "notification_preferences",
+      "description": "Change the preferences for multiple notifications based on the category for a single communication channel",
+      "name": "update_preferences_by_category",
+      "endpoint": "PUT /v1/users/self/communication_channels/:communication_channel_id/notification_preference_categories/:category",
+      "reference": "https://canvas.instructure.com/doc/api/notification_preferences.html",
+      "params": [
+        {
+          "name": "communication_channel_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "category",
+          "type": "string",
+          "default_value": "",
+          "desc": "The name of the category. Must be parameterized (e.g. The category \"Course Content\" should be \"course_content\")",
+          "example": ""
+        },
+        {
+          "name": "notification_preferences.frequency",
+          "type": "string",
+          "default_value": "",
+          "desc": "The desired frequency for each notification in the category",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Update multiple preferences",
+      "controller": "notification_preferences",
+      "description": "Change the preferences for multiple notifications for a single communication channel at once",
+      "name": "update_multiple_preferences_communication_channel_id",
+      "endpoint": "PUT /v1/users/self/communication_channels/:communication_channel_id/notification_preferences",
+      "reference": "https://canvas.instructure.com/doc/api/notification_preferences.html",
+      "params": [
+        {
+          "name": "communication_channel_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "notification_preferences.<X>.frequency",
+          "type": "string",
+          "default_value": "",
+          "desc": "The desired frequency for <X> notification",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Update multiple preferences",
+      "controller": "notification_preferences",
+      "description": "Change the preferences for multiple notifications for a single communication channel at once",
+      "name": "update_multiple_preferences_type",
+      "endpoint": "PUT /v1/users/self/communication_channels/:type/:address/notification_preferences",
+      "reference": "https://canvas.instructure.com/doc/api/notification_preferences.html",
+      "params": [
+        {
+          "name": "type",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "address",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "notification_preferences.<X>.frequency",
+          "type": "string",
+          "default_value": "",
+          "desc": "The desired frequency for <X> notification",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "originality_reports": [
+    {
+      "display_name": "Create an Originality Report",
+      "controller": "originality_reports",
+      "description": "Create a new OriginalityReport for the specified file",
+      "name": "create_originality_report",
+      "endpoint": "POST /lti/assignments/:assignment_id/submissions/:submission_id/originality_report",
+      "reference": "https://canvas.instructure.com/doc/api/originality_reports.html",
+      "params": [
+        {
+          "name": "assignment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "submission_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "originality_report.file_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The id of the file being given an originality score. Required\nif creating a report associated with a file.",
+          "example": ""
+        },
+        {
+          "name": "originality_report.originality_score",
+          "type": "number",
+          "default_value": "",
+          "desc": "A number between 0 and 100 representing the measure of the\nspecified file's originality.",
+          "example": ""
+        },
+        {
+          "name": "originality_report.originality_report_url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The URL where the originality report for the specified\nfile may be found.",
+          "example": ""
+        },
+        {
+          "name": "originality_report.originality_report_file_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The ID of the file within Canvas that contains the originality\nreport for the submitted file provided in the request URL.",
+          "example": ""
+        },
+        {
+          "name": "originality_report.tool_setting.resource_type_code",
+          "type": "string",
+          "default_value": "",
+          "desc": "The resource type code of the resource handler Canvas should use for the\nLTI launch for viewing originality reports. If set Canvas will launch\nto the message with type 'basic-lti-launch-request' in the specified\nresource handler rather than using the originality_report_url.",
+          "example": ""
+        },
+        {
+          "name": "originality_report.tool_setting.resource_url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The URL Canvas should launch to when showing an LTI originality report.\nNote that this value is inferred from the specified resource handler's\nmessage \"path\" value (See `resource_type_code`) unless\nit is specified. If this parameter is used a `resource_type_code`\nmust also be specified.",
+          "example": ""
+        },
+        {
+          "name": "originality_report.workflow_state",
+          "type": "string",
+          "default_value": "",
+          "desc": "May be set to \"pending\", \"error\", or \"scored\". If an originality score\nis provided a workflow state of \"scored\" will be inferred.",
+          "example": ""
+        },
+        {
+          "name": "originality_report.error_message",
+          "type": "string",
+          "default_value": "",
+          "desc": "A message describing the error. If set, the \"workflow_state\"\nwill be set to \"error.\"",
+          "example": ""
+        },
+        {
+          "name": "originality_report.attempt",
+          "type": "integer",
+          "default_value": "",
+          "desc": "If no `file_id` is given, and no file is required for the assignment\n(that is, the assignment allows an online text entry), this parameter\nmay be given to clarify which attempt number the report is for (in the\ncase of resubmissions). If this field is omitted and no `file_id` is\ngiven, the report will be created (or updated, if it exists) for the\nfirst submission attempt with no associated file.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Edit an Originality Report",
+      "controller": "originality_reports",
+      "description": "Modify an existing originality report. An alternative to this endpoint is\nto POST the same parameters listed below to the CREATE endpoint.",
+      "name": "edit_originality_report_submissions",
+      "endpoint": "PUT /lti/assignments/:assignment_id/submissions/:submission_id/originality_report/:id",
+      "reference": "https://canvas.instructure.com/doc/api/originality_reports.html",
+      "params": [
+        {
+          "name": "assignment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "submission_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "originality_report.originality_score",
+          "type": "number",
+          "default_value": "",
+          "desc": "A number between 0 and 100 representing the measure of the\nspecified file's originality.",
+          "example": ""
+        },
+        {
+          "name": "originality_report.originality_report_url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The URL where the originality report for the specified\nfile may be found.",
+          "example": ""
+        },
+        {
+          "name": "originality_report.originality_report_file_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The ID of the file within Canvas that contains the originality\nreport for the submitted file provided in the request URL.",
+          "example": ""
+        },
+        {
+          "name": "originality_report.tool_setting.resource_type_code",
+          "type": "string",
+          "default_value": "",
+          "desc": "The resource type code of the resource handler Canvas should use for the\nLTI launch for viewing originality reports. If set Canvas will launch\nto the message with type 'basic-lti-launch-request' in the specified\nresource handler rather than using the originality_report_url.",
+          "example": ""
+        },
+        {
+          "name": "originality_report.tool_setting.resource_url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The URL Canvas should launch to when showing an LTI originality report.\nNote that this value is inferred from the specified resource handler's\nmessage \"path\" value (See `resource_type_code`) unless\nit is specified. If this parameter is used a `resource_type_code`\nmust also be specified.",
+          "example": ""
+        },
+        {
+          "name": "originality_report.workflow_state",
+          "type": "string",
+          "default_value": "",
+          "desc": "May be set to \"pending\", \"error\", or \"scored\". If an originality score\nis provided a workflow state of \"scored\" will be inferred.",
+          "example": ""
+        },
+        {
+          "name": "originality_report.error_message",
+          "type": "string",
+          "default_value": "",
+          "desc": "A message describing the error. If set, the \"workflow_state\"\nwill be set to \"error.\"",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Edit an Originality Report",
+      "controller": "originality_reports",
+      "description": "Modify an existing originality report. An alternative to this endpoint is\nto POST the same parameters listed below to the CREATE endpoint.",
+      "name": "edit_originality_report_files",
+      "endpoint": "PUT /lti/assignments/:assignment_id/files/:file_id/originality_report",
+      "reference": "https://canvas.instructure.com/doc/api/originality_reports.html",
+      "params": [
+        {
+          "name": "assignment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "file_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "originality_report.originality_score",
+          "type": "number",
+          "default_value": "",
+          "desc": "A number between 0 and 100 representing the measure of the\nspecified file's originality.",
+          "example": ""
+        },
+        {
+          "name": "originality_report.originality_report_url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The URL where the originality report for the specified\nfile may be found.",
+          "example": ""
+        },
+        {
+          "name": "originality_report.originality_report_file_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The ID of the file within Canvas that contains the originality\nreport for the submitted file provided in the request URL.",
+          "example": ""
+        },
+        {
+          "name": "originality_report.tool_setting.resource_type_code",
+          "type": "string",
+          "default_value": "",
+          "desc": "The resource type code of the resource handler Canvas should use for the\nLTI launch for viewing originality reports. If set Canvas will launch\nto the message with type 'basic-lti-launch-request' in the specified\nresource handler rather than using the originality_report_url.",
+          "example": ""
+        },
+        {
+          "name": "originality_report.tool_setting.resource_url",
+          "type": "string",
+          "default_value": "",
+          "desc": "The URL Canvas should launch to when showing an LTI originality report.\nNote that this value is inferred from the specified resource handler's\nmessage \"path\" value (See `resource_type_code`) unless\nit is specified. If this parameter is used a `resource_type_code`\nmust also be specified.",
+          "example": ""
+        },
+        {
+          "name": "originality_report.workflow_state",
+          "type": "string",
+          "default_value": "",
+          "desc": "May be set to \"pending\", \"error\", or \"scored\". If an originality score\nis provided a workflow state of \"scored\" will be inferred.",
+          "example": ""
+        },
+        {
+          "name": "originality_report.error_message",
+          "type": "string",
+          "default_value": "",
+          "desc": "A message describing the error. If set, the \"workflow_state\"\nwill be set to \"error.\"",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Show an Originality Report",
+      "controller": "originality_reports",
+      "description": "Get a single originality report",
+      "name": "show_originality_report_submissions",
+      "endpoint": "GET /lti/assignments/:assignment_id/submissions/:submission_id/originality_report/:id",
+      "reference": "https://canvas.instructure.com/doc/api/originality_reports.html",
+      "params": [
+        {
+          "name": "assignment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "submission_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Show an Originality Report",
+      "controller": "originality_reports",
+      "description": "Get a single originality report",
+      "name": "show_originality_report_files",
+      "endpoint": "GET /lti/assignments/:assignment_id/files/:file_id/originality_report",
+      "reference": "https://canvas.instructure.com/doc/api/originality_reports.html",
+      "params": [
+        {
+          "name": "assignment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "file_id",
           "type": "string",
           "default_value": "",
           "desc": "ID",
@@ -14829,6 +23921,1448 @@ const RAWCANVASAPIS = {
       ]
     }
   ],
+  "peer_reviews": [
+    {
+      "display_name": "Get all Peer Reviews",
+      "controller": "peer_reviews",
+      "description": "Get a list of all Peer Reviews for this assignment",
+      "name": "get_all_peer_reviews_courses_peer_reviews",
+      "endpoint": "GET /v1/courses/:course_id/assignments/:assignment_id/peer_reviews",
+      "reference": "https://canvas.instructure.com/doc/api/peer_reviews.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "assignment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "include[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Associations to include with the peer review.",
+          "example": [
+            "submission_comments",
+            "user"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Get all Peer Reviews",
+      "controller": "peer_reviews",
+      "description": "Get a list of all Peer Reviews for this assignment",
+      "name": "get_all_peer_reviews_sections_peer_reviews",
+      "endpoint": "GET /v1/sections/:section_id/assignments/:assignment_id/peer_reviews",
+      "reference": "https://canvas.instructure.com/doc/api/peer_reviews.html",
+      "params": [
+        {
+          "name": "section_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "assignment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "include[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Associations to include with the peer review.",
+          "example": [
+            "submission_comments",
+            "user"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Get all Peer Reviews",
+      "controller": "peer_reviews",
+      "description": "Get a list of all Peer Reviews for this assignment",
+      "name": "get_all_peer_reviews_courses_submissions",
+      "endpoint": "GET /v1/courses/:course_id/assignments/:assignment_id/submissions/:submission_id/peer_reviews",
+      "reference": "https://canvas.instructure.com/doc/api/peer_reviews.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "assignment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "submission_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "include[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Associations to include with the peer review.",
+          "example": [
+            "submission_comments",
+            "user"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Get all Peer Reviews",
+      "controller": "peer_reviews",
+      "description": "Get a list of all Peer Reviews for this assignment",
+      "name": "get_all_peer_reviews_sections_submissions",
+      "endpoint": "GET /v1/sections/:section_id/assignments/:assignment_id/submissions/:submission_id/peer_reviews",
+      "reference": "https://canvas.instructure.com/doc/api/peer_reviews.html",
+      "params": [
+        {
+          "name": "section_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "assignment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "submission_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "include[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Associations to include with the peer review.",
+          "example": [
+            "submission_comments",
+            "user"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Create Peer Review",
+      "controller": "peer_reviews",
+      "description": "Create a peer review for the assignment",
+      "name": "create_peer_review_courses",
+      "endpoint": "POST /v1/courses/:course_id/assignments/:assignment_id/submissions/:submission_id/peer_reviews",
+      "reference": "https://canvas.instructure.com/doc/api/peer_reviews.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "assignment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "submission_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "user_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "user_id to assign as reviewer on this assignment",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Create Peer Review",
+      "controller": "peer_reviews",
+      "description": "Create a peer review for the assignment",
+      "name": "create_peer_review_sections",
+      "endpoint": "POST /v1/sections/:section_id/assignments/:assignment_id/submissions/:submission_id/peer_reviews",
+      "reference": "https://canvas.instructure.com/doc/api/peer_reviews.html",
+      "params": [
+        {
+          "name": "section_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "assignment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "submission_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "user_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "user_id to assign as reviewer on this assignment",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Delete Peer Review",
+      "controller": "peer_reviews",
+      "description": "Delete a peer review for the assignment",
+      "name": "delete_peer_review_courses",
+      "endpoint": "DELETE /v1/courses/:course_id/assignments/:assignment_id/submissions/:submission_id/peer_reviews",
+      "reference": "https://canvas.instructure.com/doc/api/peer_reviews.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "assignment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "submission_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "user_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "user_id to delete as reviewer on this assignment",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Delete Peer Review",
+      "controller": "peer_reviews",
+      "description": "Delete a peer review for the assignment",
+      "name": "delete_peer_review_sections",
+      "endpoint": "DELETE /v1/sections/:section_id/assignments/:assignment_id/submissions/:submission_id/peer_reviews",
+      "reference": "https://canvas.instructure.com/doc/api/peer_reviews.html",
+      "params": [
+        {
+          "name": "section_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "assignment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "submission_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "user_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "user_id to delete as reviewer on this assignment",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "plagiarism_detection_platform_assignments": [
+    {
+      "display_name": "Get a single assignment (lti)",
+      "controller": "plagiarism_detection_platform_assignments",
+      "description": "Get a single Canvas assignment by Canvas id or LTI id. Tool providers may only access\nassignments that are associated with their tool.",
+      "name": "get_single_assignment_lti",
+      "endpoint": "GET /lti/assignments/:assignment_id",
+      "reference": "https://canvas.instructure.com/doc/api/plagiarism_detection_platform_assignments.html",
+      "params": [
+        {
+          "name": "assignment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The id of the user. Can be a Canvas or LTI id for the user.",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "plagiarism_detection_platform_users": [
+    {
+      "display_name": "Get a single user (lti)",
+      "controller": "plagiarism_detection_platform_users",
+      "description": "Get a single Canvas user by Canvas id or LTI id. Tool providers may only access\nusers that have been assigned an assignment associated with their tool.",
+      "name": "get_single_user_lti",
+      "endpoint": "GET /lti/users/:id",
+      "reference": "https://canvas.instructure.com/doc/api/plagiarism_detection_platform_users.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get all users in a group (lti)",
+      "controller": "plagiarism_detection_platform_users",
+      "description": "Get all Canvas users in a group. Tool providers may only access\ngroups that belong to the context the tool is installed in.",
+      "name": "get_all_users_in_group_lti",
+      "endpoint": "GET /lti/groups/:group_id/users",
+      "reference": "https://canvas.instructure.com/doc/api/plagiarism_detection_platform_users.html",
+      "params": [
+        {
+          "name": "group_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "plagiarism_detection_submissions": [
+    {
+      "display_name": "Get a single submission",
+      "controller": "plagiarism_detection_submissions",
+      "description": "Get a single submission, based on submission id.",
+      "name": "get_single_submission",
+      "endpoint": "GET /lti/assignments/:assignment_id/submissions/:submission_id",
+      "reference": "https://canvas.instructure.com/doc/api/plagiarism_detection_submissions.html",
+      "params": [
+        {
+          "name": "assignment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "submission_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get the history of a single submission",
+      "controller": "plagiarism_detection_submissions",
+      "description": "Get a list of all attempts made for a submission, based on submission id.",
+      "name": "get_history_of_single_submission",
+      "endpoint": "GET /lti/assignments/:assignment_id/submissions/:submission_id/history",
+      "reference": "https://canvas.instructure.com/doc/api/plagiarism_detection_submissions.html",
+      "params": [
+        {
+          "name": "assignment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "submission_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "planner": [
+    {
+      "display_name": "List planner items",
+      "controller": "planner",
+      "description": "Retrieve the paginated list of objects to be shown on the planner for the\ncurrent user with the associated planner override to override an item's\nvisibility if set.\n\nPlanner items for a student may also be retrieved by a linked observer. Use\nthe path that accepts a user_id and supply the student's id.",
+      "name": "list_planner_items_planner",
+      "endpoint": "GET /v1/planner/items",
+      "reference": "https://canvas.instructure.com/doc/api/planner.html",
+      "params": [
+        {
+          "name": "start_date",
+          "type": "Date",
+          "default_value": "",
+          "desc": "Only return items starting from the given date.\nThe value should be formatted as: yyyy-mm-dd or ISO 8601 YYYY-MM-DDTHH:MM:SSZ.",
+          "example": ""
+        },
+        {
+          "name": "end_date",
+          "type": "Date",
+          "default_value": "",
+          "desc": "Only return items up to the given date.\nThe value should be formatted as: yyyy-mm-dd or ISO 8601 YYYY-MM-DDTHH:MM:SSZ.",
+          "example": ""
+        },
+        {
+          "name": "context_codes[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "List of context codes of courses and/or groups whose items you want to see.\nIf not specified, defaults to all contexts associated to the current user.\nNote that concluded courses will be ignored unless specified in the includes[]\nparameter. The format of this field is the context type, followed by an underscore,\nfollowed by the context id. For example: course_42, group_123",
+          "example": ""
+        },
+        {
+          "name": "filter",
+          "type": "string",
+          "default_value": "",
+          "desc": "Only return items that have new or unread activity",
+          "example": [
+            "new_activity"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "List planner items",
+      "controller": "planner",
+      "description": "Retrieve the paginated list of objects to be shown on the planner for the\ncurrent user with the associated planner override to override an item's\nvisibility if set.\n\nPlanner items for a student may also be retrieved by a linked observer. Use\nthe path that accepts a user_id and supply the student's id.",
+      "name": "list_planner_items_users",
+      "endpoint": "GET /v1/users/:user_id/planner/items",
+      "reference": "https://canvas.instructure.com/doc/api/planner.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "start_date",
+          "type": "Date",
+          "default_value": "",
+          "desc": "Only return items starting from the given date.\nThe value should be formatted as: yyyy-mm-dd or ISO 8601 YYYY-MM-DDTHH:MM:SSZ.",
+          "example": ""
+        },
+        {
+          "name": "end_date",
+          "type": "Date",
+          "default_value": "",
+          "desc": "Only return items up to the given date.\nThe value should be formatted as: yyyy-mm-dd or ISO 8601 YYYY-MM-DDTHH:MM:SSZ.",
+          "example": ""
+        },
+        {
+          "name": "context_codes[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "List of context codes of courses and/or groups whose items you want to see.\nIf not specified, defaults to all contexts associated to the current user.\nNote that concluded courses will be ignored unless specified in the includes[]\nparameter. The format of this field is the context type, followed by an underscore,\nfollowed by the context id. For example: course_42, group_123",
+          "example": ""
+        },
+        {
+          "name": "filter",
+          "type": "string",
+          "default_value": "",
+          "desc": "Only return items that have new or unread activity",
+          "example": [
+            "new_activity"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "List planner notes",
+      "controller": "planner",
+      "description": "Retrieve the paginated list of planner notes\n\nRetrieve planner note for a user",
+      "name": "list_planner_notes",
+      "endpoint": "GET /v1/planner_notes",
+      "reference": "https://canvas.instructure.com/doc/api/planner.html",
+      "params": [
+        {
+          "name": "start_date",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "Only return notes with todo dates since the start_date (inclusive).\nNo default. The value should be formatted as: yyyy-mm-dd or\nISO 8601 YYYY-MM-DDTHH:MM:SSZ.",
+          "example": ""
+        },
+        {
+          "name": "end_date",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "Only return notes with todo dates before the end_date (inclusive).\nNo default. The value should be formatted as: yyyy-mm-dd or\nISO 8601 YYYY-MM-DDTHH:MM:SSZ.\nIf end_date and start_date are both specified and equivalent,\nthen only notes with todo dates on that day are returned.",
+          "example": ""
+        },
+        {
+          "name": "context_codes[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "List of context codes of courses whose notes you want to see.\nIf not specified, defaults to all contexts that the user belongs to.\nThe format of this field is the context type, followed by an\nunderscore, followed by the context id. For example: course_42\nIncluding a code matching the user's own context code (e.g. user_1)\nwill include notes that are not associated with any particular course.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Show a planner note",
+      "controller": "planner",
+      "description": "Retrieve a planner note for the current user",
+      "name": "show_planner_note",
+      "endpoint": "GET /v1/planner_notes/:id",
+      "reference": "https://canvas.instructure.com/doc/api/planner.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Update a planner note",
+      "controller": "planner",
+      "description": "Update a planner note for the current user",
+      "name": "update_planner_note",
+      "endpoint": "PUT /v1/planner_notes/:id",
+      "reference": "https://canvas.instructure.com/doc/api/planner.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "default_value": "",
+          "desc": "The title of the planner note.",
+          "example": ""
+        },
+        {
+          "name": "details",
+          "type": "string",
+          "default_value": "",
+          "desc": "Text of the planner note.",
+          "example": ""
+        },
+        {
+          "name": "todo_date",
+          "type": "Date",
+          "default_value": "",
+          "desc": "The date where this planner note should appear in the planner.\nThe value should be formatted as: yyyy-mm-dd.",
+          "example": ""
+        },
+        {
+          "name": "course_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The ID of the course to associate with the planner note. The caller must be able to view the course in order to\nassociate it with a planner note. Use a null or empty value to remove a planner note from a course. Note that if\nthe planner note is linked to a learning object, its course_id cannot be changed.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Create a planner note",
+      "controller": "planner",
+      "description": "Create a planner note for the current user",
+      "name": "create_planner_note",
+      "endpoint": "POST /v1/planner_notes",
+      "reference": "https://canvas.instructure.com/doc/api/planner.html",
+      "params": [
+        {
+          "name": "title",
+          "type": "string",
+          "default_value": "",
+          "desc": "The title of the planner note.",
+          "example": ""
+        },
+        {
+          "name": "details",
+          "type": "string",
+          "default_value": "",
+          "desc": "Text of the planner note.",
+          "example": ""
+        },
+        {
+          "name": "todo_date",
+          "type": "Date",
+          "default_value": "",
+          "desc": "The date where this planner note should appear in the planner.\nThe value should be formatted as: yyyy-mm-dd.",
+          "example": ""
+        },
+        {
+          "name": "course_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The ID of the course to associate with the planner note. The caller must be able to view the course in order to\nassociate it with a planner note.",
+          "example": ""
+        },
+        {
+          "name": "linked_object_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "The type of a learning object to link to this planner note. Must be used in conjunction wtih linked_object_id\nand course_id. Valid linked_object_type values are:\n'announcement', 'assignment', 'discussion_topic', 'wiki_page', 'quiz'",
+          "example": ""
+        },
+        {
+          "name": "linked_object_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The id of a learning object to link to this planner note. Must be used in conjunction with linked_object_type\nand course_id. The object must be in the same course as specified by course_id. If the title argument is not\nprovided, the planner note will use the learning object's title as its title. Only one planner note may be\nlinked to a specific learning object.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Delete a planner note",
+      "controller": "planner",
+      "description": "Delete a planner note for the current user",
+      "name": "delete_planner_note",
+      "endpoint": "DELETE /v1/planner_notes/:id",
+      "reference": "https://canvas.instructure.com/doc/api/planner.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List planner overrides",
+      "controller": "planner",
+      "description": "Retrieve a planner override for the current user",
+      "name": "list_planner_overrides",
+      "endpoint": "GET /v1/planner/overrides",
+      "reference": "https://canvas.instructure.com/doc/api/planner.html",
+      "params": []
+    },
+    {
+      "display_name": "Show a planner override",
+      "controller": "planner",
+      "description": "Retrieve a planner override for the current user",
+      "name": "show_planner_override",
+      "endpoint": "GET /v1/planner/overrides/:id",
+      "reference": "https://canvas.instructure.com/doc/api/planner.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Update a planner override",
+      "controller": "planner",
+      "description": "Update a planner override's visibilty for the current user",
+      "name": "update_planner_override",
+      "endpoint": "PUT /v1/planner/overrides/:id",
+      "reference": "https://canvas.instructure.com/doc/api/planner.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "marked_complete",
+          "type": "string",
+          "default_value": "",
+          "desc": "determines whether the planner item is marked as completed",
+          "example": ""
+        },
+        {
+          "name": "dismissed",
+          "type": "string",
+          "default_value": "",
+          "desc": "determines whether the planner item shows in the opportunities list",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Create a planner override",
+      "controller": "planner",
+      "description": "Create a planner override for the current user",
+      "name": "create_planner_override",
+      "endpoint": "POST /v1/planner/overrides",
+      "reference": "https://canvas.instructure.com/doc/api/planner.html",
+      "params": [
+        {
+          "name": "plannable_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "Type of the item that you are overriding in the planner",
+          "example": [
+            "announcement",
+            "assignment",
+            "discussion_topic",
+            "quiz",
+            "wiki_page",
+            "planner_note"
+          ]
+        },
+        {
+          "name": "plannable_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "ID of the item that you are overriding in the planner",
+          "example": ""
+        },
+        {
+          "name": "marked_complete",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "If this is true, the item will show in the planner as completed",
+          "example": ""
+        },
+        {
+          "name": "dismissed",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "If this is true, the item will not show in the opportunities list",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Delete a planner override",
+      "controller": "planner",
+      "description": "Delete a planner override for the current user",
+      "name": "delete_planner_override",
+      "endpoint": "DELETE /v1/planner/overrides/:id",
+      "reference": "https://canvas.instructure.com/doc/api/planner.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "poll_sessions": [
+    {
+      "display_name": "List poll sessions for a poll",
+      "controller": "poll_sessions",
+      "description": "Returns the paginated list of PollSessions in this poll.",
+      "name": "list_poll_sessions_for_poll",
+      "endpoint": "GET /v1/polls/:poll_id/poll_sessions",
+      "reference": "https://canvas.instructure.com/doc/api/poll_sessions.html",
+      "params": [
+        {
+          "name": "poll_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get the results for a single poll session",
+      "controller": "poll_sessions",
+      "description": "Returns the poll session with the given id",
+      "name": "get_results_for_single_poll_session",
+      "endpoint": "GET /v1/polls/:poll_id/poll_sessions/:id",
+      "reference": "https://canvas.instructure.com/doc/api/poll_sessions.html",
+      "params": [
+        {
+          "name": "poll_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Create a single poll session",
+      "controller": "poll_sessions",
+      "description": "Create a new poll session for this poll",
+      "name": "create_single_poll_session",
+      "endpoint": "POST /v1/polls/:poll_id/poll_sessions",
+      "reference": "https://canvas.instructure.com/doc/api/poll_sessions.html",
+      "params": [
+        {
+          "name": "poll_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "poll_sessions.course_id[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The id of the course this session is associated with.",
+          "example": ""
+        },
+        {
+          "name": "poll_sessions.course_section_id[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The id of the course section this session is associated with.",
+          "example": ""
+        },
+        {
+          "name": "poll_sessions.has_public_results[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Whether or not results are viewable by students.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Update a single poll session",
+      "controller": "poll_sessions",
+      "description": "Update an existing poll session for this poll",
+      "name": "update_single_poll_session",
+      "endpoint": "PUT /v1/polls/:poll_id/poll_sessions/:id",
+      "reference": "https://canvas.instructure.com/doc/api/poll_sessions.html",
+      "params": [
+        {
+          "name": "poll_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "poll_sessions.course_id[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The id of the course this session is associated with.",
+          "example": ""
+        },
+        {
+          "name": "poll_sessions.course_section_id[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The id of the course section this session is associated with.",
+          "example": ""
+        },
+        {
+          "name": "poll_sessions.has_public_results[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Whether or not results are viewable by students.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Delete a poll session",
+      "controller": "poll_sessions",
+      "description": "<b>204 No Content</b> response code is returned if the deletion was successful.",
+      "name": "delete_poll_session",
+      "endpoint": "DELETE /v1/polls/:poll_id/poll_sessions/:id",
+      "reference": "https://canvas.instructure.com/doc/api/poll_sessions.html",
+      "params": [
+        {
+          "name": "poll_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Open a poll session",
+      "controller": "poll_sessions",
+      "description": "",
+      "name": "open_poll_session",
+      "endpoint": "GET /v1/polls/:poll_id/poll_sessions/:id/open",
+      "reference": "https://canvas.instructure.com/doc/api/poll_sessions.html",
+      "params": [
+        {
+          "name": "poll_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Close an opened poll session",
+      "controller": "poll_sessions",
+      "description": "",
+      "name": "close_opened_poll_session",
+      "endpoint": "GET /v1/polls/:poll_id/poll_sessions/:id/close",
+      "reference": "https://canvas.instructure.com/doc/api/poll_sessions.html",
+      "params": [
+        {
+          "name": "poll_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List opened poll sessions",
+      "controller": "poll_sessions",
+      "description": "A paginated list of all opened poll sessions available to the current user.",
+      "name": "list_opened_poll_sessions",
+      "endpoint": "GET /v1/poll_sessions/opened",
+      "reference": "https://canvas.instructure.com/doc/api/poll_sessions.html",
+      "params": []
+    },
+    {
+      "display_name": "List closed poll sessions",
+      "controller": "poll_sessions",
+      "description": "A paginated list of all closed poll sessions available to the current user.",
+      "name": "list_closed_poll_sessions",
+      "endpoint": "GET /v1/poll_sessions/closed",
+      "reference": "https://canvas.instructure.com/doc/api/poll_sessions.html",
+      "params": []
+    }
+  ],
+  "poll_choices": [
+    {
+      "display_name": "List poll choices in a poll",
+      "controller": "poll_choices",
+      "description": "Returns the paginated list of PollChoices in this poll.",
+      "name": "list_poll_choices_in_poll",
+      "endpoint": "GET /v1/polls/:poll_id/poll_choices",
+      "reference": "https://canvas.instructure.com/doc/api/poll_choices.html",
+      "params": [
+        {
+          "name": "poll_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get a single poll choice",
+      "controller": "poll_choices",
+      "description": "Returns the poll choice with the given id",
+      "name": "get_single_poll_choice",
+      "endpoint": "GET /v1/polls/:poll_id/poll_choices/:id",
+      "reference": "https://canvas.instructure.com/doc/api/poll_choices.html",
+      "params": [
+        {
+          "name": "poll_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Create a single poll choice",
+      "controller": "poll_choices",
+      "description": "Create a new poll choice for this poll",
+      "name": "create_single_poll_choice",
+      "endpoint": "POST /v1/polls/:poll_id/poll_choices",
+      "reference": "https://canvas.instructure.com/doc/api/poll_choices.html",
+      "params": [
+        {
+          "name": "poll_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "poll_choices.text[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The descriptive text of the poll choice.",
+          "example": ""
+        },
+        {
+          "name": "poll_choices.is_correct[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Whether this poll choice is considered correct or not. Defaults to false.",
+          "example": ""
+        },
+        {
+          "name": "poll_choices.position[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The order this poll choice should be returned in the context it's sibling poll choices.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Update a single poll choice",
+      "controller": "poll_choices",
+      "description": "Update an existing poll choice for this poll",
+      "name": "update_single_poll_choice",
+      "endpoint": "PUT /v1/polls/:poll_id/poll_choices/:id",
+      "reference": "https://canvas.instructure.com/doc/api/poll_choices.html",
+      "params": [
+        {
+          "name": "poll_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "poll_choices.text[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The descriptive text of the poll choice.",
+          "example": ""
+        },
+        {
+          "name": "poll_choices.is_correct[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Whether this poll choice is considered correct or not.  Defaults to false.",
+          "example": ""
+        },
+        {
+          "name": "poll_choices.position[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The order this poll choice should be returned in the context it's sibling poll choices.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Delete a poll choice",
+      "controller": "poll_choices",
+      "description": "<b>204 No Content</b> response code is returned if the deletion was successful.",
+      "name": "delete_poll_choice",
+      "endpoint": "DELETE /v1/polls/:poll_id/poll_choices/:id",
+      "reference": "https://canvas.instructure.com/doc/api/poll_choices.html",
+      "params": [
+        {
+          "name": "poll_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "poll_submissions": [
+    {
+      "display_name": "Get a single poll submission",
+      "controller": "poll_submissions",
+      "description": "Returns the poll submission with the given id",
+      "name": "get_single_poll_submission",
+      "endpoint": "GET /v1/polls/:poll_id/poll_sessions/:poll_session_id/poll_submissions/:id",
+      "reference": "https://canvas.instructure.com/doc/api/poll_submissions.html",
+      "params": [
+        {
+          "name": "poll_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "poll_session_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Create a single poll submission",
+      "controller": "poll_submissions",
+      "description": "Create a new poll submission for this poll session",
+      "name": "create_single_poll_submission",
+      "endpoint": "POST /v1/polls/:poll_id/poll_sessions/:poll_session_id/poll_submissions",
+      "reference": "https://canvas.instructure.com/doc/api/poll_submissions.html",
+      "params": [
+        {
+          "name": "poll_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "poll_session_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "poll_submissions.poll_choice_id[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The chosen poll choice for this submission.",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "polls": [
+    {
+      "display_name": "List polls",
+      "controller": "polls",
+      "description": "Returns the paginated list of polls for the current user.",
+      "name": "list_polls",
+      "endpoint": "GET /v1/polls",
+      "reference": "https://canvas.instructure.com/doc/api/polls.html",
+      "params": []
+    },
+    {
+      "display_name": "Get a single poll",
+      "controller": "polls",
+      "description": "Returns the poll with the given id",
+      "name": "get_single_poll",
+      "endpoint": "GET /v1/polls/:id",
+      "reference": "https://canvas.instructure.com/doc/api/polls.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Create a single poll",
+      "controller": "polls",
+      "description": "Create a new poll for the current user",
+      "name": "create_single_poll",
+      "endpoint": "POST /v1/polls",
+      "reference": "https://canvas.instructure.com/doc/api/polls.html",
+      "params": [
+        {
+          "name": "polls.question[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The title of the poll.",
+          "example": ""
+        },
+        {
+          "name": "polls.description[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "A brief description or instructions for the poll.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Update a single poll",
+      "controller": "polls",
+      "description": "Update an existing poll belonging to the current user",
+      "name": "update_single_poll",
+      "endpoint": "PUT /v1/polls/:id",
+      "reference": "https://canvas.instructure.com/doc/api/polls.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "polls.question[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The title of the poll.",
+          "example": ""
+        },
+        {
+          "name": "polls.description[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "A brief description or instructions for the poll.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Delete a poll",
+      "controller": "polls",
+      "description": "<b>204 No Content</b> response code is returned if the deletion was successful.",
+      "name": "delete_poll",
+      "endpoint": "DELETE /v1/polls/:id",
+      "reference": "https://canvas.instructure.com/doc/api/polls.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "proficiency_ratings": [
+    {
+      "display_name": "Create/update proficiency ratings",
+      "controller": "proficiency_ratings",
+      "description": "Create or update account-level proficiency ratings. These ratings will apply to all\nsub-accounts, unless they have their own account-level proficiency ratings defined.",
+      "name": "create_update_proficiency_ratings_accounts",
+      "endpoint": "POST /v1/accounts/:account_id/outcome_proficiency",
+      "reference": "https://canvas.instructure.com/doc/api/proficiency_ratings.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "ratings.description[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The description of the rating level.",
+          "example": ""
+        },
+        {
+          "name": "ratings.points[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The non-negative number of points of the rating level. Points across ratings should be strictly decreasing in value.",
+          "example": ""
+        },
+        {
+          "name": "ratings.mastery[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Indicates the rating level where mastery is first achieved. Only one rating in a proficiency should be marked for mastery.",
+          "example": ""
+        },
+        {
+          "name": "ratings.color[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The color associated with the rating level. Should be a hex color code like '00FFFF'.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Create/update proficiency ratings",
+      "controller": "proficiency_ratings",
+      "description": "Create or update account-level proficiency ratings. These ratings will apply to all\nsub-accounts, unless they have their own account-level proficiency ratings defined.",
+      "name": "create_update_proficiency_ratings_courses",
+      "endpoint": "POST /v1/courses/:course_id/outcome_proficiency",
+      "reference": "https://canvas.instructure.com/doc/api/proficiency_ratings.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "ratings.description[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The description of the rating level.",
+          "example": ""
+        },
+        {
+          "name": "ratings.points[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The non-negative number of points of the rating level. Points across ratings should be strictly decreasing in value.",
+          "example": ""
+        },
+        {
+          "name": "ratings.mastery[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Indicates the rating level where mastery is first achieved. Only one rating in a proficiency should be marked for mastery.",
+          "example": ""
+        },
+        {
+          "name": "ratings.color[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The color associated with the rating level. Should be a hex color code like '00FFFF'.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get proficiency ratings",
+      "controller": "proficiency_ratings",
+      "description": "Get account-level proficiency ratings. If not defined for this account,\nit will return proficiency ratings for the nearest super-account with ratings defined.\nWill return 404 if none found.\n\n  Examples:\n    curl https://<canvas>/api/v1/accounts/<account_id>/outcome_proficiency \\\n        -H 'Authorization: Bearer <token>'",
+      "name": "get_proficiency_ratings_accounts",
+      "endpoint": "GET /v1/accounts/:account_id/outcome_proficiency",
+      "reference": "https://canvas.instructure.com/doc/api/proficiency_ratings.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get proficiency ratings",
+      "controller": "proficiency_ratings",
+      "description": "Get account-level proficiency ratings. If not defined for this account,\nit will return proficiency ratings for the nearest super-account with ratings defined.\nWill return 404 if none found.\n\n  Examples:\n    curl https://<canvas>/api/v1/accounts/<account_id>/outcome_proficiency \\\n        -H 'Authorization: Bearer <token>'",
+      "name": "get_proficiency_ratings_courses",
+      "endpoint": "GET /v1/courses/:course_id/outcome_proficiency",
+      "reference": "https://canvas.instructure.com/doc/api/proficiency_ratings.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    }
+  ],
   "progress": [
     {
       "display_name": "Query progress",
@@ -14843,6 +25377,25 @@ const RAWCANVASAPIS = {
           "type": "string",
           "default_value": "",
           "desc": "ID",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "public_jwk": [
+    {
+      "display_name": "Update Public JWK",
+      "controller": "public_jwk",
+      "description": "Rotate the public key in jwk format when using lti services",
+      "name": "update_public_jwk",
+      "endpoint": "PUT /lti/developer_key/update_public_jwk",
+      "reference": "https://canvas.instructure.com/doc/api/public_jwk.html",
+      "params": [
+        {
+          "name": "public_jwk",
+          "type": "json",
+          "default_value": "",
+          "desc": "The new public jwk that will be set to the tools current public jwk.",
           "example": ""
         }
       ]
@@ -14961,6 +25514,1740 @@ const RAWCANVASAPIS = {
           "type": "array",
           "default_value": "",
           "desc": "The number of minutes to extend the quiz beyond the quiz's current\nending time. This is mutually exclusive to extend_from_now. This is\nlimited to 1440 minutes (24 hours)",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "quiz_ip_filters": [
+    {
+      "display_name": "Get available quiz IP filters.",
+      "controller": "quiz_ip_filters",
+      "description": "Get a list of available IP filters for this Quiz.\n\n<b>200 OK</b> response code is returned if the request was successful.",
+      "name": "get_available_quiz_ip_filters",
+      "endpoint": "GET /v1/courses/:course_id/quizzes/:quiz_id/ip_filters",
+      "reference": "https://canvas.instructure.com/doc/api/quiz_ip_filters.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "quiz_question_groups": [
+    {
+      "display_name": "Get a single quiz group",
+      "controller": "quiz_question_groups",
+      "description": "Returns details of the quiz group with the given id.",
+      "name": "get_single_quiz_group",
+      "endpoint": "GET /v1/courses/:course_id/quizzes/:quiz_id/groups/:id",
+      "reference": "https://canvas.instructure.com/doc/api/quiz_question_groups.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Create a question group",
+      "controller": "quiz_question_groups",
+      "description": "Create a new question group for this quiz\n\n<b>201 Created</b> response code is returned if the creation was successful.",
+      "name": "create_question_group",
+      "endpoint": "POST /v1/courses/:course_id/quizzes/:quiz_id/groups",
+      "reference": "https://canvas.instructure.com/doc/api/quiz_question_groups.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz_groups.name[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The name of the question group.",
+          "example": ""
+        },
+        {
+          "name": "quiz_groups.pick_count[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The number of questions to randomly select for this group.",
+          "example": ""
+        },
+        {
+          "name": "quiz_groups.question_points[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The number of points to assign to each question in the group.",
+          "example": ""
+        },
+        {
+          "name": "quiz_groups.assessment_question_bank_id[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The id of the assessment question bank to pull questions from.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Update a question group",
+      "controller": "quiz_question_groups",
+      "description": "Update a question group",
+      "name": "update_question_group",
+      "endpoint": "PUT /v1/courses/:course_id/quizzes/:quiz_id/groups/:id",
+      "reference": "https://canvas.instructure.com/doc/api/quiz_question_groups.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz_groups.name[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The name of the question group.",
+          "example": ""
+        },
+        {
+          "name": "quiz_groups.pick_count[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The number of questions to randomly select for this group.",
+          "example": ""
+        },
+        {
+          "name": "quiz_groups.question_points[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The number of points to assign to each question in the group.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Delete a question group",
+      "controller": "quiz_question_groups",
+      "description": "Delete a question group\n\n<b>204 No Content<b> response code is returned if the deletion was successful.",
+      "name": "delete_question_group",
+      "endpoint": "DELETE /v1/courses/:course_id/quizzes/:quiz_id/groups/:id",
+      "reference": "https://canvas.instructure.com/doc/api/quiz_question_groups.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Reorder question groups",
+      "controller": "quiz_question_groups",
+      "description": "Change the order of the quiz questions within the group\n\n<b>204 No Content<b> response code is returned if the reorder was successful.",
+      "name": "reorder_question_groups",
+      "endpoint": "POST /v1/courses/:course_id/quizzes/:quiz_id/groups/:id/reorder",
+      "reference": "https://canvas.instructure.com/doc/api/quiz_question_groups.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "order.id[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The associated item's unique identifier",
+          "example": ""
+        },
+        {
+          "name": "order.type[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The type of item is always 'question' for a group",
+          "example": [
+            "question"
+          ]
+        }
+      ]
+    }
+  ],
+  "quiz_questions": [
+    {
+      "display_name": "List questions in a quiz or a submission",
+      "controller": "quiz_questions",
+      "description": "Returns the paginated list of QuizQuestions in this quiz.",
+      "name": "list_questions_in_quiz_or_submission",
+      "endpoint": "GET /v1/courses/:course_id/quizzes/:quiz_id/questions",
+      "reference": "https://canvas.instructure.com/doc/api/quiz_questions.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz_submission_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "If specified, the endpoint will return the questions that were presented\nfor that submission. This is useful if the quiz has been modified after\nthe submission was created and the latest quiz version's set of questions\ndoes not match the submission's.\nNOTE: you must specify quiz_submission_attempt as well if you specify this\nparameter.",
+          "example": ""
+        },
+        {
+          "name": "quiz_submission_attempt",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The attempt of the submission you want the questions for.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get a single quiz question",
+      "controller": "quiz_questions",
+      "description": "Returns the quiz question with the given id",
+      "name": "get_single_quiz_question",
+      "endpoint": "GET /v1/courses/:course_id/quizzes/:quiz_id/questions/:id",
+      "reference": "https://canvas.instructure.com/doc/api/quiz_questions.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The quiz question unique identifier.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Create a single quiz question",
+      "controller": "quiz_questions",
+      "description": "Create a new quiz question for this quiz",
+      "name": "create_single_quiz_question",
+      "endpoint": "POST /v1/courses/:course_id/quizzes/:quiz_id/questions",
+      "reference": "https://canvas.instructure.com/doc/api/quiz_questions.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "question.question_name",
+          "type": "string",
+          "default_value": "",
+          "desc": "The name of the question.",
+          "example": ""
+        },
+        {
+          "name": "question.question_text",
+          "type": "string",
+          "default_value": "",
+          "desc": "The text of the question.",
+          "example": ""
+        },
+        {
+          "name": "question.quiz_group_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The id of the quiz group to assign the question to.",
+          "example": ""
+        },
+        {
+          "name": "question.question_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "The type of question. Multiple optional fields depend upon the type of question to be used.",
+          "example": [
+            "calculated_question",
+            "essay_question",
+            "file_upload_question",
+            "fill_in_multiple_blanks_question",
+            "matching_question",
+            "multiple_answers_question",
+            "multiple_choice_question",
+            "multiple_dropdowns_question",
+            "numerical_question",
+            "short_answer_question",
+            "text_only_question",
+            "true_false_question"
+          ]
+        },
+        {
+          "name": "question.position",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The order in which the question will be displayed in the quiz in relation to other questions.",
+          "example": ""
+        },
+        {
+          "name": "question.points_possible",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The maximum amount of points received for answering this question correctly.",
+          "example": ""
+        },
+        {
+          "name": "question.correct_comments",
+          "type": "string",
+          "default_value": "",
+          "desc": "The comment to display if the student answers the question correctly.",
+          "example": ""
+        },
+        {
+          "name": "question.incorrect_comments",
+          "type": "string",
+          "default_value": "",
+          "desc": "The comment to display if the student answers incorrectly.",
+          "example": ""
+        },
+        {
+          "name": "question.neutral_comments",
+          "type": "string",
+          "default_value": "",
+          "desc": "The comment to display regardless of how the student answered.",
+          "example": ""
+        },
+        {
+          "name": "question.text_after_answers",
+          "type": "string",
+          "default_value": "",
+          "desc": "no description",
+          "example": ""
+        },
+        {
+          "name": "question.answers",
+          "type": "[Answer]",
+          "default_value": "",
+          "desc": "no description",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Update an existing quiz question",
+      "controller": "quiz_questions",
+      "description": "Updates an existing quiz question for this quiz",
+      "name": "update_existing_quiz_question",
+      "endpoint": "PUT /v1/courses/:course_id/quizzes/:quiz_id/questions/:id",
+      "reference": "https://canvas.instructure.com/doc/api/quiz_questions.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The associated quiz's unique identifier.",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The quiz question's unique identifier.",
+          "example": ""
+        },
+        {
+          "name": "question.question_name",
+          "type": "string",
+          "default_value": "",
+          "desc": "The name of the question.",
+          "example": ""
+        },
+        {
+          "name": "question.question_text",
+          "type": "string",
+          "default_value": "",
+          "desc": "The text of the question.",
+          "example": ""
+        },
+        {
+          "name": "question.quiz_group_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The id of the quiz group to assign the question to.",
+          "example": ""
+        },
+        {
+          "name": "question.question_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "The type of question. Multiple optional fields depend upon the type of question to be used.",
+          "example": [
+            "calculated_question",
+            "essay_question",
+            "file_upload_question",
+            "fill_in_multiple_blanks_question",
+            "matching_question",
+            "multiple_answers_question",
+            "multiple_choice_question",
+            "multiple_dropdowns_question",
+            "numerical_question",
+            "short_answer_question",
+            "text_only_question",
+            "true_false_question"
+          ]
+        },
+        {
+          "name": "question.position",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The order in which the question will be displayed in the quiz in relation to other questions.",
+          "example": ""
+        },
+        {
+          "name": "question.points_possible",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The maximum amount of points received for answering this question correctly.",
+          "example": ""
+        },
+        {
+          "name": "question.correct_comments",
+          "type": "string",
+          "default_value": "",
+          "desc": "The comment to display if the student answers the question correctly.",
+          "example": ""
+        },
+        {
+          "name": "question.incorrect_comments",
+          "type": "string",
+          "default_value": "",
+          "desc": "The comment to display if the student answers incorrectly.",
+          "example": ""
+        },
+        {
+          "name": "question.neutral_comments",
+          "type": "string",
+          "default_value": "",
+          "desc": "The comment to display regardless of how the student answered.",
+          "example": ""
+        },
+        {
+          "name": "question.text_after_answers",
+          "type": "string",
+          "default_value": "",
+          "desc": "no description",
+          "example": ""
+        },
+        {
+          "name": "question.answers",
+          "type": "[Answer]",
+          "default_value": "",
+          "desc": "no description",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Delete a quiz question",
+      "controller": "quiz_questions",
+      "description": "<b>204 No Content</b> response code is returned if the deletion was successful.",
+      "name": "delete_quiz_question",
+      "endpoint": "DELETE /v1/courses/:course_id/quizzes/:quiz_id/questions/:id",
+      "reference": "https://canvas.instructure.com/doc/api/quiz_questions.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The associated quiz's unique identifier",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The quiz question's unique identifier",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "quiz_reports": [
+    {
+      "display_name": "Retrieve all quiz reports",
+      "controller": "quiz_reports",
+      "description": "Returns a list of all available reports.",
+      "name": "retrieve_all_quiz_reports",
+      "endpoint": "GET /v1/courses/:course_id/quizzes/:quiz_id/reports",
+      "reference": "https://canvas.instructure.com/doc/api/quiz_reports.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "includes_all_versions",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Whether to retrieve reports that consider all the submissions or only\nthe most recent. Defaults to false, ignored for item_analysis reports.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Create a quiz report",
+      "controller": "quiz_reports",
+      "description": "Create and return a new report for this quiz. If a previously\ngenerated report matches the arguments and is still current (i.e.\nthere have been no new submissions), it will be returned.\n\n*Responses*\n\n* <code>400 Bad Request</code> if the specified report type is invalid\n* <code>409 Conflict</code> if a quiz report of the specified type is already being\n  generated",
+      "name": "create_quiz_report",
+      "endpoint": "POST /v1/courses/:course_id/quizzes/:quiz_id/reports",
+      "reference": "https://canvas.instructure.com/doc/api/quiz_reports.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz_report.report_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "The type of report to be generated.",
+          "example": [
+            "student_analysis",
+            "item_analysis"
+          ]
+        },
+        {
+          "name": "quiz_report.includes_all_versions",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Whether the report should consider all submissions or only the most\nrecent. Defaults to false, ignored for item_analysis.",
+          "example": ""
+        },
+        {
+          "name": "include",
+          "type": "String[]",
+          "default_value": "",
+          "desc": "Whether the output should include documents for the file and/or progress\nobjects associated with this report. (Note: JSON-API only)",
+          "example": [
+            "file",
+            "progress"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Get a quiz report",
+      "controller": "quiz_reports",
+      "description": "Returns the data for a single quiz report.",
+      "name": "get_quiz_report",
+      "endpoint": "GET /v1/courses/:course_id/quizzes/:quiz_id/reports/:id",
+      "reference": "https://canvas.instructure.com/doc/api/quiz_reports.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "include",
+          "type": "String[]",
+          "default_value": "",
+          "desc": "Whether the output should include documents for the file and/or progress\nobjects associated with this report. (Note: JSON-API only)",
+          "example": [
+            "file",
+            "progress"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Abort the generation of a report, or remove a previously generated one",
+      "controller": "quiz_reports",
+      "description": "This API allows you to cancel a previous request you issued for a report to\nbe generated. Or in the case of an already generated report, you'd like to\nremove it, perhaps to generate it another time with an updated version that\nprovides new features.\n\nYou must check the report's generation status before attempting to use this\ninterface. See the \"workflow_state\" property of the QuizReport's Progress\nobject for more information. Only when the progress reports itself in a\n\"queued\" state can the generation be aborted.\n\n*Responses*\n\n- <code>204 No Content</code> if your request was accepted\n- <code>422 Unprocessable Entity</code> if the report is not being generated\n  or can not be aborted at this stage",
+      "name": "abort_generation_of_report_or_remove_previously_generated_one",
+      "endpoint": "DELETE /v1/courses/:course_id/quizzes/:quiz_id/reports/:id",
+      "reference": "https://canvas.instructure.com/doc/api/quiz_reports.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "quiz_statistics": [
+    {
+      "display_name": "Fetching the latest quiz statistics",
+      "controller": "quiz_statistics",
+      "description": "This endpoint provides statistics for all quiz versions, or for a specific\nquiz version, in which case the output is guaranteed to represent the\n_latest_ and most current version of the quiz.\n\n<b>200 OK</b> response code is returned if the request was successful.",
+      "name": "fetching_latest_quiz_statistics",
+      "endpoint": "GET /v1/courses/:course_id/quizzes/:quiz_id/statistics",
+      "reference": "https://canvas.instructure.com/doc/api/quiz_statistics.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "all_versions",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Whether the statistics report should include all submissions attempts.",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "quiz_submission_events": [
+    {
+      "display_name": "Submit captured events",
+      "controller": "quiz_submission_events",
+      "description": "Store a set of events which were captured during a quiz taking session.\n\nOn success, the response will be 204 No Content with an empty body.",
+      "name": "submit_captured_events",
+      "endpoint": "POST /v1/courses/:course_id/quizzes/:quiz_id/submissions/:id/events",
+      "reference": "https://canvas.instructure.com/doc/api/quiz_submission_events.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz_submission_events[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The submission events to be recorded",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Retrieve captured events",
+      "controller": "quiz_submission_events",
+      "description": "Retrieve the set of events captured during a specific submission attempt.",
+      "name": "retrieve_captured_events",
+      "endpoint": "GET /v1/courses/:course_id/quizzes/:quiz_id/submissions/:id/events",
+      "reference": "https://canvas.instructure.com/doc/api/quiz_submission_events.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "attempt",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The specific submission attempt to look up the events for. If unspecified,\nthe latest attempt will be used.",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "quiz_submission_files": [
+    {
+      "display_name": "Upload a file",
+      "controller": "quiz_submission_files",
+      "description": "Associate a new quiz submission file\n\nThis API endpoint is the first step in uploading a quiz submission file.\nSee the {file:file_uploads.html File Upload Documentation} for details on\nthe file upload workflow as these parameters are interpreted as per the\ndocumentation there.",
+      "name": "upload_file",
+      "endpoint": "POST /v1/courses/:course_id/quizzes/:quiz_id/submissions/self/files",
+      "reference": "https://canvas.instructure.com/doc/api/quiz_submission_files.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "default_value": "",
+          "desc": "The name of the quiz submission file",
+          "example": ""
+        },
+        {
+          "name": "on_duplicate",
+          "type": "string",
+          "default_value": "",
+          "desc": "How to handle duplicate names",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "quiz_submission_questions": [
+    {
+      "display_name": "Get all quiz submission questions.",
+      "controller": "quiz_submission_questions",
+      "description": "Get a list of all the question records for this quiz submission.\n\n<b>200 OK</b> response code is returned if the request was successful.",
+      "name": "get_all_quiz_submission_questions",
+      "endpoint": "GET /v1/quiz_submissions/:quiz_submission_id/questions",
+      "reference": "https://canvas.instructure.com/doc/api/quiz_submission_questions.html",
+      "params": [
+        {
+          "name": "quiz_submission_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "include[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Associations to include with the quiz submission question.",
+          "example": [
+            "quiz_question"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Answering questions",
+      "controller": "quiz_submission_questions",
+      "description": "Provide or update an answer to one or more QuizQuestions.",
+      "name": "answering_questions",
+      "endpoint": "POST /v1/quiz_submissions/:quiz_submission_id/questions",
+      "reference": "https://canvas.instructure.com/doc/api/quiz_submission_questions.html",
+      "params": [
+        {
+          "name": "quiz_submission_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "attempt",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The attempt number of the quiz submission being taken. Note that this\nmust be the latest attempt index, as questions for earlier attempts can\nnot be modified.",
+          "example": ""
+        },
+        {
+          "name": "validation_token",
+          "type": "string",
+          "default_value": "",
+          "desc": "The unique validation token you received when the Quiz Submission was\ncreated.",
+          "example": ""
+        },
+        {
+          "name": "access_code",
+          "type": "string",
+          "default_value": "",
+          "desc": "Access code for the Quiz, if any.",
+          "example": ""
+        },
+        {
+          "name": "quiz_questions[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Set of question IDs and the answer value.\n\nSee {Appendix: Question Answer Formats} for the accepted answer formats\nfor each question type.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Flagging a question.",
+      "controller": "quiz_submission_questions",
+      "description": "Set a flag on a quiz question to indicate that you want to return to it\nlater.",
+      "name": "flagging_question",
+      "endpoint": "PUT /v1/quiz_submissions/:quiz_submission_id/questions/:id/flag",
+      "reference": "https://canvas.instructure.com/doc/api/quiz_submission_questions.html",
+      "params": [
+        {
+          "name": "quiz_submission_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "attempt",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The attempt number of the quiz submission being taken. Note that this\nmust be the latest attempt index, as questions for earlier attempts can\nnot be modified.",
+          "example": ""
+        },
+        {
+          "name": "validation_token",
+          "type": "string",
+          "default_value": "",
+          "desc": "The unique validation token you received when the Quiz Submission was\ncreated.",
+          "example": ""
+        },
+        {
+          "name": "access_code",
+          "type": "string",
+          "default_value": "",
+          "desc": "Access code for the Quiz, if any.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Unflagging a question.",
+      "controller": "quiz_submission_questions",
+      "description": "Remove the flag that you previously set on a quiz question after you've\nreturned to it.",
+      "name": "unflagging_question",
+      "endpoint": "PUT /v1/quiz_submissions/:quiz_submission_id/questions/:id/unflag",
+      "reference": "https://canvas.instructure.com/doc/api/quiz_submission_questions.html",
+      "params": [
+        {
+          "name": "quiz_submission_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "attempt",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The attempt number of the quiz submission being taken. Note that this\nmust be the latest attempt index, as questions for earlier attempts can\nnot be modified.",
+          "example": ""
+        },
+        {
+          "name": "validation_token",
+          "type": "string",
+          "default_value": "",
+          "desc": "The unique validation token you received when the Quiz Submission was\ncreated.",
+          "example": ""
+        },
+        {
+          "name": "access_code",
+          "type": "string",
+          "default_value": "",
+          "desc": "Access code for the Quiz, if any.",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "quiz_submission_user_list": [
+    {
+      "display_name": "Send a message to unsubmitted or submitted users for the quiz",
+      "controller": "quiz_submission_user_list",
+      "description": "{\n  \"body\": {\n    \"type\": \"string\",\n    \"description\": \"message body of the conversation to be created\",\n    \"example\": \"Please take the quiz.\"\n  },\n  \"recipients\": {\n    \"type\": \"string\",\n    \"description\": \"Who to send the message to. May be either 'submitted' or 'unsubmitted'\",\n    \"example\": \"submitted\"\n  },\n  \"subject\": {\n    \"type\": \"string\",\n    \"description\": \"Subject of the new Conversation created\",\n    \"example\": \"ATTN: Quiz 101 Students\"\n  }\n}",
+      "name": "send_message_to_unsubmitted_or_submitted_users_for_quiz",
+      "endpoint": "POST /v1/courses/:course_id/quizzes/:id/submission_users/message",
+      "reference": "https://canvas.instructure.com/doc/api/quiz_submission_user_list.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "conversations",
+          "type": "QuizUserConversation",
+          "default_value": "",
+          "desc": "- Body and recipients to send the message to.",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "quiz_submissions": [
+    {
+      "display_name": "Get all quiz submissions.",
+      "controller": "quiz_submissions",
+      "description": "Get a list of all submissions for this quiz. Users who can view or manage\ngrades for a course will have submissions from multiple users returned. A\nuser who can only submit will have only their own submissions returned. When\na user has an in-progress submission, only that submission is returned. When\nthere isn't an in-progress quiz_submission, all completed submissions,\nincluding previous attempts, are returned.\n\n<b>200 OK</b> response code is returned if the request was successful.",
+      "name": "get_all_quiz_submissions",
+      "endpoint": "GET /v1/courses/:course_id/quizzes/:quiz_id/submissions",
+      "reference": "https://canvas.instructure.com/doc/api/quiz_submissions.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "include[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Associations to include with the quiz submission.",
+          "example": [
+            "submission",
+            "quiz",
+            "user"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Get the quiz submission.",
+      "controller": "quiz_submissions",
+      "description": "Get the submission for this quiz for the current user.\n\n<b>200 OK</b> response code is returned if the request was successful.",
+      "name": "get_quiz_submission",
+      "endpoint": "GET /v1/courses/:course_id/quizzes/:quiz_id/submission",
+      "reference": "https://canvas.instructure.com/doc/api/quiz_submissions.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "include[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Associations to include with the quiz submission.",
+          "example": [
+            "submission",
+            "quiz",
+            "user"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Get a single quiz submission.",
+      "controller": "quiz_submissions",
+      "description": "Get a single quiz submission.\n\n<b>200 OK</b> response code is returned if the request was successful.",
+      "name": "get_single_quiz_submission",
+      "endpoint": "GET /v1/courses/:course_id/quizzes/:quiz_id/submissions/:id",
+      "reference": "https://canvas.instructure.com/doc/api/quiz_submissions.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "include[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Associations to include with the quiz submission.",
+          "example": [
+            "submission",
+            "quiz",
+            "user"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Create the quiz submission (start a quiz-taking session)",
+      "controller": "quiz_submissions",
+      "description": "Start taking a Quiz by creating a QuizSubmission which you can use to answer\nquestions and submit your answers.\n\n<b>Responses</b>\n\n* <b>200 OK</b> if the request was successful\n* <b>400 Bad Request</b> if the quiz is locked\n* <b>403 Forbidden</b> if an invalid access code is specified\n* <b>403 Forbidden</b> if the Quiz's IP filter restriction does not pass\n* <b>409 Conflict</b> if a QuizSubmission already exists for this user and quiz",
+      "name": "create_quiz_submission_start_quiz_taking_session",
+      "endpoint": "POST /v1/courses/:course_id/quizzes/:quiz_id/submissions",
+      "reference": "https://canvas.instructure.com/doc/api/quiz_submissions.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "access_code",
+          "type": "string",
+          "default_value": "",
+          "desc": "Access code for the Quiz, if any.",
+          "example": ""
+        },
+        {
+          "name": "preview",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Whether this should be a preview QuizSubmission and not count towards\nthe user's course record. Teachers only.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Update student question scores and comments.",
+      "controller": "quiz_submissions",
+      "description": "Update the amount of points a student has scored for questions they've\nanswered, provide comments for the student about their answer(s), or simply\nfudge the total score by a specific amount of points.\n\n<b>Responses</b>\n\n* <b>200 OK</b> if the request was successful\n* <b>403 Forbidden</b> if you are not a teacher in this course\n* <b>400 Bad Request</b> if the attempt parameter is missing or invalid\n* <b>400 Bad Request</b> if the specified QS attempt is not yet complete",
+      "name": "update_student_question_scores_and_comments",
+      "endpoint": "PUT /v1/courses/:course_id/quizzes/:quiz_id/submissions/:id",
+      "reference": "https://canvas.instructure.com/doc/api/quiz_submissions.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz_submissions.attempt[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The attempt number of the quiz submission that should be updated. This\nattempt MUST be already completed.",
+          "example": ""
+        },
+        {
+          "name": "quiz_submissions.fudge_points[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Amount of positive or negative points to fudge the total score by.",
+          "example": ""
+        },
+        {
+          "name": "quiz_submissions.questions[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "A set of scores and comments for each question answered by the student.\nThe keys are the question IDs, and the values are hashes of `score` and\n`comment` entries. See {Appendix: Manual Scoring} for more on this\nparameter.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Complete the quiz submission (turn it in).",
+      "controller": "quiz_submissions",
+      "description": "Complete the quiz submission by marking it as complete and grading it. When\nthe quiz submission has been marked as complete, no further modifications\nwill be allowed.\n\n<b>Responses</b>\n\n* <b>200 OK</b> if the request was successful\n* <b>403 Forbidden</b> if an invalid access code is specified\n* <b>403 Forbidden</b> if the Quiz's IP filter restriction does not pass\n* <b>403 Forbidden</b> if an invalid token is specified\n* <b>400 Bad Request</b> if the QS is already complete\n* <b>400 Bad Request</b> if the attempt parameter is missing\n* <b>400 Bad Request</b> if the attempt parameter is not the latest attempt",
+      "name": "complete_quiz_submission_turn_it_in",
+      "endpoint": "POST /v1/courses/:course_id/quizzes/:quiz_id/submissions/:id/complete",
+      "reference": "https://canvas.instructure.com/doc/api/quiz_submissions.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "attempt",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The attempt number of the quiz submission that should be completed. Note\nthat this must be the latest attempt index, as earlier attempts can not\nbe modified.",
+          "example": ""
+        },
+        {
+          "name": "validation_token",
+          "type": "string",
+          "default_value": "",
+          "desc": "The unique validation token you received when this Quiz Submission was\ncreated.",
+          "example": ""
+        },
+        {
+          "name": "access_code",
+          "type": "string",
+          "default_value": "",
+          "desc": "Access code for the Quiz, if any.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get current quiz submission times.",
+      "controller": "quiz_submissions",
+      "description": "Get the current timing data for the quiz attempt, both the end_at timestamp\nand the time_left parameter.\n\n<b>Responses</b>\n\n* <b>200 OK</b> if the request was successful",
+      "name": "get_current_quiz_submission_times",
+      "endpoint": "GET /v1/courses/:course_id/quizzes/:quiz_id/submissions/:id/time",
+      "reference": "https://canvas.instructure.com/doc/api/quiz_submissions.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "quizzes": [
+    {
+      "display_name": "List quizzes in a course",
+      "controller": "quizzes",
+      "description": "Returns the paginated list of Quizzes in this course.",
+      "name": "list_quizzes_in_course",
+      "endpoint": "GET /v1/courses/:course_id/quizzes",
+      "reference": "https://canvas.instructure.com/doc/api/quizzes.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "search_term",
+          "type": "string",
+          "default_value": "",
+          "desc": "The partial title of the quizzes to match and return.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get a single quiz",
+      "controller": "quizzes",
+      "description": "Returns the quiz with the given id.",
+      "name": "get_single_quiz",
+      "endpoint": "GET /v1/courses/:course_id/quizzes/:id",
+      "reference": "https://canvas.instructure.com/doc/api/quizzes.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Create a quiz",
+      "controller": "quizzes",
+      "description": "Create a new quiz for this course.",
+      "name": "create_quiz",
+      "endpoint": "POST /v1/courses/:course_id/quizzes",
+      "reference": "https://canvas.instructure.com/doc/api/quizzes.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz.title",
+          "type": "string",
+          "default_value": "",
+          "desc": "The quiz title.",
+          "example": ""
+        },
+        {
+          "name": "quiz.description",
+          "type": "string",
+          "default_value": "",
+          "desc": "A description of the quiz.",
+          "example": ""
+        },
+        {
+          "name": "quiz.quiz_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "The type of quiz.",
+          "example": [
+            "practice_quiz",
+            "assignment",
+            "graded_survey",
+            "survey"
+          ]
+        },
+        {
+          "name": "quiz.assignment_group_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The assignment group id to put the assignment in. Defaults to the top\nassignment group in the course. Only valid if the quiz is graded, i.e. if\nquiz_type is \"assignment\" or \"graded_survey\".",
+          "example": ""
+        },
+        {
+          "name": "quiz.time_limit",
+          "type": "integer",
+          "default_value": "",
+          "desc": "Time limit to take this quiz, in minutes. Set to null for no time limit.\nDefaults to null.",
+          "example": ""
+        },
+        {
+          "name": "quiz.shuffle_answers",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "If true, quiz answers for multiple choice questions will be randomized for\neach student. Defaults to false.",
+          "example": ""
+        },
+        {
+          "name": "quiz.hide_results",
+          "type": "string",
+          "default_value": "",
+          "desc": "Dictates whether or not quiz results are hidden from students.\nIf null, students can see their results after any attempt.\nIf \"always\", students can never see their results.\nIf \"until_after_last_attempt\", students can only see results after their\nlast attempt. (Only valid if allowed_attempts > 1). Defaults to null.",
+          "example": [
+            "always",
+            "until_after_last_attempt"
+          ]
+        },
+        {
+          "name": "quiz.show_correct_answers",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Only valid if hide_results=null\nIf false, hides correct answers from students when quiz results are viewed.\nDefaults to true.",
+          "example": ""
+        },
+        {
+          "name": "quiz.show_correct_answers_last_attempt",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Only valid if show_correct_answers=true and allowed_attempts > 1\nIf true, hides correct answers from students when quiz results are viewed\nuntil they submit the last attempt for the quiz.\nDefaults to false.",
+          "example": ""
+        },
+        {
+          "name": "quiz.show_correct_answers_at",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "Only valid if show_correct_answers=true\nIf set, the correct answers will be visible by students only after this\ndate, otherwise the correct answers are visible once the student hands in\ntheir quiz submission.",
+          "example": ""
+        },
+        {
+          "name": "quiz.hide_correct_answers_at",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "Only valid if show_correct_answers=true\nIf set, the correct answers will stop being visible once this date has\npassed. Otherwise, the correct answers will be visible indefinitely.",
+          "example": ""
+        },
+        {
+          "name": "quiz.allowed_attempts",
+          "type": "integer",
+          "default_value": "",
+          "desc": "Number of times a student is allowed to take a quiz.\nSet to -1 for unlimited attempts.\nDefaults to 1.",
+          "example": ""
+        },
+        {
+          "name": "quiz.scoring_policy",
+          "type": "string",
+          "default_value": "",
+          "desc": "Required and only valid if allowed_attempts > 1.\nScoring policy for a quiz that students can take multiple times.\nDefaults to \"keep_highest\".",
+          "example": [
+            "keep_highest",
+            "keep_latest"
+          ]
+        },
+        {
+          "name": "quiz.one_question_at_a_time",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "If true, shows quiz to student one question at a time.\nDefaults to false.",
+          "example": ""
+        },
+        {
+          "name": "quiz.cant_go_back",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Only valid if one_question_at_a_time=true\nIf true, questions are locked after answering.\nDefaults to false.",
+          "example": ""
+        },
+        {
+          "name": "quiz.access_code",
+          "type": "string",
+          "default_value": "",
+          "desc": "Restricts access to the quiz with a password.\nFor no access code restriction, set to null.\nDefaults to null.",
+          "example": ""
+        },
+        {
+          "name": "quiz.ip_filter",
+          "type": "string",
+          "default_value": "",
+          "desc": "Restricts access to the quiz to computers in a specified IP range.\nFilters can be a comma-separated list of addresses, or an address followed by a mask\n\nExamples:\n  \"192.168.217.1\"\n  \"192.168.217.1/24\"\n  \"192.168.217.1/255.255.255.0\"\n\nFor no IP filter restriction, set to null.\nDefaults to null.",
+          "example": ""
+        },
+        {
+          "name": "quiz.due_at",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "The day/time the quiz is due.\nAccepts times in ISO 8601 format, e.g. 2011-10-21T18:48Z.",
+          "example": ""
+        },
+        {
+          "name": "quiz.lock_at",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "The day/time the quiz is locked for students.\nAccepts times in ISO 8601 format, e.g. 2011-10-21T18:48Z.",
+          "example": ""
+        },
+        {
+          "name": "quiz.unlock_at",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "The day/time the quiz is unlocked for students.\nAccepts times in ISO 8601 format, e.g. 2011-10-21T18:48Z.",
+          "example": ""
+        },
+        {
+          "name": "quiz.published",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Whether the quiz should have a draft state of published or unpublished.\nNOTE: If students have started taking the quiz, or there are any\nsubmissions for the quiz, you may not unpublish a quiz and will recieve\nan error.",
+          "example": ""
+        },
+        {
+          "name": "quiz.one_time_results",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Whether students should be prevented from viewing their quiz results past\nthe first time (right after they turn the quiz in.)\nOnly valid if \"hide_results\" is not set to \"always\".\nDefaults to false.",
+          "example": ""
+        },
+        {
+          "name": "quiz.only_visible_to_overrides",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Whether this quiz is only visible to overrides (Only useful if\n'differentiated assignments' account setting is on)\nDefaults to false.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Edit a quiz",
+      "controller": "quizzes",
+      "description": "Modify an existing quiz. See the documentation for quiz creation.\n\nAdditional arguments:",
+      "name": "edit_quiz",
+      "endpoint": "PUT /v1/courses/:course_id/quizzes/:id",
+      "reference": "https://canvas.instructure.com/doc/api/quizzes.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "quiz.notify_of_update",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "If true, notifies users that the quiz has changed.\nDefaults to true",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Delete a quiz",
+      "controller": "quizzes",
+      "description": "",
+      "name": "delete_quiz",
+      "endpoint": "DELETE /v1/courses/:course_id/quizzes/:id",
+      "reference": "https://canvas.instructure.com/doc/api/quizzes.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Reorder quiz items",
+      "controller": "quizzes",
+      "description": "Change order of the quiz questions or groups within the quiz\n\n<b>204 No Content</b> response code is returned if the reorder was successful.",
+      "name": "reorder_quiz_items",
+      "endpoint": "POST /v1/courses/:course_id/quizzes/:id/reorder",
+      "reference": "https://canvas.instructure.com/doc/api/quizzes.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "order.id[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The associated item's unique identifier",
+          "example": ""
+        },
+        {
+          "name": "order.type[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "The type of item is either 'question' or 'group'",
+          "example": [
+            "question",
+            "group"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Validate quiz access code",
+      "controller": "quizzes",
+      "description": "Accepts an access code and returns a boolean indicating whether that access code is correct",
+      "name": "validate_quiz_access_code",
+      "endpoint": "POST /v1/courses/:course_id/quizzes/:id/validate_access_code",
+      "reference": "https://canvas.instructure.com/doc/api/quizzes.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "access_code",
+          "type": "string",
+          "default_value": "",
+          "desc": "The access code being validated",
           "example": ""
         }
       ]
@@ -15995,6 +28282,482 @@ const RAWCANVASAPIS = {
       ]
     }
   ],
+  "sis_import_errors": [
+    {
+      "display_name": "Get SIS import error list",
+      "controller": "sis_import_errors",
+      "description": "Returns the list of SIS import errors for an account or a SIS import. Import\nerrors are only stored for 30 days.\n\nExample:\n  curl 'https://<canvas>/api/v1/accounts/<account_id>/sis_imports/<id>/sis_import_errors' \\\n    -H \"Authorization: Bearer <token>\"\n\nExample:\n  curl 'https://<canvas>/api/v1/accounts/<account_id>/sis_import_errors' \\\n    -H \"Authorization: Bearer <token>\"",
+      "name": "get_sis_import_error_list_sis_imports",
+      "endpoint": "GET /v1/accounts/:account_id/sis_imports/:id/errors",
+      "reference": "https://canvas.instructure.com/doc/api/sis_import_errors.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "failure",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "If set, only shows errors on a sis import that would cause a failure.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get SIS import error list",
+      "controller": "sis_import_errors",
+      "description": "Returns the list of SIS import errors for an account or a SIS import. Import\nerrors are only stored for 30 days.\n\nExample:\n  curl 'https://<canvas>/api/v1/accounts/<account_id>/sis_imports/<id>/sis_import_errors' \\\n    -H \"Authorization: Bearer <token>\"\n\nExample:\n  curl 'https://<canvas>/api/v1/accounts/<account_id>/sis_import_errors' \\\n    -H \"Authorization: Bearer <token>\"",
+      "name": "get_sis_import_error_list_sis_import_errors",
+      "endpoint": "GET /v1/accounts/:account_id/sis_import_errors",
+      "reference": "https://canvas.instructure.com/doc/api/sis_import_errors.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "failure",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "If set, only shows errors on a sis import that would cause a failure.",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "sis_imports": [
+    {
+      "display_name": "Get SIS import list",
+      "controller": "sis_imports",
+      "description": "Returns the list of SIS imports for an account\n\nExample:\n  curl https://<canvas>/api/v1/accounts/<account_id>/sis_imports \\\n    -H 'Authorization: Bearer <token>'",
+      "name": "get_sis_import_list",
+      "endpoint": "GET /v1/accounts/:account_id/sis_imports",
+      "reference": "https://canvas.instructure.com/doc/api/sis_imports.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "created_since",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "If set, only shows imports created after the specified date (use ISO8601 format)",
+          "example": ""
+        },
+        {
+          "name": "workflow_state[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "If set, only returns imports that are in the given state.",
+          "example": [
+            "initializing",
+            "created",
+            "importing",
+            "cleanup_batch",
+            "imported",
+            "imported_with_messages",
+            "aborted",
+            "failed",
+            "failed_with_messages",
+            "restoring",
+            "partially_restored",
+            "restored"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Get the current importing SIS import",
+      "controller": "sis_imports",
+      "description": "Returns the SIS imports that are currently processing for an account. If no\nimports are running, will return an empty array.\n\nExample:\n  curl https://<canvas>/api/v1/accounts/<account_id>/sis_imports/importing \\\n    -H 'Authorization: Bearer <token>'",
+      "name": "get_current_importing_sis_import",
+      "endpoint": "GET /v1/accounts/:account_id/sis_imports/importing",
+      "reference": "https://canvas.instructure.com/doc/api/sis_imports.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Import SIS data",
+      "controller": "sis_imports",
+      "description": "Import SIS data into Canvas. Must be on a root account with SIS imports\nenabled.\n\nFor more information on the format that's expected here, please see the\n\"SIS CSV\" section in the API docs.",
+      "name": "import_sis_data",
+      "endpoint": "POST /v1/accounts/:account_id/sis_imports",
+      "reference": "https://canvas.instructure.com/doc/api/sis_imports.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "import_type",
+          "type": "string",
+          "default_value": "",
+          "desc": "Choose the data format for reading SIS data. With a standard Canvas\ninstall, this option can only be 'instructure_csv', and if unprovided,\nwill be assumed to be so. Can be part of the query string.",
+          "example": ""
+        },
+        {
+          "name": "attachment",
+          "type": "string",
+          "default_value": "",
+          "desc": "There are two ways to post SIS import data - either via a\nmultipart/form-data form-field-style attachment, or via a non-multipart\nraw post request.\n\n'attachment' is required for multipart/form-data style posts. Assumed to\nbe SIS data from a file upload form field named 'attachment'.\n\nExamples:\n  curl -F attachment=@<filename> -H \"Authorization: Bearer <token>\" \\\n      https://<canvas>/api/v1/accounts/<account_id>/sis_imports.json?import_type=instructure_csv\n\nIf you decide to do a raw post, you can skip the 'attachment' argument,\nbut you will then be required to provide a suitable Content-Type header.\nYou are encouraged to also provide the 'extension' argument.\n\nExamples:\n  curl -H 'Content-Type: application/octet-stream' --data-binary @<filename>.zip \\\n      -H \"Authorization: Bearer <token>\" \\\n      https://<canvas>/api/v1/accounts/<account_id>/sis_imports.json?import_type=instructure_csv&extension=zip\n\n  curl -H 'Content-Type: application/zip' --data-binary @<filename>.zip \\\n      -H \"Authorization: Bearer <token>\" \\\n      https://<canvas>/api/v1/accounts/<account_id>/sis_imports.json?import_type=instructure_csv\n\n  curl -H 'Content-Type: text/csv' --data-binary @<filename>.csv \\\n      -H \"Authorization: Bearer <token>\" \\\n      https://<canvas>/api/v1/accounts/<account_id>/sis_imports.json?import_type=instructure_csv\n\n  curl -H 'Content-Type: text/csv' --data-binary @<filename>.csv \\\n      -H \"Authorization: Bearer <token>\" \\\n      https://<canvas>/api/v1/accounts/<account_id>/sis_imports.json?import_type=instructure_csv&batch_mode=1&batch_mode_term_id=15",
+          "example": ""
+        },
+        {
+          "name": "extension",
+          "type": "string",
+          "default_value": "",
+          "desc": "Recommended for raw post request style imports. This field will be used to\ndistinguish between zip, xml, csv, and other file format extensions that\nwould usually be provided with the filename in the multipart post request\nscenario. If not provided, this value will be inferred from the\nContent-Type, falling back to zip-file format if all else fails.",
+          "example": ""
+        },
+        {
+          "name": "batch_mode",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "If set, this SIS import will be run in batch mode, deleting any data\npreviously imported via SIS that is not present in this latest import.\nSee the SIS CSV Format page for details.\nBatch mode cannot be used with diffing.",
+          "example": ""
+        },
+        {
+          "name": "batch_mode_term_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "Limit deletions to only this term. Required if batch mode is enabled.",
+          "example": ""
+        },
+        {
+          "name": "multi_term_batch_mode",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Runs batch mode against all terms in terms file. Requires change_threshold.",
+          "example": ""
+        },
+        {
+          "name": "skip_deletes",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "When set the import will skip any deletes. This does not account for\nobjects that are deleted during the batch mode cleanup process.",
+          "example": ""
+        },
+        {
+          "name": "override_sis_stickiness",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Many fields on records in Canvas can be marked \"sticky,\" which means that\nwhen something changes in the UI apart from the SIS, that field gets\n\"stuck.\" In this way, by default, SIS imports do not override UI changes.\nIf this field is present, however, it will tell the SIS import to ignore\n\"stickiness\" and override all fields.",
+          "example": ""
+        },
+        {
+          "name": "add_sis_stickiness",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "This option, if present, will process all changes as if they were UI\nchanges. This means that \"stickiness\" will be added to changed fields.\nThis option is only processed if 'override_sis_stickiness' is also provided.",
+          "example": ""
+        },
+        {
+          "name": "clear_sis_stickiness",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "This option, if present, will clear \"stickiness\" from all fields touched\nby this import. Requires that 'override_sis_stickiness' is also provided.\nIf 'add_sis_stickiness' is also provided, 'clear_sis_stickiness' will\noverrule the behavior of 'add_sis_stickiness'",
+          "example": ""
+        },
+        {
+          "name": "diffing_data_set_identifier",
+          "type": "string",
+          "default_value": "",
+          "desc": "If set on a CSV import, Canvas will attempt to optimize the SIS import by\ncomparing this set of CSVs to the previous set that has the same data set\nidentifier, and only applying the difference between the two. See the\nSIS CSV Format documentation for more details.\nDiffing cannot be used with batch_mode",
+          "example": ""
+        },
+        {
+          "name": "diffing_remaster_data_set",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "If true, and diffing_data_set_identifier is sent, this SIS import will be\npart of the data set, but diffing will not be performed. See the SIS CSV\nFormat documentation for details.",
+          "example": ""
+        },
+        {
+          "name": "diffing_drop_status",
+          "type": "string",
+          "default_value": "",
+          "desc": "If diffing_drop_status is passed, this SIS import will use this status for\nenrollments that are not included in the sis_batch. Defaults to 'deleted'",
+          "example": [
+            "deleted",
+            "completed",
+            "inactive"
+          ]
+        },
+        {
+          "name": "change_threshold",
+          "type": "integer",
+          "default_value": "",
+          "desc": "If set with batch_mode, the batch cleanup process will not run if the\nnumber of items deleted is higher than the percentage set. If set to 10\nand a term has 200 enrollments, and batch would delete more than 20 of\nthe enrollments the batch will abort before the enrollments are deleted.\nThe change_threshold will be evaluated for course, sections, and\nenrollments independently.\nIf set with diffing, diffing will not be performed if the files are\ngreater than the threshold as a percent. If set to 5 and the file is more\nthan 5% smaller or more than 5% larger than the file that is being\ncompared to, diffing will not be performed. If the files are less than 5%,\ndiffing will be performed. The way the percent is calculated is by taking\nthe size of the current import and dividing it by the size of the previous\nimport. The formula used is:\n|(1 - current_file_size / previous_file_size)| * 100\nSee the SIS CSV Format documentation for more details.\nRequired for multi_term_batch_mode.",
+          "example": ""
+        },
+        {
+          "name": "diff_row_count_threshold",
+          "type": "integer",
+          "default_value": "",
+          "desc": "If set with diffing, diffing will not be performed if the number of rows\nto be run in the fully calculated diff import exceeds the threshold.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get SIS import status",
+      "controller": "sis_imports",
+      "description": "Get the status of an already created SIS import.\n\n  Examples:\n    curl https://<canvas>/api/v1/accounts/<account_id>/sis_imports/<sis_import_id> \\\n        -H 'Authorization: Bearer <token>'",
+      "name": "get_sis_import_status",
+      "endpoint": "GET /v1/accounts/:account_id/sis_imports/:id",
+      "reference": "https://canvas.instructure.com/doc/api/sis_imports.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Restore workflow_states of SIS imported items",
+      "controller": "sis_imports",
+      "description": "This will restore the the workflow_state for all the items that changed\ntheir workflow_state during the import being restored.\nThis will restore states for items imported with the following importers:\naccounts.csv terms.csv courses.csv sections.csv group_categories.csv\ngroups.csv users.csv admins.csv\nThis also restores states for other items that changed during the import.\nAn example would be if an enrollment was deleted from a sis import and the\ngroup_membership was also deleted as a result of the enrollment deletion,\nboth items would be restored when the sis batch is restored.",
+      "name": "restore_workflow_states_of_sis_imported_items",
+      "endpoint": "PUT /v1/accounts/:account_id/sis_imports/:id/restore_states",
+      "reference": "https://canvas.instructure.com/doc/api/sis_imports.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "batch_mode",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "If set, will only restore items that were deleted from batch_mode.",
+          "example": ""
+        },
+        {
+          "name": "undelete_only",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "If set, will only restore items that were deleted. This will ignore any\nitems that were created or modified.",
+          "example": ""
+        },
+        {
+          "name": "unconclude_only",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "If set, will only restore enrollments that were concluded. This will\nignore any items that were created or deleted.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Abort SIS import",
+      "controller": "sis_imports",
+      "description": "Abort a SIS import that has not completed.\n\nAborting a sis batch that is running can take some time for every process to\nsee the abort event. Subsequent sis batches begin to process 10 minutes\nafter the abort to allow each process to clean up properly.",
+      "name": "abort_sis_import",
+      "endpoint": "PUT /v1/accounts/:account_id/sis_imports/:id/abort",
+      "reference": "https://canvas.instructure.com/doc/api/sis_imports.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Abort all pending SIS imports",
+      "controller": "sis_imports",
+      "description": "Abort already created but not processed or processing SIS imports.",
+      "name": "abort_all_pending_sis_imports",
+      "endpoint": "PUT /v1/accounts/:account_id/sis_imports/abort_all_pending",
+      "reference": "https://canvas.instructure.com/doc/api/sis_imports.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "sis_integration": [
+    {
+      "display_name": "Retrieve assignments enabled for grade export to SIS",
+      "controller": "sis_integration",
+      "description": "Retrieve a list of published assignments flagged as \"post_to_sis\".\nSee the Assignments API for more details on assignments.\nAssignment group and section information are included for convenience.\n\nEach section includes course information for the origin course and the\ncross-listed course, if applicable. The `origin_course` is the course to\nwhich the section belongs or the course from which the section was\ncross-listed. Generally, the `origin_course` should be preferred when\nperforming integration work. The `xlist_course` is provided for consistency\nand is only present when the section has been cross-listed.\nSee Sections API and Courses Api for me details.\n\nThe `override` is only provided if the Differentiated Assignments course\nfeature is turned on and the assignment has an override for that section.\nWhen there is an override for the assignment the override object's\nkeys/values can be merged with the top level assignment object to create a\nview of the assignment object specific to that section.\nSee Assignments api for more information on assignment overrides.\n\nrestricts to courses that start before this date (if they have a start date)\nrestricts to courses that end after this date (if they have an end date)\ninformation to include.\n\n  \"student_overrides\":: returns individual student override information",
+      "name": "retrieve_assignments_enabled_for_grade_export_to_sis_accounts",
+      "endpoint": "GET /sis/accounts/:account_id/assignments",
+      "reference": "https://canvas.instructure.com/doc/api/sis_integration.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The ID of the account to query.",
+          "example": ""
+        },
+        {
+          "name": "course_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The ID of the course to query.",
+          "example": ""
+        },
+        {
+          "name": "starts_before",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "When searching on an account,",
+          "example": ""
+        },
+        {
+          "name": "ends_after",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "When searching on an account,",
+          "example": ""
+        },
+        {
+          "name": "include",
+          "type": "string",
+          "default_value": "",
+          "desc": "Array of additional",
+          "example": [
+            "student_overrides"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Retrieve assignments enabled for grade export to SIS",
+      "controller": "sis_integration",
+      "description": "Retrieve a list of published assignments flagged as \"post_to_sis\".\nSee the Assignments API for more details on assignments.\nAssignment group and section information are included for convenience.\n\nEach section includes course information for the origin course and the\ncross-listed course, if applicable. The `origin_course` is the course to\nwhich the section belongs or the course from which the section was\ncross-listed. Generally, the `origin_course` should be preferred when\nperforming integration work. The `xlist_course` is provided for consistency\nand is only present when the section has been cross-listed.\nSee Sections API and Courses Api for me details.\n\nThe `override` is only provided if the Differentiated Assignments course\nfeature is turned on and the assignment has an override for that section.\nWhen there is an override for the assignment the override object's\nkeys/values can be merged with the top level assignment object to create a\nview of the assignment object specific to that section.\nSee Assignments api for more information on assignment overrides.\n\nrestricts to courses that start before this date (if they have a start date)\nrestricts to courses that end after this date (if they have an end date)\ninformation to include.\n\n  \"student_overrides\":: returns individual student override information",
+      "name": "retrieve_assignments_enabled_for_grade_export_to_sis_courses",
+      "endpoint": "GET /sis/courses/:course_id/assignments",
+      "reference": "https://canvas.instructure.com/doc/api/sis_integration.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The ID of the account to query.",
+          "example": ""
+        },
+        {
+          "name": "course_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The ID of the course to query.",
+          "example": ""
+        },
+        {
+          "name": "starts_before",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "When searching on an account,",
+          "example": ""
+        },
+        {
+          "name": "ends_after",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "When searching on an account,",
+          "example": ""
+        },
+        {
+          "name": "include",
+          "type": "string",
+          "default_value": "",
+          "desc": "Array of additional",
+          "example": [
+            "student_overrides"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Disable assignments currently enabled for grade export to SIS",
+      "controller": "sis_integration",
+      "description": "Disable all assignments flagged as \"post_to_sis\", with the option of making it\nspecific to a grading period, in a course.\n\nOn success, the response will be 204 No Content with an empty body.\n\nOn failure, the response will be 400 Bad Request with a body of a specific\nmessage.\n\nFor disabling assignments in a specific grading period",
+      "name": "disable_assignments_currently_enabled_for_grade_export_to_sis",
+      "endpoint": "PUT /sis/courses/:course_id/disable_post_to_sis",
+      "reference": "https://canvas.instructure.com/doc/api/sis_integration.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The ID of the course.",
+          "example": ""
+        },
+        {
+          "name": "grading_period_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The ID of the grading period.",
+          "example": ""
+        }
+      ]
+    }
+  ],
   "score": [
     {
       "display_name": "Create a Score",
@@ -16072,6 +28835,655 @@ const RAWCANVASAPIS = {
           "type": "Object",
           "default_value": "",
           "desc": "(EXTENSION) Optional submission type and data.\nnew_submission [Boolean] flag to indicate that this is a new submission. Defaults to true unless submission_type is none.\nsubmission_type [String] permissible values are: none, basic_lti_launch, online_text_entry, external_tool, or online_url. Defaults to external_tool.\nsubmission_data [String] submission data (URL or body text)\nsubmitted_at [String] Date and time that the submission was originally created. Should use subsecond precision. This should match the data and time that the original submission happened in Canvas.",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "search": [
+    {
+      "display_name": "Find recipients",
+      "controller": "search",
+      "description": "Find valid recipients (users, courses and groups) that the current user\ncan send messages to. The /api/v1/search/recipients path is the preferred\nendpoint, /api/v1/conversations/find_recipients is deprecated.\n\nPagination is supported.",
+      "name": "find_recipients_conversations",
+      "endpoint": "GET /v1/conversations/find_recipients",
+      "reference": "https://canvas.instructure.com/doc/api/search.html",
+      "params": [
+        {
+          "name": "search",
+          "type": "string",
+          "default_value": "",
+          "desc": "Search terms used for matching users/courses/groups (e.g. \"bob smith\"). If\nmultiple terms are given (separated via whitespace), only results matching\nall terms will be returned.",
+          "example": ""
+        },
+        {
+          "name": "context",
+          "type": "string",
+          "default_value": "",
+          "desc": "Limit the search to a particular course/group (e.g. \"course_3\" or \"group_4\").",
+          "example": ""
+        },
+        {
+          "name": "exclude[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Array of ids to exclude from the search. These may be user ids or\ncourse/group ids prefixed with \"course_\" or \"group_\" respectively,\ne.g. exclude[]=1&exclude[]=2&exclude[]=course_3",
+          "example": ""
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "default_value": "",
+          "desc": "Limit the search just to users or contexts (groups/courses).",
+          "example": [
+            "user",
+            "context"
+          ]
+        },
+        {
+          "name": "user_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "Search for a specific user id. This ignores the other above parameters,\nand will never return more than one result.",
+          "example": ""
+        },
+        {
+          "name": "from_conversation_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "When searching by user_id, only users that could be normally messaged by\nthis user will be returned. This parameter allows you to specify a\nconversation that will be referenced for a shared context -- if both the\ncurrent user and the searched user are in the conversation, the user will\nbe returned. This is used to start new side conversations.",
+          "example": ""
+        },
+        {
+          "name": "permissions[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Array of permission strings to be checked for each matched context (e.g.\n\"send_messages\"). This argument determines which permissions may be\nreturned in the response; it won't prevent contexts from being returned if\nthey don't grant the permission(s).",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Find recipients",
+      "controller": "search",
+      "description": "Find valid recipients (users, courses and groups) that the current user\ncan send messages to. The /api/v1/search/recipients path is the preferred\nendpoint, /api/v1/conversations/find_recipients is deprecated.\n\nPagination is supported.",
+      "name": "find_recipients_search",
+      "endpoint": "GET /v1/search/recipients",
+      "reference": "https://canvas.instructure.com/doc/api/search.html",
+      "params": [
+        {
+          "name": "search",
+          "type": "string",
+          "default_value": "",
+          "desc": "Search terms used for matching users/courses/groups (e.g. \"bob smith\"). If\nmultiple terms are given (separated via whitespace), only results matching\nall terms will be returned.",
+          "example": ""
+        },
+        {
+          "name": "context",
+          "type": "string",
+          "default_value": "",
+          "desc": "Limit the search to a particular course/group (e.g. \"course_3\" or \"group_4\").",
+          "example": ""
+        },
+        {
+          "name": "exclude[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Array of ids to exclude from the search. These may be user ids or\ncourse/group ids prefixed with \"course_\" or \"group_\" respectively,\ne.g. exclude[]=1&exclude[]=2&exclude[]=course_3",
+          "example": ""
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "default_value": "",
+          "desc": "Limit the search just to users or contexts (groups/courses).",
+          "example": [
+            "user",
+            "context"
+          ]
+        },
+        {
+          "name": "user_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "Search for a specific user id. This ignores the other above parameters,\nand will never return more than one result.",
+          "example": ""
+        },
+        {
+          "name": "from_conversation_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "When searching by user_id, only users that could be normally messaged by\nthis user will be returned. This parameter allows you to specify a\nconversation that will be referenced for a shared context -- if both the\ncurrent user and the searched user are in the conversation, the user will\nbe returned. This is used to start new side conversations.",
+          "example": ""
+        },
+        {
+          "name": "permissions[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "Array of permission strings to be checked for each matched context (e.g.\n\"send_messages\"). This argument determines which permissions may be\nreturned in the response; it won't prevent contexts from being returned if\nthey don't grant the permission(s).",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List all courses",
+      "controller": "search",
+      "description": "A paginated list of all courses visible in the public index",
+      "name": "list_all_courses",
+      "endpoint": "GET /v1/search/all_courses",
+      "reference": "https://canvas.instructure.com/doc/api/search.html",
+      "params": [
+        {
+          "name": "search",
+          "type": "string",
+          "default_value": "",
+          "desc": "Search terms used for matching users/courses/groups (e.g. \"bob smith\"). If\nmultiple terms are given (separated via whitespace), only results matching\nall terms will be returned.",
+          "example": ""
+        },
+        {
+          "name": "public_only",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Only return courses with public content. Defaults to false.",
+          "example": ""
+        },
+        {
+          "name": "open_enrollment_only",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Only return courses that allow self enrollment. Defaults to false.",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "display_name": "List course sections",
+      "controller": "sections",
+      "description": "A paginated list of the list of sections for this course.",
+      "name": "list_course_sections",
+      "endpoint": "GET /v1/courses/:course_id/sections",
+      "reference": "https://canvas.instructure.com/doc/api/sections.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "include[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "- \"students\": Associations to include with the group. Note: this is only\n  available if you have permission to view users or grades in the course\n- \"avatar_url\": Include the avatar URLs for students returned.\n- \"enrollments\": If 'students' is also included, return the section\n  enrollment for each student\n- \"total_students\": Returns the total amount of active and invited students\n  for the course section\n- \"passback_status\": Include the grade passback status.",
+          "example": [
+            "students",
+            "avatar_url",
+            "enrollments",
+            "total_students",
+            "passback_status"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Create course section",
+      "controller": "sections",
+      "description": "Creates a new section for this course.",
+      "name": "create_course_section",
+      "endpoint": "POST /v1/courses/:course_id/sections",
+      "reference": "https://canvas.instructure.com/doc/api/sections.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "course_section.name",
+          "type": "string",
+          "default_value": "",
+          "desc": "The name of the section",
+          "example": ""
+        },
+        {
+          "name": "course_section.sis_section_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The sis ID of the section. Must have manage_sis permission to set. This is ignored if caller does not have permission to set.",
+          "example": ""
+        },
+        {
+          "name": "course_section.integration_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The integration_id of the section. Must have manage_sis permission to set. This is ignored if caller does not have permission to set.",
+          "example": ""
+        },
+        {
+          "name": "course_section.start_at",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "Section start date in ISO8601 format, e.g. 2011-01-01T01:00Z",
+          "example": ""
+        },
+        {
+          "name": "course_section.end_at",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "Section end date in ISO8601 format. e.g. 2011-01-01T01:00Z",
+          "example": ""
+        },
+        {
+          "name": "course_section.restrict_enrollments_to_section_dates",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Set to true to restrict user enrollments to the start and end dates of the section.",
+          "example": ""
+        },
+        {
+          "name": "enable_sis_reactivation",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "When true, will first try to re-activate a deleted section with matching sis_section_id if possible.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Cross-list a Section",
+      "controller": "sections",
+      "description": "Move the Section to another course.  The new course may be in a different account (department),\nbut must belong to the same root account (institution).",
+      "name": "cross_list_section",
+      "endpoint": "POST /v1/sections/:id/crosslist/:new_course_id",
+      "reference": "https://canvas.instructure.com/doc/api/sections.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "new_course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "De-cross-list a Section",
+      "controller": "sections",
+      "description": "Undo cross-listing of a Section, returning it to its original course.",
+      "name": "de_cross_list_section",
+      "endpoint": "DELETE /v1/sections/:id/crosslist",
+      "reference": "https://canvas.instructure.com/doc/api/sections.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Edit a section",
+      "controller": "sections",
+      "description": "Modify an existing section.",
+      "name": "edit_section",
+      "endpoint": "PUT /v1/sections/:id",
+      "reference": "https://canvas.instructure.com/doc/api/sections.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "course_section.name",
+          "type": "string",
+          "default_value": "",
+          "desc": "The name of the section",
+          "example": ""
+        },
+        {
+          "name": "course_section.sis_section_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The sis ID of the section. Must have manage_sis permission to set.",
+          "example": ""
+        },
+        {
+          "name": "course_section.integration_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The integration_id of the section. Must have manage_sis permission to set.",
+          "example": ""
+        },
+        {
+          "name": "course_section.start_at",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "Section start date in ISO8601 format, e.g. 2011-01-01T01:00Z",
+          "example": ""
+        },
+        {
+          "name": "course_section.end_at",
+          "type": "DateTime",
+          "default_value": "",
+          "desc": "Section end date in ISO8601 format. e.g. 2011-01-01T01:00Z",
+          "example": ""
+        },
+        {
+          "name": "course_section.restrict_enrollments_to_section_dates",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "Set to true to restrict user enrollments to the start and end dates of the section.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Get section information",
+      "controller": "sections",
+      "description": "Gets details about a specific section",
+      "name": "get_section_information_courses",
+      "endpoint": "GET /v1/courses/:course_id/sections/:id",
+      "reference": "https://canvas.instructure.com/doc/api/sections.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "include[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "- \"students\": Associations to include with the group. Note: this is only\n  available if you have permission to view users or grades in the course\n- \"avatar_url\": Include the avatar URLs for students returned.\n- \"enrollments\": If 'students' is also included, return the section\n  enrollment for each student\n- \"total_students\": Returns the total amount of active and invited students\n  for the course section\n- \"passback_status\": Include the grade passback status.",
+          "example": [
+            "students",
+            "avatar_url",
+            "enrollments",
+            "total_students",
+            "passback_status"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Get section information",
+      "controller": "sections",
+      "description": "Gets details about a specific section",
+      "name": "get_section_information_sections",
+      "endpoint": "GET /v1/sections/:id",
+      "reference": "https://canvas.instructure.com/doc/api/sections.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "include[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "- \"students\": Associations to include with the group. Note: this is only\n  available if you have permission to view users or grades in the course\n- \"avatar_url\": Include the avatar URLs for students returned.\n- \"enrollments\": If 'students' is also included, return the section\n  enrollment for each student\n- \"total_students\": Returns the total amount of active and invited students\n  for the course section\n- \"passback_status\": Include the grade passback status.",
+          "example": [
+            "students",
+            "avatar_url",
+            "enrollments",
+            "total_students",
+            "passback_status"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Delete a section",
+      "controller": "sections",
+      "description": "Delete an existing section.  Returns the former Section.",
+      "name": "delete_section",
+      "endpoint": "DELETE /v1/sections/:id",
+      "reference": "https://canvas.instructure.com/doc/api/sections.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "services": [
+    {
+      "display_name": "Get Kaltura config",
+      "controller": "services",
+      "description": "Return the config information for the Kaltura plugin in json format.",
+      "name": "get_kaltura_config",
+      "endpoint": "GET /v1/services/kaltura",
+      "reference": "https://canvas.instructure.com/doc/api/services.html",
+      "params": []
+    },
+    {
+      "display_name": "Start Kaltura session",
+      "controller": "services",
+      "description": "Start a new Kaltura session, so that new media can be recorded and uploaded\nto this Canvas instance's Kaltura instance.",
+      "name": "start_kaltura_session",
+      "endpoint": "POST /v1/services/kaltura_session",
+      "reference": "https://canvas.instructure.com/doc/api/services.html",
+      "params": []
+    }
+  ],
+  "shared_brand_configs": [
+    {
+      "display_name": "Share a BrandConfig (Theme)",
+      "controller": "shared_brand_configs",
+      "description": "Create a SharedBrandConfig, which will give the given brand_config a name\nand make it available to other users of this account.",
+      "name": "share_brandconfig_theme",
+      "endpoint": "POST /v1/accounts/:account_id/shared_brand_configs",
+      "reference": "https://canvas.instructure.com/doc/api/shared_brand_configs.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "shared_brand_config.name",
+          "type": "string",
+          "default_value": "",
+          "desc": "Name to share this BrandConfig (theme) as.",
+          "example": ""
+        },
+        {
+          "name": "shared_brand_config.brand_config_md5",
+          "type": "string",
+          "default_value": "",
+          "desc": "MD5 of brand_config to share",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Update a shared theme",
+      "controller": "shared_brand_configs",
+      "description": "Update the specified shared_brand_config with a new name or to point to a new brand_config.\nUses same parameters as create.",
+      "name": "update_shared_theme",
+      "endpoint": "PUT /v1/accounts/:account_id/shared_brand_configs/:id",
+      "reference": "https://canvas.instructure.com/doc/api/shared_brand_configs.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Un-share a BrandConfig (Theme)",
+      "controller": "shared_brand_configs",
+      "description": "Delete a SharedBrandConfig, which will unshare it so you nor anyone else in\nyour account will see it as an option to pick from.",
+      "name": "un_share_brandconfig_theme",
+      "endpoint": "DELETE /v1/shared_brand_configs/:id",
+      "reference": "https://canvas.instructure.com/doc/api/shared_brand_configs.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "submission_comments": [
+    {
+      "display_name": "Edit a submission comment",
+      "controller": "submission_comments",
+      "description": "Edit the given submission comment.",
+      "name": "edit_submission_comment",
+      "endpoint": "PUT /v1/courses/:course_id/assignments/:assignment_id/submissions/:user_id/comments/:id",
+      "reference": "https://canvas.instructure.com/doc/api/submission_comments.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "assignment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "comment",
+          "type": "string",
+          "default_value": "",
+          "desc": "If this argument is present, edit the text of a comment.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Delete a submission comment",
+      "controller": "submission_comments",
+      "description": "Delete the given submission comment.",
+      "name": "delete_submission_comment",
+      "endpoint": "DELETE /v1/courses/:course_id/assignments/:assignment_id/submissions/:user_id/comments/:id",
+      "reference": "https://canvas.instructure.com/doc/api/submission_comments.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "assignment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Upload a file",
+      "controller": "submission_comments",
+      "description": "Upload a file to attach to a submission comment\n\nSee the {file:file_uploads.html File Upload Documentation} for details on the file upload workflow.\n\nThe final step of the file upload workflow will return the attachment data,\nincluding the new file id. The caller can then PUT the file_id to the\nsubmission API to attach it to a comment",
+      "name": "upload_file",
+      "endpoint": "POST /v1/courses/:course_id/assignments/:assignment_id/submissions/:user_id/comments/files",
+      "reference": "https://canvas.instructure.com/doc/api/submission_comments.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "assignment_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
           "example": ""
         }
       ]
@@ -17583,6 +30995,347 @@ const RAWCANVASAPIS = {
       ]
     }
   ],
+  "tabs": [
+    {
+      "display_name": "List available tabs for a course or group",
+      "controller": "tabs",
+      "description": "Returns a paginated list of navigation tabs available in the current context.",
+      "name": "list_available_tabs_for_course_or_group_accounts",
+      "endpoint": "GET /v1/accounts/:account_id/tabs",
+      "reference": "https://canvas.instructure.com/doc/api/tabs.html",
+      "params": [
+        {
+          "name": "account_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List available tabs for a course or group",
+      "controller": "tabs",
+      "description": "Returns a paginated list of navigation tabs available in the current context.",
+      "name": "list_available_tabs_for_course_or_group_courses",
+      "endpoint": "GET /v1/courses/:course_id/tabs",
+      "reference": "https://canvas.instructure.com/doc/api/tabs.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List available tabs for a course or group",
+      "controller": "tabs",
+      "description": "Returns a paginated list of navigation tabs available in the current context.",
+      "name": "list_available_tabs_for_course_or_group_groups",
+      "endpoint": "GET /v1/groups/:group_id/tabs",
+      "reference": "https://canvas.instructure.com/doc/api/tabs.html",
+      "params": [
+        {
+          "name": "group_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List available tabs for a course or group",
+      "controller": "tabs",
+      "description": "Returns a paginated list of navigation tabs available in the current context.",
+      "name": "list_available_tabs_for_course_or_group_users",
+      "endpoint": "GET /v1/users/:user_id/tabs",
+      "reference": "https://canvas.instructure.com/doc/api/tabs.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Update a tab for a course",
+      "controller": "tabs",
+      "description": "Home and Settings tabs are not manageable, and can't be hidden or moved\n\nReturns a tab object",
+      "name": "update_tab_for_course",
+      "endpoint": "PUT /v1/courses/:course_id/tabs/:tab_id",
+      "reference": "https://canvas.instructure.com/doc/api/tabs.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "tab_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "position",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The new position of the tab, 1-based",
+          "example": ""
+        },
+        {
+          "name": "hidden",
+          "type": "boolean",
+          "default_value": "",
+          "desc": "no description",
+          "example": ""
+        }
+      ]
+    }
+  ],
+  "user_observees": [
+    {
+      "display_name": "List observees",
+      "controller": "user_observees",
+      "description": "A paginated list of the users that the given user is observing.\n\n*Note:* all users are allowed to list their own observees. Administrators can list\nother users' observees.\n\nThe returned observees will include an attribute \"observation_link_root_account_ids\", a list\nof ids for the root accounts the observer and observee are linked on. The observer will only be able to\nobserve in courses associated with these root accounts.",
+      "name": "list_observees",
+      "endpoint": "GET /v1/users/:user_id/observees",
+      "reference": "https://canvas.instructure.com/doc/api/user_observees.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "include[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "- \"avatar_url\": Optionally include avatar_url.",
+          "example": [
+            "avatar_url"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "List observers",
+      "controller": "user_observees",
+      "description": "A paginated list of the users that the given user is observing.\n\n*Note:* all users are allowed to list their own observees. Administrators can list\nother users' observees.\n\nThe returned observees will include an attribute \"observation_link_root_account_ids\", a list\nof ids for the root accounts the observer and observee are linked on. The observer will only be able to\nobserve in courses associated with these root accounts.",
+      "name": "list_observers",
+      "endpoint": "GET /v1/users/:user_id/observers",
+      "reference": "https://canvas.instructure.com/doc/api/user_observees.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "include[]",
+          "type": "array",
+          "default_value": "",
+          "desc": "- \"avatar_url\": Optionally include avatar_url.",
+          "example": [
+            "avatar_url"
+          ]
+        }
+      ]
+    },
+    {
+      "display_name": "Add an observee with credentials",
+      "controller": "user_observees",
+      "description": "Register the given user to observe another user, given the observee's credentials.\n\n*Note:* all users are allowed to add their own observees, given the observee's\ncredentials or access token are provided. Administrators can add observees given credentials, access token or\nthe {api:UserObserveesController#update observee's id}.",
+      "name": "add_observee_with_credentials",
+      "endpoint": "POST /v1/users/:user_id/observees",
+      "reference": "https://canvas.instructure.com/doc/api/user_observees.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "observee.unique_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "The login id for the user to observe.  Required if access_token is omitted.",
+          "example": ""
+        },
+        {
+          "name": "observee.password",
+          "type": "string",
+          "default_value": "",
+          "desc": "The password for the user to observe. Required if access_token is omitted.",
+          "example": ""
+        },
+        {
+          "name": "access_token",
+          "type": "string",
+          "default_value": "",
+          "desc": "The access token for the user to observe.  Required if <tt>observee[unique_id]</tt> or <tt>observee[password]</tt> are omitted.",
+          "example": ""
+        },
+        {
+          "name": "pairing_code",
+          "type": "string",
+          "default_value": "",
+          "desc": "A generated pairing code for the user to observe. Required if the Observer pairing code feature flag is enabled",
+          "example": ""
+        },
+        {
+          "name": "root_account_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The ID for the root account to associate with the observation link.\nDefaults to the current domain account.\nIf 'all' is specified, a link will be created for each root account associated\nto both the observer and observee.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Show an observee",
+      "controller": "user_observees",
+      "description": "Gets information about an observed user.\n\n*Note:* all users are allowed to view their own observees.",
+      "name": "show_observee",
+      "endpoint": "GET /v1/users/:user_id/observees/:observee_id",
+      "reference": "https://canvas.instructure.com/doc/api/user_observees.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "observee_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Show an observer",
+      "controller": "user_observees",
+      "description": "Gets information about an observed user.\n\n*Note:* all users are allowed to view their own observers.",
+      "name": "show_observer",
+      "endpoint": "GET /v1/users/:user_id/observers/:observer_id",
+      "reference": "https://canvas.instructure.com/doc/api/user_observees.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "observer_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Add an observee",
+      "controller": "user_observees",
+      "description": "Registers a user as being observed by the given user.",
+      "name": "add_observee",
+      "endpoint": "PUT /v1/users/:user_id/observees/:observee_id",
+      "reference": "https://canvas.instructure.com/doc/api/user_observees.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "observee_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "root_account_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "The ID for the root account to associate with the observation link.\nIf not specified, a link will be created for each root account associated\nto both the observer and observee.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Remove an observee",
+      "controller": "user_observees",
+      "description": "Unregisters a user as being observed by the given user.",
+      "name": "remove_observee",
+      "endpoint": "DELETE /v1/users/:user_id/observees/:observee_id",
+      "reference": "https://canvas.instructure.com/doc/api/user_observees.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "observee_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "root_account_id",
+          "type": "integer",
+          "default_value": "",
+          "desc": "If specified, only removes the link for the given root account",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Create observer pairing code",
+      "controller": "user_observees",
+      "description": "If the user is a student, will generate a code to be used with self registration\nor observees APIs to link another user to this student.",
+      "name": "create_observer_pairing_code",
+      "endpoint": "POST /v1/users/:user_id/observer_pairing_codes",
+      "reference": "https://canvas.instructure.com/doc/api/user_observees.html",
+      "params": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    }
+  ],
   "users": [
     {
       "display_name": "List users in account",
@@ -18677,6 +32430,172 @@ const RAWCANVASAPIS = {
       "endpoint": "DELETE /v1/users/self/course_nicknames",
       "reference": "https://canvas.instructure.com/doc/api/users.html",
       "params": []
+    }
+  ],
+  "webhooks_subscriptions": [
+    {
+      "display_name": "Create a Webhook Subscription",
+      "controller": "webhooks_subscriptions",
+      "description": "Creates a webook subscription for the specified event type and\ncontext.",
+      "name": "create_webhook_subscription",
+      "endpoint": "POST /lti/subscriptions",
+      "reference": "https://canvas.instructure.com/doc/api/webhooks_subscriptions.html",
+      "params": [
+        {
+          "name": "subscription.ContextId",
+          "type": "string",
+          "default_value": "",
+          "desc": "The id of the context for the subscription.",
+          "example": ""
+        },
+        {
+          "name": "subscription.ContextType",
+          "type": "string",
+          "default_value": "",
+          "desc": "The type of context for the subscription. Must be 'assignment',\n'account', or 'course'.",
+          "example": ""
+        },
+        {
+          "name": "subscription.EventTypes",
+          "type": "Array",
+          "default_value": "",
+          "desc": "Array of strings representing the event types for\nthe subscription.",
+          "example": ""
+        },
+        {
+          "name": "subscription.Format",
+          "type": "string",
+          "default_value": "",
+          "desc": "Format to deliver the live events. Must be 'live-event' or 'caliper'.",
+          "example": ""
+        },
+        {
+          "name": "subscription.TransportMetadata",
+          "type": "Object",
+          "default_value": "",
+          "desc": "An object with a single key: 'Url'. Example: { \"Url\": \"sqs.example\" }",
+          "example": ""
+        },
+        {
+          "name": "subscription.TransportType",
+          "type": "string",
+          "default_value": "",
+          "desc": "Must be either 'sqs' or 'https'.",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Delete a Webhook Subscription",
+      "controller": "webhooks_subscriptions",
+      "description": "",
+      "name": "delete_webhook_subscription",
+      "endpoint": "DELETE /lti/subscriptions/:id",
+      "reference": "https://canvas.instructure.com/doc/api/webhooks_subscriptions.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Show a single Webhook Subscription",
+      "controller": "webhooks_subscriptions",
+      "description": "",
+      "name": "show_single_webhook_subscription",
+      "endpoint": "GET /lti/subscriptions/:id",
+      "reference": "https://canvas.instructure.com/doc/api/webhooks_subscriptions.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Update a Webhook Subscription",
+      "controller": "webhooks_subscriptions",
+      "description": "This endpoint uses the same parameters as the create endpoint",
+      "name": "update_webhook_subscription",
+      "endpoint": "PUT /lti/subscriptions/:id",
+      "reference": "https://canvas.instructure.com/doc/api/webhooks_subscriptions.html",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "List all Webhook Subscription for a tool proxy",
+      "controller": "webhooks_subscriptions",
+      "description": "This endpoint returns a paginated list with a default limit of 100 items per result set.\nYou can retrieve the next result set by setting a 'StartKey' header in your next request\nwith the value of the 'EndKey' header in the response.\n\nExample use of a 'StartKey' header object:\n  { \"Id\":\"71d6dfba-0547-477d-b41d-db8cb528c6d1\",\"DeveloperKey\":\"10000000000001\" }",
+      "name": "list_all_webhook_subscription_for_tool_proxy",
+      "endpoint": "GET /lti/subscriptions",
+      "reference": "https://canvas.instructure.com/doc/api/webhooks_subscriptions.html",
+      "params": []
+    }
+  ],
+  "e_pub_exports": [
+    {
+      "display_name": "List courses with their latest ePub export",
+      "controller": "e_pub_exports",
+      "description": "A paginated list of all courses a user is actively participating in, and\nthe latest ePub export associated with the user & course.",
+      "name": "list_courses_with_their_latest_epub_export",
+      "endpoint": "GET /v1/epub_exports",
+      "reference": "https://canvas.instructure.com/doc/api/e_pub_exports.html",
+      "params": []
+    },
+    {
+      "display_name": "Create ePub Export",
+      "controller": "e_pub_exports",
+      "description": "Begin an ePub export for a course.\n\nYou can use the {api:ProgressController#show Progress API} to track the\nprogress of the export. The export's progress is linked to with the\n_progress_url_ value.\n\nWhen the export completes, use the {api:EpubExportsController#show Show content export} endpoint\nto retrieve a download URL for the exported content.",
+      "name": "create_epub_export",
+      "endpoint": "POST /v1/courses/:course_id/epub_exports",
+      "reference": "https://canvas.instructure.com/doc/api/e_pub_exports.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
+    },
+    {
+      "display_name": "Show ePub export",
+      "controller": "e_pub_exports",
+      "description": "Get information about a single ePub export.",
+      "name": "show_epub_export",
+      "endpoint": "GET /v1/courses/:course_id/epub_exports/:id",
+      "reference": "https://canvas.instructure.com/doc/api/e_pub_exports.html",
+      "params": [
+        {
+          "name": "course_id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "default_value": "",
+          "desc": "ID",
+          "example": ""
+        }
+      ]
     }
   ]
 }
