@@ -71,9 +71,11 @@
                         <?}?>
                       </div>
                       <div><?=action.description?></div>
+                      <?if (action.endpoint!=""){?>
                       <hr>
                       <div title="endpoint"><?=action.endpoint?></div>
                       <div title="reference"><a href="<?=action.reference?>" target="_blank">Canvas API reference</a></div>
+                      <?}?>
                       <hr/>
                       <ol title="steps">
                       <?var steps=action.guide?>

@@ -640,6 +640,23 @@ const CANVASAPIS={
           "example":"2011-01-01T01:00Z"
         },
       ]
+    },
+    { 
+      "display_name":"4: find_courses",
+      "description":"Find courses by keywords or id",
+      "automated":"false",
+      "controller":"_courses",
+      "guide":[
+        "Select an empty cell to start",
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnGenTemp\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).getFindCoursesTemplate();})();return false;\">Get template</button>",
+        "Enter values.",
+        "Select the range. Columns name and id are required. Provide at least one value, name or id, and leave the other one empty. If ids are provided, the program will search for courses by ids.",
+        "<button type=\"button\" class=\"btn btn-primary\" id=\"btnCallAPI\" onclick=\"(function (){onCall();google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).getCoursesInfo();})();return false;\">Call API</button>"
+      ],
+      "name":"find_courses",
+      "endpoint":"",
+      "reference":"",
+      "params":[]
     }
   ],
   "_pages":[

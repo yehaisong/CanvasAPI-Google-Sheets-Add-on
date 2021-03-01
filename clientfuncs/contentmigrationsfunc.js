@@ -71,8 +71,5 @@
   */
  function getContentMigrationTemplate()
  {
-    const cell=SpreadsheetApp.getActiveSheet().getCurrentCell();
-    const range=SpreadsheetApp.getActiveSheet().getRange(cell.getLastRow(),cell.getLastColumn(),1,6);
-    const values=[["course_id","source_course_id", "old_start_date", "old_end_date", "new_start_date", "new_end_date"]];
-    range.setValues(values);
+    Helper.getColumnTemplate([["course_id","source_course_id", "old_start_date", "old_end_date", "new_start_date", "new_end_date"]]);
  }
