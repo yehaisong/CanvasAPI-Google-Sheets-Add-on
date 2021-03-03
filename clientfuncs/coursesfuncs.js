@@ -179,3 +179,11 @@ function publishCourses(event)
   //handle progress
   Helper.showProgress(rng,data);
 }
+
+/**
+  * Get column headers for find courses
+  */
+ function getFindCoursesTemplate()
+ {
+    Helper.getColumnTemplate([["id","name"]]);
+ }

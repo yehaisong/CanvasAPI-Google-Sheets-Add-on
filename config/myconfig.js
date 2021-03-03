@@ -3,15 +3,18 @@
  * @author hye@cedarville.edu (Haisong Ye)
  */
 
-
-/**@constant
- * @type {boolean}
- * @description Log customized message using Helper.log or not.
- * @default true
+/**
+ * MyConfig class for PerpertiesService.getUserProperties()
  */
-const LOGMESSAGE = true;
+class MyConfig{
+  static getProperty(name){
+    return PropertiesService.getUserProperties().getProperty(name);
+  }
 
-
+  static setProperty(name,value){
+    PropertiesService.getUserProperties().setProperty(name,value);
+  }
+}
 
 /**
  * Show a input dialog for user token.
@@ -56,3 +59,38 @@ function testConfig(){
   let data=canvasAPI(action.endpoint,opts);
   Browser.msgBox("Testing result", "Root Account Permissions: "+JSON.stringify(data),Browser.Buttons.OK);
 }
+
+/**
+ * Show a config dialog
+ */
+function showMyConfigDialog()
+{
+
+    var htmlTemplate = HtmlService.createTemplateFromFile('ui/template/myconfig');
+    htmlTemplate.data={
+        "host":MyConfig.getProperty("host"),
+        "token":MyConfig.getProperty("token"),
+        "syslog":MyConfig.getProperty("syslog"),
+        "confirmhost":MyConfig.getProperty("confirmhost")};
+    let htmloutput=htmlTemplate.evaluate();
+    SpreadsheetApp.getUi() // Or DocumentApp or SlidesApp or FormApp.
+      .showModalDialog(htmloutput, 'Config');
+}
+
+/**
+ * Sys config
+ * @param {string} host The host url of canvas
+ * @param {string} token Your personal token for api calls
+ * @param {boolean} syslog Keep execution log for debug purpose
+ * @param {boolean} confirmhost Show a confirmation dialog for host
+ */
+function saveMyConfig(host,token,syslog,confirmhost)
+{
+    MyConfig.setProperty("host",host);
+    MyConfig.setProperty("token",token);
+    MyConfig.setProperty("syslog",syslog);
+    MyConfig.setProperty("confirmhost",confirmhost);
+    Helper.log(`Configuration saved. Host, token, syslog (${syslog}), confirmhost (${confirmhost})`);
+}
+
+

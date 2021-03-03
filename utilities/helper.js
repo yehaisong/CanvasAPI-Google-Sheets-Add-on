@@ -441,7 +441,10 @@ class Helper {
    */
   static log(data)
   {
-    if(LOGMESSAGE){
+    if(MyConfig.getProperty("syslog")==null)
+      MyConfig.setProperty("syslog",true);
+
+    if(MyConfig.getProperty("syslog")=="true"){
       Logger.log(data);
     }
   }
@@ -589,14 +592,23 @@ class Helper {
    */
   static confirmHost()
   {
-    const userProperties = userConfiguration();
-    let moveon=Browser.msgBox(`The current host is ${userProperties.host}. Do you want to continue the operation?`, Browser.Buttons.OK_CANCEL);
-		if(moveon=="cancel"){
-			return false;
-		}
+
+    if(MyConfig.getProperty("confirmhost")==null)
+      MyConfig.setProperty("confirmhost",true);
+
+    if(MyConfig.getProperty("confirmhost")=="true"){
+      let moveon=Browser.msgBox(`The current host is ${MyConfig.getProperty("host")}. Do you want to continue the operation?`, Browser.Buttons.OK_CANCEL);
+      if(moveon=="cancel"){
+        return false;
+      }
+      else
+      {
+        return true;
+      }
+    }
     else
     {
-      return true;
+      return true; //do not confirm, always going forward.
     }
   }
 

@@ -29,12 +29,12 @@
  */
 function userConfiguration() {
 	var userProperties = PropertiesService.getUserProperties();
-  if(!userProperties.getProperty("host")) { 
-    setHost(); //config.gs
-  }
-  if(!userProperties.getProperty("token")) {
-    setToken(); //config.gs
-  }
+	if(!userProperties.getProperty("host")) { 
+		setHost(); //config.gs
+	}
+	if(!userProperties.getProperty("token")) {
+		setToken(); //config.gs
+	}
 	return userProperties.getProperties();
 }
 

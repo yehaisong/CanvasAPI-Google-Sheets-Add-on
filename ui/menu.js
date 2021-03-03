@@ -173,8 +173,9 @@ function onOpen() {
   .addSeparator()
   .addSubMenu(ui.createMenu('Config')
       //.addItem('check settings', 'checkTokens')
-      .addItem('Set token', 'setToken')
-      .addItem('Set host', 'setHost')
+      //.addItem('Set token', 'setToken')
+      //.addItem('Set host', 'setHost')
+      .addItem('Config','showMyConfigDialog')
       .addItem('Test settings','testConfig'))
   //.addSeparator()
   .addToUi();
