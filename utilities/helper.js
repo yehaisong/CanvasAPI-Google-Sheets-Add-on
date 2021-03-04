@@ -110,24 +110,26 @@ class Helper {
    * If not provided, all original field of the jsonobject will be displayed.
    * @param {string} bgcolor Provide a RGB color for the background of the filled area. If not provided, a randome color will be used. See function getColor() for all colors
    * @param {boolean} blankrow Insert a blankrow or not. Default true.
+   * @param {boolean} newrow Insert new rows to show content. Default true. If set to false, blankrow will be ignored.
    */
-  static fillValues(startrow,startcol,jsonobject,columns,bgcolor,blankrow)
+  static fillValues(startrow,startcol,jsonobject,columns,bgcolor,blankrow=true,newrows=true)
   {
     const contents=Helper.parseJSON(jsonobject,columns);
     if(contents.length>0){
-      if(blankrow==null)
-        blankrow=true;
-      //insert a blankrow before rng
-      if(blankrow){
-        Helper.insertRows(startrow,1);
-        startrow++;
+      Helper.log(`Start fill values. Content length (${contents.length})`);
+      if(newrows){ //add new rows?
+        //insert a blankrow before rng
+        if(blankrow){ //insert rows for content, and +1 header and +1 footer
+          Helper.insertRows(startrow,contents.length+2);
+          startrow++;
+        }
+        else{//insert rows for content only
+          Helper.insertRows(startrow,contents.length);
+        }
       }
-      Helper.insertRows(startrow,contents.length);
+      //get the range for fill values
       const rng = SpreadsheetApp.getActiveSheet().getRange(startrow,startcol,contents.length,contents[0].length);
-      //insert a blank row after rng
-      if(blankrow){
-        Helper.insertRows(rng.getLastRow()+1,1);
-      }
+      //fill bgcolor
       if(bgcolor==null)
         bgcolor= Helper.getColor();
       rng.setHorizontalAlignment("left");
@@ -145,18 +147,21 @@ class Helper {
           SpreadsheetApp.getActiveSheet().getRange(cell.getRow()+1,cell.getColumn(),rng.getNumRows()-1,1).insertCheckboxes();
         }
       }
-      //group rows
-      let grouprowindex=rng.getRow()+1;//use the first new row as the +/- row
-      if(blankrow){
-        grouprowindex=rng.getRow();//use the blank row as the +/- row
-        if(grouprowindex>1)
-          grouprowindex--; //use the active row as group header if not the first row
+      //group rows only when newrows are true
+      if(newrows){
+        let grouprowindex=rng.getRow()+1;//use the first new row as the +/- row
+        if(blankrow){
+          grouprowindex=rng.getRow();//use the blank row as the +/- row
+          if(grouprowindex>1)
+            grouprowindex--; //use the active row as group header if not the first row
+        }
       }
       SpreadsheetApp.getActiveSheet().getRange(grouprowindex+":"+(rng.getLastRow()+1)).activate().shiftRowGroupDepth(1);
       //blankrow after range
     }
     else
     {
+      Helper.log("Content is empty.")
       Helper.insertRows(startrow,1);
       const cell=SpreadsheetApp.getActiveSheet().getRange(startrow,startcol,1,1);
       cell.setValue("No records were found.");

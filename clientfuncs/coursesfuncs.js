@@ -104,10 +104,11 @@ function updateCourseDates(range_notation,updateduedate)
 }
 
 /**
- * Get full course information using course name or course id
+ * Get full course information using course name or course id. Support direct call.
  * @param {string} range_notation A1 Notation. If not provided, use the current selected range.
+ * @param {boolean} directcall A direct call from a cell. Default is false.
  */
-function getCoursesInfo(range_notation)
+function getCoursesInfo(range_notation,directcall=false)
 {
   if(!Helper.confirmHost())
     return;
@@ -142,8 +143,12 @@ function getCoursesInfo(range_notation)
     }
     Helper.toast("getting info: "+courses[i].name,"Progress",2)
   }
-  Helper.fillValues(range.getLastRow()+1,range.getColumn(),queued_courses,"course_list_changedate",null);
-  //fill data
+  if(directcall){//call from a cell
+    return Helper.parseJSON(queued_courses);
+  }
+  else{//call from sidebar
+    Helper.fillValues(range.getLastRow()+1,range.getColumn(),queued_courses,"course_list_changedate",null);
+  }
 }
 
 /**
